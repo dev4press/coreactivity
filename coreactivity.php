@@ -3,7 +3,7 @@
 /*
 Plugin Name:       CoreActivity
 Plugin URI:        https://plugins.dev4press.com/coreactivity/
-Description:       Monitor and log all kinds of activity happening in the WordPress website.
+Description:       Monitor and log all kinds of activity happening in the WordPress website, with fine control over events to log, detailed log and events panels, and more.
 Author:            Milan Petrovic
 Author URI:        https://www.dev4press.com/
 Text Domain:       coreactivity
@@ -31,7 +31,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 
-use Dev4Press\v41\WordPress;
+use Dev4Press\v42\WordPress;
 
 $coreactivity_dirname_basic = dirname( __FILE__ ) . '/';
 $coreactivity_urlname_basic = plugins_url( '/', __FILE__ );
@@ -46,3 +46,10 @@ require_once( COREACTIVITY_D4PLIB_PATH . 'core.php' );
 require_once( COREACTIVITY_PATH . 'core/autoload.php' );
 require_once( COREACTIVITY_PATH . 'core/bridge.php' );
 require_once( COREACTIVITY_PATH . 'core/functions.php' );
+
+coreactivity();
+coreactivity_settings();
+
+if ( WordPress::instance()->is_admin() ) {
+	coreactivity_admin();
+}

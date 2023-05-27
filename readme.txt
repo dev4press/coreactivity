@@ -7,10 +7,10 @@ Requires PHP: 7.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Monitor and log all kinds of activity happening in the WordPress website.
+Monitor and log all kinds of activity happening in the WordPress website, with fine control over events to log, detailed log and events panels, and more.
 
 == Description ==
-Monitor and log all kinds of activity happening in the WordPress website.
+Monitor and log all kinds of activity happening in the WordPress website, with fine control over events to log, detailed log and events panels, and more.
 
 == Installation ==
 = General Requirements =

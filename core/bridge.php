@@ -1,13 +1,26 @@
 <?php
 
-use Dev4Press\Plugin\SweepPress\Admin\AJAX;
-use Dev4Press\Plugin\SweepPress\Admin\Plugin as Admin;
-use Dev4Press\Plugin\SweepPress\Basic\DB;
-use Dev4Press\Plugin\SweepPress\Basic\Prepare;
-use Dev4Press\Plugin\SweepPress\Basic\Plugin;
-use Dev4Press\Plugin\SweepPress\Basic\Settings;
-use Dev4Press\Plugin\SweepPress\Basic\Sweep;
+use Dev4Press\Plugin\CoreActivity\Admin\Plugin as AdminPlugin;
+use Dev4Press\Plugin\CoreActivity\Basic\DB;
+use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
+use Dev4Press\Plugin\CoreActivity\Basic\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+function coreactivity() : Plugin {
+	return Plugin::instance();
+}
+
+function coreactivity_settings() : Settings {
+	return Settings::instance();
+}
+
+function coreactivity_db() : DB {
+	return DB::instance();
+}
+
+function coreactivity_admin() : AdminPlugin {
+	return AdminPlugin::instance();
 }
