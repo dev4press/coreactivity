@@ -13,15 +13,20 @@ class InstallDB extends BaseInstallDB {
 	protected $tables = array(
 		'events'  => array(
 			'name'    => 'events',
-			'columns' => 3,
+			'columns' => 6,
 			'scope'   => 'network',
 			'data'    => "event_id bigint(20) unsigned NOT NULL AUTO_INCREMENT, \n" .
 			             "component varchar(128) NOT NULL DEFAULT 'post', \n" .
 			             "event varchar(128) NOT NULL DEFAULT '', \n" .
+			             "scope varchar(16) NOT NULL DEFAULT '', \n" .
+			             "status varchar(32) NOT NULL DEFAULT 'active', \n" .
+			             "rules text NULL DEFAULT NULL, \n" .
 			             "PRIMARY KEY  (event_id), \n" .
 			             "UNIQUE KEY `component_event` (`component`, `event`), \n" .
 			             "KEY component (component), \n" .
-			             "KEY event (event)"
+			             "KEY event (event), \n" .
+			             "KEY scope (scope), \n" .
+			             "KEY status (status)"
 		),
 		'logs'    => array(
 			'name'    => 'logs',

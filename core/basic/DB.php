@@ -19,4 +19,27 @@ class DB extends BaseDB {
 	public $_tables = array( 'events', 'logs', 'logmeta' );
 	public $_network_tables = array( 'events', 'logs', 'logmeta' );
 	public $_metas = array( 'log' => 'log_id' );
+
+	public function get_all_registered_events() {
+		$sql = "SELECT *, '' as label, '' as loaded FROM " . $this->events . " ORDER BY `component`, `event`";
+
+		return $this->get_results( $sql );
+	}
+
+	public function add_new_event( string $component, string $event, string $scope, string $status = 'active', array $rules = array() ) : int {
+		$data = array(
+			'component' => $component,
+			'event'     => $event,
+			'scope'     => $scope,
+			'status'    => $status
+		);
+
+		if ( ! empty( $rules ) ) {
+			$data[ 'rules' ] = json_encode( $rules );
+		}
+
+		$result = $this->insert( $this->events, $data );
+
+		return $result == 1 ? $this->get_insert_id() : 0;
+	}
 }

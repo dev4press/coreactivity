@@ -2,6 +2,8 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
+use Dev4Press\Plugin\CoreActivity\Log\Init as LogInit;
+use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\v42\Core\Plugins\Core;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,6 +31,9 @@ class Plugin extends Core {
 
 	public function run() {
 		do_action( 'coreactivity_load_settings' );
+
+		LogInit::instance();
+		LogCore::instance();
 
 		do_action( 'coreactivity_plugin_core_ready' );
 	}
