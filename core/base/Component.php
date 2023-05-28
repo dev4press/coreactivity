@@ -22,6 +22,12 @@ abstract class Component {
 	 */
 	protected $name = '';
 	/**
+	 * Name of the object type to use to add to the logging table. Individual events can override it.
+	 *
+	 * @var string
+	 */
+	protected $object_type = '';
+	/**
 	 * @var array
 	 */
 	protected $events = array();
@@ -32,6 +38,7 @@ abstract class Component {
 
 	public function __construct() {
 		add_action( 'coreactivity_component_registration', array( $this, 'register' ) );
+		add_action( 'coreactivity_tracking_ready', array( $this, 'tracking' ) );
 	}
 
 	/** @return static */
@@ -46,10 +53,9 @@ abstract class Component {
 	}
 
 	public function register( Init $init ) {
-		debugpress_store_object($this);
 		foreach ( $this->events() as $event => $data ) {
 			$event  = strtolower( $event );
-			$status = $init->register( $this->code(), $event, $data[ 'label' ], $data[ 'scope' ] ?? '', $data[ 'status' ] ?? 'active', $data[ 'rules' ] ?? array() );
+			$status = $init->register( $this->code(), $event, $data[ 'label' ], $data[ 'scope' ] ?? '', $data[ 'status' ] ?? 'active', $data[ 'object_type' ] ?? $this->object_type, $data[ 'rules' ] ?? array() );
 
 			if ( $status ) {
 				$this->registered[] = $event;
@@ -76,6 +82,8 @@ abstract class Component {
 	public function is_active( string $event ) : bool {
 		return $this->is_registered( $event );
 	}
+
+	abstract public function tracking();
 
 	abstract public function label() : string;
 

@@ -8,23 +8,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class User extends Component {
+class Post extends Component {
 	protected $plugin = 'coreactivity';
-	protected $name = 'user';
-	protected $object_type = 'user';
+	protected $name = 'post';
+	protected $object_type = 'post';
 
 	public function tracking() {
 
 	}
 
 	public function label() : string {
-		return __( "Users" );
+		return __( "Posts" );
 	}
 
 	protected function get_events() : array {
 		return array(
-			'login'  => array( 'label' => __( "Login" ) ),
-			'logout' => array( 'label' => __( "Logout" ) )
+			'status-change'  => array( 'label' => __( "Post Status Change" ) )
 		);
 	}
 }

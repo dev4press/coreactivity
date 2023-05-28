@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Cache;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
+use Dev4Press\Plugin\CoreActivity\Components\Post;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\v42\Core\Quick\Str;
 
@@ -45,6 +46,7 @@ class Init {
 
 	private function _init_components() {
 		User::instance();
+		Post::instance();
 	}
 
 	public function ready() {
@@ -54,27 +56,31 @@ class Init {
 		do_action( 'coreactivity_component_registration', $this );
 
 		Cache::instance()->set( 'events', 'registered', $this->events );
+
+		do_action( 'coreactivity_tracking_ready', $this );
 	}
 
-	public function register( string $component, string $event, string $label, string $scope = '', string $status = 'active', array $rules = array() ) : bool {
+	public function register( string $component, string $event, string $label, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
 		$obj = (object) array(
-			'event_id'  => 0,
-			'component' => $component,
-			'event'     => $event,
-			'scope'     => $scope,
-			'status'    => $status,
-			'rules'     => $rules,
-			'label'     => $label,
-			'loaded'    => true
+			'event_id'    => 0,
+			'component'   => $component,
+			'event'       => $event,
+			'status'      => $status,
+			'rules'       => $rules,
+			'label'       => $label,
+			'loaded'      => true,
+			'scope'       => $scope,
+			'object_type' => $object_type
 		);
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			$this->events[ $component ][ $event ]->loaded = true;
-			$this->events[ $component ][ $event ]->label  = $label;
+			$this->events[ $component ][ $event ]->loaded      = true;
+			$this->events[ $component ][ $event ]->label       = $label;
+			$this->events[ $component ][ $event ]->object_type = $object_type;
 
 			$obj->event_id = $this->events[ $component ][ $event ]->event_id;
 		} else {
-			$id = DB::instance()->add_new_event( $component, $event, $scope, $status, $rules );
+			$id = DB::instance()->add_new_event( $component, $event, $status, $rules );
 
 			if ( $id > 0 ) {
 				$obj->event_id = $id;
