@@ -61,7 +61,7 @@ class InstallDB extends BaseInstallDB {
 			'scope'   => 'network',
 			'data'    => "meta_id bigint(20) unsigned NOT NULL AUTO_INCREMENT, \n" .
 			             "log_id bigint(20) unsigned NOT NULL DEFAULT '0', \n" .
-			             "meta_key bigint(20) unsigned NOT NULL DEFAULT '0', \n" .
+			             "meta_key varchar(128) NOT NULL DEFAULT '', \n" .
 			             "meta_value longtext NULL DEFAULT NULL, \n" .
 			             "PRIMARY KEY  (meta_id), \n" .
 			             "KEY log_id (log_id), \n" .
