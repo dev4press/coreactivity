@@ -14,8 +14,6 @@ class Settings extends PanelSettings {
 	public function __construct( $admin ) {
 		parent::__construct( $admin );
 
-		$this->subpanels = $this->subpanels + array(
-
-			);
+		$this->subpanels = $this->subpanels + array();
 	}
 }

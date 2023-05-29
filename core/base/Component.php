@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Base;
 
+use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -73,6 +74,18 @@ abstract class Component {
 		}
 
 		return $this->events;
+	}
+
+	public function log( string $event, array $data = array(), array $meta = array() ) : int {
+		if ( $this->is_active( $event ) ) {
+			$event_id = Init::instance()->get_event_id( $this->code(), $event );
+
+			if ( $event_id > 0 ) {
+				return Core::instance()->log( $event_id, $data, $meta );
+			}
+		}
+
+		return 0;
 	}
 
 	public function is_registered( string $event ) : bool {

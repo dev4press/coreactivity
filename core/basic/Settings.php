@@ -16,7 +16,8 @@ class Settings extends BaseSettings {
 			'activated' => 0
 		),
 		'settings' => array(
-
+			'log_if_available_user_agent' => true,
+			'log_if_available_referer'    => false,
 		)
 	);
 

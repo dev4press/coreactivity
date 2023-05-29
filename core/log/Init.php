@@ -6,6 +6,7 @@ use Dev4Press\Plugin\CoreActivity\Basic\Cache;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
 use Dev4Press\Plugin\CoreActivity\Components\User;
+use Dev4Press\v42\Core\Quick\Sanitize;
 use Dev4Press\v42\Core\Quick\Str;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -37,8 +38,9 @@ class Init {
 				$this->events[ $event->component ] = array();
 			}
 
-			$event->rules  = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
-			$event->loaded = false;
+			$event->event_id = Sanitize::absint( $event->event_id );
+			$event->rules    = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
+			$event->loaded   = false;
 
 			$this->events[ $event->component ][ $event->event ] = $event;
 		}
@@ -58,6 +60,14 @@ class Init {
 		Cache::instance()->set( 'events', 'registered', $this->events );
 
 		do_action( 'coreactivity_tracking_ready', $this );
+	}
+
+	public function get_event_id( string $component, string $event ) : int {
+		if ( isset( $this->events[ $component ][ $event ] ) ) {
+			return $this->events[ $component ][ $event ]->event_id;
+		}
+
+		return 0;
 	}
 
 	public function register( string $component, string $event, string $label, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {

@@ -23,7 +23,7 @@ class Post extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'status-change'  => array( 'label' => __( "Post Status Change" ) )
+			'status-change' => array( 'label' => __( "Post Status Change" ) )
 		);
 	}
 }
