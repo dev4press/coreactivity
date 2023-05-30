@@ -4,7 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin as CorePlugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings as CoreSettings;
-use Dev4Press\v42\Core\Admin\Menu\Plugin as BasePlugin;
+use Dev4Press\v42\Core\Admin\Network\Plugin as BasePlugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
