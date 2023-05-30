@@ -12,12 +12,14 @@ class Dashboard extends PanelDashboard {
 	public function __construct( $admin ) {
 		parent::__construct( $admin );
 
-		$this->sidebar_links[ 'plugin' ][ 'events' ] = array(
-			'icon'  => $this->a()->menu_items[ 'events' ][ 'icon' ],
-			'class' => 'button-primary',
-			'url'   => $this->a()->panel_url( 'events' ),
-			'label' => __( "Events", "coreactivity" )
-		);
+		if ( isset( $this->a()->menu_items[ 'events' ] ) ) {
+			$this->sidebar_links[ 'plugin' ][ 'events' ] = array(
+				'icon'  => $this->a()->menu_items[ 'events' ][ 'icon' ],
+				'class' => 'button-primary',
+				'url'   => $this->a()->panel_url( 'events' ),
+				'label' => __( "Events", "coreactivity" )
+			);
+		}
 
 		$this->sidebar_links[ 'plugin' ][ 'logs' ] = array(
 			'icon'  => $this->a()->menu_items[ 'logs' ][ 'icon' ],

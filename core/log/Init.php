@@ -72,23 +72,25 @@ class Init {
 		return 0;
 	}
 
-	public function register( string $component, string $event, string $label, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
+	public function register( string $component, string $component_label, string $event, string $label, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
 		$obj = (object) array(
-			'event_id'    => 0,
-			'component'   => $component,
-			'event'       => $event,
-			'status'      => $status,
-			'rules'       => $rules,
-			'label'       => $label,
-			'loaded'      => true,
-			'scope'       => $scope,
-			'object_type' => $object_type
+			'event_id'        => 0,
+			'component'       => $component,
+			'component_label' => $component_label,
+			'event'           => $event,
+			'status'          => $status,
+			'rules'           => $rules,
+			'label'           => $label,
+			'loaded'          => true,
+			'scope'           => $scope,
+			'object_type'     => $object_type
 		);
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			$this->events[ $component ][ $event ]->loaded      = true;
-			$this->events[ $component ][ $event ]->label       = $label;
-			$this->events[ $component ][ $event ]->object_type = $object_type;
+			$this->events[ $component ][ $event ]->loaded          = true;
+			$this->events[ $component ][ $event ]->label           = $label;
+			$this->events[ $component ][ $event ]->object_type     = $object_type;
+			$this->events[ $component ][ $event ]->component_label = $component_label;
 
 			$obj->event_id = $this->events[ $component ][ $event ]->event_id;
 		} else {

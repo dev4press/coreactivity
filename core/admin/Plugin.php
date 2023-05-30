@@ -107,7 +107,7 @@ class Plugin extends BasePlugin {
 				'icon'  => 'ui-radar',
 				'info'  => __( "All the events registered for activity tracking and logging.", "coreactivity" ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Events',
-				'scope' => array( 'blog', 'network' )
+				'scope' => array( 'network' )
 			),
 			'logs'      => array(
 				'title' => __( "Logs", "coreactivity" ),
