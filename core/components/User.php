@@ -40,7 +40,7 @@ class User extends Component {
 		}
 
 		if ( $user !== false ) {
-			$this->log( 'login', array( 'user_id' => $user->ID ), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
+			$this->log( 'login', array( 'user_id' => $user->ID, 'object_id' => $user->ID ), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
 		}
 	}
 
@@ -48,7 +48,7 @@ class User extends Component {
 		$user = get_user_by( 'id', $user_id );
 
 		if ( $user !== false ) {
-			$this->log( 'logout', array( 'user_id' => $user->ID ), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
+			$this->log( 'logout', array( 'user_id' => $user->ID, 'object_id' => $user->ID ), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
 		}
 	}
 }

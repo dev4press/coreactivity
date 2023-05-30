@@ -83,6 +83,10 @@ class Core {
 		return $id;
 	}
 
+	public function get( string $name ) : string {
+		return $this->cached_data[ $name ] ?? '';
+	}
+
 	private function get_user_agent() : string {
 		if ( coreactivity_settings()->get( 'log_if_available_user_agent' ) && isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) ) {
 			return Sanitize::basic( trim( $_SERVER[ 'HTTP_USER_AGENT' ] ) );

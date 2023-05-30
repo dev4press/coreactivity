@@ -56,7 +56,7 @@ class DB extends BaseDB {
 		if ( $result !== false ) {
 			$id = $this->get_insert_id();
 
-			$this->insert_meta_data( $this->logmeta, 'log_id', $id, $meta );
+			$this->insert_meta_data( $this->logmeta, 'log_id', $id, $meta, true );
 
 			return $id;
 		}

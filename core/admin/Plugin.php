@@ -68,21 +68,23 @@ class Plugin extends BasePlugin {
 		return coreactivity()->svg_icon;
 	}
 
-	public function after_setup_theme() {
+	public function admin_menu_items() {
 		$this->setup_items = array(
 			'install' => array(
 				'title' => __( "Install", "coreactivity" ),
 				'icon'  => 'ui-traffic',
 				'type'  => 'setup',
 				'info'  => __( "Before you continue, make sure plugin installation was successful.", "coreactivity" ),
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Install'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Install',
+				'scope' => array( 'blog', 'network' )
 			),
 			'update'  => array(
 				'title' => __( "Update", "coreactivity" ),
 				'icon'  => 'ui-traffic',
 				'type'  => 'setup',
 				'info'  => __( "Before you continue, make sure plugin was successfully updated.", "coreactivity" ),
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Update'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Update',
+				'scope' => array( 'blog', 'network' )
 			)
 		);
 
@@ -90,34 +92,40 @@ class Plugin extends BasePlugin {
 			'dashboard' => array(
 				'title' => __( "Overview", "coreactivity" ),
 				'icon'  => 'ui-home',
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Dashboard'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Dashboard',
+				'scope' => array( 'blog', 'network' )
 			),
 			'about'     => array(
 				'title' => __( "About", "coreactivity" ),
 				'icon'  => 'ui-info',
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\About'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\About',
+				'scope' => array( 'blog', 'network' )
 			),
 			'events'    => array(
 				'title' => __( "Events", "coreactivity" ),
 				'icon'  => 'ui-radar',
 				'info'  => __( "All the events registered for activity tracking and logging.", "coreactivity" ),
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Events'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Events',
+				'scope' => array( 'blog', 'network' )
 			),
 			'logs'      => array(
 				'title' => __( "Logs", "coreactivity" ),
 				'icon'  => 'ui-calendar-pen',
 				'info'  => __( "Detailed log with all the logged activities for all supported events.", "coreactivity" ),
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Logs'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Logs',
+				'scope' => array( 'blog', 'network' )
 			),
 			'settings'  => array(
 				'title' => __( "Settings", "coreactivity" ),
 				'icon'  => 'ui-cog',
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Settings'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Settings',
+				'scope' => array( 'network' )
 			),
 			'tools'     => array(
 				'title' => __( "Tools", "coreactivity" ),
 				'icon'  => 'ui-wrench',
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Tools'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Tools',
+				'scope' => array( 'network' )
 			)
 		);
 	}

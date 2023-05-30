@@ -81,6 +81,10 @@ abstract class Component {
 			$event_id = Init::instance()->get_event_id( $this->code(), $event );
 
 			if ( $event_id > 0 ) {
+				if ( ( isset( $data[ 'object_id' ] ) || isset( $data[ 'object_name' ] ) ) && ! isset( $data[ 'object_type' ] ) ) {
+					$data[ 'object_type' ] = $this->object_type;
+				}
+
 				return Core::instance()->log( $event_id, $data, $meta );
 			}
 		}

@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Cache;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
+use Dev4Press\Plugin\CoreActivity\Components\Error;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\v42\Core\Quick\Sanitize;
@@ -47,6 +48,7 @@ class Init {
 	}
 
 	private function _init_components() {
+		Error::instance();
 		User::instance();
 		Post::instance();
 	}
