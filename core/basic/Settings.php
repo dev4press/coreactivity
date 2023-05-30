@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Settings extends BaseSettings {
 	public $base = 'coreactivity';
+	public $scope = 'network';
 
 	public $settings = array(
 		'core'     => array(

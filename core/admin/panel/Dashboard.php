@@ -12,18 +12,18 @@ class Dashboard extends PanelDashboard {
 	public function __construct( $admin ) {
 		parent::__construct( $admin );
 
-		$this->sidebar_links[ 'plugin' ][ 'items' ] = array(
-			'icon'  => $this->a()->menu_items[ 'items' ][ 'icon' ],
+		$this->sidebar_links[ 'plugin' ][ 'events' ] = array(
+			'icon'  => $this->a()->menu_items[ 'events' ][ 'icon' ],
 			'class' => 'button-primary',
-			'url'   => $this->a()->panel_url( 'items' ),
-			'label' => __( "Shared Items", "coreactivity" )
+			'url'   => $this->a()->panel_url( 'events' ),
+			'label' => __( "Events", "coreactivity" )
 		);
 
-		$this->sidebar_links[ 'plugin' ][ 'log' ] = array(
-			'icon'  => $this->a()->menu_items[ 'log' ][ 'icon' ],
+		$this->sidebar_links[ 'plugin' ][ 'logs' ] = array(
+			'icon'  => $this->a()->menu_items[ 'logs' ][ 'icon' ],
 			'class' => 'button-primary',
-			'url'   => $this->a()->panel_url( 'log' ),
-			'label' => __( "Share Logs", "coreactivity" )
+			'url'   => $this->a()->panel_url( 'logs' ),
+			'label' => __( "Logs", "coreactivity" )
 		);
 	}
 }

@@ -15,6 +15,7 @@ class Plugin extends BasePlugin {
 	public $plugin_prefix = 'coreactivity';
 	public $plugin_menu = 'CoreActivity';
 	public $plugin_title = 'CoreActivity';
+	public $plugin_settings = 'network-only';
 
 	public $auto_mod_interface_colors = true;
 	public $has_widgets = true;
@@ -76,7 +77,7 @@ class Plugin extends BasePlugin {
 				'type'  => 'setup',
 				'info'  => __( "Before you continue, make sure plugin installation was successful.", "coreactivity" ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Install',
-				'scope' => array( 'blog', 'network' )
+				'scope' => array( 'network' )
 			),
 			'update'  => array(
 				'title' => __( "Update", "coreactivity" ),
@@ -84,7 +85,7 @@ class Plugin extends BasePlugin {
 				'type'  => 'setup',
 				'info'  => __( "Before you continue, make sure plugin was successfully updated.", "coreactivity" ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Update',
-				'scope' => array( 'blog', 'network' )
+				'scope' => array( 'network' )
 			)
 		);
 
