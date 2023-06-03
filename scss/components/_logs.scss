@@ -1,0 +1,24 @@
+.coreactivity-grid-logs {
+    tr {
+        th {
+            &.column-blog_id,
+            &.column-log_id {
+                width: 80px;
+            }
+
+            &.column-method,
+            &.column-context,
+            &.column-protocol {
+                width: 100px;
+            }
+
+            &.column-ip {
+                width: 160px;
+            }
+
+            &.column-logged {
+                width: 120px;
+            }
+        }
+    }
+}

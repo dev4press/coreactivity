@@ -2,8 +2,210 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
+use Dev4Press\Plugin\CoreActivity\Log\Core;
+use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\v42\Core\Plugins\DBLite;
+use Dev4Press\v42\Core\Quick\Sanitize;
+use Dev4Press\v42\Core\UI\Elements;
 use Dev4Press\v42\WordPress\Admin\Table;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class Logs extends Table {
+	public $_sanitize_orderby_fields = array( 'l.log_id', 'e.component', 'e.event' );
+	public $_table_class_name = 'coreactivity-grid-logs';
+	public $_checkbox_field = 'log_id';
+	public $_self_nonce_key = 'coreactivity-table-logs';
+
 	protected $_filter_lock = array();
+
+	public function __construct( $args = array() ) {
+		parent::__construct( array(
+			'singular' => 'event',
+			'plural'   => 'events',
+			'ajax'     => false
+		) );
+	}
+
+	protected function db() : ?DBLite {
+		return coreactivity_db();
+	}
+
+	protected function process_request_args() {
+		$this->_request_args = array(
+			'filter-component'   => Sanitize::_get_basic( 'filter-component', '' ),
+			'filter-event'       => Sanitize::_get_basic( 'filter-event', '' ),
+			'filter-context'     => Sanitize::_get_basic( 'filter-context', '-' ),
+			'filter-method'      => Sanitize::_get_basic( 'filter-method', '' ),
+			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type', '' ),
+			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id', '' ),
+			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id', '' ),
+			'search'             => $this->_get_field( 's' ),
+			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
+			'order'              => $this->_get_field( 'order', 'DESC' ),
+			'paged'              => $this->_get_field( 'paged' ),
+		);
+
+		foreach ( array_keys( $this->_filter_lock ) as $field ) {
+			$key = 'filter-' . $field;
+
+			if ( isset( $this->_request_args[ $key ] ) ) {
+				$this->_request_args[ $key ] = '';
+			}
+		}
+	}
+
+	protected function filter_block_top() {
+		echo '<div class="alignleft actions">';
+		if ( ! isset( $this->_filter_lock[ 'component' ] ) ) {
+			Elements::instance()->select( array_merge( array( '' => __( "All Components" ) ), Init::instance()->components() ), array(
+				'selected' => $this->get_request_arg( 'filter-component' ),
+				'name'     => 'filter-component'
+			) );
+		}
+
+		if ( ! isset( $this->_filter_lock[ 'event' ] ) ) {
+			Elements::instance()->select( array_merge( array( '' => __( "All Events" ) ), Init::instance()->events_list() ), array(
+				'selected' => $this->get_request_arg( 'filter-event' ),
+				'name'     => 'filter-event'
+			) );
+		}
+
+		if ( ! isset( $this->_filter_lock[ 'context' ] ) ) {
+			$_contexts = array(
+				'-' => __( "All Contexts" ),
+				''  => __( "Normal" )
+			);
+
+			foreach ( Core::instance()->valid_request_contexts() as $context ) {
+				$_contexts[ $context ] = $context;
+			}
+
+			Elements::instance()->select( $_contexts, array(
+				'selected' => $this->get_request_arg( 'filter-context' ),
+				'name'     => 'filter-context'
+			) );
+		}
+
+		if ( ! isset( $this->_filter_lock[ 'method' ] ) ) {
+			$_methods = array(
+				'' => __( "All Methods" )
+			);
+
+			foreach ( Core::instance()->valid_request_methods() as $method ) {
+				$_methods[ $method ] = $method;
+			}
+
+			Elements::instance()->select( $_methods, array(
+				'selected' => $this->get_request_arg( 'filter-method' ),
+				'name'     => 'filter-method'
+			) );
+		}
+
+		submit_button( __( "Filter", "coreactivity" ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
+		echo '</div>';
+	}
+
+	public function rows_per_page() : int {
+		$per_page = get_user_option( 'coreactivity_events_rows_per_page' );
+
+		if ( empty( $per_page ) || $per_page < 1 ) {
+			$per_page = 50;
+		}
+
+		return $per_page;
+	}
+
+	public function get_columns() : array {
+		$columns = array(
+			'cb'          => '<input type="checkbox" />',
+			'log_id'      => __( "ID", "coreactivity" ),
+			'blog_id'     => __( "Blog" ),
+			'user_id'     => __( "User" ),
+			'ip'          => __( "IP" ),
+			'component'   => __( "Component", "coreactivity" ),
+			'event'       => __( "Event", "coreactivity" ),
+			'context'     => __( "Context" ),
+			'method'      => __( "Method" ),
+			'protocol'    => __( "Protocol" ),
+			'request'     => __( "Request" ),
+			'object_type' => __( "Object Type" ),
+			'object_name' => __( "Object" ),
+			'logged'      => __( "Logged", "coreactivity" )
+		);
+
+		foreach ( array_keys( $this->_filter_lock ) as $column ) {
+			if ( isset( $columns[ $column ] ) ) {
+				unset( $columns[ $column ] );
+			}
+		}
+
+		return $columns;
+	}
+
+	protected function get_sortable_columns() : array {
+		return array(
+			'log_id'    => array( 'l.log_id', false ),
+			'component' => array( 'e.component', false ),
+			'event'     => array( 'e.event', false )
+		);
+	}
+
+	protected function get_bulk_actions() : array {
+		return array(
+			'delete' => __( "Delete", "coreactivity" )
+		);
+	}
+
+	public function column_logged( $item ) : string {
+		$timestamp = coreactivity()->datetime()->timestamp_gmt_to_local( strtotime( $item->logged ) );
+
+		return date( 'Y.m.d', $timestamp ) . '<br/>@ ' . date( 'H:m:s', $timestamp );
+	}
+
+	public function prepare_items() {
+		$this->prepare_column_headers();
+
+		$per_page    = $this->rows_per_page();
+		$sel_search  = $this->get_request_arg( 'search' );
+		$sel_blog_id = $this->get_request_arg( 'filter-blog_id' );
+		$sel_user_id = $this->get_request_arg( 'filter-user_id' );
+
+		if ( isset( $this->_filter_lock[ 'blog_id' ] ) ) {
+			$sel_blog_id = $this->_filter_lock[ 'blog_id' ];
+		}
+
+		if ( isset( $this->_filter_lock[ 'user_id' ] ) ) {
+			$sel_user_id = $this->_filter_lock[ 'user_id' ];
+		}
+
+		$sql = array(
+			'select' => array(
+				'l.*',
+				'e.component',
+				'e.event'
+			),
+			'from'   => array(
+				coreactivity_db()->logs . ' l ',
+				'INNER JOIN ' . coreactivity_db()->events . ' e ON l.event_id = e.event_id'
+			),
+			'where'  => array()
+		);
+
+		if ( ! empty( $sel_blog_id ) ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`blog_id` = %d', $sel_blog_id );
+		}
+
+		if ( ! empty( $sel_user_id ) ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`user_id` = %d', $sel_user_id );
+		}
+
+		if ( ! empty( $sel_search ) ) {
+			$sql[ 'where' ][] = $this->_get_search_where( array( 'e.`component`', 'e.`event`, l.`request`, l.`object_name`' ), $sel_search );
+		}
+
+		$this->query_items( $sql, $per_page );
+	}
 }

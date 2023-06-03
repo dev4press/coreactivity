@@ -17,6 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Core {
 	private $cached_data;
 
+	private $object_types = array();
+
+	private $request_contexts = array(
+		'AJAX',
+		'CRON',
+		'REST',
+		'CLI'
+	);
+
 	private $request_methods = array(
 		'GET',
 		'POST',
@@ -85,6 +94,14 @@ class Core {
 
 	public function get( string $name ) : string {
 		return $this->cached_data[ $name ] ?? '';
+	}
+
+	public function valid_request_contexts() : array {
+		return $this->request_contexts;
+	}
+
+	public function valid_request_methods() : array {
+		return $this->request_methods;
 	}
 
 	private function get_user_agent() : string {

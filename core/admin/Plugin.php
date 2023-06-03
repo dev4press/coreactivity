@@ -57,6 +57,23 @@ class Plugin extends BasePlugin {
 		$this->enqueue->js( 'coreactivity-admin' );
 	}
 
+	public function plugins_loaded() {
+		parent::plugins_loaded();
+
+		add_filter( 'default_hidden_columns', array( $this, 'hide_columns_default' ), 10, 2 );
+	}
+
+	public function hide_columns_default( $columns, $screen ) {
+		if ( $screen->id == 'coreactivity_page_coreactivity-logs' ) {
+			$columns[] = 'method';
+			$columns[] = 'protocol';
+			$columns[] = 'object_type';
+			$columns[] = 'object_name';
+		}
+
+		return $columns;
+	}
+
 	public function svg_icon() : string {
 		return coreactivity()->svg_icon;
 	}
@@ -134,7 +151,7 @@ class Plugin extends BasePlugin {
 	public function message_process( $code, $msg ) {
 		switch ( $code ) {
 			case 'events-updated':
-				$msg['message'] = __( "Events activity status has been updated.", "coreactivity" );
+				$msg[ 'message' ] = __( "Events activity status has been updated.", "coreactivity" );
 				break;
 		}
 

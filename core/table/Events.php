@@ -82,18 +82,18 @@ class Events extends Table {
 		);
 	}
 
-	protected function get_bulk_actions() : array {
-		return array(
-			'enable'  => __( "Enable", "coreactivity" ),
-			'disable' => __( "Disable", "coreactivity" )
-		);
-	}
-
 	protected function get_sortable_columns() : array {
 		return array(
 			'event_id'  => array( 'event_id', false ),
 			'component' => array( 'component', false ),
 			'event'     => array( 'event', false )
+		);
+	}
+
+	protected function get_bulk_actions() : array {
+		return array(
+			'enable'  => __( "Enable", "coreactivity" ),
+			'disable' => __( "Disable", "coreactivity" )
 		);
 	}
 

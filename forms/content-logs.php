@@ -1,6 +1,6 @@
 <?php
 
-use Dev4Press\Plugin\CoreActivity\Table\Events;
+use Dev4Press\Plugin\CoreActivity\Table\Logs;
 
 ?>
 <div class="d4p-content">
@@ -9,7 +9,7 @@ use Dev4Press\Plugin\CoreActivity\Table\Events;
 
 	<?php
 
-	$_grid = new Events();
+	$_grid = new Logs();
 	$_grid->prepare_items();
 
 	$_grid->search_box( esc_html__( "Search", "coreactivity" ), 'events-search' );

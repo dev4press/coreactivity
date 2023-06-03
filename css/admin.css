@@ -31,3 +31,16 @@
 .coreactivity-grid-events tr td.column-status button i.d4p-ui-toggle-off {
   color: red;
 }
+
+.coreactivity-grid-logs tr th.column-blog_id, .coreactivity-grid-logs tr th.column-log_id {
+  width: 80px;
+}
+.coreactivity-grid-logs tr th.column-method, .coreactivity-grid-logs tr th.column-context, .coreactivity-grid-logs tr th.column-protocol {
+  width: 100px;
+}
+.coreactivity-grid-logs tr th.column-ip {
+  width: 160px;
+}
+.coreactivity-grid-logs tr th.column-logged {
+  width: 120px;
+}

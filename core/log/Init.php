@@ -15,8 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Init {
-	private $events;
-	private $components;
+	private $events = array();
+	private $components = array();
+	private $list = array();
 
 	public function __construct() {
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 15 );
@@ -45,6 +46,7 @@ class Init {
 			$event->loaded   = false;
 
 			$this->events[ $event->component ][ $event->event ] = $event;
+			$this->list[ $event->event_id ] = $event->event;
 		}
 	}
 
@@ -69,12 +71,16 @@ class Init {
 		return $this->events[ $component ][ $event ] ?? null;
 	}
 
-	public function events() {
+	public function events() : array {
 		return $this->events;
 	}
 
-	public function components() {
+	public function components() : array {
 		return $this->components;
+	}
+
+	public function events_list() : array {
+		return $this->list;
 	}
 
 	public function get_event_id( string $component, string $event ) : int {
@@ -150,6 +156,7 @@ class Init {
 				$obj->event_id = $id;
 
 				$this->events[ $component ][ $event ] = $obj;
+				$this->list[ $obj->event_id ] = $event;
 			}
 		}
 
