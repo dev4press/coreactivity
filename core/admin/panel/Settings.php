@@ -16,9 +16,9 @@ class Settings extends PanelSettings {
 
 		$this->subpanels = $this->subpanels + array(
 				'optional'    => array(
-					'title'      => __( "Optional Data", "coresocial" ),
+					'title'      => __( "Optional Data", "coreactivity" ),
 					'icon'       => 'ui-terms',
-					'info'       => __( "Settings related to logging of optional data.", "coresocial" )
+					'info'       => __( "Settings related to logging of optional data.", "coreactivity" )
 				)
 			);
 	}

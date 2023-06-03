@@ -4,10 +4,10 @@ use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
 
 ?>
 <div class="d4p-install-block">
-	<h4>
+    <h4>
 		<?php esc_html_e( "Additional database tables", "coreactivity" ); ?>
-	</h4>
-	<div>
+    </h4>
+    <div>
 		<?php
 
 		$db = InstallDB::instance();
@@ -24,10 +24,10 @@ use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
 
 		$msg = array();
 		foreach ( $check as $table => $data ) {
-			if ( $data['status'] == 'error' ) {
+			if ( $data[ 'status' ] == 'error' ) {
 				$_proceed  = false;
 				$_error_db = true;
-				$msg[]     = '<span class="gdpc-error">[' . esc_html__( "ERROR", "coreactivity" ) . '] - <strong>' . $table . '</strong>: ' . $data['msg'] . '</span>';
+				$msg[]     = '<span class="gdpc-error">[' . esc_html__( "ERROR", "coreactivity" ) . '] - <strong>' . $table . '</strong>: ' . $data[ 'msg' ] . '</span>';
 			} else {
 				$msg[] = '<span class="gdpc-ok">[' . esc_html__( "OK", "coreactivity" ) . '] - <strong>' . $table . '</strong></span>';
 			}
@@ -36,5 +36,5 @@ use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
 		echo join( '<br/>', $msg );
 
 		?>
-	</div>
+    </div>
 </div>

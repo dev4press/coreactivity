@@ -18,15 +18,15 @@ class Settings extends BaseSettings {
 		$this->settings = array(
 			'optional'    => array(
 				'optional-settings' => array(
-					'name'     => __( "Meta Data", "coresocial" ),
+					'name'     => __( "Meta Data", "coreactivity" ),
 					'sections' => array(
 						array(
 							'label'    => '',
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
-								$this->i( 'settings', 'log_if_available_user_agent', __( "User Agent", "coresocial" ), __( "If the request has user agent string, it will be logged as the log entry meta data.", "coresocial" ), Type::BOOLEAN ),
-								$this->i( 'settings', 'log_if_available_referer', __( "Referer", "coresocial" ), __( "If the request has referer, it will be logged as the log entry meta data.", "coresocial" ), Type::BOOLEAN )
+								$this->i( 'settings', 'log_if_available_user_agent', __( "User Agent", "coreactivity" ), __( "If the request has user agent string, it will be logged as the log entry meta data.", "coreactivity" ), Type::BOOLEAN ),
+								$this->i( 'settings', 'log_if_available_referer', __( "Referer", "coreactivity" ), __( "If the request has referer, it will be logged as the log entry meta data.", "coreactivity" ), Type::BOOLEAN )
 							)
 						)
 					)
