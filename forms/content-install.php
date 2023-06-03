@@ -17,17 +17,16 @@ use function Dev4Press\v42\Functions\panel;
 
 			<div class="d4p-install-block">
 				<h4>
-					<?php _e( "All Done", "coreactivity" ); ?>
+					<?php esc_html_e( "All Done", "coreactivity" ); ?>
 				</h4>
 				<div>
-					<?php _e( "Installation completed.", "coreactivity" ); ?>
+					<?php esc_html_e( "Installation completed.", "coreactivity" ); ?>
 				</div>
 			</div>
 
 			<div class="d4p-install-confirm">
-				<a class="button-primary" href="<?php echo panel()->a()->panel_url( 'about' ) ?>&install"><?php _e( "Click here to continue", "coreactivity" ); ?></a>
+				<a class="button-primary" href="<?php echo esc_url( panel()->a()->panel_url( 'about' )); ?>&install"><?php esc_html_e( "Click here to continue", "coreactivity" ); ?></a>
 			</div>
 		</div>
-		<?php echo coreactivity()->recommend( 'install' ); ?>
 	</div>
 </div>

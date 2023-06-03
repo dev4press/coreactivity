@@ -54,3 +54,7 @@ coreactivity_settings();
 if ( WordPress::instance()->is_admin() ) {
 	coreactivity_admin();
 }
+
+if (WordPress::instance()->is_ajax()) {
+	coreactivity_ajax();
+}

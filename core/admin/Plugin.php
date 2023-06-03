@@ -41,14 +41,6 @@ class Plugin extends BasePlugin {
 				'min'  => true,
 				'ver'  => coreactivity_settings()->file_version(),
 				'src'  => 'plugin'
-			) )->register( 'css', 'coreactivity-meta',
-			array(
-				'path' => 'css/',
-				'file' => 'meta',
-				'ext'  => 'css',
-				'min'  => true,
-				'ver'  => coreactivity_settings()->file_version(),
-				'src'  => 'plugin'
 			) )->register( 'js', 'coreactivity-admin',
 			array(
 				'path' => 'js/',
@@ -140,6 +132,12 @@ class Plugin extends BasePlugin {
 	}
 
 	public function message_process( $code, $msg ) {
+		switch ( $code ) {
+			case 'events-updated':
+				$msg['message'] = __( "Events activity status has been updated.", "coreactivity" );
+				break;
+		}
+
 		return $msg;
 	}
 

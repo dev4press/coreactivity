@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Init {
 	private $events;
+	private $components;
 
 	public function __construct() {
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 15 );
@@ -64,12 +65,57 @@ class Init {
 		do_action( 'coreactivity_tracking_ready', $this );
 	}
 
+	public function event( string $component, string $event ) {
+		return $this->events[ $component ][ $event ] ?? null;
+	}
+
+	public function events() {
+		return $this->events;
+	}
+
+	public function components() {
+		return $this->components;
+	}
+
 	public function get_event_id( string $component, string $event ) : int {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
 			return $this->events[ $component ][ $event ]->event_id;
 		}
 
 		return 0;
+	}
+
+	public function get_event_description( string $component, string $event ) : string {
+		if ( isset( $this->events[ $component ][ $event ] ) ) {
+			if ( $this->events[ $component ][ $event ]->loaded ) {
+				return $this->events[ $component ][ $event ]->component_label . ' / ' . $this->events[ $component ][ $event ]->label;
+			}
+		}
+
+		return 'N/A';
+	}
+
+	public function is_event_loaded( string $component, string $event ) : bool {
+		if ( isset( $this->events[ $component ][ $event ] ) ) {
+			return $this->events[ $component ][ $event ]->loaded;
+		}
+
+		return false;
+	}
+
+	public function event_status( int $event_id ) : string {
+		$status = '';
+
+		foreach ( $this->events as $component => $events ) {
+			foreach ( $events as $event => $obj ) {
+				if ( $obj->event_id == $event_id ) {
+					$status = $obj->status;
+					break 2;
+				}
+			}
+		}
+
+		return in_array( $status, array( 'active', 'inactive' ) ) ? $status : '';
 	}
 
 	public function register( string $component, string $component_label, string $event, string $label, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
@@ -85,6 +131,10 @@ class Init {
 			'scope'           => $scope,
 			'object_type'     => $object_type
 		);
+
+		if ( ! isset( $this->components[ $component ] ) ) {
+			$this->components[ $component ] = $component_label;
+		}
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
 			$this->events[ $component ][ $event ]->loaded          = true;

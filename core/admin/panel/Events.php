@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Events extends Panel {
 	protected $table = true;
 	protected $sidebar = false;
+	protected $form = true;
+	protected $form_multiform = false;
+	protected $form_method = 'get';
 
 	public function screen_options_show() {
 		$args = array(

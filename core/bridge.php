@@ -1,6 +1,7 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Admin\Plugin as AdminPlugin;
+use Dev4Press\Plugin\CoreActivity\Admin\AJAX;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings;
@@ -23,4 +24,8 @@ function coreactivity_db() : DB {
 
 function coreactivity_admin() : AdminPlugin {
 	return AdminPlugin::instance();
+}
+
+function coreactivity_ajax() : AJAX {
+	return AJAX::instance();
 }

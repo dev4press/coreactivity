@@ -2,7 +2,6 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
-use Dev4Press\v42\Core\Options\Element as EL;
 use Dev4Press\v42\Core\Options\Settings as BaseSettings;
 use Dev4Press\v42\Core\Options\Type;
 
@@ -16,6 +15,23 @@ class Settings extends BaseSettings {
 	}
 
 	protected function init() {
-		$this->settings = array();
+		$this->settings = array(
+			'optional'    => array(
+				'optional-settings' => array(
+					'name'     => __( "Meta Data", "coresocial" ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'log_if_available_user_agent', __( "User Agent", "coresocial" ), __( "If the request has user agent string, it will be logged as the log entry meta data.", "coresocial" ), Type::BOOLEAN ),
+								$this->i( 'settings', 'log_if_available_referer', __( "Referer", "coresocial" ), __( "If the request has referer, it will be logged as the log entry meta data.", "coresocial" ), Type::BOOLEAN )
+							)
+						)
+					)
+				)
+			)
+		);
 	}
 }

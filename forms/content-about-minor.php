@@ -1,7 +1,7 @@
 <div class="d4p-about-minor">
-	<h3><?php _e( "Maintenance and Security Releases", "coreactivity" ); ?></h3>
+	<h3><?php esc_html_e( "Maintenance and Security Releases", "coreactivity" ); ?></h3>
 	<p>
-		<strong><?php _e( "Version", "coreactivity" ); ?> <span>1.1</span></strong> &minus;
+		<strong><?php esc_html_e( "Version", "coreactivity" ); ?> <span>1.1</span></strong> &minus;
 		Updates to Networks, styling and blocks; many improvements and bug fixes.
 	</p>
 	<p>

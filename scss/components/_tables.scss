@@ -1,0 +1,52 @@
+.coreactivity-grid-events {
+    tr {
+        &.__is-not-loaded {
+            background: #FFDEDE;
+        }
+
+        th {
+            &.column-event_id {
+                width: 80px;
+            }
+
+            &.column-status {
+                width: 70px;
+            }
+
+            &.column-component,
+            &.column-event {
+                width: 15%;
+            }
+
+            &.column-loaded {
+                width: 160px;
+            }
+        }
+
+        td {
+            &.column-status {
+                button {
+                    border: 0;
+                    padding: 0;
+                    margin: 0;
+                    background: none;
+                    vertical-align: top;
+                    cursor: pointer;
+
+                    i {
+                        vertical-align: top;
+                        font-size: 1.9em;
+
+                        &.d4p-ui-toggle-on {
+                            color: green;
+                        }
+
+                        &.d4p-ui-toggle-off {
+                            color: red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
