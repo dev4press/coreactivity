@@ -4,7 +4,7 @@ use Dev4Press\Plugin\CoreActivity\Table\Logs;
 
 ?>
 <div class="d4p-content">
-    <input type="hidden" name="page" value="coreactivity-events"/>
+    <input type="hidden" name="page" value="coreactivity-logs"/>
     <input type="hidden" name="coreactivity_handler" value="getback"/>
 
 	<?php

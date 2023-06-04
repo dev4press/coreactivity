@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Logs extends Panel {
 	protected $table = true;
 	protected $sidebar = false;
+	protected $form = true;
+	protected $form_multiform = false;
+	protected $form_method = 'get';
 
 	public function screen_options_show() {
 		add_screen_option( 'per_page', array(

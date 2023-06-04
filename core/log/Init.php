@@ -18,6 +18,7 @@ class Init {
 	private $events = array();
 	private $components = array();
 	private $list = array();
+	private $object_types = array();
 
 	public function __construct() {
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 15 );
@@ -65,6 +66,15 @@ class Init {
 		Cache::instance()->set( 'events', 'registered', $this->events );
 
 		do_action( 'coreactivity_tracking_ready', $this );
+
+		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
+			'post'    => __( "Post" ),
+			'term'    => __( "Term" ),
+			'comment' => __( "Comment" ),
+			'user'    => __( "User" ),
+			'plugin'  => __( "Plugin" ),
+			'theme'   => __( "Theme" )
+		) );
 	}
 
 	public function event( string $component, string $event ) {
@@ -77,6 +87,10 @@ class Init {
 
 	public function components() : array {
 		return $this->components;
+	}
+
+	public function object_types() : array {
+		return $this->object_types;
 	}
 
 	public function events_list() : array {

@@ -17,8 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Core {
 	private $cached_data;
 
-	private $object_types = array();
-
 	private $request_contexts = array(
 		'AJAX',
 		'CRON',

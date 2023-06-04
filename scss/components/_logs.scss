@@ -13,11 +13,21 @@
             }
 
             &.column-ip {
-                width: 160px;
+                min-width: 120px;
             }
 
             &.column-logged {
                 width: 120px;
+            }
+        }
+
+        td {
+            &.column-ip {
+                img {
+                    margin: 0 5px 0 0;
+                    width: 28px;
+                    float: left;
+                }
             }
         }
     }

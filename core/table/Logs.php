@@ -34,6 +34,10 @@ class Logs extends Table {
 
 		$this->_display_columns_simplified = coreactivity_settings()->get( 'display_columns_simplified' );
 		$this->_display_ip_country_flag    = coreactivity_settings()->get( 'display_ip_geo_flag' );
+
+		if ( ! is_multisite() ) {
+			$this->_filter_lock[ 'blog_id' ] = 0;
+		}
 	}
 
 	protected function db() : ?DBLite {
@@ -44,12 +48,13 @@ class Logs extends Table {
 		$this->_request_args = array(
 			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id', '' ),
 			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id', '' ),
-			'filter-event'       => Sanitize::_get_absint( 'filter-event', '' ),
+			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id', '' ),
 			'filter-component'   => Sanitize::_get_basic( 'filter-component', '' ),
-			'filter-context'     => Sanitize::_get_basic( 'filter-context', '-' ),
+			'filter-context'     => Sanitize::_get_basic( 'filter-context', '' ),
 			'filter-method'      => Sanitize::_get_basic( 'filter-method', '' ),
 			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type', '' ),
 			'search'             => $this->_get_field( 's' ),
+			'period'             => $this->_get_field( 'period' ),
 			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
 			'order'              => $this->_get_field( 'order', 'DESC' ),
 			'paged'              => $this->_get_field( 'paged' ),
@@ -66,6 +71,11 @@ class Logs extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
+		Elements::instance()->select( $this->get_period_dropdown( 'logged', coreactivity_db()->logs ), array(
+			'selected' => $this->get_request_arg( 'period' ),
+			'name'     => 'period'
+		) );
+
 		if ( ! isset( $this->_filter_lock[ 'component' ] ) ) {
 			$_components = array(
 				'' => __( "All Components" )
@@ -91,15 +101,15 @@ class Logs extends Table {
 			}
 
 			Elements::instance()->select( $_events, array(
-				'selected' => $this->get_request_arg( 'filter-event' ),
-				'name'     => 'filter-event'
+				'selected' => $this->get_request_arg( 'filter-event_id' ),
+				'name'     => 'filter-event_id'
 			) );
 		}
 
 		if ( ! isset( $this->_filter_lock[ 'context' ] ) ) {
 			$_contexts = array(
-				'-' => __( "All Contexts" ),
-				''  => __( "Normal" )
+				''  => __( "All Contexts" ),
+				'-' => __( "Normal" )
 			);
 
 			foreach ( Core::instance()->valid_request_contexts() as $context ) {
@@ -124,6 +134,21 @@ class Logs extends Table {
 			Elements::instance()->select( $_methods, array(
 				'selected' => $this->get_request_arg( 'filter-method' ),
 				'name'     => 'filter-method'
+			) );
+		}
+
+		if ( ! isset( $this->_filter_lock[ 'object_type' ] ) ) {
+			$_types = array(
+				'' => __( "All Object Types" )
+			);
+
+			foreach ( Init::instance()->object_types() as $type => $value ) {
+				$_types[ $type ] = $value;
+			}
+
+			Elements::instance()->select( $_types, array(
+				'selected' => $this->get_request_arg( 'filter-object_type' ),
+				'name'     => 'filter-object_type'
 			) );
 		}
 
@@ -211,12 +236,16 @@ class Logs extends Table {
 	public function prepare_items() {
 		$this->prepare_column_headers();
 
-		$per_page      = $this->rows_per_page();
-		$sel_search    = $this->get_request_arg( 'search' );
-		$sel_blog_id   = $this->get_request_arg( 'filter-blog_id' );
-		$sel_user_id   = $this->get_request_arg( 'filter-user_id' );
-		$sel_component = $this->get_request_arg( 'filter-component' );
-		$sel_event_id  = $this->get_request_arg( 'filter-event' );
+		$per_page        = $this->rows_per_page();
+		$sel_search      = $this->get_request_arg( 'search' );
+		$sel_period      = $this->get_request_arg( 'period' );
+		$sel_blog_id     = $this->get_request_arg( 'filter-blog_id' );
+		$sel_user_id     = $this->get_request_arg( 'filter-user_id' );
+		$sel_event_id    = $this->get_request_arg( 'filter-event_id' );
+		$sel_component   = $this->get_request_arg( 'filter-component' );
+		$sel_context     = $this->get_request_arg( 'filter-context' );
+		$sel_method      = $this->get_request_arg( 'filter-method' );
+		$sel_object_type = $this->get_request_arg( 'filter-object_type' );
 
 		if ( isset( $this->_filter_lock[ 'blog_id' ] ) ) {
 			$sel_blog_id = $this->_filter_lock[ 'blog_id' ];
@@ -237,12 +266,12 @@ class Logs extends Table {
 		$sql = array(
 			'select' => array(
 				'l.*',
-				'e.component',
-				'e.event'
+				'e.`component`',
+				'e.`event`'
 			),
 			'from'   => array(
 				coreactivity_db()->logs . ' l ',
-				'INNER JOIN ' . coreactivity_db()->events . ' e ON l.event_id = e.event_id'
+				'INNER JOIN ' . coreactivity_db()->events . ' e ON l.`event_id` = e.`event_id`'
 			),
 			'where'  => array()
 		);
@@ -259,6 +288,23 @@ class Logs extends Table {
 			$sql[ 'where' ][] = $this->db()->prepare( 'l.`event_id` = %d', $sel_event_id );
 		} else if ( ! empty( $sel_component ) ) {
 			$sql[ 'where' ][] = $this->db()->prepare( 'e.`component` = %s', $sel_component );
+		}
+
+		if ( ! empty( $sel_context ) ) {
+			$sel_context      = $sel_context == '-' ? '' : $sel_context;
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`context` = %s', $sel_context );
+		}
+
+		if ( ! empty( $sel_method ) ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`method` = %s', $sel_method );
+		}
+
+		if ( ! empty( $sel_object_type ) ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`object_type` = %s', $sel_object_type );
+		}
+
+		if ( ! empty( $sel_period ) ) {
+			$sql[ 'where' ][] = $this->_get_period_where( $sel_period, 'l.`logged`' );
 		}
 
 		if ( ! empty( $sel_search ) ) {
