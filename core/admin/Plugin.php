@@ -40,7 +40,8 @@ class Plugin extends BasePlugin {
 				'ext'  => 'css',
 				'min'  => true,
 				'ver'  => coreactivity_settings()->file_version(),
-				'src'  => 'plugin'
+				'src'  => 'plugin',
+				'int'  => array( 'flags' )
 			) )->register( 'js', 'coreactivity-admin',
 			array(
 				'path' => 'js/',

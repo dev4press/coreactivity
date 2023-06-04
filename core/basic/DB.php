@@ -77,10 +77,10 @@ class DB extends BaseDB {
 
 		$result = $this->insert( $this->events, $data );
 
-		return $result == 1 ? $this->get_insert_id() : 0;
+		return $result == 1 ? absint( $this->get_insert_id() ) : 0;
 	}
 
 	public function change_event_status( int $event_id, string $new_status ) {
-		$this->update( $this->events, array( 'status' => $new_status ), array( 'event_id' => $event_id ), array('%s'), array('%d') );
+		$this->update( $this->events, array( 'status' => $new_status ), array( 'event_id' => $event_id ), array( '%s' ), array( '%d' ) );
 	}
 }

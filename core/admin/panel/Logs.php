@@ -14,13 +14,11 @@ class Logs extends Panel {
 	protected $sidebar = false;
 
 	public function screen_options_show() {
-		$args = array(
+		add_screen_option( 'per_page', array(
 			'label'   => __( "Rows", "coreactivity" ),
 			'default' => 25,
 			'option'  => 'coreactivity_logs_rows_per_page'
-		);
-
-		add_screen_option( 'per_page', $args );
+		) );
 
 		new LogsTable();
 	}

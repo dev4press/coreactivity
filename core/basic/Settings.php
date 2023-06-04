@@ -19,6 +19,8 @@ class Settings extends BaseSettings {
 		'settings' => array(
 			'log_if_available_user_agent' => true,
 			'log_if_available_referer'    => false,
+			'display_columns_simplified'  => false,
+			'display_ip_geo_flag'         => false
 		)
 	);
 

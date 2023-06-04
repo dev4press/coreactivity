@@ -12,6 +12,7 @@ class User extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'user';
 	protected $object_type = 'user';
+	protected $scope = 'both';
 
 	public function tracking() {
 		if ( $this->is_active( 'login' ) ) {

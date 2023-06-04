@@ -15,10 +15,15 @@ class Settings extends PanelSettings {
 		parent::__construct( $admin );
 
 		$this->subpanels = $this->subpanels + array(
-				'optional'    => array(
-					'title'      => __( "Optional Data", "coreactivity" ),
-					'icon'       => 'ui-terms',
-					'info'       => __( "Settings related to logging of optional data.", "coreactivity" )
+				'optional' => array(
+					'title' => __( "Optional Data", "coreactivity" ),
+					'icon'  => 'ui-terms',
+					'info'  => __( "Settings related to logging of optional data.", "coreactivity" )
+				),
+				'logs'     => array(
+					'title' => __( "Logs Panel", "coreactivity" ),
+					'icon'  => 'ui-calendar-pen',
+					'info'  => __( "Settings related to some aspects for the Logs panel display.", "coreactivity" )
 				)
 			);
 	}

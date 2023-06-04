@@ -46,7 +46,7 @@ class Init {
 			$event->loaded   = false;
 
 			$this->events[ $event->component ][ $event->event ] = $event;
-			$this->list[ $event->event_id ] = $event->event;
+			$this->list[ $event->event_id ]                     = array( 'name' => $event->event, 'label' => $event->event );
 		}
 	}
 
@@ -101,6 +101,14 @@ class Init {
 		return 'N/A';
 	}
 
+	public function get_component_label( string $component ) {
+		return $this->components[ $component ] ?? $component;
+	}
+
+	public function get_event_label( int $event_id, string $event ) {
+		return $this->list[ $event_id ][ 'label' ] ?? $event;
+	}
+
 	public function is_event_loaded( string $component, string $event ) : bool {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
 			return $this->events[ $component ][ $event ]->loaded;
@@ -145,10 +153,12 @@ class Init {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
 			$this->events[ $component ][ $event ]->loaded          = true;
 			$this->events[ $component ][ $event ]->label           = $label;
+			$this->events[ $component ][ $event ]->scope           = $scope;
 			$this->events[ $component ][ $event ]->object_type     = $object_type;
 			$this->events[ $component ][ $event ]->component_label = $component_label;
 
-			$obj->event_id = $this->events[ $component ][ $event ]->event_id;
+			$obj->event_id                           = $this->events[ $component ][ $event ]->event_id;
+			$this->list[ $obj->event_id ][ 'label' ] = $label;
 		} else {
 			$id = DB::instance()->add_new_event( $component, $event, $status, $rules );
 
@@ -156,7 +166,7 @@ class Init {
 				$obj->event_id = $id;
 
 				$this->events[ $component ][ $event ] = $obj;
-				$this->list[ $obj->event_id ] = $event;
+				$this->list[ $obj->event_id ]         = array( 'name' => $event, 'label' => $label );
 			}
 		}
 

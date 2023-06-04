@@ -17,13 +17,11 @@ class Events extends Panel {
 	protected $form_method = 'get';
 
 	public function screen_options_show() {
-		$args = array(
+		add_screen_option( 'per_page', array(
 			'label'   => __( "Rows", "coreactivity" ),
 			'default' => 50,
 			'option'  => 'coreactivity_events_rows_per_page'
-		);
-
-		add_screen_option( 'per_page', $args );
+		) );
 
 		new EventsTable();
 	}
