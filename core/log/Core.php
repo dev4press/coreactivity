@@ -39,13 +39,14 @@ class Core {
 
 	public function __construct() {
 		$this->cached_data = array(
-			'ip'       => IP::visitor(),
-			'ua'       => $this->get_user_agent(),
-			'referer'  => $this->get_referer(),
-			'method'   => $this->get_request_method(),
-			'protocol' => wp_get_server_protocol(),
-			'request'  => URL::current_url_request(),
-			'context'  => WordPress::instance()->context()
+			'ip'        => IP::visitor(),
+			'server_ip' => IP::server(),
+			'ua'        => $this->get_user_agent(),
+			'referer'   => $this->get_referer(),
+			'method'    => $this->get_request_method(),
+			'protocol'  => wp_get_server_protocol(),
+			'request'   => URL::current_url_request(),
+			'context'   => WordPress::instance()->context()
 		);
 
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );

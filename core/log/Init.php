@@ -68,12 +68,12 @@ class Init {
 		do_action( 'coreactivity_tracking_ready', $this );
 
 		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
-			'post'    => __( "Post" ),
-			'term'    => __( "Term" ),
-			'comment' => __( "Comment" ),
-			'user'    => __( "User" ),
-			'plugin'  => __( "Plugin" ),
-			'theme'   => __( "Theme" )
+			'post'    => __( "Post", "coreactivity" ),
+			'term'    => __( "Term", "coreactivity" ),
+			'comment' => __( "Comment", "coreactivity" ),
+			'user'    => __( "User", "coreactivity" ),
+			'plugin'  => __( "Plugin", "coreactivity" ),
+			'theme'   => __( "Theme", "coreactivity" )
 		) );
 	}
 
@@ -117,6 +117,10 @@ class Init {
 
 	public function get_component_label( string $component ) {
 		return $this->components[ $component ] ?? $component;
+	}
+
+	public function get_object_type_label( string $object_type ) {
+		return $this->object_types[ $object_type ] ?? Str::slug_to_name( $object_type );
 	}
 
 	public function get_event_label( int $event_id, string $event ) {

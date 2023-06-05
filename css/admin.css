@@ -38,14 +38,66 @@
 .coreactivity-grid-logs tr th.column-method, .coreactivity-grid-logs tr th.column-context, .coreactivity-grid-logs tr th.column-protocol {
   width: 100px;
 }
-.coreactivity-grid-logs tr th.column-ip {
-  min-width: 120px;
+.coreactivity-grid-logs tr th.column-user_id, .coreactivity-grid-logs tr th.column-component, .coreactivity-grid-logs tr th.column-event {
+  width: 240px;
 }
-.coreactivity-grid-logs tr th.column-logged {
+.coreactivity-grid-logs tr th.column-ip {
+  width: 220px;
+}
+.coreactivity-grid-logs tr th.column-object_type, .coreactivity-grid-logs tr th.column-logged {
   width: 120px;
 }
 .coreactivity-grid-logs tr td.column-ip img {
   margin: 0 5px 0 0;
   width: 28px;
-  float: left;
+}
+.coreactivity-grid-logs tr td.column-request {
+  word-break: break-all;
+}
+.coreactivity-grid-logs tr td.column-user_id i {
+  color: #AAA;
+}
+
+.coreactivity-field-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.coreactivity-field-wrapper i {
+  font-size: 1.5em;
+}
+.coreactivity-field-wrapper span {
+  flex-grow: 1;
+  word-break: break-all;
+}
+
+.d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs .coreactivity-header-ip {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  font-size: 1.1em;
+  padding: 0.6em 0.9em;
+  border-radius: var(--d4p-layout-main-border-radius);
+  border: 1px solid var(--d4p-color-main-border);
+  background-color: var(--d4p-color-main-background);
+}
+.d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs .coreactivity-header-ip span {
+  font-family: monospace;
+}
+.d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs .coreactivity-header-ip i {
+  color: var(--d4p-color-layout-accent);
+  font-size: 1.5em;
+}
+.d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs ul.subsubsub .view {
+  font-weight: bold;
+}
+.d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs ul.subsubsub .view.ip img {
+  width: 23px;
+  height: auto;
+  vertical-align: bottom;
+}
+.d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs ul.subsubsub .view.user img {
+  width: 18px;
+  height: auto;
+  vertical-align: bottom;
 }

@@ -18,12 +18,12 @@ class Post extends Component {
 	}
 
 	public function label() : string {
-		return __( "Posts" );
+		return __( "Posts", "coreactivity" );
 	}
 
 	protected function get_events() : array {
 		return array(
-			'status-change' => array( 'label' => __( "Post Status Change" ) )
+			'status-change' => array( 'label' => __( "Post Status Change", "coreactivity" ) )
 		);
 	}
 }

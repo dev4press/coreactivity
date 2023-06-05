@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\v42\Core\Helpers\IP;
 use Dev4Press\v42\Core\Plugins\DBLite;
 use Dev4Press\v42\Core\Quick\Sanitize;
 use Dev4Press\v42\Core\UI\Elements;
@@ -21,6 +22,10 @@ class Logs extends Table {
 	public $_self_nonce_key = 'coreactivity-table-logs';
 	public $_display_columns_simplified;
 	public $_display_ip_country_flag;
+	public $_display_user_avatar;
+	public $_current_view = '';
+	public $_current_ip = '';
+	public $_server_ip = '';
 
 	protected $_filter_lock = array();
 	protected $_items_ips = array();
@@ -32,12 +37,67 @@ class Logs extends Table {
 			'ajax'     => false
 		) );
 
+		$this->_current_ip = Core::instance()->get( 'ip' );
+		$this->_server_ip  = Core::instance()->get( 'server_ip' );
+
 		$this->_display_columns_simplified = coreactivity_settings()->get( 'display_columns_simplified' );
-		$this->_display_ip_country_flag    = coreactivity_settings()->get( 'display_ip_geo_flag' );
+		$this->_display_ip_country_flag    = coreactivity_settings()->get( 'display_ip_country_flag' );
+		$this->_display_user_avatar        = coreactivity_settings()->get( 'display_user_avatar' );
 
 		if ( ! is_multisite() ) {
-			$this->_filter_lock[ 'blog_id' ] = 0;
+			$this->_filter_lock[ 'blog_id' ] = - 1;
 		}
+
+		if ( in_array( $this->_request_args[ 'view' ], array( 'user', 'ip', 'blog', 'object' ) ) ) {
+			$this->_current_view = $this->_request_args[ 'view' ];
+
+			switch ( $this->_current_view ) {
+				case 'user':
+					if ( ! isset( $this->_filter_lock[ 'user_id' ] ) && ! empty( $this->_request_args[ 'filter-user_id' ] ) ) {
+						$this->_filter_lock[ 'user_id' ] = $this->_request_args[ 'filter-user_id' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'blog':
+					if ( ! isset( $this->_filter_lock[ 'blog_id' ] ) && ! empty( $this->_request_args[ 'filter-blog_id' ] ) ) {
+						$this->_filter_lock[ 'blog_id' ] = $this->_request_args[ 'filter-blog_id' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'ip':
+					if ( ! isset( $this->_filter_lock[ 'ip' ] ) && ! empty( $this->_request_args[ 'filter-ip' ] ) ) {
+						$this->_filter_lock[ 'ip' ] = $this->_request_args[ 'filter-ip' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+			}
+		}
+	}
+
+	protected function _view( string $view, string $args ) : string {
+		return $this->_url() . '&view=' . $view . '&' . $args;
+	}
+
+	protected function _self( $args, $getback = false, $nonce = null ) : string {
+		$url = parent::_self( $args, $getback, $nonce );
+
+		if ( ! empty( $this->_current_view ) ) {
+			$url .= '&view=' . $this->_current_view;
+
+			switch ( $this->_current_view ) {
+				case 'ip':
+					$url .= '&filter-ip=' . $this->_filter_lock[ 'ip' ];
+					break;
+				case 'user':
+					$url .= '&filter-user_id=' . $this->_filter_lock[ 'user_id' ];
+					break;
+			}
+		}
+
+		return $url;
 	}
 
 	protected function db() : ?DBLite {
@@ -49,10 +109,12 @@ class Logs extends Table {
 			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id', '' ),
 			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id', '' ),
 			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id', '' ),
+			'filter-ip'          => Sanitize::_get_basic( 'filter-ip', '' ),
 			'filter-component'   => Sanitize::_get_basic( 'filter-component', '' ),
 			'filter-context'     => Sanitize::_get_basic( 'filter-context', '' ),
 			'filter-method'      => Sanitize::_get_basic( 'filter-method', '' ),
 			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type', '' ),
+			'view'               => $this->_get_field( 'view' ),
 			'search'             => $this->_get_field( 's' ),
 			'period'             => $this->_get_field( 'period' ),
 			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
@@ -78,7 +140,7 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock[ 'component' ] ) ) {
 			$_components = array(
-				'' => __( "All Components" )
+				'' => __( "All Components", "coreactivity" )
 			);
 
 			foreach ( Init::instance()->components() as $component => $label ) {
@@ -93,7 +155,7 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock[ 'event' ] ) ) {
 			$_events = array(
-				'' => __( "All Events" )
+				'' => __( "All Events", "coreactivity" )
 			);
 
 			foreach ( Init::instance()->events_list() as $id => $event ) {
@@ -108,8 +170,8 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock[ 'context' ] ) ) {
 			$_contexts = array(
-				''  => __( "All Contexts" ),
-				'-' => __( "Normal" )
+				''  => __( "All Contexts", "coreactivity" ),
+				'-' => __( "Normal", "coreactivity" )
 			);
 
 			foreach ( Core::instance()->valid_request_contexts() as $context ) {
@@ -124,7 +186,7 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock[ 'method' ] ) ) {
 			$_methods = array(
-				'' => __( "All Methods" )
+				'' => __( "All Methods", "coreactivity" )
 			);
 
 			foreach ( Core::instance()->valid_request_methods() as $method ) {
@@ -139,7 +201,7 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock[ 'object_type' ] ) ) {
 			$_types = array(
-				'' => __( "All Object Types" )
+				'' => __( "All Object Types", "coreactivity" )
 			);
 
 			foreach ( Init::instance()->object_types() as $type => $value ) {
@@ -156,6 +218,45 @@ class Logs extends Table {
 		echo '</div>';
 	}
 
+	protected function get_views() : array {
+		$views = array();
+
+		if ( ! empty( $this->_current_view ) ) {
+			$current_view = '';
+			$current_key  = 'view ';
+
+			$views[ 'all' ] = '<a href="' . $this->_url() . '">' . __( "All", "coreactivity" ) . '</a>';
+
+			switch ( $this->_current_view ) {
+				case 'ip':
+					if ( $this->_display_ip_country_flag ) {
+						$ip           = GEOJSIO::instance()->locate( $this->_filter_lock[ 'ip' ] );
+						$current_view = $ip->flag() . ' <span>' . $this->_filter_lock[ 'ip' ] . '</span>';
+					} else {
+						$current_view = $this->_filter_lock[ 'ip' ];
+					}
+					$current_key .= 'ip';
+					break;
+				case 'user':
+					$user = get_user_by( 'id', $this->_filter_lock[ 'user_id' ] );
+					$name = !$user ? __( "Not Found", "coreactivity" ) : $user->display_name;
+
+					if ( $this->_filter_lock[ 'user_id' ] > 0 && $this->_display_user_avatar ) {
+						$avatar       = get_avatar( $this->_filter_lock[ 'user_id' ], 30 );
+						$current_view = $avatar . ' <span>' . $this->_filter_lock[ 'user_id' ].' &middot; '.$name . '</span>';
+					} else {
+						$current_view = $this->_filter_lock[ 'user_id' ].' &middot; '.$name;
+					}
+					$current_key .= 'user';
+					break;
+			}
+
+			$views[ $current_key ] = $current_view;
+		}
+
+		return $views;
+	}
+
 	public function rows_per_page() : int {
 		$per_page = get_user_option( 'coreactivity_events_rows_per_page' );
 
@@ -170,17 +271,17 @@ class Logs extends Table {
 		$columns = array(
 			'cb'          => '<input type="checkbox" />',
 			'log_id'      => __( "ID", "coreactivity" ),
-			'blog_id'     => __( "Blog" ),
-			'user_id'     => __( "User" ),
+			'blog_id'     => __( "Blog", "coreactivity" ),
+			'user_id'     => __( "User", "coreactivity" ),
 			'component'   => __( "Component", "coreactivity" ),
 			'event'       => __( "Event", "coreactivity" ),
-			'context'     => __( "Context" ),
-			'method'      => __( "Method" ),
-			'protocol'    => __( "Protocol" ),
-			'ip'          => __( "IP" ),
-			'request'     => __( "Request" ),
-			'object_type' => __( "Object Type" ),
-			'object_name' => __( "Object" ),
+			'context'     => __( "Context", "coreactivity" ),
+			'method'      => __( "Method", "coreactivity" ),
+			'protocol'    => __( "Protocol", "coreactivity" ),
+			'ip'          => __( "IP", "coreactivity" ),
+			'request'     => __( "Request", "coreactivity" ),
+			'object_type' => __( "Object Type", "coreactivity" ),
+			'object_name' => __( "Object", "coreactivity" ),
 			'logged'      => __( "Logged", "coreactivity" )
 		);
 
@@ -213,18 +314,82 @@ class Logs extends Table {
 	}
 
 	public function column_ip( $item ) : string {
-		$render = $item->ip;
+		$render  = '<span>' . $item->ip . '</span>';
+		$actions = array(
+			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( "Logs", "coreactivity" ) . '</a>'
+		);
 
 		if ( $this->_display_ip_country_flag ) {
 			$ip     = GEOJSIO::instance()->locate( $item->ip );
-			$render = $ip->flag() . ' <span>' . $render . '</span>';
+			$render = $ip->flag() . ' ' . $render;
 		}
 
-		return $render;
+		if ( $item->ip == $this->_server_ip ) {
+			$render .= '<i class="d4p-icon d4p-ui-database" title="' . esc_attr__( "Server IP", "coreactivity" ) . '"></i>';
+		}
+
+		if ( $item->ip == $this->_current_ip ) {
+			$render .= '<i class="d4p-icon d4p-ui-user-square" title="' . esc_attr__( "Current Request IP", "coreactivity" ) . '"></i>';
+		}
+
+		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_ip', $render, $item );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_ip', $actions, $item );
+
+		return $render . $this->row_actions( $actions );
+	}
+
+	public function column_user_id( $item ) : string {
+		$render  = '';
+		$actions = array(
+			'view' => '<a href="' . $this->_view( 'user', 'filter-user_id=' . $item->user_id ) . '">' . esc_html__( "Logs", "coreactivity" ) . '</a>'
+		);
+
+		if ( $item->user_id == 0 ) {
+			if ( $this->_display_user_avatar ) {
+				$render .= '<i class="d4p-icon d4p-ui-user-square"></i>';
+			}
+
+			$render .= '<span>ID: <strong>0</strong> &middot; ' . esc_html__( "Not a User", "coreactivity" ) . '</span>';
+		} else {
+			if ( $this->_display_user_avatar ) {
+				$render .= get_avatar( $item->user_id, 20 );;
+			}
+
+			$user = get_user_by( 'id', $item->user_id );
+
+			$render .= '<span>ID: <strong>' . $item->user_id . '</strong> &middot; ';
+
+			if ( ! $user ) {
+				$render .= esc_html__( "Not Found", "coreactivity" );
+			} else {
+				$render .= $user->display_name;
+
+				$actions['edit'] = '<a href="user-edit.php?user_id=' . $item->user_id . '">' . esc_html__( "Edit", "coreactivity" )  . '</a>';
+			}
+
+			$render .= '</span>';
+		}
+
+		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_user_id', $render, $item );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_user_id', $actions, $item );
+
+		return $render . $this->row_actions( $actions );
 	}
 
 	public function column_event( $item ) : string {
 		return $this->_display_columns_simplified ? Init::instance()->get_event_label( absint( $item->event_id ), $item->event ) : $item->event;
+	}
+
+	public function column_object_type( $item ) : string {
+		return ! empty( $item->object_type ) ? Init::instance()->get_object_type_label( $item->object_type ) : '/';
+	}
+
+	public function column_context( $item ) : string {
+		return ! empty( $item->context ) ? strtoupper( $item->context ) : '/';
 	}
 
 	public function column_logged( $item ) : string {
@@ -242,6 +407,7 @@ class Logs extends Table {
 		$sel_blog_id     = $this->get_request_arg( 'filter-blog_id' );
 		$sel_user_id     = $this->get_request_arg( 'filter-user_id' );
 		$sel_event_id    = $this->get_request_arg( 'filter-event_id' );
+		$sel_ip          = $this->get_request_arg( 'filter-ip' );
 		$sel_component   = $this->get_request_arg( 'filter-component' );
 		$sel_context     = $this->get_request_arg( 'filter-context' );
 		$sel_method      = $this->get_request_arg( 'filter-method' );
@@ -253,6 +419,10 @@ class Logs extends Table {
 
 		if ( isset( $this->_filter_lock[ 'user_id' ] ) ) {
 			$sel_user_id = $this->_filter_lock[ 'user_id' ];
+		}
+
+		if ( isset( $this->_filter_lock[ 'ip' ] ) ) {
+			$sel_ip = $this->_filter_lock[ 'ip' ];
 		}
 
 		if ( isset( $this->_filter_lock[ 'component' ] ) ) {
@@ -299,6 +469,10 @@ class Logs extends Table {
 			$sql[ 'where' ][] = $this->db()->prepare( 'l.`method` = %s', $sel_method );
 		}
 
+		if ( ! empty( $sel_ip ) ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`ip` = %s', $sel_ip );
+		}
+
 		if ( ! empty( $sel_object_type ) ) {
 			$sql[ 'where' ][] = $this->db()->prepare( 'l.`object_type` = %s', $sel_object_type );
 		}
@@ -308,10 +482,11 @@ class Logs extends Table {
 		}
 
 		if ( ! empty( $sel_search ) ) {
-			$sql[ 'where' ][] = $this->_get_search_where( array( 'e.`component`', 'e.`event`, l.`request`, l.`object_name`' ), $sel_search );
+			$sql[ 'where' ][] = $this->_get_search_where( array( 'e.`component`', 'e.`ip`', 'e.`event`, l.`request`, l.`object_name`' ), $sel_search );
 		}
 
-		$this->query_items( $sql, $per_page );
+		$this->query_items( $sql, $per_page, true, true, 'log_id' );
+		$this->query_metas( coreactivity_db()->logmeta, 'log_id' );
 
 		if ( $this->_display_ip_country_flag ) {
 			foreach ( $this->items as $item ) {
@@ -326,5 +501,7 @@ class Logs extends Table {
 				GEOJSIO::instance()->bulk( $this->_items_ips );
 			}
 		}
+
+		debugpress_store_object( $this );
 	}
 }

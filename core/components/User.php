@@ -25,13 +25,13 @@ class User extends Component {
 	}
 
 	public function label() : string {
-		return __( "Users" );
+		return __( "Users", "coreactivity" );
 	}
 
 	protected function get_events() : array {
 		return array(
-			'login'  => array( 'label' => __( "Login" ) ),
-			'logout' => array( 'label' => __( "Logout" ) )
+			'login'  => array( 'label' => __( "Login", "coreactivity" ) ),
+			'logout' => array( 'label' => __( "Logout", "coreactivity" ) )
 		);
 	}
 

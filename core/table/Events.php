@@ -42,7 +42,7 @@ class Events extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
-		Elements::instance()->select( array_merge( array( '' => __( "All Components" ) ), Init::instance()->components() ), array(
+		Elements::instance()->select( array_merge( array( '' => __( "All Components", "coreactivity" ) ), Init::instance()->components() ), array(
 			'selected' => $this->get_request_arg( 'filter-component' ),
 			'name'     => 'filter-component'
 		) );
@@ -74,7 +74,7 @@ class Events extends Table {
 		return array(
 			'cb'          => '<input type="checkbox" />',
 			'event_id'    => __( "ID", "coreactivity" ),
-			'status'      => __( "Status" ),
+			'status'      => __( "Status", "coreactivity" ),
 			'component'   => __( "Component", "coreactivity" ),
 			'event'       => __( "Event", "coreactivity" ),
 			'description' => __( "Description", "coreactivity" ),
@@ -102,11 +102,11 @@ class Events extends Table {
 	}
 
 	protected function column_loaded( $item ) : string {
-		return Init::instance()->is_event_loaded( $item->component, $item->event ) ? __( "Yes" ) : __( "No" );
+		return Init::instance()->is_event_loaded( $item->component, $item->event ) ? __( "Yes", "coreactivity" ) : __( "No", "coreactivity" );
 	}
 
 	protected function column_status( $item ) : string {
-		$title  = $item->status == 'active' ? __( "Active" ) : __( "Disabled" );
+		$title  = $item->status == 'active' ? __( "Active", "coreactivity" ) : __( "Disabled", "coreactivity" );
 		$toggle = $item->status == 'active' ? 'd4p-ui-toggle-on' : 'd4p-ui-toggle-off';
 
 		return '<button class="coreactivity-event-toggle" data-id="' . esc_attr( $item->event_id ) . '" data-nonce="' . wp_create_nonce( 'coreactivity-toggle-event-' . $item->event_id ) . '" type="button"><i aria-hidden="true" class="d4p-icon ' . $toggle . '"></i><span class="d4p-accessibility-show-for-sr">' . $title . '</span></button>';

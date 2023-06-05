@@ -1,0 +1,511 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
+"Project-Id-Version: CoreActivity\n"
+"POT-Creation-Date: 06/05/2023 06:08:12 PM\n"
+"Language-Team: Milan Petrovic <support@dev4press.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: GD i18n 2.7; www.dev4press.com\n"
+
+#: core/admin/panel/Dashboard.php:19
+#: core/admin/Plugin.php:115
+msgid "Events"
+msgstr ""
+
+#: core/admin/panel/Dashboard.php:27
+#: core/admin/Plugin.php:122
+#: core/table/Logs.php:318
+#: core/table/Logs.php:345
+msgid "Logs"
+msgstr ""
+
+#: core/admin/panel/Events.php:20
+#: core/admin/panel/Logs.php:22
+msgid "Rows"
+msgstr ""
+
+#: core/admin/panel/Logs.php:37
+#: core/table/Logs.php:327
+msgid "Server IP"
+msgstr ""
+
+#: core/admin/panel/Logs.php:42
+#: core/table/Logs.php:331
+msgid "Current Request IP"
+msgstr ""
+
+#: core/admin/panel/Settings.php:18
+msgid "Optional Data"
+msgstr ""
+
+#: core/admin/panel/Settings.php:20
+msgid "Settings related to logging of optional data."
+msgstr ""
+
+#: core/admin/panel/Settings.php:23
+msgid "Logs Panel"
+msgstr ""
+
+#: core/admin/panel/Settings.php:25
+msgid "Settings related to some aspects for the Logs panel display."
+msgstr ""
+
+#: core/admin/panel/Settings.php:28
+msgid "Maintenance"
+msgstr ""
+
+#: core/admin/panel/Settings.php:30
+msgid "Settings related to maintenance and cleanup of the log database tables."
+msgstr ""
+
+#: core/admin/Plugin.php:84
+msgid "Install"
+msgstr ""
+
+#: core/admin/Plugin.php:87
+msgid "Before you continue, make sure plugin installation was successful."
+msgstr ""
+
+#: core/admin/Plugin.php:92
+msgid "Update"
+msgstr ""
+
+#: core/admin/Plugin.php:95
+msgid "Before you continue, make sure plugin was successfully updated."
+msgstr ""
+
+#: core/admin/Plugin.php:103
+msgid "Overview"
+msgstr ""
+
+#: core/admin/Plugin.php:109
+msgid "About"
+msgstr ""
+
+#: core/admin/Plugin.php:117
+msgid "All the events registered for activity tracking and logging."
+msgstr ""
+
+#: core/admin/Plugin.php:124
+msgid "Detailed log with all the logged activities for all supported events."
+msgstr ""
+
+#: core/admin/Plugin.php:129
+msgid "Settings"
+msgstr ""
+
+#: core/admin/Plugin.php:135
+msgid "Tools"
+msgstr ""
+
+#: core/admin/Plugin.php:154
+msgid "Events activity status has been updated."
+msgstr ""
+
+#: core/admin/Settings.php:20
+msgid "Meta Data"
+msgstr ""
+
+#: core/admin/Settings.php:27
+msgid "User Agent"
+msgstr ""
+
+#: core/admin/Settings.php:27
+msgid "If the request has user agent string, it will be logged as the log entry meta data."
+msgstr ""
+
+#: core/admin/Settings.php:28
+msgid "Referer"
+msgstr ""
+
+#: core/admin/Settings.php:28
+msgid "If the request has referer, it will be logged as the log entry meta data."
+msgstr ""
+
+#: core/admin/Settings.php:36
+msgid "Content Display"
+msgstr ""
+
+#: core/admin/Settings.php:43
+msgid "Simplified values"
+msgstr ""
+
+#: core/admin/Settings.php:43
+msgid "Values for columns Component and Event will be displayed using labels."
+msgstr ""
+
+#: core/admin/Settings.php:44
+msgid "IP GEO location flag"
+msgstr ""
+
+#: core/admin/Settings.php:44
+msgid "Show country for the logged IP."
+msgstr ""
+
+#: core/admin/Settings.php:45
+msgid "User avatar"
+msgstr ""
+
+#: core/admin/Settings.php:45
+msgid "Show user avatar for logs that are related to the user."
+msgstr ""
+
+#: core/admin/Settings.php:53
+msgid "Auto Cleanup"
+msgstr ""
+
+#: core/admin/Settings.php:60
+msgid "Remove old entries"
+msgstr ""
+
+#: core/admin/Settings.php:60
+msgid "If enabled, maintenance will be run once a day, and all old entries will be removed."
+msgstr ""
+
+#: core/admin/Settings.php:61
+msgid "Log entries to keep"
+msgstr ""
+
+#: core/admin/Settings.php:61
+msgid "All entries older than the number of months specified here, will be removed during the maintenance."
+msgstr ""
+
+#: core/admin/Settings.php:61
+msgid "months"
+msgstr ""
+
+#: core/components/Error.php:25
+msgid "Errors"
+msgstr ""
+
+#: core/components/Error.php:30
+msgid "404 Not Found"
+msgstr ""
+
+#: core/components/Error.php:31
+msgid "404 Not Found PHP"
+msgstr ""
+
+#: core/components/Error.php:32
+msgid "404 Not Found File"
+msgstr ""
+
+#: core/components/Error.php:33
+msgid "404 Not Found Media"
+msgstr ""
+
+#: core/components/Error.php:34
+msgid "404 Not Found Script"
+msgstr ""
+
+#: core/components/Error.php:35
+msgid "404 Not Found Style"
+msgstr ""
+
+#: core/components/Post.php:20
+msgid "Posts"
+msgstr ""
+
+#: core/components/Post.php:25
+msgid "Post Status Change"
+msgstr ""
+
+#: core/components/User.php:27
+msgid "Users"
+msgstr ""
+
+#: core/components/User.php:32
+msgid "Login"
+msgstr ""
+
+#: core/components/User.php:33
+msgid "Logout"
+msgstr ""
+
+#: core/log/Init.php:70
+msgid "Post"
+msgstr ""
+
+#: core/log/Init.php:71
+msgid "Term"
+msgstr ""
+
+#: core/log/Init.php:72
+msgid "Comment"
+msgstr ""
+
+#: core/log/Init.php:73
+#: core/table/Logs.php:274
+msgid "User"
+msgstr ""
+
+#: core/log/Init.php:74
+msgid "Plugin"
+msgstr ""
+
+#: core/log/Init.php:75
+msgid "Theme"
+msgstr ""
+
+#: core/table/Events.php:44
+#: core/table/Logs.php:142
+msgid "All Components"
+msgstr ""
+
+#: core/table/Events.php:48
+#: core/table/Logs.php:216
+msgid "Filter"
+msgstr ""
+
+#: core/table/Events.php:75
+#: core/table/Logs.php:272
+msgid "ID"
+msgstr ""
+
+#: core/table/Events.php:76
+msgid "Status"
+msgstr ""
+
+#: core/table/Events.php:77
+#: core/table/Logs.php:275
+msgid "Component"
+msgstr ""
+
+#: core/table/Events.php:78
+#: core/table/Logs.php:276
+msgid "Event"
+msgstr ""
+
+#: core/table/Events.php:79
+msgid "Description"
+msgstr ""
+
+#: core/table/Events.php:80
+msgid "Loaded"
+msgstr ""
+
+#: core/table/Events.php:94
+msgid "Enable"
+msgstr ""
+
+#: core/table/Events.php:95
+msgid "Disable"
+msgstr ""
+
+#: core/table/Events.php:104
+msgid "Yes"
+msgstr ""
+
+#: core/table/Events.php:104
+msgid "No"
+msgstr ""
+
+#: core/table/Events.php:108
+msgid "Active"
+msgstr ""
+
+#: core/table/Events.php:108
+msgid "Disabled"
+msgstr ""
+
+#: core/table/Logs.php:157
+msgid "All Events"
+msgstr ""
+
+#: core/table/Logs.php:172
+msgid "All Contexts"
+msgstr ""
+
+#: core/table/Logs.php:173
+msgid "Normal"
+msgstr ""
+
+#: core/table/Logs.php:188
+msgid "All Methods"
+msgstr ""
+
+#: core/table/Logs.php:203
+msgid "All Object Types"
+msgstr ""
+
+#: core/table/Logs.php:227
+msgid "All"
+msgstr ""
+
+#: core/table/Logs.php:241
+#: core/table/Logs.php:364
+msgid "Not Found"
+msgstr ""
+
+#: core/table/Logs.php:273
+msgid "Blog"
+msgstr ""
+
+#: core/table/Logs.php:277
+msgid "Context"
+msgstr ""
+
+#: core/table/Logs.php:278
+msgid "Method"
+msgstr ""
+
+#: core/table/Logs.php:279
+msgid "Protocol"
+msgstr ""
+
+#: core/table/Logs.php:280
+msgid "IP"
+msgstr ""
+
+#: core/table/Logs.php:281
+msgid "Request"
+msgstr ""
+
+#: core/table/Logs.php:282
+msgid "Object Type"
+msgstr ""
+
+#: core/table/Logs.php:283
+msgid "Object"
+msgstr ""
+
+#: core/table/Logs.php:284
+msgid "Logged"
+msgstr ""
+
+#: core/table/Logs.php:307
+msgid "Delete"
+msgstr ""
+
+#: core/table/Logs.php:353
+msgid "Not a User"
+msgstr ""
+
+#: core/table/Logs.php:368
+msgid "Edit"
+msgstr ""
+
+#: forms/content-about-changelog.php:1
+#: forms/content-about-minor.php:8
+msgid "Version"
+msgstr ""
+
+#: forms/content-about-minor.php:6
+msgid "Maintenance and Security Releases"
+msgstr ""
+
+#: forms/content-about-minor.php:12
+msgid "For more information, see <a href='%s'>the changelog</a>."
+msgstr ""
+
+#: forms/content-events.php:14
+#: forms/content-logs.php:20
+msgid "Search"
+msgstr ""
+
+#: forms/content-install.php:19
+#: forms/content-update.php:19
+msgid "All Done"
+msgstr ""
+
+#: forms/content-install.php:22
+msgid "Installation completed."
+msgstr ""
+
+#: forms/content-install.php:27
+#: forms/content-update.php:27
+msgid "Click here to continue"
+msgstr ""
+
+#: forms/content-tools-export.php:8
+#: forms/content-tools-remove.php:8
+msgid "Important Information"
+msgstr ""
+
+#: forms/content-tools-export.php:10
+msgid "With this tool you export plugin settings into plain text file (JSON serialized content). Do not modify export file! Making changes to export file will make it unusable."
+msgstr ""
+
+#: forms/content-tools-export.php:11
+msgid "This tool doesn't export the data from the dedicated database tables."
+msgstr ""
+
+#: forms/content-tools-remove.php:10
+msgid "This tool can remove plugin settings saved in the WordPress options table added by the plugin and you can remove share and likes data gathered by the plugin share blocks."
+msgstr ""
+
+#: forms/content-tools-remove.php:12
+msgid "Deletion operations are not reversible, and it is highly recommended to create database backup before proceeding with this tool."
+msgstr ""
+
+#: forms/content-tools-remove.php:13
+msgid "If you choose to remove plugin settings, once that is done, all settings will be reinitialized to default values if you choose to leave plugin active."
+msgstr ""
+
+#: forms/content-tools-remove.php:18
+msgid "Remove plugin settings"
+msgstr ""
+
+#: forms/content-tools-remove.php:21
+msgid "Main Plugin Settings"
+msgstr ""
+
+#: forms/content-tools-remove.php:27
+msgid "Remove database data and tables"
+msgstr ""
+
+#: forms/content-tools-remove.php:29
+msgid "This will remove all shares and likes data!"
+msgstr ""
+
+#: forms/content-tools-remove.php:31
+msgid "Remove plugins database table and all data in them"
+msgstr ""
+
+#: forms/content-tools-remove.php:34
+msgid "Remove all data from database table"
+msgstr ""
+
+#: forms/content-tools-remove.php:37
+msgid "Database tables that will be affected"
+msgstr ""
+
+#: forms/content-tools-remove.php:47
+msgid "Disable Plugin"
+msgstr ""
+
+#: forms/content-tools-remove.php:50
+msgid "Disable plugin"
+msgstr ""
+
+#: forms/content-tools-updater.php:2
+msgid "Update status"
+msgstr ""
+
+#: forms/content-update.php:22
+msgid "Update completed."
+msgstr ""
+
+#: forms/setup-database.php:7
+msgid "Additional database tables"
+msgstr ""
+
+#: forms/setup-database.php:17
+msgid "Database Upgrade Notices"
+msgstr ""
+
+#: forms/setup-database.php:21
+msgid "Database Tables Check"
+msgstr ""
+
+#: forms/setup-database.php:29
+msgid "ERROR"
+msgstr ""
+
+#: forms/setup-database.php:31
+msgid "OK"
+msgstr ""
+

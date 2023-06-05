@@ -1,6 +1,8 @@
 === CoreActivity ===
 Contributors: GDragoN
-Version: 1.0
+Donate link: https://buymeacoffee.com/millan
+Tags: activity
+Stable tag: 1.0
 Requires at least: 5.5
 Tested up to: 6.2
 Requires PHP: 7.3
@@ -31,3 +33,15 @@ Monitor and log all kinds of activity happening in the WordPress website, with f
 * Activate the plugin through the 'Plugins' menu in WordPress.
 * Plugin adds new top level menu called 'CoreActivity' inside Tools.
 * Check all the plugin settings before using the plugin.
+
+== Frequently Asked Questions ==
+
+== Changelog ==
+= 1.0 (2020.09.15) =
+* First official release
+
+== Upgrade Notice ==
+= 1.0 =
+First official release.
+
+== Screenshots ==

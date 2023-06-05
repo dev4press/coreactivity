@@ -23,17 +23,17 @@ class Error extends Component {
 	}
 
 	public function label() : string {
-		return __( "Errors" );
+		return __( "Errors", "coreactivity" );
 	}
 
 	protected function get_events() : array {
 		return array(
-			'404'        => array( 'label' => __( "404 Not Found" ) ),
-			'404-php'    => array( 'label' => __( "404 Not Found PHP" ) ),
-			'404-file'   => array( 'label' => __( "404 Not Found File" ) ),
-			'404-media'  => array( 'label' => __( "404 Not Found Media" ) ),
-			'404-script' => array( 'label' => __( "404 Not Found Script" ) ),
-			'404-style'  => array( 'label' => __( "404 Not Found Style" ) )
+			'404'        => array( 'label' => __( "404 Not Found", "coreactivity" ) ),
+			'404-php'    => array( 'label' => __( "404 Not Found PHP", "coreactivity" ) ),
+			'404-file'   => array( 'label' => __( "404 Not Found File", "coreactivity" ) ),
+			'404-media'  => array( 'label' => __( "404 Not Found Media", "coreactivity" ) ),
+			'404-script' => array( 'label' => __( "404 Not Found Script", "coreactivity" ) ),
+			'404-style'  => array( 'label' => __( "404 Not Found Style", "coreactivity" ) )
 		);
 	}
 

@@ -1,6 +1,7 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Table\Logs;
+use Dev4Press\Plugin\CoreActivity\Table\LogsBlog;
 
 ?>
 <div class="d4p-content">
@@ -9,11 +10,15 @@ use Dev4Press\Plugin\CoreActivity\Table\Logs;
 
 	<?php
 
-	$_grid = new Logs();
+	if ( is_multisite() && ! is_network_admin() ) {
+		$_grid = new LogsBlog();
+	} else {
+		$_grid = new Logs();
+	}
+
 	$_grid->prepare_items();
-
-	$_grid->search_box( esc_html__( "Search", "coreactivity" ), 'events-search' );
-
+	$_grid->views();
+	$_grid->search_box( esc_html__( "Search", "coreactivity" ), 'logs-search' );
 	$_grid->display();
 
 	?>
