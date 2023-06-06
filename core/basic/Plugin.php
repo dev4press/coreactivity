@@ -37,4 +37,18 @@ class Plugin extends Core {
 
 		do_action( 'coreactivity_plugin_core_ready' );
 	}
+
+	public function after_setup_theme() {
+		add_filter( 'coreactivity_log_purge', array( $this, 'log_purge' ) );
+
+		if ( ! wp_next_scheduled( 'coreactivity_log_purge' ) ) {
+			$cron_time = mktime( 3, 5, 0, date( 'm' ), date( 'd' ), date( 'Y' ) );
+
+			wp_schedule_event( $cron_time, 'daily', 'coreactivity_log_purge' );
+		}
+	}
+
+	public function log_purge() {
+
+	}
 }

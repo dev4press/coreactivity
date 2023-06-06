@@ -19,6 +19,9 @@ class Plugin extends Component {
 	public function tracking() {
 		add_action( 'delete_plugin', array( $this, 'delete_plugin' ) );
 		add_action( 'deleted_plugin', array( $this, 'deleted_plugin' ), 10, 2 );
+
+		add_action( 'activated_plugin', array( $this, 'activated_plugin' ), 1000, 2 );
+		add_action( 'deactivated_plugin', array( $this, 'deactivated_plugin' ), 1000, 2 );
 	}
 
 	public function label() : string {
@@ -27,7 +30,11 @@ class Plugin extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'deleted' => array( 'label' => __( "Plugin Deleted", "coreactivity" ) )
+			'deleted'             => array( 'label' => __( "Plugin Deleted", "coreactivity" ) ),
+			'activated'           => array( 'label' => __( "Plugin Activated", "coreactivity" ), 'scope' => 'blog' ),
+			'network_activated'   => array( 'label' => __( "Plugin Network Activated", "coreactivity" ), 'scope' => 'network' ),
+			'deactivated'         => array( 'label' => __( "Plugin Deactivated", "coreactivity" ), 'scope' => 'blog' ),
+			'network_deactivated' => array( 'label' => __( "Plugin Network Deactivated", "coreactivity" ), 'scope' => 'network' )
 		);
 	}
 
@@ -41,6 +48,22 @@ class Plugin extends Component {
 				$this->log( 'deleted', array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
 			}
 		}
+	}
+
+	public function activated_plugin( $plugin_file, $network_wide = false ) {
+		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
+
+		$event = $network_wide ? 'network_activated' : 'activated';
+
+		$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
+	}
+
+	public function deactivated_plugin( $plugin_file, $network_wide = false ) {
+		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
+
+		$event = $network_wide ? 'network_deactivated' : 'deactivated';
+
+		$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
 	}
 
 	private function _get_plugin( $plugin_file ) : array {

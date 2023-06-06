@@ -9,6 +9,7 @@ use Dev4Press\Plugin\CoreActivity\Components\Plugin;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
 use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
+use Dev4Press\Plugin\CoreActivity\Components\WordPress;
 use Dev4Press\v42\Core\Quick\Sanitize;
 use Dev4Press\v42\Core\Quick\Str;
 use stdClass;
@@ -50,11 +51,13 @@ class Init {
 			$event->loaded   = false;
 
 			$this->events[ $event->component ][ $event->event ] = $event;
-			$this->list[ $event->event_id ]                     = array( 'name' => $event->event, 'label' => $event->event );
+
+			$this->list[ $event->event_id ] = array( 'name' => $event->event, 'label' => $event->event );
 		}
 	}
 
 	private function _init_components() {
+		WordPress::instance();
 		Error::instance();
 		Plugin::instance();
 		Theme::instance();
@@ -78,7 +81,8 @@ class Init {
 			'comment' => __( "Comment", "coreactivity" ),
 			'user'    => __( "User", "coreactivity" ),
 			'plugin'  => __( "Plugin", "coreactivity" ),
-			'theme'   => __( "Theme", "coreactivity" )
+			'theme'   => __( "Theme", "coreactivity" ),
+			'cron'    => __( "Cron", "coreactivity" )
 		) );
 	}
 
