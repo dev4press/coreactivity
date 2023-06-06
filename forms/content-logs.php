@@ -17,8 +17,18 @@ use Dev4Press\Plugin\CoreActivity\Table\LogsBlog;
 	}
 
 	$_grid->prepare_items();
-	$_grid->views();
-	$_grid->search_box( esc_html__( "Search", "coreactivity" ), 'logs-search' );
+
+	?>
+    <div class="d4p-grid-alternative-view-search">
+		<?php
+
+		$_grid->views();
+		$_grid->search_box( esc_html__( "Search", "coreactivity" ), 'logs-search' );
+
+		?></div>
+
+	<?php
+
 	$_grid->display();
 
 	?>

@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Core {
 	private $cached_data;
+	private $page_events = array();
 
 	private $request_contexts = array(
 		'AJAX',
@@ -84,6 +85,11 @@ class Core {
 
 		if ( $id ) {
 			do_action( 'coreactivity_event_logged', $id, $data, $meta );
+
+			$this->page_events[ $id ] = array(
+				'data' => $data,
+				'meta' => $meta
+			);
 		} else {
 			do_action( 'coreactivity_event_log_failed', $data, $meta );
 		}
@@ -173,6 +179,12 @@ class Core {
 		if ( ! isset( $meta[ 'referer' ] ) ) {
 			if ( ! empty( $this->cached_data[ 'referer' ] ) ) {
 				$meta[ 'referer' ] = $this->cached_data[ 'referer' ];
+			}
+		}
+
+		if ( ! isset( $meta[ 'ajax_action' ] ) ) {
+			if ( $this->cached_data[ 'context' ] === 'AJAX' && isset( $_REQUEST[ 'action' ] ) ) {
+				$meta[ 'ajax_action' ] = sanitize_text_field( $_REQUEST[ 'action' ] );
 			}
 		}
 

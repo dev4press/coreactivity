@@ -17,8 +17,8 @@ class Settings extends BaseSettings {
 	protected function init() {
 		$this->settings = array(
 			'optional'    => array(
-				'optional-settings' => array(
-					'name'     => __( "Meta Data", "coreactivity" ),
+				'optional-meta' => array(
+					'name'     => __( "Standard Meta Data", "coreactivity" ),
 					'sections' => array(
 						array(
 							'label'    => '',

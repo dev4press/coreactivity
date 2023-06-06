@@ -4,7 +4,6 @@ namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
-use Dev4Press\v42\Core\Helpers\IP;
 use Dev4Press\v42\Core\Plugins\DBLite;
 use Dev4Press\v42\Core\Quick\Sanitize;
 use Dev4Press\v42\Core\UI\Elements;
@@ -20,6 +19,7 @@ class Logs extends Table {
 	public $_table_class_name = 'coreactivity-grid-logs';
 	public $_checkbox_field = 'log_id';
 	public $_self_nonce_key = 'coreactivity-table-logs';
+	public $_views_separator = '';
 	public $_display_columns_simplified;
 	public $_display_ip_country_flag;
 	public $_display_user_avatar;
@@ -48,18 +48,32 @@ class Logs extends Table {
 			$this->_filter_lock[ 'blog_id' ] = - 1;
 		}
 
-		if ( in_array( $this->_request_args[ 'view' ], array( 'user', 'ip', 'blog', 'object' ) ) ) {
+		if ( in_array( $this->_request_args[ 'view' ], array( 'user_id', 'blog_id', 'event_id', 'ip', 'object', 'component' ) ) ) {
 			$this->_current_view = $this->_request_args[ 'view' ];
 
 			switch ( $this->_current_view ) {
-				case 'user':
+				case 'component':
+					if ( ! isset( $this->_filter_lock[ 'component' ] ) && ! empty( $this->_request_args[ 'filter-component' ] ) ) {
+						$this->_filter_lock[ 'component' ] = $this->_request_args[ 'filter-component' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'event_id':
+					if ( ! isset( $this->_filter_lock[ 'event_id' ] ) && ! empty( $this->_request_args[ 'filter-event_id' ] ) ) {
+						$this->_filter_lock[ 'event_id' ] = $this->_request_args[ 'filter-event_id' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'user_id':
 					if ( ! isset( $this->_filter_lock[ 'user_id' ] ) && ! empty( $this->_request_args[ 'filter-user_id' ] ) ) {
 						$this->_filter_lock[ 'user_id' ] = $this->_request_args[ 'filter-user_id' ];
 					} else {
 						$this->_current_view = '';
 					}
 					break;
-				case 'blog':
+				case 'blog_id':
 					if ( ! isset( $this->_filter_lock[ 'blog_id' ] ) && ! empty( $this->_request_args[ 'filter-blog_id' ] ) ) {
 						$this->_filter_lock[ 'blog_id' ] = $this->_request_args[ 'filter-blog_id' ];
 					} else {
@@ -122,12 +136,24 @@ class Logs extends Table {
 			'paged'              => $this->_get_field( 'paged' ),
 		);
 
+		if ( ! empty( $this->_request_args[ 'filter-component' ] ) && ! Init::instance()->is_component_valid( $this->_request_args[ 'filter-component' ] ) ) {
+			$this->_request_args[ 'filter-component' ] = '';
+		}
+
+		if ( ! empty( $this->_request_args[ 'filter-event_id' ] ) && ! Init::instance()->is_event_id_valid( $this->_request_args[ 'filter-event_id' ] ) ) {
+			$this->_request_args[ 'filter-event_id' ] = '';
+		}
+
 		foreach ( array_keys( $this->_filter_lock ) as $field ) {
 			$key = 'filter-' . $field;
 
 			if ( isset( $this->_request_args[ $key ] ) ) {
 				$this->_request_args[ $key ] = '';
 			}
+		}
+
+		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
+			$this->_request_args[ 'filter-component' ] = '';
 		}
 	}
 
@@ -138,7 +164,7 @@ class Logs extends Table {
 			'name'     => 'period'
 		) );
 
-		if ( ! isset( $this->_filter_lock[ 'component' ] ) ) {
+		if ( ! isset( $this->_filter_lock[ 'component' ] ) && ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
 			$_components = array(
 				'' => __( "All Components", "coreactivity" )
 			);
@@ -153,7 +179,7 @@ class Logs extends Table {
 			) );
 		}
 
-		if ( ! isset( $this->_filter_lock[ 'event' ] ) ) {
+		if ( ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
 			$_events = array(
 				'' => __( "All Events", "coreactivity" )
 			);
@@ -222,32 +248,63 @@ class Logs extends Table {
 		$views = array();
 
 		if ( ! empty( $this->_current_view ) ) {
+			?>
+
+            <input type="hidden" name="view" value="<?php echo esc_attr( $this->_current_view ); ?>"/>
+            <input type="hidden" name="filter-<?php echo esc_attr( $this->_current_view ); ?>" value="<?php echo esc_attr( $this->_filter_lock[ $this->_current_view ] ); ?>"/>
+
+			<?php
+
 			$current_view = '';
 			$current_key  = 'view ';
 
-			$views[ 'all' ] = '<a href="' . $this->_url() . '">' . __( "All", "coreactivity" ) . '</a>';
+			$views[ 'all' ] = '<a class="coreactivity-view-button" href="' . $this->_url() . '"><i class="d4p-icon d4p-ui-angles-left"></i> ' . __( "All Logs", "coreactivity" ) . '</a>';
 
 			switch ( $this->_current_view ) {
+				case 'component':
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-tag"></i> <span>' . esc_html__( "Component" ) . '</span>';
+					$current_view .= Init::instance()->get_component_label( $this->_filter_lock[ 'component' ] );
+					$current_view .= '<span>[' . esc_html( $this->_filter_lock[ 'component' ] ) . ']</span>';
+					$current_view .= '</span>';
+
+					$current_key .= 'component';
+					break;
+				case 'event_id':
+					$event = Init::instance()->get_event_by_id( $this->_filter_lock[ 'event_id' ] );
+
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-radar"></i> <span>' . esc_html__( "Event" ) . '</span>';
+					$current_view .= $event->component_label . ' / ' . $event->label;
+					$current_view .= '<span>[' . $event->component . '/' . $event->event . ']</span>';
+					$current_view .= '</span>';
+
+					$current_key .= 'component';
+					break;
 				case 'ip':
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud"></i> <span>' . esc_html__( "IP" ) . '</span>';
+
 					if ( $this->_display_ip_country_flag ) {
 						$ip           = GEOJSIO::instance()->locate( $this->_filter_lock[ 'ip' ] );
-						$current_view = $ip->flag() . ' <span>' . $this->_filter_lock[ 'ip' ] . '</span>';
+						$current_view .= '<span>' . esc_html( $this->_filter_lock[ 'ip' ] ) . '</span> ' . $ip->flag();
 					} else {
-						$current_view = $this->_filter_lock[ 'ip' ];
+						$current_view .= $this->_filter_lock[ 'ip' ];
 					}
-					$current_key .= 'ip';
+
+					$current_view .= '</span>';
+					$current_key  .= 'ip';
 					break;
-				case 'user':
+				case 'user_id':
 					$user = get_user_by( 'id', $this->_filter_lock[ 'user_id' ] );
-					$name = !$user ? __( "Not Found", "coreactivity" ) : $user->display_name;
+					$name = ! $user ? __( "Not Found", "coreactivity" ) : $user->display_name;
+
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-user"></i> <span>' . esc_html__( "User" ) . '</span>';
+					$current_view .= '<span>' . esc_html( $this->_filter_lock[ 'user_id' ] . ' : ' . $name ) . '</span>';
 
 					if ( $this->_filter_lock[ 'user_id' ] > 0 && $this->_display_user_avatar ) {
-						$avatar       = get_avatar( $this->_filter_lock[ 'user_id' ], 30 );
-						$current_view = $avatar . ' <span>' . $this->_filter_lock[ 'user_id' ].' &middot; '.$name . '</span>';
-					} else {
-						$current_view = $this->_filter_lock[ 'user_id' ].' &middot; '.$name;
+						$current_view .= ' ' . get_avatar( $this->_filter_lock[ 'user_id' ], 30 );
 					}
-					$current_key .= 'user';
+
+					$current_view .= '</span>';
+					$current_key  .= 'user';
 					break;
 			}
 
@@ -274,7 +331,7 @@ class Logs extends Table {
 			'blog_id'     => __( "Blog", "coreactivity" ),
 			'user_id'     => __( "User", "coreactivity" ),
 			'component'   => __( "Component", "coreactivity" ),
-			'event'       => __( "Event", "coreactivity" ),
+			'event_id'    => __( "Event", "coreactivity" ),
 			'context'     => __( "Context", "coreactivity" ),
 			'method'      => __( "Method", "coreactivity" ),
 			'protocol'    => __( "Protocol", "coreactivity" ),
@@ -291,6 +348,10 @@ class Logs extends Table {
 			}
 		}
 
+		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
+			unset( $columns[ 'component' ] );
+		}
+
 		return $columns;
 	}
 
@@ -299,7 +360,7 @@ class Logs extends Table {
 			'log_id'    => array( 'l.log_id', false ),
 			'ip'        => array( 'l.ip', false ),
 			'component' => array( 'e.component', false ),
-			'event'     => array( 'e.event', false )
+			'event_id'  => array( 'e.event', false )
 		);
 	}
 
@@ -343,7 +404,7 @@ class Logs extends Table {
 	public function column_user_id( $item ) : string {
 		$render  = '';
 		$actions = array(
-			'view' => '<a href="' . $this->_view( 'user', 'filter-user_id=' . $item->user_id ) . '">' . esc_html__( "Logs", "coreactivity" ) . '</a>'
+			'view' => '<a href="' . $this->_view( 'user_id', 'filter-user_id=' . $item->user_id ) . '">' . esc_html__( "Logs", "coreactivity" ) . '</a>'
 		);
 
 		if ( $item->user_id == 0 ) {
@@ -366,7 +427,7 @@ class Logs extends Table {
 			} else {
 				$render .= $user->display_name;
 
-				$actions['edit'] = '<a href="user-edit.php?user_id=' . $item->user_id . '">' . esc_html__( "Edit", "coreactivity" )  . '</a>';
+				$actions[ 'edit' ] = '<a href="user-edit.php?user_id=' . $item->user_id . '">' . esc_html__( "Edit", "coreactivity" ) . '</a>';
 			}
 
 			$render .= '</span>';
@@ -380,7 +441,7 @@ class Logs extends Table {
 		return $render . $this->row_actions( $actions );
 	}
 
-	public function column_event( $item ) : string {
+	public function column_event_id( $item ) : string {
 		return $this->_display_columns_simplified ? Init::instance()->get_event_label( absint( $item->event_id ), $item->event ) : $item->event;
 	}
 

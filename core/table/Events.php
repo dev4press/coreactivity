@@ -97,6 +97,26 @@ class Events extends Table {
 		);
 	}
 
+	protected function column_component( $item ) : string {
+		$render = '<div class="coreactivity-field-wrapper">';
+		$render .= '<span>' . $item->component . '</span>';
+		$render .= '<a href="admin.php?page=coreactivity-logs&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "Filter" ) . '</span></a>';
+		$render .= '<a href="admin.php?page=coreactivity-logs&view=component&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "View" ) . '</span></a>';
+		$render .= '</div>';
+
+		return $render;
+	}
+
+	protected function column_event( $item ) : string {
+		$render = '<div class="coreactivity-field-wrapper">';
+		$render .= '<span>' . $item->event . '</span>';
+		$render .= '<a href="admin.php?page=coreactivity-logs&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "Filter" ) . '</span></a>';
+		$render .= '<a href="admin.php?page=coreactivity-logs&view=event_id&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "View" ) . '</span></a>';
+		$render .= '</div>';
+
+		return $render;
+	}
+
 	protected function column_description( $item ) : string {
 		return Init::instance()->get_event_description( $item->component, $item->event );
 	}

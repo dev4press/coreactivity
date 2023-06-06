@@ -5,10 +5,13 @@ namespace Dev4Press\Plugin\CoreActivity\Log;
 use Dev4Press\Plugin\CoreActivity\Basic\Cache;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Components\Error;
+use Dev4Press\Plugin\CoreActivity\Components\Plugin;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
+use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\v42\Core\Quick\Sanitize;
 use Dev4Press\v42\Core\Quick\Str;
+use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -53,6 +56,8 @@ class Init {
 
 	private function _init_components() {
 		Error::instance();
+		Plugin::instance();
+		Theme::instance();
 		User::instance();
 		Post::instance();
 	}
@@ -115,6 +120,18 @@ class Init {
 		return 'N/A';
 	}
 
+	public function get_event_by_id( int $event_id ) : ?stdClass {
+		foreach ( $this->events as $events ) {
+			foreach ( $events as $obj ) {
+				if ( $obj->event_id == $event_id ) {
+					return $obj;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public function get_component_label( string $component ) {
 		return $this->components[ $component ] ?? $component;
 	}
@@ -133,6 +150,14 @@ class Init {
 		}
 
 		return false;
+	}
+
+	public function is_component_valid( string $component ) : bool {
+		return isset( $this->events[ $component ] );
+	}
+
+	public function is_event_id_valid( int $event_id ) : bool {
+		return isset( $this->list[ $event_id ] );
 	}
 
 	public function event_status( int $event_id ) : string {

@@ -88,8 +88,15 @@
   color: var(--d4p-color-layout-accent);
   font-size: 1.5em;
 }
+.d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs ul.subsubsub {
+  display: inline-flex;
+  gap: 1em;
+  align-items: center;
+}
 .d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs ul.subsubsub .view {
   font-weight: bold;
+  display: flex;
+  gap: 1em;
 }
 .d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs ul.subsubsub .view.ip img {
   width: 23px;
@@ -100,4 +107,36 @@
   width: 18px;
   height: auto;
   vertical-align: bottom;
+}
+
+.subsubsub .coreactivity-view-button {
+  padding: 2px 8px;
+  border-radius: var(--d4p-layout-main-border-radius);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.subsubsub .coreactivity-view-button i {
+  font-size: 1.2em;
+  line-height: inherit;
+}
+.subsubsub span.coreactivity-view-button {
+  font-weight: normal;
+  line-height: 2;
+  border: 1px solid var(--d4p-color-main-border);
+  background-color: var(--d4p-color-main-background);
+}
+.subsubsub span.coreactivity-view-button i {
+  color: var(--d4p-color-layout-accent);
+}
+.subsubsub span.coreactivity-view-button span:first-of-type {
+  font-weight: bold;
+  color: var(--d4p-color-layout-accent);
+}
+.subsubsub a.coreactivity-view-button {
+  background: var(--d4p-color-layout-accent);
+  color: var(--d4p-color-main-background);
+}
+.subsubsub a.coreactivity-view-button i {
+  vertical-align: top;
 }
