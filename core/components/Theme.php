@@ -17,8 +17,10 @@ class Theme extends Component {
 	protected $storage = array();
 
 	public function tracking() {
-		add_action( 'delete_theme', array( $this, 'delete_theme' ) );
-		add_action( 'deleted_theme', array( $this, 'deleted_theme' ), 10, 2 );
+		if ( $this->is_active( 'deleted' ) ) {
+			add_action( 'delete_theme', array( $this, 'init_delete' ) );
+			add_action( 'deleted_theme', array( $this, 'event_deleted' ), 10, 2 );
+		}
 	}
 
 	public function label() : string {
@@ -31,11 +33,11 @@ class Theme extends Component {
 		);
 	}
 
-	public function delete_theme( $stylesheet ) {
+	public function init_delete( $stylesheet ) {
 		$this->storage[ $stylesheet ] = $this->_get_theme( $stylesheet );
 	}
 
-	public function deleted_theme( $stylesheet, $deleted ) {
+	public function event_deleted( $stylesheet, $deleted ) {
 		if ( $deleted ) {
 			if ( isset( $this->storage[ $stylesheet ] ) ) {
 				$this->log( 'deleted', array( 'object_name' => $stylesheet ), $this->_theme_meta( $stylesheet ) );

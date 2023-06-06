@@ -17,11 +17,18 @@ class Plugin extends Component {
 	protected $storage = array();
 
 	public function tracking() {
-		add_action( 'delete_plugin', array( $this, 'delete_plugin' ) );
-		add_action( 'deleted_plugin', array( $this, 'deleted_plugin' ), 10, 2 );
+		if ( $this->is_active( 'deleted' ) ) {
+			add_action( 'delete_plugin', array( $this, 'init_delete' ) );
+			add_action( 'deleted_plugin', array( $this, 'event_deleted' ), 10, 2 );
+		}
 
-		add_action( 'activated_plugin', array( $this, 'activated_plugin' ), 1000, 2 );
-		add_action( 'deactivated_plugin', array( $this, 'deactivated_plugin' ), 1000, 2 );
+		if ( $this->is_active( 'activated' ) || $this->is_active( 'network_activated' ) ) {
+			add_action( 'activated_plugin', array( $this, 'event_activated' ), 1000, 2 );
+		}
+
+		if ( $this->is_active( 'deactivated' ) || $this->is_active( 'network_deactivated' ) ) {
+			add_action( 'deactivated_plugin', array( $this, 'event_deactivated' ), 1000, 2 );
+		}
 	}
 
 	public function label() : string {
@@ -38,11 +45,11 @@ class Plugin extends Component {
 		);
 	}
 
-	public function delete_plugin( $plugin_file ) {
+	public function init_delete( $plugin_file ) {
 		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
 	}
 
-	public function deleted_plugin( $plugin_file, $deleted ) {
+	public function event_deleted( $plugin_file, $deleted ) {
 		if ( $deleted ) {
 			if ( isset( $this->storage[ $plugin_file ] ) ) {
 				$this->log( 'deleted', array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
@@ -50,20 +57,24 @@ class Plugin extends Component {
 		}
 	}
 
-	public function activated_plugin( $plugin_file, $network_wide = false ) {
+	public function event_activated( $plugin_file, $network_wide = false ) {
 		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
 
 		$event = $network_wide ? 'network_activated' : 'activated';
 
-		$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
+		if ( $this->is_active( $event ) ) {
+			$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
+		}
 	}
 
-	public function deactivated_plugin( $plugin_file, $network_wide = false ) {
+	public function event_deactivated( $plugin_file, $network_wide = false ) {
 		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
 
 		$event = $network_wide ? 'network_deactivated' : 'deactivated';
 
-		$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
+		if ( $this->is_active( $event ) ) {
+			$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
+		}
 	}
 
 	private function _get_plugin( $plugin_file ) : array {

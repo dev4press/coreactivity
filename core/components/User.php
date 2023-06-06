@@ -14,13 +14,21 @@ class User extends Component {
 	protected $object_type = 'user';
 	protected $scope = 'both';
 
+	protected $storage = array();
+
 	public function tracking() {
+		add_filter( 'authenticate', array( $this, 'init_authenticate' ), 10, 3 );
+
 		if ( $this->is_active( 'login' ) ) {
 			add_action( 'wp_login', array( $this, 'event_login' ), 10, 2 );
 		}
 
 		if ( $this->is_active( 'logout' ) ) {
 			add_action( 'wp_logout', array( $this, 'event_logout' ) );
+		}
+
+		if ( $this->is_active( 'failed_login' ) ) {
+			add_action( 'wp_login_failed', array( $this, 'event_failed_login' ), 10, 2 );
 		}
 	}
 
@@ -30,9 +38,17 @@ class User extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'login'  => array( 'label' => __( "Login", "coreactivity" ) ),
-			'logout' => array( 'label' => __( "Logout", "coreactivity" ) )
+			'login'        => array( 'label' => __( "Login", "coreactivity" ) ),
+			'logout'       => array( 'label' => __( "Logout", "coreactivity" ) ),
+			'failed_login' => array( 'label' => __( "Failed Login", "coreactivity" ) )
 		);
+	}
+
+	public function init_authenticate( $user, $username, $password ) {
+		$this->storage[ 'username' ] = $username;
+		$this->storage[ 'password' ] = $password;
+
+		return $user;
 	}
 
 	public function event_login( $username, $user = null ) {
@@ -51,5 +67,12 @@ class User extends Component {
 		if ( $user !== false ) {
 			$this->log( 'logout', array( 'user_id' => $user->ID, 'object_id' => $user->ID ), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
 		}
+	}
+
+	public function event_failed_login( $username, $error ) {
+		$user    = get_user_by( 'login', $username );
+		$user_id = $user->ID ?? 0;
+
+		$this->log( 'failed_login', array( 'object_id' => $user_id ), array( 'username' => $username, 'email' => $this->storage[ 'password' ] ) );
 	}
 }

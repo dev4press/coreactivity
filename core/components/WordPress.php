@@ -13,7 +13,9 @@ class WordPress extends Component {
 	protected $name = 'wordpress';
 
 	public function tracking() {
-		add_filter( 'schedule_event', array( $this, 'schedule_event' ), 10000 );
+		if ( $this->is_active( 'cron-schedule' ) ) {
+			add_filter( 'schedule_event', array( $this, 'event_schedule_event' ), 10000 );
+		}
 	}
 
 	public function label() : string {
@@ -26,7 +28,7 @@ class WordPress extends Component {
 		);
 	}
 
-	public function schedule_event( $event ) {
+	public function event_schedule_event( $event ) {
 		if ( $event ) {
 			$caller = wp_debug_backtrace_summary( null, 4, false );
 
