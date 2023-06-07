@@ -27,7 +27,7 @@ class User extends Component {
 			add_action( 'wp_logout', array( $this, 'event_logout' ) );
 		}
 
-		if ( $this->is_active( 'failed_login' ) ) {
+		if ( $this->is_active( 'failed-login' ) ) {
 			add_action( 'wp_login_failed', array( $this, 'event_failed_login' ), 10, 2 );
 		}
 	}
@@ -40,7 +40,7 @@ class User extends Component {
 		return array(
 			'login'        => array( 'label' => __( "Login", "coreactivity" ) ),
 			'logout'       => array( 'label' => __( "Logout", "coreactivity" ) ),
-			'failed_login' => array( 'label' => __( "Failed Login", "coreactivity" ) )
+			'failed-login' => array( 'label' => __( "Failed Login", "coreactivity" ) )
 		);
 	}
 
@@ -73,6 +73,11 @@ class User extends Component {
 		$user    = get_user_by( 'login', $username );
 		$user_id = $user->ID ?? 0;
 
-		$this->log( 'failed_login', array( 'object_id' => $user_id ), array( 'username' => $username, 'email' => $this->storage[ 'password' ] ) );
+		if ( $user_id == 0 ) {
+			$user    = get_user_by( 'email', $username );
+			$user_id = $user->ID ?? 0;
+		}
+
+		$this->log( 'failed-login', array( 'object_id' => $user_id ), array( 'login' => $username, 'password' => $this->storage[ 'password' ] ) );
 	}
 }

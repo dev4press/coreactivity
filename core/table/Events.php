@@ -13,10 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Events extends Table {
-	public $_sanitize_orderby_fields = array( 'event_id', 'component', 'name' );
+	public $_sanitize_orderby_fields = array( 'e.event_id', 'e.component', 'e.event', 'logs' );
 	public $_table_class_name = 'coreactivity-grid-events';
 	public $_checkbox_field = 'event_id';
 	public $_self_nonce_key = 'coreactivity-table-events';
+	public $_logged_counts = array();
 
 	public function __construct( $args = array() ) {
 		parent::__construct( array(
@@ -50,7 +51,7 @@ class Events extends Table {
 		echo '</div>';
 	}
 
-	protected function get_row_classes( $item ) : array {
+	protected function get_row_classes( $item, $classes = array() ) : array {
 		$classes = array();
 
 		if ( ! Init::instance()->is_event_loaded( $item->component, $item->event ) ) {
@@ -77,6 +78,7 @@ class Events extends Table {
 			'status'      => __( "Status", "coreactivity" ),
 			'component'   => __( "Component", "coreactivity" ),
 			'event'       => __( "Event", "coreactivity" ),
+			'logs'        => __( "Logs", "coreactivity" ),
 			'description' => __( "Description", "coreactivity" ),
 			'loaded'      => __( "Loaded", "coreactivity" )
 		);
@@ -84,9 +86,10 @@ class Events extends Table {
 
 	protected function get_sortable_columns() : array {
 		return array(
-			'event_id'  => array( 'event_id', false ),
-			'component' => array( 'component', false ),
-			'event'     => array( 'event', false )
+			'event_id'  => array( 'e.event_id', false ),
+			'component' => array( 'e.component', false ),
+			'event'     => array( 'e.event', false ),
+			'logs'      => array( 'logs', false )
 		);
 	}
 
@@ -110,8 +113,12 @@ class Events extends Table {
 	protected function column_event( $item ) : string {
 		$render = '<div class="coreactivity-field-wrapper">';
 		$render .= '<span>' . $item->event . '</span>';
-		$render .= '<a href="admin.php?page=coreactivity-logs&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "Filter" ) . '</span></a>';
-		$render .= '<a href="admin.php?page=coreactivity-logs&view=event_id&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "View" ) . '</span></a>';
+
+		if ( $item->logs > 0 ) {
+			$render .= '<a href="admin.php?page=coreactivity-logs&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "Filter" ) . '</span></a>';
+			$render .= '<a href="admin.php?page=coreactivity-logs&view=event_id&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "View" ) . '</span></a>';
+		}
+
 		$render .= '</div>';
 
 		return $render;
@@ -141,11 +148,14 @@ class Events extends Table {
 
 		$sql = array(
 			'select' => array(
-				'*'
+				'e.*',
+				'COUNT(l.`log_id`) AS `logs`'
 			),
 			'from'   => array(
-				coreactivity_db()->events
+				coreactivity_db()->events . ' e',
+				'LEFT JOIN ' . coreactivity_db()->logs . ' l ON l.`event_id` = e.`event_id`'
 			),
+			'group'  => 'e.`event_id`',
 			'where'  => array()
 		);
 

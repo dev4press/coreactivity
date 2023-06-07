@@ -29,6 +29,7 @@ abstract class Component {
 	 */
 	protected $object_type = '';
 	protected $scope = '';
+	protected $group = 'wordpress';
 	/**
 	 * @var array
 	 */

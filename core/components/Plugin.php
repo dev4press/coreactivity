@@ -22,11 +22,11 @@ class Plugin extends Component {
 			add_action( 'deleted_plugin', array( $this, 'event_deleted' ), 10, 2 );
 		}
 
-		if ( $this->is_active( 'activated' ) || $this->is_active( 'network_activated' ) ) {
+		if ( $this->is_active( 'activated' ) || $this->is_active( 'network-activated' ) ) {
 			add_action( 'activated_plugin', array( $this, 'event_activated' ), 1000, 2 );
 		}
 
-		if ( $this->is_active( 'deactivated' ) || $this->is_active( 'network_deactivated' ) ) {
+		if ( $this->is_active( 'deactivated' ) || $this->is_active( 'network-deactivated' ) ) {
 			add_action( 'deactivated_plugin', array( $this, 'event_deactivated' ), 1000, 2 );
 		}
 	}
@@ -39,9 +39,9 @@ class Plugin extends Component {
 		return array(
 			'deleted'             => array( 'label' => __( "Plugin Deleted", "coreactivity" ) ),
 			'activated'           => array( 'label' => __( "Plugin Activated", "coreactivity" ), 'scope' => 'blog' ),
-			'network_activated'   => array( 'label' => __( "Plugin Network Activated", "coreactivity" ), 'scope' => 'network' ),
+			'network-activated'   => array( 'label' => __( "Plugin Network Activated", "coreactivity" ), 'scope' => 'network' ),
 			'deactivated'         => array( 'label' => __( "Plugin Deactivated", "coreactivity" ), 'scope' => 'blog' ),
-			'network_deactivated' => array( 'label' => __( "Plugin Network Deactivated", "coreactivity" ), 'scope' => 'network' )
+			'network-deactivated' => array( 'label' => __( "Plugin Network Deactivated", "coreactivity" ), 'scope' => 'network' )
 		);
 	}
 
@@ -60,7 +60,7 @@ class Plugin extends Component {
 	public function event_activated( $plugin_file, $network_wide = false ) {
 		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
 
-		$event = $network_wide ? 'network_activated' : 'activated';
+		$event = $network_wide ? 'network-activated' : 'activated';
 
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
@@ -70,7 +70,7 @@ class Plugin extends Component {
 	public function event_deactivated( $plugin_file, $network_wide = false ) {
 		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
 
-		$event = $network_wide ? 'network_deactivated' : 'deactivated';
+		$event = $network_wide ? 'network-deactivated' : 'deactivated';
 
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
@@ -82,7 +82,7 @@ class Plugin extends Component {
 	}
 
 	private function _plugin_meta( $plugin_file ) : array {
-		return array(
+		$meta = array(
 			'plugin_name'        => strip_tags( $this->storage[ $plugin_file ][ 'Name' ] ?? '' ),
 			'plugin_title'       => strip_tags( $this->storage[ $plugin_file ][ 'Title' ] ?? '' ),
 			'plugin_author'      => strip_tags( $this->storage[ $plugin_file ][ 'Author' ] ?? '' ),
@@ -90,5 +90,11 @@ class Plugin extends Component {
 			'plugin_version'     => $this->storage[ $plugin_file ][ 'Version' ] ?? '',
 			'plugin_url'         => $this->storage[ $plugin_file ][ 'PluginURI' ] ?? ''
 		);
+
+		if ( ! coreactivity_settings()->get( 'log_if_available_description' ) ) {
+			unset( $meta[ 'plugin_description' ] );
+		}
+
+		return $meta;
 	}
 }

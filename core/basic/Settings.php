@@ -17,13 +17,15 @@ class Settings extends BaseSettings {
 			'activated' => 0
 		),
 		'settings' => array(
-			'log_if_available_user_agent' => true,
-			'log_if_available_referer'    => false,
-			'display_columns_simplified'  => false,
-			'display_ip_country_flag'     => false,
-			'display_user_avatar'         => false,
-			'auto_cleanup_active'         => true,
-			'auto_cleanup_period'         => 24
+			'log_if_available_user_agent'  => true,
+			'log_if_available_referer'     => false,
+			'log_if_available_description' => false,
+			'display_columns_simplified'   => false,
+			'display_ip_country_flag'      => false,
+			'display_user_avatar'          => false,
+			'display_request_column'       => true,
+			'auto_cleanup_active'          => true,
+			'auto_cleanup_period'          => 24
 		)
 	);
 

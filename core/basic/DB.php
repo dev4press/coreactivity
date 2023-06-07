@@ -83,4 +83,11 @@ class DB extends BaseDB {
 	public function change_event_status( int $event_id, string $new_status ) {
 		$this->update( $this->events, array( 'status' => $new_status ), array( 'event_id' => $event_id ), array( '%s' ), array( '%d' ) );
 	}
+
+	public function count_logged_events() : array {
+		$sql = "SELECT `event_id`, COUNT(*) as `logs` FROM " . $this->logs . " GROUP BY `event_id`";
+		$raw = $this->get_results( $sql );
+
+		return empty( $raw ) ? array() : $this->pluck( $raw, 'logs', 'event_id' );
+	}
 }

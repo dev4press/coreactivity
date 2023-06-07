@@ -48,13 +48,19 @@ class Theme extends Component {
 	private function _get_theme( $stylesheet ) : array {
 		$theme = wp_get_theme( $stylesheet );
 
-		return array(
-			'theme_name'        => $theme->get( 'Name' ),
-			'theme_version'     => $theme->get( 'Version' ),
-			'theme_author'      => $theme->get( 'Author' ),
+		$meta = array(
+			'theme_name'        => strip_tags( $theme->get( 'Name' ) ),
+			'theme_author'      => strip_tags( $theme->get( 'Author' ) ),
 			'theme_description' => $theme->get( 'Description' ),
+			'theme_version'     => $theme->get( 'Version' ),
 			'theme_url'         => $theme->get( 'ThemeURI' )
 		);
+
+		if ( ! coreactivity_settings()->get( 'log_if_available_description' ) ) {
+			unset( $meta[ 'theme_description' ] );
+		}
+
+		return $meta;
 	}
 
 	private function _theme_meta( $stylesheet ) : array {

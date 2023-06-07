@@ -4,6 +4,9 @@
 .coreactivity-grid-events tr th.column-event_id {
   width: 80px;
 }
+.coreactivity-grid-events tr th.column-logs {
+  width: 100px;
+}
 .coreactivity-grid-events tr th.column-status {
   width: 70px;
 }
@@ -32,8 +35,21 @@
   color: red;
 }
 
+.coreactivity-grid-logs.striped tbody tr:nth-child(4n+1),
+.coreactivity-grid-logs.striped tbody tr:nth-child(4n+2) {
+  background-color: #F2F2F2 !important;
+}
+.coreactivity-grid-logs.striped tbody tr:nth-child(4n),
+.coreactivity-grid-logs.striped tbody tr:nth-child(4n-1) {
+  background-color: #FFF !important;
+}
 .coreactivity-grid-logs tr th.column-blog_id, .coreactivity-grid-logs tr th.column-log_id {
   width: 80px;
+}
+.coreactivity-grid-logs tr th.column-meta {
+  width: 48px;
+  text-align: center;
+  cursor: pointer;
 }
 .coreactivity-grid-logs tr th.column-method, .coreactivity-grid-logs tr th.column-context, .coreactivity-grid-logs tr th.column-protocol {
   width: 100px;
@@ -56,6 +72,44 @@
 }
 .coreactivity-grid-logs tr td.column-user_id i {
   color: #AAA;
+}
+.coreactivity-grid-logs tr td.column-meta {
+  text-align: center;
+  vertical-align: middle;
+}
+.coreactivity-grid-logs tr td.column-meta button {
+  background: none;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.coreactivity-grid-logs tr.coreactivity-hidden-row.__hidden {
+  display: none;
+}
+.coreactivity-grid-logs tr.coreactivity-hidden-row td {
+  padding-top: 0;
+}
+.coreactivity-grid-logs tr.coreactivity-hidden-row td > div {
+  padding: 0.5em 0 0;
+  border-top: 1px dashed #DDD;
+  display: flex;
+  gap: 1em;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+.coreactivity-grid-logs tr.coreactivity-hidden-row td > div > ul {
+  margin: 0;
+  list-style: none;
+  flex: 0 0 calc(50% - 8px);
+}
+.coreactivity-grid-logs tr.coreactivity-hidden-row td > div > ul li {
+  word-break: break-all;
+  display: flex;
+}
+.coreactivity-grid-logs tr.coreactivity-hidden-row td > div > ul li strong {
+  min-width: 150px;
 }
 
 .coreactivity-field-wrapper {

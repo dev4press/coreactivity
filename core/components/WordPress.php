@@ -16,6 +16,10 @@ class WordPress extends Component {
 		if ( $this->is_active( 'cron-schedule' ) ) {
 			add_filter( 'schedule_event', array( $this, 'event_schedule_event' ), 10000 );
 		}
+
+		if ( $this->is_active( 'content-export' ) ) {
+			add_filter( 'export_wp', array( $this, 'event_content_export' ) );
+		}
 	}
 
 	public function label() : string {
@@ -24,7 +28,8 @@ class WordPress extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'cron-schedule' => array( 'label' => __( "CRON Event Scheduled", "coreactivity" ), 'scope' => 'blog' )
+			'cron-schedule'  => array( 'label' => __( "CRON Event Scheduled", "coreactivity" ), 'scope' => 'blog' ),
+			'content-export' => array( 'label' => __( "Content Export", "coreactivity" ), 'scope' => 'blog' )
 		);
 	}
 
@@ -42,5 +47,11 @@ class WordPress extends Component {
 		}
 
 		return $event;
+	}
+
+	public function event_content_export( $args ) {
+		$this->log( 'content-export', array(), array(
+			'export_args' => $args
+		) );
 	}
 }

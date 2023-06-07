@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Log\Core;
+use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
 use Dev4Press\v42\Core\Plugins\DBLite;
 use Dev4Press\v42\Core\Quick\Sanitize;
@@ -23,6 +24,7 @@ class Logs extends Table {
 	public $_display_columns_simplified;
 	public $_display_ip_country_flag;
 	public $_display_user_avatar;
+	public $_display_request_column;
 	public $_current_view = '';
 	public $_current_ip = '';
 	public $_server_ip = '';
@@ -43,6 +45,7 @@ class Logs extends Table {
 		$this->_display_columns_simplified = coreactivity_settings()->get( 'display_columns_simplified' );
 		$this->_display_ip_country_flag    = coreactivity_settings()->get( 'display_ip_country_flag' );
 		$this->_display_user_avatar        = coreactivity_settings()->get( 'display_user_avatar' );
+		$this->_display_request_column     = coreactivity_settings()->get( 'display_request_column' );
 
 		if ( ! is_multisite() ) {
 			$this->_filter_lock[ 'blog_id' ] = - 1;
@@ -89,6 +92,8 @@ class Logs extends Table {
 					break;
 			}
 		}
+
+		Display::instance();
 	}
 
 	protected function _view( string $view, string $args ) : string {
@@ -315,10 +320,10 @@ class Logs extends Table {
 	}
 
 	public function rows_per_page() : int {
-		$per_page = get_user_option( 'coreactivity_events_rows_per_page' );
+		$per_page = get_user_option( 'coreactivity_logs_rows_per_page' );
 
 		if ( empty( $per_page ) || $per_page < 1 ) {
-			$per_page = 50;
+			$per_page = 25;
 		}
 
 		return $per_page;
@@ -339,8 +344,13 @@ class Logs extends Table {
 			'request'     => __( "Request", "coreactivity" ),
 			'object_type' => __( "Object Type", "coreactivity" ),
 			'object_name' => __( "Object", "coreactivity" ),
-			'logged'      => __( "Logged", "coreactivity" )
+			'logged'      => __( "Logged", "coreactivity" ),
+			'meta'        => '<i class="vers d4p-icon d4p-ui-chevron-square-down d4p-icon-lg" title="' . esc_attr__( "Toggle Meta" ) . '"></i><span class="screen-reader-text">' . esc_html__( "Toggle Meta" ) . '</span>'
 		);
+
+		if ( ! $this->_display_request_column ) {
+			unset( $columns[ 'request' ] );
+		}
 
 		foreach ( array_keys( $this->_filter_lock ) as $column ) {
 			if ( isset( $columns[ $column ] ) ) {
@@ -368,6 +378,57 @@ class Logs extends Table {
 		return array(
 			'delete' => __( "Delete", "coreactivity" )
 		);
+	}
+
+	public function single_row( $item ) {
+		parent::single_row( $item );
+
+		$classes = $this->get_row_classes( $item, array( 'coreactivity-hidden-row', '__hidden' ) );
+
+		echo '<tr class="' . esc_attr( join( ' ', $classes ) ) . '">';
+		$this->single_hidden_row( $item );
+		echo '</tr>';
+	}
+
+	public function single_hidden_row( $item ) {
+		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
+
+		$total = count( $columns ) - count( $hidden );
+		$metas = array( 'referer', 'user_agent' );
+
+		$left  = array();
+		$right = array();
+
+		if ( ! $this->_display_request_column ) {
+			$left[] = '<li><strong>' . esc_html__( "request" ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
+		}
+
+		if ( isset( $item->meta[ 'referer' ] ) ) {
+			$left[] = '<li><strong>' . esc_html__( "referer" ) . ':</strong><span>' . esc_html( $item->meta[ 'referer' ] ) . '</span></li>';
+		}
+
+		if ( isset( $item->meta[ 'user_agent' ] ) ) {
+			$left[] = '<li><strong>' . esc_html__( "user_agent" ) . ':</strong><span>' . esc_html( $item->meta[ 'user_agent' ] ) . '</span></li>';
+		}
+
+		foreach ( $item->meta as $key => $value ) {
+			if ( in_array( $key, $metas ) ) {
+				continue;
+			}
+
+			$value = is_scalar( $value ) ? $value : json_encode( $value );
+
+			$right[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . esc_html( $value ) . '</span></li>';
+		}
+
+		echo '<td colspan="' . $total . '">';
+		echo '<div>';
+
+		echo '<ul>' . join( '', $right ) . '</ul>';
+		echo '<ul>' . join( '', $left ) . '</ul>';
+
+		echo '</div>';
+		echo '</td>';
 	}
 
 	public function column_component( $item ) : string {
@@ -449,6 +510,12 @@ class Logs extends Table {
 		return ! empty( $item->object_type ) ? Init::instance()->get_object_type_label( $item->object_type ) : '/';
 	}
 
+	public function column_object_name( $item ) : string {
+		$render = $item->object_name ?? '';
+
+		return apply_filters( 'coreactivity_logs_field_render_object_name', (string) $render, $item );
+	}
+
 	public function column_context( $item ) : string {
 		return ! empty( $item->context ) ? strtoupper( $item->context ) : '/';
 	}
@@ -457,6 +524,10 @@ class Logs extends Table {
 		$timestamp = coreactivity()->datetime()->timestamp_gmt_to_local( strtotime( $item->logged ) );
 
 		return date( 'Y.m.d', $timestamp ) . '<br/>@ ' . date( 'H:m:s', $timestamp );
+	}
+
+	public function column_meta( $item ) : string {
+		return '<button type="button" aria-label="' . esc_attr__( "Show Log Meta Data" ) . '"><i class="d4p-icon d4p-ui-chevron-square-down d4p-icon-lg"></i></button>';
 	}
 
 	public function prepare_items() {
