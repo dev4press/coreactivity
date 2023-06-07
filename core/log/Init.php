@@ -10,6 +10,8 @@ use Dev4Press\Plugin\CoreActivity\Components\Post;
 use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\Plugin\CoreActivity\Components\WordPress;
+use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
+use Dev4Press\v41\Core\Quick\WPR;
 use Dev4Press\v42\Core\Quick\Sanitize;
 use Dev4Press\v42\Core\Quick\Str;
 use stdClass;
@@ -21,6 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Init {
 	private $events = array();
 	private $components = array();
+	private $categories = array();
 	private $list = array();
 	private $object_types = array();
 
@@ -63,9 +66,18 @@ class Init {
 		Theme::instance();
 		User::instance();
 		Post::instance();
+
+		if ( WPR::is_plugin_active( 'user-switching/user-switching.php' ) ) {
+			UserSwitching::instance();
+		}
 	}
 
 	public function ready() {
+		$this->categories = array(
+			'wordpress' => __( "WordPress" ),
+			'plugin'    => __( "Plugin" )
+		);
+
 		$this->_init_events();
 		$this->_init_components();
 
@@ -96,6 +108,10 @@ class Init {
 
 	public function components() : array {
 		return $this->components;
+	}
+
+	public function categories() : array {
+		return $this->categories;
 	}
 
 	public function object_types() : array {
@@ -179,9 +195,10 @@ class Init {
 		return in_array( $status, array( 'active', 'inactive' ) ) ? $status : '';
 	}
 
-	public function register( string $component, string $component_label, string $event, string $label, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
+	public function register( string $category, string $component, string $component_label, string $event, string $label, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
 		$obj = (object) array(
 			'event_id'        => 0,
+			'category'        => $category,
 			'component'       => $component,
 			'component_label' => $component_label,
 			'event'           => $event,
@@ -207,7 +224,7 @@ class Init {
 			$obj->event_id                           = $this->events[ $component ][ $event ]->event_id;
 			$this->list[ $obj->event_id ][ 'label' ] = $label;
 		} else {
-			$id = DB::instance()->add_new_event( $component, $event, $status, $rules );
+			$id = DB::instance()->add_new_event( $category, $component, $event, $status, $rules );
 
 			if ( $id > 0 ) {
 				$obj->event_id = $id;

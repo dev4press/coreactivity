@@ -1,6 +1,6 @@
 <?php
 
-namespace Dev4Press\Plugin\CoreActivity\plugins;
+namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
 
@@ -11,10 +11,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 class UserSwitching extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'user-switching';
-	protected $group = 'plugin';
+	protected $category = 'plugin';
 
 	public function tracking() {
-		// TODO: Implement tracking() method.
+		if ( $this->is_active( 'switch-to-user' ) ) {
+			add_action( 'switch_to_user', array( $this, 'event_switch_to_user' ), 10, 2 );
+		}
+
+		if ( $this->is_active( 'switch-back-user' ) || $this->is_active( 'switch-back' ) ) {
+			add_action( 'switch_back_user', array( $this, 'event_switch_back_user' ), 10, 2 );
+		}
+
+		if ( $this->is_active( 'switch-off-user' ) ) {
+			add_action( 'switch_off_user', array( $this, 'event_switch_off_user' ) );
+		}
 	}
 
 	public function label() : string {
@@ -23,12 +33,62 @@ class UserSwitching extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'404'        => array( 'label' => __( "404 Not Found", "coreactivity" ) ),
-			'404-php'    => array( 'label' => __( "404 Not Found PHP", "coreactivity" ) ),
-			'404-file'   => array( 'label' => __( "404 Not Found File", "coreactivity" ) ),
-			'404-media'  => array( 'label' => __( "404 Not Found Media", "coreactivity" ) ),
-			'404-script' => array( 'label' => __( "404 Not Found Script", "coreactivity" ) ),
-			'404-style'  => array( 'label' => __( "404 Not Found Style", "coreactivity" ) )
+			'switch-to-user'   => array( 'label' => __( "Switched to User", "coreactivity" ) ),
+			'switch-off-user'  => array( 'label' => __( "Switched Off", "coreactivity" ) ),
+			'switch-back-user' => array( 'label' => __( "Switched Back from User", "coreactivity" ) ),
+			'switch-back'      => array( 'label' => __( "Switched Back", "coreactivity" ) )
+		);
+	}
+
+	public function event_switch_to_user( $user_id, $old_user_id ) {
+		$user = get_user_by( 'id', $user_id );
+
+		$this->log( 'switch-to-user',
+			array(
+				'user_id'     => $old_user_id,
+				'object_type' => 'user',
+				'object_id'   => $user_id
+			), array(
+				'switched_to_user' => $user->user_login ?? ''
+			)
+		);
+	}
+
+	public function event_switch_back_user( $user_id, $old_user_id ) {
+		if ( $old_user_id === false ) {
+			if ( $this->is_active( 'switch-back' ) ) {
+				$this->log( 'switch-back',
+					array(
+						'user_id'     => $user_id,
+						'object_type' => 'user',
+						'object_id'   => $user_id
+					)
+				);
+			}
+		} else {
+			if ( $this->is_active( 'switch-back-user' ) ) {
+				$user = get_user_by( 'id', $old_user_id );
+
+				$this->log( 'switch-back-user',
+					array(
+						'user_id'     => $old_user_id,
+						'object_type' => 'user',
+						'object_id'   => $user_id
+					), array(
+						'switched_from_user' => $user->user_login ?? ''
+					)
+				);
+			}
+		}
+	}
+
+	public function event_switch_off_user( $user_id ) {
+		$this->log( 'switch-off-user',
+			array(
+				'user_id'     => $user_id,
+				'object_type' => 'user',
+				'object_id'   => $user_id
+			)
 		);
 	}
 }

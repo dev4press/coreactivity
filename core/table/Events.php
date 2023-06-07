@@ -33,6 +33,7 @@ class Events extends Table {
 
 	protected function process_request_args() {
 		$this->_request_args = array(
+			'filter-group'     => Sanitize::_get_basic( 'filter-group', '' ),
 			'filter-component' => Sanitize::_get_basic( 'filter-component', '' ),
 			'search'           => $this->_get_field( 's' ),
 			'orderby'          => $this->_get_field( 'orderby', 'event_id' ),
@@ -43,6 +44,11 @@ class Events extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
+		Elements::instance()->select( array_merge( array( '' => __( "All Categories", "coreactivity" ) ), Init::instance()->categories() ), array(
+			'selected' => $this->get_request_arg( 'filter-group' ),
+			'name'     => 'filter-group'
+		) );
+
 		Elements::instance()->select( array_merge( array( '' => __( "All Components", "coreactivity" ) ), Init::instance()->components() ), array(
 			'selected' => $this->get_request_arg( 'filter-component' ),
 			'name'     => 'filter-component'
@@ -76,6 +82,7 @@ class Events extends Table {
 			'cb'          => '<input type="checkbox" />',
 			'event_id'    => __( "ID", "coreactivity" ),
 			'status'      => __( "Status", "coreactivity" ),
+			'category'    => __( "Category", "coreactivity" ),
 			'component'   => __( "Component", "coreactivity" ),
 			'event'       => __( "Event", "coreactivity" ),
 			'logs'        => __( "Logs", "coreactivity" ),
@@ -98,6 +105,14 @@ class Events extends Table {
 			'enable'  => __( "Enable", "coreactivity" ),
 			'disable' => __( "Disable", "coreactivity" )
 		);
+	}
+
+	protected function column_category( $item ) : string {
+		$render = '<div class="coreactivity-field-wrapper">';
+		$render .= '<span>' . $item->category . '</span>';
+		$render .= '</div>';
+
+		return $render;
 	}
 
 	protected function column_component( $item ) : string {

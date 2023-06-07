@@ -15,6 +15,7 @@ class Plugin extends BasePlugin {
 	public $plugin_prefix = 'coreactivity';
 	public $plugin_menu = 'CoreActivity';
 	public $plugin_title = 'CoreActivity';
+	public $buy_me_a_coffee = true;
 	public $plugin_settings = 'network-only';
 
 	public $auto_mod_interface_colors = true;
@@ -51,11 +52,6 @@ class Plugin extends BasePlugin {
 				'ver'  => coreactivity_settings()->file_version(),
 				'src'  => 'plugin'
 			) );
-	}
-
-	protected function extra_enqueue_scripts_plugin() {
-		$this->enqueue->css( 'coreactivity-admin' );
-		$this->enqueue->js( 'coreactivity-admin' );
 	}
 
 	public function plugins_loaded() {
@@ -112,19 +108,19 @@ class Plugin extends BasePlugin {
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\About',
 				'scope' => array( 'blog', 'network' )
 			),
-			'events'    => array(
-				'title' => __( "Events", "coreactivity" ),
-				'icon'  => 'ui-radar',
-				'info'  => __( "All the events registered for activity tracking and logging.", "coreactivity" ),
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Events',
-				'scope' => array( 'network' )
-			),
 			'logs'      => array(
 				'title' => __( "Logs", "coreactivity" ),
 				'icon'  => 'ui-calendar-pen',
 				'info'  => __( "Detailed log with all the logged activities for all supported events.", "coreactivity" ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Logs',
 				'scope' => array( 'blog', 'network' )
+			),
+			'events'    => array(
+				'title' => __( "Events", "coreactivity" ),
+				'icon'  => 'ui-radar',
+				'info'  => __( "All the events registered for activity tracking and logging.", "coreactivity" ),
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Events',
+				'scope' => array( 'network' )
 			),
 			'settings'  => array(
 				'title' => __( "Settings", "coreactivity" ),
@@ -169,5 +165,10 @@ class Plugin extends BasePlugin {
 
 	public function settings_definitions() : Settings {
 		return Settings::instance();
+	}
+
+	protected function extra_enqueue_scripts_plugin() {
+		$this->enqueue->css( 'coreactivity-admin' );
+		$this->enqueue->js( 'coreactivity-admin' );
 	}
 }

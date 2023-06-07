@@ -4,6 +4,9 @@
 .coreactivity-grid-events tr th.column-event_id {
   width: 80px;
 }
+.coreactivity-grid-events tr th.column-category {
+  width: 120px;
+}
 .coreactivity-grid-events tr th.column-logs {
   width: 100px;
 }

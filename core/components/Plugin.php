@@ -91,6 +91,10 @@ class Plugin extends Component {
 			'plugin_url'         => $this->storage[ $plugin_file ][ 'PluginURI' ] ?? ''
 		);
 
+		if ( $meta[ 'plugin_name' ] == $meta[ 'plugin_title' ] ) {
+			unset( $meta[ 'plugin_name' ] );
+		}
+
 		if ( ! coreactivity_settings()->get( 'log_if_available_description' ) ) {
 			unset( $meta[ 'plugin_description' ] );
 		}
