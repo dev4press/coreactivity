@@ -66,6 +66,7 @@ class DB extends BaseDB {
 
 	public function add_new_event( string $category, string $component, string $event, string $status = 'active', array $rules = array() ) : int {
 		$data = array(
+			'category' => $category,
 			'component' => $component,
 			'event'     => $event,
 			'status'    => $status

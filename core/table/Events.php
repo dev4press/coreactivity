@@ -49,7 +49,8 @@ class Events extends Table {
 			'name'     => 'filter-group'
 		) );
 
-		Elements::instance()->select( array_merge( array( '' => __( "All Components", "coreactivity" ) ), Init::instance()->components() ), array(
+		Elements::instance()->select_grouped( Init::instance()->get_select_event_components( true ), array(
+			'empty'    => __( "All Components" ),
 			'selected' => $this->get_request_arg( 'filter-component' ),
 			'name'     => 'filter-component'
 		) );
@@ -118,9 +119,12 @@ class Events extends Table {
 	protected function column_component( $item ) : string {
 		$render = '<div class="coreactivity-field-wrapper">';
 		$render .= '<span>' . $item->component . '</span>';
-		$render .= '<a href="admin.php?page=coreactivity-logs&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "Filter" ) . '</span></a>';
-		$render .= '<a href="admin.php?page=coreactivity-logs&view=component&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "View" ) . '</span></a>';
-		$render .= '</div>';
+
+		if ( $this->_logged_counts[ $item->component ] > 0 ) {
+			$render .= '<a href="admin.php?page=coreactivity-logs&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "Filter" ) . '</span></a>';
+			$render .= '<a href="admin.php?page=coreactivity-logs&view=component&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "View" ) . '</span></a>';
+			$render .= '</div>';
+		}
 
 		return $render;
 	}
@@ -183,5 +187,13 @@ class Events extends Table {
 		}
 
 		$this->query_items( $sql, $per_page );
+
+		foreach ( $this->items as $item ) {
+			if ( ! isset( $this->_logged_counts[ $item->component ] ) ) {
+				$this->_logged_counts[ $item->component ] = 0;
+			}
+
+			$this->_logged_counts[ $item->component ] += $item->logs;
+		}
 	}
 }

@@ -35,6 +35,9 @@ class Display {
 			case 'post':
 				$render = $this->_display_post( $item );
 				break;
+			case 'term':
+				$render = $this->_display_term( $item );
+				break;
 		}
 
 		return $render;
@@ -73,6 +76,28 @@ class Display {
 
 	private function _display_post( stdClass $item ) : string {
 		$render = '';
+
+		$post = get_post($item->object_id);
+
+		if ($post instanceof \WP_Post) {
+			$render .= sprintf( __( "ID: %s &middot; Post: %s<br/>Post Type: %s" ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
+		} else {
+			$render .= 'MISSING: <strong>' . $item->object_id . '</strong>';
+		}
+
+		return $render;
+	}
+
+	private function _display_term( stdClass $item ) : string {
+		$render = '';
+
+		$term = get_term( $item->object_id );
+
+		if ( $term instanceof \WP_Term ) {
+			$render .= sprintf( __( "ID: %s &middot; Term: %s<br/>Taxonomy: %s" ), '<strong>' . $term->term_id . '</strong>', '<strong><a href="' . get_edit_term_link( $term ) . '">' . $term->name . '</a></strong>', '<strong>' . $term->taxonomy . '</strong>' );
+		} else {
+			$render .= 'MISSING: <strong>' . $item->object_id . '</strong>';
+		}
 
 		return $render;
 	}

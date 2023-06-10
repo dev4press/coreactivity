@@ -12,9 +12,18 @@ class Post extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'post';
 	protected $object_type = 'post';
+	protected $do_not_log = array();
 
 	public function tracking() {
 
+	}
+
+	public function init() {
+		$this->do_not_log = apply_filters( 'coreactivity_post_do_not_log_post_types', array() );
+	}
+
+	public function is_post_type_allowed( string $post_type ) : bool {
+		return ! in_array( $post_type, $this->do_not_log );
 	}
 
 	public function label() : string {

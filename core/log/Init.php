@@ -4,14 +4,18 @@ namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Cache;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
+use Dev4Press\Plugin\CoreActivity\Components\Comment;
 use Dev4Press\Plugin\CoreActivity\Components\Error;
 use Dev4Press\Plugin\CoreActivity\Components\Plugin;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
+use Dev4Press\Plugin\CoreActivity\Components\Term;
 use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\Plugin\CoreActivity\Components\WordPress;
+use Dev4Press\Plugin\CoreActivity\Plugins\DuplicatePost;
+use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
-use Dev4Press\v41\Core\Quick\WPR;
+use Dev4Press\v42\Core\Quick\WPR;
 use Dev4Press\v42\Core\Quick\Sanitize;
 use Dev4Press\v42\Core\Quick\Str;
 use stdClass;
@@ -66,9 +70,21 @@ class Init {
 		Theme::instance();
 		User::instance();
 		Post::instance();
+		Term::instance();
+		Comment::instance();
+	}
+
+	private function _init_plugins() {
+		if ( WPR::is_plugin_active( 'duplicate-post/duplicate-post.php' ) ) {
+			DuplicatePost::instance();
+		}
 
 		if ( WPR::is_plugin_active( 'user-switching/user-switching.php' ) ) {
 			UserSwitching::instance();
+		}
+
+		if ( WPR::is_plugin_active( 'sweeppress/sweeppress.php' ) ) {
+			SweepPress::instance();
 		}
 	}
 
@@ -80,6 +96,7 @@ class Init {
 
 		$this->_init_events();
 		$this->_init_components();
+		$this->_init_plugins();
 
 		do_action( 'coreactivity_component_registration', $this );
 
@@ -164,6 +181,55 @@ class Init {
 		return $this->list[ $event_id ][ 'label' ] ?? $event;
 	}
 
+	public function get_select_events( bool $simplified = false ) : array {
+		$list = array();
+
+		foreach ( $this->events as $component => $events ) {
+			foreach ( $events as $event ) {
+				if ( ! isset( $list[ $component ] ) ) {
+					$list[ $component ] = array(
+						'title'  => $simplified ? ( $this->components[ $component ] ?? $component ) : $component,
+						'values' => array()
+					);
+				}
+
+				$list[ $component ][ 'values' ][ $event->event_id ] = $simplified ? ( empty( $event->label ) ? Str::slug_to_name( $event->event ) : $event->label ) : $event->event;
+			}
+		}
+
+		return array_values( $list );
+	}
+
+	public function get_select_event_components( bool $simplified = false ) : array {
+		$list = array(
+			'wordpress' => array(
+				'title'  => $simplified ? __( "WordPress" ) : 'wordpress',
+				'values' => array()
+			),
+			'plugin'    => array(
+				'title'  => $simplified ? __( "Plugins" ) : 'plugin',
+				'values' => array()
+			)
+		);
+
+		foreach ( $this->events as $component => $events ) {
+			foreach ( $events as $event ) {
+				$category = $event->category;
+				$label    = $event->component_label;
+
+				if ( ! isset( $list[ $category ][ 'values' ][ $component ] ) && ! empty( $label ) ) {
+					$list[ $category ][ 'values' ][ $component ] = $simplified ? $label : $component;
+				}
+			}
+		}
+
+		if ( empty( $list[ 'plugin' ][ 'values' ] ) ) {
+			unset( $list[ 'plugin' ] );
+		}
+
+		return array_values( $list );
+	}
+
 	public function is_event_loaded( string $component, string $event ) : bool {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
 			return $this->events[ $component ][ $event ]->loaded;
@@ -221,7 +287,8 @@ class Init {
 			$this->events[ $component ][ $event ]->object_type     = $object_type;
 			$this->events[ $component ][ $event ]->component_label = $component_label;
 
-			$obj->event_id                           = $this->events[ $component ][ $event ]->event_id;
+			$obj->event_id = $this->events[ $component ][ $event ]->event_id;
+
 			$this->list[ $obj->event_id ][ 'label' ] = $label;
 		} else {
 			$id = DB::instance()->add_new_event( $category, $component, $event, $status, $rules );

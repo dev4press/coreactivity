@@ -42,6 +42,7 @@ abstract class Component {
 	public function __construct() {
 		add_action( 'coreactivity_component_registration', array( $this, 'register' ) );
 		add_action( 'coreactivity_tracking_ready', array( $this, 'tracking' ) );
+		add_action( 'coreactivity_init', array( $this, 'init' ) );
 	}
 
 	/** @return static */
@@ -78,6 +79,10 @@ abstract class Component {
 		return $this->events;
 	}
 
+	public function init() {
+
+	}
+
 	public function log( string $event, array $data = array(), array $meta = array() ) : int {
 		if ( $this->is_active( $event ) ) {
 			$event_id = Init::instance()->get_event_id( $this->code(), $event );
@@ -100,6 +105,34 @@ abstract class Component {
 
 	public function is_active( string $event ) : bool {
 		return $this->is_registered( $event );
+	}
+
+	protected function find_differences( array $old, array $new ) : array {
+		$diff = array(
+			'added'    => array(),
+			'removed'  => array(),
+			'modified' => array()
+		);
+
+		foreach ( $new as $key => $value ) {
+			if ( ! isset( $old[ $key ] ) ) {
+				$diff[ 'added' ][ $key ] = $value;
+			}
+		}
+
+		foreach ( $old as $key => $value ) {
+			if ( ! isset( $new[ $key ] ) ) {
+				$diff[ 'removed' ][ $key ] = $value;
+			}
+		}
+
+		foreach ( $old as $key => $value ) {
+			if ( $new[ $key ] != $value ) {
+				$diff[ 'modified' ][ $key ] = $value;
+			}
+		}
+
+		return array_filter( $diff );
 	}
 
 	abstract public function tracking();

@@ -41,7 +41,7 @@ class Core {
 	public function __construct() {
 		$this->cached_data = array(
 			'ip'        => IP::visitor(),
-			'server_ip' => IP::server(),
+			'server_ip' => isset( $_SERVER[ 'SERVER_ADDR' ] ) ? IP::server() : '',
 			'ua'        => $this->get_user_agent(),
 			'referer'   => $this->get_referer(),
 			'method'    => $this->get_request_method(),

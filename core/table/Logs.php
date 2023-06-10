@@ -170,30 +170,16 @@ class Logs extends Table {
 		) );
 
 		if ( ! isset( $this->_filter_lock[ 'component' ] ) && ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			$_components = array(
-				'' => __( "All Components", "coreactivity" )
-			);
-
-			foreach ( Init::instance()->components() as $component => $label ) {
-				$_components[ $component ] = $this->_display_columns_simplified ? $label : $component;
-			}
-
-			Elements::instance()->select( $_components, array(
+			Elements::instance()->select_grouped( Init::instance()->get_select_event_components( $this->_display_columns_simplified ), array(
+				'empty'    => __( "All Components" ),
 				'selected' => $this->get_request_arg( 'filter-component' ),
 				'name'     => 'filter-component'
 			) );
 		}
 
 		if ( ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			$_events = array(
-				'' => __( "All Events", "coreactivity" )
-			);
-
-			foreach ( Init::instance()->events_list() as $id => $event ) {
-				$_events[ $id ] = $this->_display_columns_simplified ? $event[ 'label' ] : $event[ 'name' ];
-			}
-
-			Elements::instance()->select( $_events, array(
+			Elements::instance()->select_grouped( Init::instance()->get_select_events( $this->_display_columns_simplified ), array(
+				'empty'    => __( "All Events" ),
 				'selected' => $this->get_request_arg( 'filter-event_id' ),
 				'name'     => 'filter-event_id'
 			) );
@@ -380,6 +366,16 @@ class Logs extends Table {
 		);
 	}
 
+	private function print_array( $input ) : string {
+		$render = array();
+
+		foreach ( $input as $key => $value ) {
+			$render[] = $key . ': ' . esc_html( is_scalar( $value ) ? $value : json_encode( $value ) );
+		}
+
+		return join( '<br/>', $render );
+	}
+
 	public function single_row( $item ) {
 		parent::single_row( $item );
 
@@ -394,7 +390,7 @@ class Logs extends Table {
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
 
 		$total = count( $columns ) - count( $hidden );
-		$metas = array( 'referer', 'user_agent' );
+		$metas = array( 'referer', 'user_agent', 'ajax_action' );
 
 		$left  = array();
 		$right = array();
@@ -403,25 +399,24 @@ class Logs extends Table {
 			$left[] = '<li><strong>' . esc_html__( "request" ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
 		}
 
-		if ( isset( $item->meta[ 'referer' ] ) ) {
-			$left[] = '<li><strong>' . esc_html__( "referer" ) . ':</strong><span>' . esc_html( $item->meta[ 'referer' ] ) . '</span></li>';
-		}
-
-		if ( isset( $item->meta[ 'user_agent' ] ) ) {
-			$left[] = '<li><strong>' . esc_html__( "user_agent" ) . ':</strong><span>' . esc_html( $item->meta[ 'user_agent' ] ) . '</span></li>';
-		}
-
 		foreach ( $item->meta as $key => $value ) {
+			$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 10 ? $this->print_array( $value ) : json_encode( $value ) );
+
 			if ( in_array( $key, $metas ) ) {
-				continue;
+				$left[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
+			} else {
+				$right[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
 			}
-
-			$value = is_scalar( $value ) ? $value : json_encode( $value );
-
-			$right[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . esc_html( $value ) . '</span></li>';
 		}
+
+		$description = apply_filters( 'coreactivity_logs_log_item_descriptions', '', $item );
 
 		echo '<td colspan="' . $total . '">';
+
+		if ( ! empty( $description ) ) {
+			echo '<div>' . $this->kses( $description ) . '</div>';
+		}
+
 		echo '<div>';
 
 		echo '<ul>' . join( '', $right ) . '</ul>';
@@ -512,8 +507,9 @@ class Logs extends Table {
 
 	public function column_object_name( $item ) : string {
 		$render = $item->object_name ?? '';
+		$render = apply_filters( 'coreactivity_logs_field_render_object_name', (string) $render, $item );
 
-		return apply_filters( 'coreactivity_logs_field_render_object_name', (string) $render, $item );
+		return $this->kses( $render );
 	}
 
 	public function column_context( $item ) : string {
@@ -633,7 +629,15 @@ class Logs extends Table {
 				GEOJSIO::instance()->bulk( $this->_items_ips );
 			}
 		}
+	}
 
-		debugpress_store_object( $this );
+	private function kses( $render ) : string {
+		$allowed_tags = array(
+			'a'      => array( 'href' => true ),
+			'br'     => array(),
+			'strong' => array()
+		);
+
+		return wp_kses( $render, $allowed_tags );
 	}
 }

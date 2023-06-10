@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
+use Dev4Press\v42\WordPress as LibWordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WordPress extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'wordpress';
+	protected $wp_version = '';
 
 	public function tracking() {
 		if ( $this->is_active( 'cron-schedule' ) ) {
@@ -20,6 +22,11 @@ class WordPress extends Component {
 		if ( $this->is_active( 'content-export' ) ) {
 			add_filter( 'export_wp', array( $this, 'event_content_export' ) );
 		}
+
+		if ( $this->is_active( 'update-core' ) || $this->is_active( 'update-core-auto' ) ) {
+			add_filter( 'update_feedback', array( $this, 'prepare_update' ) );
+			add_action( '_core_updated_successfully', array( $this, 'event_update' ) );
+		}
 	}
 
 	public function label() : string {
@@ -28,9 +35,19 @@ class WordPress extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'cron-schedule'  => array( 'label' => __( "CRON Event Scheduled", "coreactivity" ), 'scope' => 'blog' ),
-			'content-export' => array( 'label' => __( "Content Export", "coreactivity" ), 'scope' => 'blog' )
+			'update-core'      => array( 'label' => __( "WordPress Update", "coreactivity" ), 'scope' => 'network' ),
+			'update-core-auto' => array( 'label' => __( "WordPress Auto Update", "coreactivity" ), 'scope' => 'network' ),
+			'cron-schedule'    => array( 'label' => __( "CRON Event Scheduled", "coreactivity" ), 'scope' => 'blog' ),
+			'content-export'   => array( 'label' => __( "Content Export", "coreactivity" ), 'scope' => 'blog' )
 		);
+	}
+
+	public function prepare_update( $message ) {
+		if ( empty( $this->wp_version ) ) {
+			$this->wp_version = LibWordPress::instance()->version();
+		}
+
+		return $message;
 	}
 
 	public function event_schedule_event( $event ) {
@@ -53,5 +70,16 @@ class WordPress extends Component {
 		$this->log( 'content-export', array(), array(
 			'export_args' => $args
 		) );
+	}
+
+	public function event_update( $wp_version ) {
+		$event = isset( $GLOBALS[ 'pagenow' ] ) && $GLOBALS[ 'pagenow' ] == 'update-core.php' ? 'update-core' : 'update-core-auto';
+
+		if ( $this->is_active( $event ) ) {
+			$this->log( $event, array(), array(
+				'from' => $this->wp_version,
+				'to'   => $wp_version
+			) );
+		}
 	}
 }

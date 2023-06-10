@@ -36,6 +36,8 @@ class Plugin extends Core {
 		LogCore::instance();
 
 		do_action( 'coreactivity_plugin_core_ready' );
+
+		add_action( 'init', array( $this, 'init' ), 100 );
 	}
 
 	public function after_setup_theme() {
@@ -46,6 +48,10 @@ class Plugin extends Core {
 
 			wp_schedule_event( $cron_time, 'daily', 'coreactivity_log_purge' );
 		}
+	}
+
+	public function init() {
+		do_action( 'coreactivity_init' );
 	}
 
 	public function log_purge() {
