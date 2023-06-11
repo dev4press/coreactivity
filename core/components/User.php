@@ -12,6 +12,7 @@ class User extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'user';
 	protected $object_type = 'user';
+	protected $icon = 'ui-user';
 	protected $scope = 'both';
 
 	protected $storage = array();

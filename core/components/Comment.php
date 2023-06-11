@@ -12,6 +12,7 @@ class Comment extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'comment';
 	protected $object_type = 'comment';
+	protected $icon = 'ui-comment-dots';
 	protected $do_not_log = array();
 
 	public function tracking() {

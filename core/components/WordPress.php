@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WordPress extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'wordpress';
+	protected $icon = 'brand-wordpress';
 	protected $wp_version = '';
 
 	public function tracking() {

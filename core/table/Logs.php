@@ -178,7 +178,7 @@ class Logs extends Table {
 		}
 
 		if ( ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			Elements::instance()->select_grouped( Init::instance()->get_select_events( $this->_display_columns_simplified ), array(
+			Elements::instance()->select_grouped( Init::instance()->get_select_events( $this->_display_columns_simplified, $this->_filter_lock[ 'component' ] ?? '' ), array(
 				'empty'    => __( "All Events" ),
 				'selected' => $this->get_request_arg( 'filter-event_id' ),
 				'name'     => 'filter-event_id'
@@ -253,7 +253,9 @@ class Logs extends Table {
 
 			switch ( $this->_current_view ) {
 				case 'component':
-					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-tag"></i> <span>' . esc_html__( "Component" ) . '</span>';
+					$current_view = '<span class="coreactivity-view-button">';
+					$current_view .= '<i class="d4p-icon d4p-' . Init::instance()->get_component_icon( $this->_filter_lock[ 'component' ] ) . ' d4p-icon-fw"></i>';
+					$current_view .= '<span>' . esc_html__( "Component" ) . '</span>';
 					$current_view .= Init::instance()->get_component_label( $this->_filter_lock[ 'component' ] );
 					$current_view .= '<span>[' . esc_html( $this->_filter_lock[ 'component' ] ) . ']</span>';
 					$current_view .= '</span>';

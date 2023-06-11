@@ -13,6 +13,7 @@ class DuplicatePost extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'duplicate-post';
 	protected $object_type = 'post';
+	protected $icon = 'ui-paste';
 	protected $category = 'plugin';
 	protected $do_not_log = array();
 

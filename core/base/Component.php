@@ -28,6 +28,7 @@ abstract class Component {
 	 * @var string
 	 */
 	protected $object_type = '';
+	protected $icon = 'ui-folder';
 	protected $scope = '';
 	protected $category = 'wordpress';
 	/**
@@ -59,7 +60,7 @@ abstract class Component {
 	public function register( Init $init ) {
 		foreach ( $this->events() as $event => $data ) {
 			$event  = strtolower( $event );
-			$status = $init->register( $this->category, $this->code(), $this->label(), $event, $data[ 'label' ], $data[ 'scope' ] ?? $this->scope, $data[ 'status' ] ?? 'active', $data[ 'object_type' ] ?? $this->object_type, $data[ 'rules' ] ?? array() );
+			$status = $init->register( $this->category, $this->code(), $this->label(), $event, $data[ 'label' ], $this->icon, $data[ 'scope' ] ?? $this->scope, $data[ 'status' ] ?? 'active', $data[ 'object_type' ] ?? $this->object_type, $data[ 'rules' ] ?? array() );
 
 			if ( $status ) {
 				$this->registered[] = $event;

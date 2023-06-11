@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Error extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'error';
+	protected $icon = 'ui-warning-octagon';
 
 	private $_files_php = array( 'php', 'php3', 'php4', 'php5', 'phtml', 'phps' );
 	private $_files_media = array( 'jpg', 'jpeg', 'bmp', 'png', 'gif', 'webp', 'avi', 'mov', 'mp4', 'mp3' );

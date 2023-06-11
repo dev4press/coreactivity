@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class UserSwitching extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'user-switching';
+	protected $icon = 'ui-user-group';
 	protected $category = 'plugin';
 
 	public function tracking() {

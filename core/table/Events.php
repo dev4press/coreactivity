@@ -118,6 +118,7 @@ class Events extends Table {
 
 	protected function column_component( $item ) : string {
 		$render = '<div class="coreactivity-field-wrapper">';
+		$render .= '<i class="d4p-icon d4p-' . Init::instance()->get_component_icon( $item->component ) . ' d4p-icon-fw"></i>';
 		$render .= '<span>' . $item->component . '</span>';
 
 		if ( $this->_logged_counts[ $item->component ] > 0 ) {

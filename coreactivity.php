@@ -37,6 +37,8 @@ use Dev4Press\v42\WordPress;
 $coreactivity_dirname_basic = dirname( __FILE__ ) . '/';
 $coreactivity_urlname_basic = plugins_url( '/', __FILE__ );
 
+const COREACTIVITY_FILE = __FILE__;
+
 define( 'COREACTIVITY_PATH', $coreactivity_dirname_basic );
 define( 'COREACTIVITY_URL', $coreactivity_urlname_basic );
 define( 'COREACTIVITY_D4PLIB_PATH', $coreactivity_dirname_basic . 'd4plib/' );

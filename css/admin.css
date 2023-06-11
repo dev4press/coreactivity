@@ -14,7 +14,7 @@
   width: 70px;
 }
 .coreactivity-grid-events tr th.column-component, .coreactivity-grid-events tr th.column-event {
-  width: 15%;
+  width: 17%;
 }
 .coreactivity-grid-events tr th.column-loaded {
   width: 160px;
@@ -121,7 +121,7 @@
   gap: 8px;
 }
 .coreactivity-field-wrapper i {
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 .coreactivity-field-wrapper span {
   flex-grow: 1;

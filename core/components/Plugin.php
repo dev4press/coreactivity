@@ -12,6 +12,7 @@ class Plugin extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'plugin';
 	protected $object_type = 'plugin';
+	protected $icon = 'ui-plug';
 	protected $scope = 'both';
 
 	protected $storage = array();

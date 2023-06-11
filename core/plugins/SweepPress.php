@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class SweepPress extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'sweeppress';
+	protected $icon = 'plugin-sweeppress';
 	protected $category = 'plugin';
 
 	public function tracking() {

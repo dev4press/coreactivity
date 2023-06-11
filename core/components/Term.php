@@ -13,6 +13,7 @@ class Term extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'term';
 	protected $object_type = 'term';
+	protected $icon = 'ui-tags';
 	protected $do_not_log = array();
 	protected $storage = array();
 

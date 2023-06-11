@@ -76,6 +76,10 @@ class Core {
 	}
 
 	public function log( int $event_id, array $data = array(), array $meta = array() ) : int {
+		if ( apply_filters( 'coreactivity_skip_log', false, $event_id, $data, $meta ) === true ) {
+			return 0;
+		}
+
 		$data = $this->prepare_data( $data );
 		$meta = $this->prepare_meta( $meta );
 
@@ -99,6 +103,10 @@ class Core {
 
 	public function get( string $name ) : string {
 		return $this->cached_data[ $name ] ?? '';
+	}
+
+	public function get_current_page_log() : array {
+		return $this->page_events;
 	}
 
 	public function valid_request_contexts() : array {

@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
+use Dev4Press\Plugin\CoreActivity\Log\Init;
 use Dev4Press\Plugin\CoreActivity\Log\Init as LogInit;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\v42\Core\Plugins\Core;
@@ -38,6 +39,7 @@ class Plugin extends Core {
 		do_action( 'coreactivity_plugin_core_ready' );
 
 		add_action( 'init', array( $this, 'init' ), 100 );
+		add_action( 'debugpress-tracker-plugins-call', array( $this, 'debugpress' ) );
 	}
 
 	public function after_setup_theme() {
@@ -47,6 +49,15 @@ class Plugin extends Core {
 			$cron_time = mktime( 3, 5, 0, date( 'm' ), date( 'd' ), date( 'Y' ) );
 
 			wp_schedule_event( $cron_time, 'daily', 'coreactivity_log_purge' );
+		}
+	}
+
+	public function debugpress() {
+		if ( function_exists( 'debugpress_store_for_plugin' ) ) {
+			debugpress_store_for_plugin( COREACTIVITY_FILE, array(
+				'events' => Init::instance()->events(),
+				'log'    => LogCore::instance()->get_current_page_log()
+			) );
 		}
 	}
 

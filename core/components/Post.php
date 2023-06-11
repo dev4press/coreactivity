@@ -12,6 +12,7 @@ class Post extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'post';
 	protected $object_type = 'post';
+	protected $icon = 'ui-memo-pad';
 	protected $do_not_log = array();
 
 	public function tracking() {

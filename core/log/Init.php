@@ -27,6 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Init {
 	private $events = array();
 	private $components = array();
+	private $icons = array();
 	private $categories = array();
 	private $list = array();
 	private $object_types = array();
@@ -173,6 +174,10 @@ class Init {
 		return $this->components[ $component ] ?? $component;
 	}
 
+	public function get_component_icon( string $component ) {
+		return $this->icons[ $component ] ?? 'ui-folder';
+	}
+
 	public function get_object_type_label( string $object_type ) {
 		return $this->object_types[ $object_type ] ?? Str::slug_to_name( $object_type );
 	}
@@ -181,10 +186,14 @@ class Init {
 		return $this->list[ $event_id ][ 'label' ] ?? $event;
 	}
 
-	public function get_select_events( bool $simplified = false ) : array {
+	public function get_select_events( bool $simplified = false, string $only_component = '' ) : array {
 		$list = array();
 
 		foreach ( $this->events as $component => $events ) {
+			if ( ! empty( $only_component ) && $only_component != $component ) {
+				continue;
+			}
+
 			foreach ( $events as $event ) {
 				if ( ! isset( $list[ $component ] ) ) {
 					$list[ $component ] = array(
@@ -261,12 +270,13 @@ class Init {
 		return in_array( $status, array( 'active', 'inactive' ) ) ? $status : '';
 	}
 
-	public function register( string $category, string $component, string $component_label, string $event, string $label, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
+	public function register( string $category, string $component, string $component_label, string $event, string $label, string $icon, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
 		$obj = (object) array(
 			'event_id'        => 0,
 			'category'        => $category,
 			'component'       => $component,
 			'component_label' => $component_label,
+			'component_icon'  => $icon,
 			'event'           => $event,
 			'status'          => $status,
 			'rules'           => $rules,
@@ -278,6 +288,7 @@ class Init {
 
 		if ( ! isset( $this->components[ $component ] ) ) {
 			$this->components[ $component ] = $component_label;
+			$this->icons[ $component ]      = $icon;
 		}
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
@@ -286,6 +297,7 @@ class Init {
 			$this->events[ $component ][ $event ]->scope           = $scope;
 			$this->events[ $component ][ $event ]->object_type     = $object_type;
 			$this->events[ $component ][ $event ]->component_label = $component_label;
+			$this->events[ $component ][ $event ]->component_icon  = $icon;
 
 			$obj->event_id = $this->events[ $component ][ $event ]->event_id;
 

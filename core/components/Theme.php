@@ -12,6 +12,7 @@ class Theme extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'theme';
 	protected $object_type = 'theme';
+	protected $icon = 'ui-palette';
 	protected $scope = 'both';
 
 	protected $storage = array();

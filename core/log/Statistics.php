@@ -20,4 +20,8 @@ class Statistics {
 
 		return $instance;
 	}
+
+	public function overall( int $days = 30 ) {
+
+	}
 }
