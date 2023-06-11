@@ -6,6 +6,8 @@ use Dev4Press\Plugin\CoreActivity\Basic\Cache;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Components\Comment;
 use Dev4Press\Plugin\CoreActivity\Components\Error;
+use Dev4Press\Plugin\CoreActivity\Components\Internal;
+use Dev4Press\Plugin\CoreActivity\Components\Notification;
 use Dev4Press\Plugin\CoreActivity\Components\Plugin;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
 use Dev4Press\Plugin\CoreActivity\Components\Term;
@@ -25,6 +27,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Init {
+	public $statistics = array(
+		'components' => array(
+			'total'  => 0,
+			'db'     => 0,
+			'loaded' => 0
+		),
+		'events'     => array(
+			'total'  => 0,
+			'db'     => 0,
+			'loaded' => 0
+		)
+	);
+
 	private $events = array();
 	private $components = array();
 	private $icons = array();
@@ -52,11 +67,17 @@ class Init {
 		foreach ( $events as $event ) {
 			if ( ! isset( $this->events[ $event->component ] ) ) {
 				$this->events[ $event->component ] = array();
+
+				$this->statistics[ 'components' ][ 'db' ] ++;
+				$this->statistics[ 'components' ][ 'total' ] ++;
 			}
 
 			$event->event_id = Sanitize::absint( $event->event_id );
 			$event->rules    = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
 			$event->loaded   = false;
+
+			$this->statistics[ 'events' ][ 'db' ] ++;
+			$this->statistics[ 'events' ][ 'total' ] ++;
 
 			$this->events[ $event->component ][ $event->event ] = $event;
 
@@ -65,7 +86,9 @@ class Init {
 	}
 
 	private function _init_components() {
+		Internal::instance();
 		WordPress::instance();
+		Notification::instance();
 		Error::instance();
 		Plugin::instance();
 		Theme::instance();
@@ -92,6 +115,7 @@ class Init {
 	public function ready() {
 		$this->categories = array(
 			'wordpress' => __( "WordPress" ),
+			'internal'  => __( "Internal" ),
 			'plugin'    => __( "Plugin" )
 		);
 
@@ -215,6 +239,10 @@ class Init {
 				'title'  => $simplified ? __( "WordPress" ) : 'wordpress',
 				'values' => array()
 			),
+			'internal'    => array(
+				'title'  => $simplified ? __( "Internal" ) : 'internal',
+				'values' => array()
+			),
 			'plugin'    => array(
 				'title'  => $simplified ? __( "Plugins" ) : 'plugin',
 				'values' => array()
@@ -287,8 +315,13 @@ class Init {
 		);
 
 		if ( ! isset( $this->components[ $component ] ) ) {
-			$this->components[ $component ] = $component_label;
-			$this->icons[ $component ]      = $icon;
+			$this->components[ $component ]               = $component_label;
+			$this->icons[ $component ]                    = $icon;
+			$this->statistics[ 'components' ][ 'loaded' ] += 1;
+		}
+
+		if ( ! isset( $this->events[ $component ] ) ) {
+			$this->statistics[ 'components' ][ 'total' ] += 1;
 		}
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
@@ -301,7 +334,8 @@ class Init {
 
 			$obj->event_id = $this->events[ $component ][ $event ]->event_id;
 
-			$this->list[ $obj->event_id ][ 'label' ] = $label;
+			$this->list[ $obj->event_id ][ 'label' ]  = $label;
+			$this->statistics[ 'events' ][ 'loaded' ] += 1;
 		} else {
 			$id = DB::instance()->add_new_event( $category, $component, $event, $status, $rules );
 

@@ -1,9 +1,13 @@
 <?php
 
+use Dev4Press\Plugin\CoreActivity\Log\Statistics;
+
+$statistics = Statistics::instance()->overall();
+
 ?>
 
 <div class="d4p-group d4p-dashboard-card d4p-card-double">
-	<h3><?php esc_html_e( "Last 30 days statistics", "coresocial" ); ?></h3>
+	<h3><?php esc_html_e( "Overall Statistics", "coresocial" ); ?></h3>
 	<div class="d4p-group-inner">
 
 	</div>

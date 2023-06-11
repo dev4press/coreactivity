@@ -2,6 +2,8 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
+use Dev4Press\Plugin\CoreActivity\Basic\DB;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -21,7 +23,28 @@ class Statistics {
 		return $instance;
 	}
 
-	public function overall( int $days = 30 ) {
+	public function overall() {
+		$stats = Init::instance()->statistics;
 
+		return $stats;
+	}
+
+	public function detailed( int $days = 30 ) : array {
+		$counts  = DB::instance()->statistics_components_log( $days );
+		$results = array(
+			'total'      => 0,
+			'components' => array()
+		);
+
+		foreach ( $counts as $component => $count ) {
+			$results[ 'total' ]                    += $count;
+			$results[ 'components' ][ $component ] = array(
+				'label' => Init::instance()->get_component_label( $component ),
+				'icon'  => Init::instance()->get_component_icon( $component ),
+				'count' => $count
+			);
+		}
+
+		return $results;
 	}
 }

@@ -66,7 +66,7 @@ class DB extends BaseDB {
 
 	public function add_new_event( string $category, string $component, string $event, string $status = 'active', array $rules = array() ) : int {
 		$data = array(
-			'category' => $category,
+			'category'  => $category,
 			'component' => $component,
 			'event'     => $event,
 			'status'    => $status
@@ -90,5 +90,15 @@ class DB extends BaseDB {
 		$raw = $this->get_results( $sql );
 
 		return empty( $raw ) ? array() : $this->pluck( $raw, 'logs', 'event_id' );
+	}
+
+	public function statistics_components_log( int $days = 30 ) : array {
+		$sql = $this->prepare( "SELECT e.`component`, COUNT(l.log_id) AS logs 
+				FROM $this->events e LEFT JOIN $this->logs l ON e.`event_id` = l.`event_id`
+				WHERE l.`logged` IS NULL OR l.`logged` > DATE_SUB(NOW(), INTERVAL %d DAY)
+				GROUP BY e.`component` ORDER BY e.`component`", $days );
+		$raw = $this->get_results( $sql );
+
+		return empty( $raw ) ? array() : $this->pluck( $raw, 'logs', 'component' );
 	}
 }

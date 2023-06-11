@@ -3,7 +3,7 @@
 		<?php
 
 		include( COREACTIVITY_PATH . 'forms/content-dashboard-overall.php' );
-		// include( CORESOCIAL_PATH . 'forms/content-dashboard-statistics.php' );
+        include( COREACTIVITY_PATH . 'forms/content-dashboard-statistics.php' );
 
 		?>
     </div>

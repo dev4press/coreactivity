@@ -25,7 +25,7 @@ class Theme extends Component {
 	}
 
 	public function label() : string {
-		return __( "Plugins", "coreactivity" );
+		return __( "Themes", "coreactivity" );
 	}
 
 	protected function get_events() : array {
