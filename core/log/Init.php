@@ -114,9 +114,9 @@ class Init {
 
 	public function ready() {
 		$this->categories = array(
-			'wordpress' => __( "WordPress" ),
-			'internal'  => __( "Internal" ),
-			'plugin'    => __( "Plugin" )
+			'wordpress' => __( "WordPress", "coreactivity" ),
+			'internal'  => __( "Internal", "coreactivity" ),
+			'plugin'    => __( "Plugin", "coreactivity" )
 		);
 
 		$this->_init_events();
@@ -237,15 +237,15 @@ class Init {
 	public function get_select_event_components( bool $simplified = false ) : array {
 		$list = array(
 			'wordpress' => array(
-				'title'  => $simplified ? __( "WordPress" ) : 'wordpress',
+				'title'  => $simplified ? __( "WordPress", "coreactivity" ) : 'wordpress',
 				'values' => array()
 			),
 			'internal'  => array(
-				'title'  => $simplified ? __( "Internal" ) : 'internal',
+				'title'  => $simplified ? __( "Internal", "coreactivity" ) : 'internal',
 				'values' => array()
 			),
 			'plugin'    => array(
-				'title'  => $simplified ? __( "Plugins" ) : 'plugin',
+				'title'  => $simplified ? __( "Plugins", "coreactivity" ) : 'plugin',
 				'values' => array()
 			)
 		);

@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
+use Dev4Press\v42\Core\Mailer\Detection;
 use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,6 +30,15 @@ class Display {
 		}
 
 		switch ( $item->object_type ) {
+			case 'theme':
+				$render = $this->_display_theme( $item );
+				break;
+			case 'plugin':
+				$render = $this->_display_plugin( $item );
+				break;
+			case 'notification':
+				$render = $this->_display_notification( $item );
+				break;
 			case 'user':
 				$render = $this->_display_user( $item );
 				break;
@@ -38,6 +48,60 @@ class Display {
 			case 'term':
 				$render = $this->_display_term( $item );
 				break;
+		}
+
+		return $render;
+	}
+
+	private function _display_theme( stdClass $item ) : string {
+		$render = '';
+
+		if ( empty( $item->object_name ) ) {
+			$render .= __( "Unknown Theme", "coreactivity" );
+		} else {
+			if ( isset( $item->meta[ 'theme_name' ] ) ) {
+				$render .= '<span>' . esc_html__( "Theme", "coreactivity" ) . ': <strong>' . $item->meta[ 'theme_name' ] . '</strong></span><br/>';
+			}
+			$render .= '<span>' . esc_html__( "Directory", "coreactivity" ) . ': <strong>' . $item->object_name . '</span>';
+			if ( isset( $item->meta[ 'theme_version' ] ) ) {
+				$render .= '<br/><span>' . esc_html__( "Version", "coreactivity" ) . ': <strong>' . $item->meta[ 'theme_version' ] . '</strong></span>';
+			}
+		}
+
+		return $render;
+	}
+
+	private function _display_plugin( stdClass $item ) : string {
+		$render = '';
+
+		if ( empty( $item->object_name ) ) {
+			$render .= __( "Unknown Plugin", "coreactivity" );
+		} else {
+			$plugin = $item->meta[ 'plugin_title' ] ?? '';
+			$render .= '<span>' . esc_html__( "Plugin", "coreactivity" ) . ': <strong>' . $plugin . '</strong></span>';
+			$render .= '<br/><span>' . esc_html__( "File", "coreactivity" ) . ': <strong>' . $item->object_name . '</strong></span>';
+			if ( isset( $item->meta[ 'plugin_version' ] ) ) {
+				$render .= '<br/><span>' . esc_html__( "Version", "coreactivity" ) . ': <strong>' . $item->meta[ 'plugin_version' ] . '</strong></span>';
+			}
+		}
+
+		return $render;
+	}
+
+	private function _display_notification( stdClass $item ) : string {
+		$render = '';
+
+		if ( empty( $item->object_name ) ) {
+			$render .= __( "Unknown Notification Type", "coreactivity" );
+		} else {
+			$render .= '<strong>' . $item->object_name . '</strong>';
+
+			$data = Detection::instance()->get_data( $item->object_name );
+
+			if ( ! empty( $data ) ) {
+				$render .= '<br/><span>' . esc_html__( "Source", "coreactivity" ) . ': <strong>' . $data[ 'source' ] . '</strong></span>';
+				$render .= '<br/><span>' . esc_html__( "Name", "coreactivity" ) . ': <strong>' . $data[ 'label' ] . '</strong></span>';
+			}
 		}
 
 		return $render;
@@ -77,10 +141,10 @@ class Display {
 	private function _display_post( stdClass $item ) : string {
 		$render = '';
 
-		$post = get_post($item->object_id);
+		$post = get_post( $item->object_id );
 
-		if ($post instanceof \WP_Post) {
-			$render .= sprintf( __( "ID: %s &middot; Post: %s<br/>Post Type: %s" ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
+		if ( $post instanceof \WP_Post ) {
+			$render .= sprintf( __( "ID: %s &middot; Post: %s<br/>Post Type: %s", "coreactivity" ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
 		} else {
 			$render .= 'MISSING: <strong>' . $item->object_id . '</strong>';
 		}
@@ -94,7 +158,7 @@ class Display {
 		$term = get_term( $item->object_id );
 
 		if ( $term instanceof \WP_Term ) {
-			$render .= sprintf( __( "ID: %s &middot; Term: %s<br/>Taxonomy: %s" ), '<strong>' . $term->term_id . '</strong>', '<strong><a href="' . get_edit_term_link( $term ) . '">' . $term->name . '</a></strong>', '<strong>' . $term->taxonomy . '</strong>' );
+			$render .= sprintf( __( "ID: %s &middot; Term: %s<br/>Taxonomy: %s", "coreactivity" ), '<strong>' . $term->term_id . '</strong>', '<strong><a href="' . get_edit_term_link( $term ) . '">' . $term->name . '</a></strong>', '<strong>' . $term->taxonomy . '</strong>' );
 		} else {
 			$render .= 'MISSING: <strong>' . $item->object_id . '</strong>';
 		}

@@ -21,7 +21,7 @@ class SweepPress extends Component {
 	}
 
 	public function label() : string {
-		return __( "SweepPress" );
+		return __( "SweepPress", "coreactivity" );
 	}
 
 	protected function get_events() : array {

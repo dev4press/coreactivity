@@ -21,7 +21,7 @@ class Internal extends Component {
 	}
 
 	public function label() : string {
-		return __( "Internal" );
+		return __( "Internal", "coreactivity" );
 	}
 
 	protected function get_events() : array {

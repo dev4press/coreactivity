@@ -29,7 +29,7 @@ class UserSwitching extends Component {
 	}
 
 	public function label() : string {
-		return __( "User Switching" );
+		return __( "User Switching", "coreactivity" );
 	}
 
 	protected function get_events() : array {

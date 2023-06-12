@@ -31,7 +31,7 @@ class Notification extends Component {
 	}
 
 	public function label() : string {
-		return __( "Notifications" );
+		return __( "Notifications", "coreactivity" );
 	}
 
 	protected function get_events() : array {

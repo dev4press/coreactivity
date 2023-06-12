@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
+use WP_Theme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,8 +19,12 @@ class Theme extends Component {
 	protected $storage = array();
 
 	public function tracking() {
+		if ( $this->is_active( 'switched' ) ) {
+			add_action( 'switch_theme', array( $this, 'event_switched' ), 10, 3 );
+		}
+
 		if ( $this->is_active( 'deleted' ) ) {
-			add_action( 'delete_theme', array( $this, 'init_delete' ) );
+			add_action( 'delete_theme', array( $this, 'prepare_stylesheet' ) );
 			add_action( 'deleted_theme', array( $this, 'event_deleted' ), 10, 2 );
 		}
 	}
@@ -30,11 +35,12 @@ class Theme extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'deleted' => array( 'label' => __( "Theme Deleted", "coreactivity" ) )
+			'deleted'  => array( 'label' => __( "Theme Deleted", "coreactivity" ) ),
+			'switched' => array( 'label' => __( "Theme Switched", "coreactivity" ) )
 		);
 	}
 
-	public function init_delete( $stylesheet ) {
+	public function prepare_stylesheet( $stylesheet ) {
 		$this->storage[ $stylesheet ] = $this->_get_theme( $stylesheet );
 	}
 
@@ -46,19 +52,32 @@ class Theme extends Component {
 		}
 	}
 
-	private function _get_theme( $stylesheet ) : array {
+	public function event_switched( $new_name, $new_theme, $old_theme ) {
+		$this->prepare_stylesheet( $new_theme->get_stylesheet() );
+		$this->prepare_stylesheet( $old_theme->get_stylesheet() );
+
+		$this->log( 'switched', array(
+			'object_name' => $new_theme->get_stylesheet()
+		), array_merge(
+			array( 'old_stylesheet' => $old_theme->get_stylesheet() ),
+			$this->_get_theme( $old_theme->get_stylesheet(), 'old_' ),
+			$this->_get_theme( $new_theme->get_stylesheet() )
+		) );
+	}
+
+	private function _get_theme( $stylesheet, $prefix = '' ) : array {
 		$theme = wp_get_theme( $stylesheet );
 
 		$meta = array(
-			'theme_name'        => strip_tags( $theme->get( 'Name' ) ),
-			'theme_author'      => strip_tags( $theme->get( 'Author' ) ),
-			'theme_description' => $theme->get( 'Description' ),
-			'theme_version'     => $theme->get( 'Version' ),
-			'theme_url'         => $theme->get( 'ThemeURI' )
+			$prefix . 'theme_name'        => strip_tags( $theme->get( 'Name' ) ),
+			$prefix . 'theme_author'      => strip_tags( $theme->get( 'Author' ) ),
+			$prefix . 'theme_description' => $theme->get( 'Description' ),
+			$prefix . 'theme_version'     => $theme->get( 'Version' ),
+			$prefix . 'theme_url'         => $theme->get( 'ThemeURI' )
 		);
 
 		if ( ! coreactivity_settings()->get( 'log_if_available_description' ) ) {
-			unset( $meta[ 'theme_description' ] );
+			unset( $meta[ $prefix . 'theme_description' ] );
 		}
 
 		return $meta;

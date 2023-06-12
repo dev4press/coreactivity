@@ -33,7 +33,7 @@ class DuplicatePost extends Component {
 	}
 
 	public function label() : string {
-		return __( "Duplicate Post" );
+		return __( "Duplicate Post", "coreactivity" );
 	}
 
 	protected function get_events() : array {

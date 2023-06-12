@@ -96,438 +96,6 @@ class Logs extends Table {
 		Display::instance();
 	}
 
-	protected function _view( string $view, string $args ) : string {
-		return $this->_url() . '&view=' . $view . '&' . $args;
-	}
-
-	protected function _self( $args, $getback = false, $nonce = null ) : string {
-		$url = parent::_self( $args, $getback, $nonce );
-
-		if ( ! empty( $this->_current_view ) ) {
-			$url .= '&view=' . $this->_current_view;
-
-			switch ( $this->_current_view ) {
-				case 'ip':
-					$url .= '&filter-ip=' . $this->_filter_lock[ 'ip' ];
-					break;
-				case 'user':
-					$url .= '&filter-user_id=' . $this->_filter_lock[ 'user_id' ];
-					break;
-			}
-		}
-
-		return $url;
-	}
-
-	protected function db() : ?DBLite {
-		return coreactivity_db();
-	}
-
-	protected function process_request_args() {
-		$this->_request_args = array(
-			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id', '' ),
-			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id', '' ),
-			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id', '' ),
-			'filter-ip'          => Sanitize::_get_basic( 'filter-ip', '' ),
-			'filter-component'   => Sanitize::_get_basic( 'filter-component', '' ),
-			'filter-context'     => Sanitize::_get_basic( 'filter-context', '' ),
-			'filter-method'      => Sanitize::_get_basic( 'filter-method', '' ),
-			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type', '' ),
-			'view'               => $this->_get_field( 'view' ),
-			'search'             => $this->_get_field( 's' ),
-			'period'             => $this->_get_field( 'period' ),
-			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
-			'order'              => $this->_get_field( 'order', 'DESC' ),
-			'paged'              => $this->_get_field( 'paged' ),
-		);
-
-		if ( ! empty( $this->_request_args[ 'filter-component' ] ) && ! Init::instance()->is_component_valid( $this->_request_args[ 'filter-component' ] ) ) {
-			$this->_request_args[ 'filter-component' ] = '';
-		}
-
-		if ( ! empty( $this->_request_args[ 'filter-event_id' ] ) && ! Init::instance()->is_event_id_valid( $this->_request_args[ 'filter-event_id' ] ) ) {
-			$this->_request_args[ 'filter-event_id' ] = '';
-		}
-
-		foreach ( array_keys( $this->_filter_lock ) as $field ) {
-			$key = 'filter-' . $field;
-
-			if ( isset( $this->_request_args[ $key ] ) ) {
-				$this->_request_args[ $key ] = '';
-			}
-		}
-
-		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			$this->_request_args[ 'filter-component' ] = '';
-		}
-	}
-
-	protected function filter_block_top() {
-		echo '<div class="alignleft actions">';
-		Elements::instance()->select( $this->get_period_dropdown( 'logged', coreactivity_db()->logs ), array(
-			'selected' => $this->get_request_arg( 'period' ),
-			'name'     => 'period'
-		) );
-
-		if ( ! isset( $this->_filter_lock[ 'component' ] ) && ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			Elements::instance()->select_grouped( Init::instance()->get_select_event_components( $this->_display_columns_simplified ), array(
-				'empty'    => __( "All Components" ),
-				'selected' => $this->get_request_arg( 'filter-component' ),
-				'name'     => 'filter-component'
-			) );
-		}
-
-		if ( ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			Elements::instance()->select_grouped( Init::instance()->get_select_events( $this->_display_columns_simplified, $this->_filter_lock[ 'component' ] ?? '' ), array(
-				'empty'    => __( "All Events" ),
-				'selected' => $this->get_request_arg( 'filter-event_id' ),
-				'name'     => 'filter-event_id'
-			) );
-		}
-
-		if ( ! isset( $this->_filter_lock[ 'context' ] ) ) {
-			$_contexts = array(
-				''  => __( "All Contexts", "coreactivity" ),
-				'-' => __( "Normal", "coreactivity" )
-			);
-
-			foreach ( Core::instance()->valid_request_contexts() as $context ) {
-				$_contexts[ $context ] = $context;
-			}
-
-			Elements::instance()->select( $_contexts, array(
-				'selected' => $this->get_request_arg( 'filter-context' ),
-				'name'     => 'filter-context'
-			) );
-		}
-
-		if ( ! isset( $this->_filter_lock[ 'method' ] ) ) {
-			$_methods = array(
-				'' => __( "All Methods", "coreactivity" )
-			);
-
-			foreach ( Core::instance()->valid_request_methods() as $method ) {
-				$_methods[ $method ] = $method;
-			}
-
-			Elements::instance()->select( $_methods, array(
-				'selected' => $this->get_request_arg( 'filter-method' ),
-				'name'     => 'filter-method'
-			) );
-		}
-
-		if ( ! isset( $this->_filter_lock[ 'object_type' ] ) ) {
-			$_types = array(
-				'' => __( "All Object Types", "coreactivity" )
-			);
-
-			foreach ( Init::instance()->object_types() as $type => $value ) {
-				$_types[ $type ] = $value;
-			}
-
-			Elements::instance()->select( $_types, array(
-				'selected' => $this->get_request_arg( 'filter-object_type' ),
-				'name'     => 'filter-object_type'
-			) );
-		}
-
-		submit_button( __( "Filter", "coreactivity" ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
-		echo '</div>';
-	}
-
-	protected function get_views() : array {
-		$views = array();
-
-		if ( ! empty( $this->_current_view ) ) {
-			?>
-
-            <input type="hidden" name="view" value="<?php echo esc_attr( $this->_current_view ); ?>"/>
-            <input type="hidden" name="filter-<?php echo esc_attr( $this->_current_view ); ?>" value="<?php echo esc_attr( $this->_filter_lock[ $this->_current_view ] ); ?>"/>
-
-			<?php
-
-			$current_view = '';
-			$current_key  = 'view ';
-
-			$views[ 'all' ] = '<a class="coreactivity-view-button" href="' . $this->_url() . '"><i class="d4p-icon d4p-ui-angles-left"></i> ' . __( "All Logs", "coreactivity" ) . '</a>';
-
-			switch ( $this->_current_view ) {
-				case 'component':
-					$current_view = '<span class="coreactivity-view-button">';
-					$current_view .= '<i class="d4p-icon d4p-' . Init::instance()->get_component_icon( $this->_filter_lock[ 'component' ] ) . ' d4p-icon-fw"></i>';
-					$current_view .= '<span>' . esc_html__( "Component" ) . '</span>';
-					$current_view .= Init::instance()->get_component_label( $this->_filter_lock[ 'component' ] );
-					$current_view .= '<span>[' . esc_html( $this->_filter_lock[ 'component' ] ) . ']</span>';
-					$current_view .= '</span>';
-
-					$current_key .= 'component';
-					break;
-				case 'event_id':
-					$event = Init::instance()->get_event_by_id( $this->_filter_lock[ 'event_id' ] );
-
-					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-radar"></i> <span>' . esc_html__( "Event" ) . '</span>';
-					$current_view .= $event->component_label . ' / ' . $event->label;
-					$current_view .= '<span>[' . $event->component . '/' . $event->event . ']</span>';
-					$current_view .= '</span>';
-
-					$current_key .= 'component';
-					break;
-				case 'ip':
-					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud"></i> <span>' . esc_html__( "IP" ) . '</span>';
-
-					if ( $this->_display_ip_country_flag ) {
-						$ip           = GEOJSIO::instance()->locate( $this->_filter_lock[ 'ip' ] );
-						$current_view .= '<span>' . esc_html( $this->_filter_lock[ 'ip' ] ) . '</span> ' . $ip->flag();
-					} else {
-						$current_view .= $this->_filter_lock[ 'ip' ];
-					}
-
-					$current_view .= '</span>';
-					$current_key  .= 'ip';
-					break;
-				case 'user_id':
-					$user = get_user_by( 'id', $this->_filter_lock[ 'user_id' ] );
-					$name = ! $user ? __( "Not Found", "coreactivity" ) : $user->display_name;
-
-					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-user"></i> <span>' . esc_html__( "User" ) . '</span>';
-					$current_view .= '<span>' . esc_html( $this->_filter_lock[ 'user_id' ] . ' : ' . $name ) . '</span>';
-
-					if ( $this->_filter_lock[ 'user_id' ] > 0 && $this->_display_user_avatar ) {
-						$current_view .= ' ' . get_avatar( $this->_filter_lock[ 'user_id' ], 30 );
-					}
-
-					$current_view .= '</span>';
-					$current_key  .= 'user';
-					break;
-			}
-
-			$views[ $current_key ] = $current_view;
-		}
-
-		return $views;
-	}
-
-	public function rows_per_page() : int {
-		$per_page = get_user_option( 'coreactivity_logs_rows_per_page' );
-
-		if ( empty( $per_page ) || $per_page < 1 ) {
-			$per_page = 25;
-		}
-
-		return $per_page;
-	}
-
-	public function get_columns() : array {
-		$columns = array(
-			'cb'          => '<input type="checkbox" />',
-			'log_id'      => __( "ID", "coreactivity" ),
-			'blog_id'     => __( "Blog", "coreactivity" ),
-			'user_id'     => __( "User", "coreactivity" ),
-			'component'   => __( "Component", "coreactivity" ),
-			'event_id'    => __( "Event", "coreactivity" ),
-			'context'     => __( "Context", "coreactivity" ),
-			'method'      => __( "Method", "coreactivity" ),
-			'protocol'    => __( "Protocol", "coreactivity" ),
-			'ip'          => __( "IP", "coreactivity" ),
-			'request'     => __( "Request", "coreactivity" ),
-			'object_type' => __( "Object Type", "coreactivity" ),
-			'object_name' => __( "Object", "coreactivity" ),
-			'logged'      => __( "Logged", "coreactivity" ),
-			'meta'        => '<i class="vers d4p-icon d4p-ui-chevron-square-down d4p-icon-lg" title="' . esc_attr__( "Toggle Meta" ) . '"></i><span class="screen-reader-text">' . esc_html__( "Toggle Meta" ) . '</span>'
-		);
-
-		if ( ! $this->_display_request_column ) {
-			unset( $columns[ 'request' ] );
-		}
-
-		foreach ( array_keys( $this->_filter_lock ) as $column ) {
-			if ( isset( $columns[ $column ] ) ) {
-				unset( $columns[ $column ] );
-			}
-		}
-
-		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			unset( $columns[ 'component' ] );
-		}
-
-		return $columns;
-	}
-
-	protected function get_sortable_columns() : array {
-		return array(
-			'log_id'    => array( 'l.log_id', false ),
-			'ip'        => array( 'l.ip', false ),
-			'component' => array( 'e.component', false ),
-			'event_id'  => array( 'e.event', false )
-		);
-	}
-
-	protected function get_bulk_actions() : array {
-		return array(
-			'delete' => __( "Delete", "coreactivity" )
-		);
-	}
-
-	private function print_array( $input ) : string {
-		$render = array();
-
-		foreach ( $input as $key => $value ) {
-			$render[] = $key . ': ' . esc_html( is_scalar( $value ) ? $value : json_encode( $value ) );
-		}
-
-		return join( '<br/>', $render );
-	}
-
-	public function single_row( $item ) {
-		parent::single_row( $item );
-
-		$classes = $this->get_row_classes( $item, array( 'coreactivity-hidden-row', '__hidden' ) );
-
-		echo '<tr class="' . esc_attr( join( ' ', $classes ) ) . '">';
-		$this->single_hidden_row( $item );
-		echo '</tr>';
-	}
-
-	public function single_hidden_row( $item ) {
-		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
-
-		$total = count( $columns ) - count( $hidden );
-		$metas = array( 'referer', 'user_agent', 'ajax_action' );
-
-		$left  = array();
-		$right = array();
-
-		if ( ! $this->_display_request_column ) {
-			$left[] = '<li><strong>' . esc_html__( "request" ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
-		}
-
-		foreach ( $item->meta as $key => $value ) {
-			$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 10 ? $this->print_array( $value ) : json_encode( $value ) );
-
-			if ( in_array( $key, $metas ) ) {
-				$left[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
-			} else {
-				$right[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
-			}
-		}
-
-		$description = apply_filters( 'coreactivity_logs_log_item_descriptions', '', $item );
-
-		echo '<td colspan="' . $total . '">';
-
-		if ( ! empty( $description ) ) {
-			echo '<div>' . $this->kses( $description ) . '</div>';
-		}
-
-		echo '<div>';
-
-		echo '<ul>' . join( '', $right ) . '</ul>';
-		echo '<ul>' . join( '', $left ) . '</ul>';
-
-		echo '</div>';
-		echo '</td>';
-	}
-
-	public function column_component( $item ) : string {
-		return $this->_display_columns_simplified ? Init::instance()->get_component_label( $item->component ) : $item->component;
-	}
-
-	public function column_ip( $item ) : string {
-		$render  = '<span>' . $item->ip . '</span>';
-		$actions = array(
-			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( "Logs", "coreactivity" ) . '</a>'
-		);
-
-		if ( $this->_display_ip_country_flag ) {
-			$ip     = GEOJSIO::instance()->locate( $item->ip );
-			$render = $ip->flag() . ' ' . $render;
-		}
-
-		if ( $item->ip == $this->_server_ip ) {
-			$render .= '<i class="d4p-icon d4p-ui-database" title="' . esc_attr__( "Server IP", "coreactivity" ) . '"></i>';
-		}
-
-		if ( $item->ip == $this->_current_ip ) {
-			$render .= '<i class="d4p-icon d4p-ui-user-square" title="' . esc_attr__( "Current Request IP", "coreactivity" ) . '"></i>';
-		}
-
-		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
-
-		$render  = apply_filters( 'coreactivity_logs_field_render_ip', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_ip', $actions, $item );
-
-		return $render . $this->row_actions( $actions );
-	}
-
-	public function column_user_id( $item ) : string {
-		$render  = '';
-		$actions = array(
-			'view' => '<a href="' . $this->_view( 'user_id', 'filter-user_id=' . $item->user_id ) . '">' . esc_html__( "Logs", "coreactivity" ) . '</a>'
-		);
-
-		if ( $item->user_id == 0 ) {
-			if ( $this->_display_user_avatar ) {
-				$render .= '<i class="d4p-icon d4p-ui-user-square"></i>';
-			}
-
-			$render .= '<span>ID: <strong>0</strong> &middot; ' . esc_html__( "Not a User", "coreactivity" ) . '</span>';
-		} else {
-			if ( $this->_display_user_avatar ) {
-				$render .= get_avatar( $item->user_id, 20 );;
-			}
-
-			$user = get_user_by( 'id', $item->user_id );
-
-			$render .= '<span>ID: <strong>' . $item->user_id . '</strong> &middot; ';
-
-			if ( ! $user ) {
-				$render .= esc_html__( "Not Found", "coreactivity" );
-			} else {
-				$render .= $user->display_name;
-
-				$actions[ 'edit' ] = '<a href="user-edit.php?user_id=' . $item->user_id . '">' . esc_html__( "Edit", "coreactivity" ) . '</a>';
-			}
-
-			$render .= '</span>';
-		}
-
-		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
-
-		$render  = apply_filters( 'coreactivity_logs_field_render_user_id', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_user_id', $actions, $item );
-
-		return $render . $this->row_actions( $actions );
-	}
-
-	public function column_event_id( $item ) : string {
-		return $this->_display_columns_simplified ? Init::instance()->get_event_label( absint( $item->event_id ), $item->event ) : $item->event;
-	}
-
-	public function column_object_type( $item ) : string {
-		return ! empty( $item->object_type ) ? Init::instance()->get_object_type_label( $item->object_type ) : '/';
-	}
-
-	public function column_object_name( $item ) : string {
-		$render = $item->object_name ?? '';
-		$render = apply_filters( 'coreactivity_logs_field_render_object_name', (string) $render, $item );
-
-		return $this->kses( $render );
-	}
-
-	public function column_context( $item ) : string {
-		return ! empty( $item->context ) ? strtoupper( $item->context ) : '/';
-	}
-
-	public function column_logged( $item ) : string {
-		$timestamp = coreactivity()->datetime()->timestamp_gmt_to_local( strtotime( $item->logged ) );
-
-		return date( 'Y.m.d', $timestamp ) . '<br/>@ ' . date( 'H:m:s', $timestamp );
-	}
-
-	public function column_meta( $item ) : string {
-		return '<button type="button" aria-label="' . esc_attr__( "Show Log Meta Data" ) . '"><i class="d4p-icon d4p-ui-chevron-square-down d4p-icon-lg"></i></button>';
-	}
-
 	public function prepare_items() {
 		$this->prepare_column_headers();
 
@@ -631,6 +199,438 @@ class Logs extends Table {
 				GEOJSIO::instance()->bulk( $this->_items_ips );
 			}
 		}
+	}
+
+	public function get_columns() : array {
+		$columns = array(
+			'cb'          => '<input type="checkbox" />',
+			'log_id'      => __( "ID", "coreactivity" ),
+			'blog_id'     => __( "Blog", "coreactivity" ),
+			'user_id'     => __( "User", "coreactivity" ),
+			'component'   => __( "Component", "coreactivity" ),
+			'event_id'    => __( "Event", "coreactivity" ),
+			'context'     => __( "Context", "coreactivity" ),
+			'method'      => __( "Method", "coreactivity" ),
+			'protocol'    => __( "Protocol", "coreactivity" ),
+			'ip'          => __( "IP", "coreactivity" ),
+			'request'     => __( "Request", "coreactivity" ),
+			'object_type' => __( "Object Type", "coreactivity" ),
+			'object_name' => __( "Object", "coreactivity" ),
+			'logged'      => __( "Logged", "coreactivity" ),
+			'meta'        => '<i class="vers d4p-icon d4p-ui-chevron-square-down d4p-icon-lg" title="' . esc_attr__( "Toggle Meta", "coreactivity" ) . '"></i><span class="screen-reader-text">' . esc_html__( "Toggle Meta", "coreactivity" ) . '</span>'
+		);
+
+		if ( ! $this->_display_request_column ) {
+			unset( $columns[ 'request' ] );
+		}
+
+		foreach ( array_keys( $this->_filter_lock ) as $column ) {
+			if ( isset( $columns[ $column ] ) ) {
+				unset( $columns[ $column ] );
+			}
+		}
+
+		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
+			unset( $columns[ 'component' ] );
+		}
+
+		return $columns;
+	}
+
+	public function single_row( $item ) {
+		parent::single_row( $item );
+
+		$classes = $this->get_row_classes( $item, array( 'coreactivity-hidden-row', '__hidden' ) );
+
+		echo '<tr class="' . esc_attr( join( ' ', $classes ) ) . '">';
+		$this->single_hidden_row( $item );
+		echo '</tr>';
+	}
+
+	protected function _view( string $view, string $args ) : string {
+		return $this->_url() . '&view=' . $view . '&' . $args;
+	}
+
+	protected function _self( $args, $getback = false, $nonce = null ) : string {
+		$url = parent::_self( $args, $getback, $nonce );
+
+		if ( ! empty( $this->_current_view ) ) {
+			$url .= '&view=' . $this->_current_view;
+
+			switch ( $this->_current_view ) {
+				case 'ip':
+					$url .= '&filter-ip=' . $this->_filter_lock[ 'ip' ];
+					break;
+				case 'user':
+					$url .= '&filter-user_id=' . $this->_filter_lock[ 'user_id' ];
+					break;
+			}
+		}
+
+		return $url;
+	}
+
+	protected function db() : ?DBLite {
+		return coreactivity_db();
+	}
+
+	protected function rows_per_page() : int {
+		$per_page = get_user_option( 'coreactivity_logs_rows_per_page' );
+
+		if ( empty( $per_page ) || $per_page < 1 ) {
+			$per_page = 25;
+		}
+
+		return $per_page;
+	}
+
+	protected function process_request_args() {
+		$this->_request_args = array(
+			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id', '' ),
+			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id', '' ),
+			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id', '' ),
+			'filter-ip'          => Sanitize::_get_basic( 'filter-ip', '' ),
+			'filter-component'   => Sanitize::_get_basic( 'filter-component', '' ),
+			'filter-context'     => Sanitize::_get_basic( 'filter-context', '' ),
+			'filter-method'      => Sanitize::_get_basic( 'filter-method', '' ),
+			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type', '' ),
+			'view'               => $this->_get_field( 'view' ),
+			'search'             => $this->_get_field( 's' ),
+			'period'             => $this->_get_field( 'period' ),
+			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
+			'order'              => $this->_get_field( 'order', 'DESC' ),
+			'paged'              => $this->_get_field( 'paged' ),
+		);
+
+		if ( ! empty( $this->_request_args[ 'filter-component' ] ) && ! Init::instance()->is_component_valid( $this->_request_args[ 'filter-component' ] ) ) {
+			$this->_request_args[ 'filter-component' ] = '';
+		}
+
+		if ( ! empty( $this->_request_args[ 'filter-event_id' ] ) && ! Init::instance()->is_event_id_valid( $this->_request_args[ 'filter-event_id' ] ) ) {
+			$this->_request_args[ 'filter-event_id' ] = '';
+		}
+
+		foreach ( array_keys( $this->_filter_lock ) as $field ) {
+			$key = 'filter-' . $field;
+
+			if ( isset( $this->_request_args[ $key ] ) ) {
+				$this->_request_args[ $key ] = '';
+			}
+		}
+
+		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
+			$this->_request_args[ 'filter-component' ] = '';
+		}
+	}
+
+	protected function filter_block_top() {
+		echo '<div class="alignleft actions">';
+		Elements::instance()->select( $this->get_period_dropdown( 'logged', coreactivity_db()->logs ), array(
+			'selected' => $this->get_request_arg( 'period' ),
+			'name'     => 'period'
+		) );
+
+		if ( ! isset( $this->_filter_lock[ 'component' ] ) && ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
+			Elements::instance()->select_grouped( Init::instance()->get_select_event_components( $this->_display_columns_simplified ), array(
+				'empty'    => __( "All Components", "coreactivity" ),
+				'selected' => $this->get_request_arg( 'filter-component' ),
+				'name'     => 'filter-component'
+			) );
+		}
+
+		if ( ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
+			Elements::instance()->select_grouped( Init::instance()->get_select_events( $this->_display_columns_simplified, $this->_filter_lock[ 'component' ] ?? '' ), array(
+				'empty'    => __( "All Events", "coreactivity" ),
+				'selected' => $this->get_request_arg( 'filter-event_id' ),
+				'name'     => 'filter-event_id'
+			) );
+		}
+
+		if ( ! isset( $this->_filter_lock[ 'context' ] ) ) {
+			$_contexts = array(
+				''  => __( "All Contexts", "coreactivity" ),
+				'-' => __( "Normal", "coreactivity" )
+			);
+
+			foreach ( Core::instance()->valid_request_contexts() as $context ) {
+				$_contexts[ $context ] = $context;
+			}
+
+			Elements::instance()->select( $_contexts, array(
+				'selected' => $this->get_request_arg( 'filter-context' ),
+				'name'     => 'filter-context'
+			) );
+		}
+
+		if ( ! isset( $this->_filter_lock[ 'method' ] ) ) {
+			$_methods = array(
+				'' => __( "All Methods", "coreactivity" )
+			);
+
+			foreach ( Core::instance()->valid_request_methods() as $method ) {
+				$_methods[ $method ] = $method;
+			}
+
+			Elements::instance()->select( $_methods, array(
+				'selected' => $this->get_request_arg( 'filter-method' ),
+				'name'     => 'filter-method'
+			) );
+		}
+
+		if ( ! isset( $this->_filter_lock[ 'object_type' ] ) ) {
+			$_types = array(
+				'' => __( "All Object Types", "coreactivity" )
+			);
+
+			foreach ( Init::instance()->object_types() as $type => $value ) {
+				$_types[ $type ] = $value;
+			}
+
+			Elements::instance()->select( $_types, array(
+				'selected' => $this->get_request_arg( 'filter-object_type' ),
+				'name'     => 'filter-object_type'
+			) );
+		}
+
+		submit_button( __( "Filter", "coreactivity" ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
+		echo '</div>';
+	}
+
+	protected function get_views() : array {
+		$views = array();
+
+		if ( ! empty( $this->_current_view ) ) {
+			?>
+
+            <input type="hidden" name="view" value="<?php echo esc_attr( $this->_current_view ); ?>"/>
+            <input type="hidden" name="filter-<?php echo esc_attr( $this->_current_view ); ?>" value="<?php echo esc_attr( $this->_filter_lock[ $this->_current_view ] ); ?>"/>
+
+			<?php
+
+			$current_view = '';
+			$current_key  = 'view ';
+
+			$views[ 'all' ] = '<a class="coreactivity-view-button" href="' . $this->_url() . '"><i class="d4p-icon d4p-ui-angles-left"></i> ' . __( "All Logs", "coreactivity" ) . '</a>';
+
+			switch ( $this->_current_view ) {
+				case 'component':
+					$current_view = '<span class="coreactivity-view-button">';
+					$current_view .= '<i class="d4p-icon d4p-' . Init::instance()->get_component_icon( $this->_filter_lock[ 'component' ] ) . ' d4p-icon-fw"></i>';
+					$current_view .= '<span>' . esc_html__( "Component", "coreactivity" ) . '</span>';
+					$current_view .= Init::instance()->get_component_label( $this->_filter_lock[ 'component' ] );
+					$current_view .= '<span>[' . esc_html( $this->_filter_lock[ 'component' ] ) . ']</span>';
+					$current_view .= '</span>';
+
+					$current_key .= 'component';
+					break;
+				case 'event_id':
+					$event = Init::instance()->get_event_by_id( $this->_filter_lock[ 'event_id' ] );
+
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-radar"></i> <span>' . esc_html__( "Event", "coreactivity" ) . '</span>';
+					$current_view .= $event->component_label . ' / ' . $event->label;
+					$current_view .= '<span>[' . $event->component . '/' . $event->event . ']</span>';
+					$current_view .= '</span>';
+
+					$current_key .= 'component';
+					break;
+				case 'ip':
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud"></i> <span>' . esc_html__( "IP", "coreactivity" ) . '</span>';
+
+					if ( $this->_display_ip_country_flag ) {
+						$ip           = GEOJSIO::instance()->locate( $this->_filter_lock[ 'ip' ] );
+						$current_view .= '<span>' . esc_html( $this->_filter_lock[ 'ip' ] ) . '</span> ' . $ip->flag();
+					} else {
+						$current_view .= $this->_filter_lock[ 'ip' ];
+					}
+
+					$current_view .= '</span>';
+					$current_key  .= 'ip';
+					break;
+				case 'user_id':
+					$user = get_user_by( 'id', $this->_filter_lock[ 'user_id' ] );
+					$name = ! $user ? __( "Not Found", "coreactivity" ) : $user->display_name;
+
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-user"></i> <span>' . esc_html__( "User", "coreactivity" ) . '</span>';
+					$current_view .= '<span>' . esc_html( $this->_filter_lock[ 'user_id' ] . ' : ' . $name ) . '</span>';
+
+					if ( $this->_filter_lock[ 'user_id' ] > 0 && $this->_display_user_avatar ) {
+						$current_view .= ' ' . get_avatar( $this->_filter_lock[ 'user_id' ], 30 );
+					}
+
+					$current_view .= '</span>';
+					$current_key  .= 'user';
+					break;
+			}
+
+			$views[ $current_key ] = $current_view;
+		}
+
+		return $views;
+	}
+
+	protected function get_sortable_columns() : array {
+		return array(
+			'log_id'    => array( 'l.log_id', false ),
+			'ip'        => array( 'l.ip', false ),
+			'component' => array( 'e.component', false ),
+			'event_id'  => array( 'e.event', false )
+		);
+	}
+
+	protected function get_bulk_actions() : array {
+		return array(
+			'delete' => __( "Delete", "coreactivity" )
+		);
+	}
+
+	protected function single_hidden_row( $item ) {
+		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
+
+		$total = count( $columns ) - count( $hidden );
+		$metas = array( 'referer', 'user_agent', 'ajax_action' );
+
+		$left  = array();
+		$right = array();
+
+		if ( ! $this->_display_request_column && ! empty( $item->request ) ) {
+			$left[] = '<li><strong>' . esc_html__( "request", "coreactivity" ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
+		}
+
+		foreach ( $item->meta as $key => $value ) {
+			$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 10 ? $this->print_array( $value ) : json_encode( $value ) );
+
+			if ( in_array( $key, $metas ) ) {
+				$left[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
+			} else {
+				$right[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
+			}
+		}
+
+		$description = apply_filters( 'coreactivity_logs_log_item_descriptions', '', $item );
+
+		echo '<td colspan="' . $total . '">';
+
+		if ( ! empty( $description ) ) {
+			echo '<div>' . $this->kses( $description ) . '</div>';
+		}
+
+		echo '<div>';
+
+		echo '<ul>' . join( '', $right ) . '</ul>';
+		echo '<ul>' . join( '', $left ) . '</ul>';
+
+		echo '</div>';
+		echo '</td>';
+	}
+
+	protected function column_component( $item ) : string {
+		return $this->_display_columns_simplified ? Init::instance()->get_component_label( $item->component ) : $item->component;
+	}
+
+	protected function column_ip( $item ) : string {
+		$render  = '<span>' . $item->ip . '</span>';
+		$actions = array(
+			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( "Logs", "coreactivity" ) . '</a>'
+		);
+
+		if ( $this->_display_ip_country_flag ) {
+			$ip     = GEOJSIO::instance()->locate( $item->ip );
+			$render = $ip->flag() . ' ' . $render;
+		}
+
+		if ( $item->ip == $this->_server_ip ) {
+			$render .= '<i class="d4p-icon d4p-ui-database" title="' . esc_attr__( "Server IP", "coreactivity" ) . '"></i>';
+		}
+
+		if ( $item->ip == $this->_current_ip ) {
+			$render .= '<i class="d4p-icon d4p-ui-user-square" title="' . esc_attr__( "Current Request IP", "coreactivity" ) . '"></i>';
+		}
+
+		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_ip', $render, $item );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_ip', $actions, $item );
+
+		return $render . $this->row_actions( $actions );
+	}
+
+	protected function column_user_id( $item ) : string {
+		$render  = '';
+		$actions = array(
+			'view' => '<a href="' . $this->_view( 'user_id', 'filter-user_id=' . $item->user_id ) . '">' . esc_html__( "Logs", "coreactivity" ) . '</a>'
+		);
+
+		if ( $item->user_id == 0 ) {
+			if ( $this->_display_user_avatar ) {
+				$render .= '<i class="d4p-icon d4p-ui-user-square"></i>';
+			}
+
+			$render .= '<span>ID: <strong>0</strong> &middot; ' . esc_html__( "Not a User", "coreactivity" ) . '</span>';
+		} else {
+			if ( $this->_display_user_avatar ) {
+				$render .= get_avatar( $item->user_id, 20 );;
+			}
+
+			$user = get_user_by( 'id', $item->user_id );
+
+			$render .= '<span>ID: <strong>' . $item->user_id . '</strong> &middot; ';
+
+			if ( ! $user ) {
+				$render .= esc_html__( "Not Found", "coreactivity" );
+			} else {
+				$render .= $user->display_name;
+
+				$actions[ 'edit' ] = '<a href="user-edit.php?user_id=' . $item->user_id . '">' . esc_html__( "Edit", "coreactivity" ) . '</a>';
+			}
+
+			$render .= '</span>';
+		}
+
+		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_user_id', $render, $item );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_user_id', $actions, $item );
+
+		return $render . $this->row_actions( $actions );
+	}
+
+	protected function column_event_id( $item ) : string {
+		return $this->_display_columns_simplified ? Init::instance()->get_event_label( absint( $item->event_id ), $item->event ) : $item->event;
+	}
+
+	protected function column_object_type( $item ) : string {
+		return ! empty( $item->object_type ) ? Init::instance()->get_object_type_label( $item->object_type ) : '/';
+	}
+
+	protected function column_object_name( $item ) : string {
+		$render = $item->object_name ?? '';
+		$render = apply_filters( 'coreactivity_logs_field_render_object_name', (string) $render, $item );
+
+		return $this->kses( $render );
+	}
+
+	protected function column_context( $item ) : string {
+		return ! empty( $item->context ) ? strtoupper( $item->context ) : '/';
+	}
+
+	protected function column_logged( $item ) : string {
+		$timestamp = coreactivity()->datetime()->timestamp_gmt_to_local( strtotime( $item->logged ) );
+
+		return date( 'Y.m.d', $timestamp ) . '<br/>@ ' . date( 'H:m:s', $timestamp );
+	}
+
+	protected function column_meta( $item ) : string {
+		return '<button type="button" aria-label="' . esc_attr__( "Show Log Meta Data", "coreactivity" ) . '"><i class="d4p-icon d4p-ui-chevron-square-down d4p-icon-lg"></i></button>';
+	}
+
+	private function print_array( $input ) : string {
+		$render = array();
+
+		foreach ( $input as $key => $value ) {
+			$render[] = $key . ': ' . esc_html( is_scalar( $value ) ? $value : json_encode( $value ) );
+		}
+
+		return join( '<br/>', $render );
 	}
 
 	private function kses( $render ) : string {
