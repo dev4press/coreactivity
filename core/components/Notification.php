@@ -59,20 +59,19 @@ class Notification extends Component {
 
 			$event = isset( $this->storage[ 'name' ] ) && ! empty( $this->storage[ 'name' ] ) ? 'email-failed' : 'email-failed-unknown';
 
-			$this->event_final( $event, $email_data );
+			$this->event_final( $event, $email_data, $error->get_error_message() );
 		}
 	}
 
-	protected function event_final( $event, $email_data ) {
+	protected function event_final( $event, $email_data, $error = '' ) {
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array(
 				'object_name' => $this->storage[ 'name' ] ?? ''
 			), array(
 				'subject' => isset( $email_data[ 'subject' ] ) ? esc_sql( $email_data[ 'subject' ] ) : '',
 				'email'   => isset( $email_data[ 'to' ] ) ? esc_sql( $email_data[ 'to' ] ) : '',
-				'source'  => $this->storage[ 'call' ][ 'source' ] ?? '',
-				'file'    => $this->storage[ 'call' ][ 'file' ] ?? '',
-				'line'    => $this->storage[ 'call' ][ 'line' ] ?? ''
+				'error'   => $error,
+				'source'  => $this->storage[ 'call' ]
 			) );
 		}
 	}

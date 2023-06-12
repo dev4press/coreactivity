@@ -130,13 +130,14 @@ class Init {
 		do_action( 'coreactivity_tracking_ready', $this );
 
 		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
-			'post'    => __( "Post", "coreactivity" ),
-			'term'    => __( "Term", "coreactivity" ),
-			'comment' => __( "Comment", "coreactivity" ),
-			'user'    => __( "User", "coreactivity" ),
-			'plugin'  => __( "Plugin", "coreactivity" ),
-			'theme'   => __( "Theme", "coreactivity" ),
-			'cron'    => __( "Cron", "coreactivity" )
+			'post'         => __( "Post", "coreactivity" ),
+			'term'         => __( "Term", "coreactivity" ),
+			'comment'      => __( "Comment", "coreactivity" ),
+			'user'         => __( "User", "coreactivity" ),
+			'plugin'       => __( "Plugin", "coreactivity" ),
+			'theme'        => __( "Theme", "coreactivity" ),
+			'cron'         => __( "Cron", "coreactivity" ),
+			'notification' => __( "Notification", "coreactivity" )
 		) );
 	}
 
@@ -239,7 +240,7 @@ class Init {
 				'title'  => $simplified ? __( "WordPress" ) : 'wordpress',
 				'values' => array()
 			),
-			'internal'    => array(
+			'internal'  => array(
 				'title'  => $simplified ? __( "Internal" ) : 'internal',
 				'values' => array()
 			),
