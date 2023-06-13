@@ -41,7 +41,8 @@ abstract class Component {
 	protected $registered = array();
 
 	public function __construct() {
-		add_action( 'coreactivity_component_registration', array( $this, 'register' ) );
+		add_action( 'coreactivity_component_registration', array( $this, 'register_component' ) );
+		add_action( 'coreactivity_events_registration', array( $this, 'register_events' ) );
 		add_action( 'coreactivity_tracking_ready', array( $this, 'tracking' ) );
 		add_action( 'coreactivity_init', array( $this, 'init' ) );
 	}
@@ -57,10 +58,25 @@ abstract class Component {
 		return $instance[ static::class ];
 	}
 
-	public function register( Init $init ) {
+	public function register_component( Init $init ) {
+		$init->register_component( $this->category, $this->code(), array(
+			'label' => $this->label(),
+			'icon'  => $this->icon
+		) );
+	}
+
+	public function register_events( Init $init ) {
 		foreach ( $this->events() as $event => $data ) {
 			$event  = strtolower( $event );
-			$status = $init->register( $this->category, $this->code(), $this->label(), $event, $data[ 'label' ], $this->icon, $data[ 'scope' ] ?? $this->scope, $data[ 'status' ] ?? 'active', $data[ 'object_type' ] ?? $this->object_type, $data[ 'rules' ] ?? array() );
+			$status = $init->register_event( $this->code(), $event, array(
+				'label'           => $data[ 'label' ],
+				'scope'           => $data[ 'scope' ] ?? $this->scope,
+				'status'          => $data[ 'status' ] ?? 'active',
+				'object_type'     => $data[ 'object_type' ] ?? $this->object_type,
+				'is_security'     => $data[ 'is_security' ] ?? false,
+				'is_malicious'    => $data[ 'is_malicious' ] ?? false,
+				'level'           => $data[ 'level' ] ?? 0
+			), $data[ 'rules' ] ?? array() );
 
 			if ( $status ) {
 				$this->registered[] = $event;

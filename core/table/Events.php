@@ -107,7 +107,7 @@ class Events extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
-		Elements::instance()->select( array_merge( array( '' => __( "All Categories", "coreactivity" ) ), Init::instance()->categories() ), array(
+		Elements::instance()->select( array_merge( array( '' => __( "All Categories", "coreactivity" ) ), Init::instance()->get_all_categories() ), array(
 			'selected' => $this->get_request_arg( 'filter-group' ),
 			'name'     => 'filter-group'
 		) );

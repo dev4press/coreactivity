@@ -63,8 +63,11 @@ class Plugin extends Core {
 	public function debugpress() {
 		if ( function_exists( 'debugpress_store_for_plugin' ) ) {
 			debugpress_store_for_plugin( COREACTIVITY_FILE, array(
-				'events' => Init::instance()->events(),
-				'log'    => LogCore::instance()->get_current_page_log()
+				'data' => array(
+					'components' => Init::instance()->get_all_components(),
+					'events'     => Init::instance()->get_all_events()
+				),
+				'log'  => LogCore::instance()->get_current_page_log()
 			) );
 		}
 	}

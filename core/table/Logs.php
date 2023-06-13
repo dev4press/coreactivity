@@ -403,7 +403,7 @@ class Logs extends Table {
 				'' => __( "All Object Types", "coreactivity" )
 			);
 
-			foreach ( Init::instance()->object_types() as $type => $value ) {
+			foreach ( Init::instance()->get_object_types() as $type => $value ) {
 				$_types[ $type ] = $value;
 			}
 
@@ -446,9 +446,10 @@ class Logs extends Table {
 					break;
 				case 'event_id':
 					$event = Init::instance()->get_event_by_id( $this->_filter_lock[ 'event_id' ] );
+					$label = Init::instance()->get_component_label( $event->component );
 
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-radar"></i> <span>' . esc_html__( "Event", "coreactivity" ) . '</span>';
-					$current_view .= $event->component_label . ' / ' . $event->label;
+					$current_view .= $label . ' / ' . $event->label;
 					$current_view .= '<span>[' . $event->component . '/' . $event->event . ']</span>';
 					$current_view .= '</span>';
 

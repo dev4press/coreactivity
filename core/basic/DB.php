@@ -36,7 +36,7 @@ class DB extends BaseDB {
 	);
 
 	public function get_all_registered_events() {
-		$sql = "SELECT *, '' as scope, '' as component_label, '' as label, '' as object_type, '' as loaded FROM " . $this->events . " ORDER BY `component`, `event`";
+		$sql = "SELECT * FROM " . $this->events . " ORDER BY `component`, `event`";
 
 		return $this->get_results( $sql );
 	}

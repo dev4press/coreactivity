@@ -15,6 +15,7 @@ use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\Plugin\CoreActivity\Components\WordPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\DuplicatePost;
+use Dev4Press\Plugin\CoreActivity\Plugins\GravityForms;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
 use Dev4Press\v42\Core\Quick\WPR;
@@ -40,9 +41,8 @@ class Init {
 		)
 	);
 
-	private $events = array();
 	private $components = array();
-	private $icons = array();
+	private $events = array();
 	private $categories = array();
 	private $list = array();
 	private $object_types = array();
@@ -61,27 +61,38 @@ class Init {
 		return $instance;
 	}
 
+	private function _generate_component_label( string $component ) : string {
+		$parts = explode( '/', $component );
+
+		return isset( $parts[ 1 ] ) ? Str::slug_to_name( $parts[ 1 ] ) : $component;
+	}
+
 	private function _init_events() {
 		$events = Cache::instance()->get_all_registered_events();
 
 		foreach ( $events as $event ) {
 			if ( ! isset( $this->events[ $event->component ] ) ) {
-				$this->events[ $event->component ] = array();
+				$this->components[ $event->component ] = (object) array(
+					'category'  => $event->category,
+					'component' => $event->component,
+					'label'     => $this->_generate_component_label( $event->component ),
+					'icon'      => 'ui-folder',
+					'loaded'    => false
+				);
 
-				$this->statistics[ 'components' ][ 'db' ] ++;
-				$this->statistics[ 'components' ][ 'total' ] ++;
+				$this->events[ $event->component ] = array();
 			}
 
 			$event->event_id = Sanitize::absint( $event->event_id );
 			$event->rules    = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
 			$event->loaded   = false;
 
-			$this->statistics[ 'events' ][ 'db' ] ++;
-			$this->statistics[ 'events' ][ 'total' ] ++;
-
 			$this->events[ $event->component ][ $event->event ] = $event;
 
-			$this->list[ $event->event_id ] = array( 'name' => $event->event, 'label' => $event->event );
+			$this->list[ $event->event_id ] = array(
+				'name'  => $event->event,
+				'label' => $event->event
+			);
 		}
 	}
 
@@ -101,6 +112,10 @@ class Init {
 	private function _init_plugins() {
 		if ( WPR::is_plugin_active( 'duplicate-post/duplicate-post.php' ) ) {
 			DuplicatePost::instance();
+		}
+
+		if ( WPR::is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+			GravityForms::instance();
 		}
 
 		if ( WPR::is_plugin_active( 'user-switching/user-switching.php' ) ) {
@@ -124,6 +139,7 @@ class Init {
 		$this->_init_plugins();
 
 		do_action( 'coreactivity_component_registration', $this );
+		do_action( 'coreactivity_events_registration', $this );
 
 		Cache::instance()->set( 'events', 'registered', $this->events );
 
@@ -141,28 +157,24 @@ class Init {
 		) );
 	}
 
-	public function event( string $component, string $event ) {
+	public function get_event( string $component, string $event ) {
 		return $this->events[ $component ][ $event ] ?? null;
 	}
 
-	public function events() : array {
+	public function get_all_events() : array {
 		return $this->events;
 	}
 
-	public function components() : array {
+	public function get_all_components() : array {
 		return $this->components;
 	}
 
-	public function categories() : array {
+	public function get_all_categories() : array {
 		return $this->categories;
 	}
 
-	public function object_types() : array {
+	public function get_object_types() : array {
 		return $this->object_types;
-	}
-
-	public function events_list() : array {
-		return $this->list;
 	}
 
 	public function get_event_id( string $component, string $event ) : int {
@@ -176,7 +188,7 @@ class Init {
 	public function get_event_description( string $component, string $event ) : string {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
 			if ( $this->events[ $component ][ $event ]->loaded ) {
-				return $this->events[ $component ][ $event ]->component_label . ' / ' . $this->events[ $component ][ $event ]->label;
+				return $this->components[ $component ]->label . ' / ' . $this->events[ $component ][ $event ]->label;
 			}
 		}
 
@@ -195,12 +207,12 @@ class Init {
 		return null;
 	}
 
-	public function get_component_label( string $component ) {
-		return $this->components[ $component ] ?? $component;
+	public function get_component_label( string $component ) : string {
+		return $this->components[ $component ] ? $this->components[ $component ]->label : $component;
 	}
 
-	public function get_component_icon( string $component ) {
-		return $this->icons[ $component ] ?? 'ui-folder';
+	public function get_component_icon( string $component ) : string {
+		return $this->components[ $component ] ? $this->components[ $component ]->icon : 'ui-folder';
 	}
 
 	public function get_object_type_label( string $object_type ) {
@@ -222,7 +234,7 @@ class Init {
 			foreach ( $events as $event ) {
 				if ( ! isset( $list[ $component ] ) ) {
 					$list[ $component ] = array(
-						'title'  => $simplified ? ( $this->components[ $component ] ?? $component ) : $component,
+						'title'  => $simplified ? ( $this->components[ $component ] ? $this->components[ $component ]->label : $component ) : $component,
 						'values' => array()
 					);
 				}
@@ -250,15 +262,8 @@ class Init {
 			)
 		);
 
-		foreach ( $this->events as $component => $events ) {
-			foreach ( $events as $event ) {
-				$category = $event->category;
-				$label    = $event->component_label;
-
-				if ( ! isset( $list[ $category ][ 'values' ][ $component ] ) && ! empty( $label ) ) {
-					$list[ $category ][ 'values' ][ $component ] = $simplified ? $label : $component;
-				}
-			}
+		foreach ( $this->components as $component => $obj ) {
+			$list[ $obj->category ][ 'values' ][ $component ] = $simplified ? $obj->label : $component;
 		}
 
 		if ( empty( $list[ 'plugin' ][ 'values' ] ) ) {
@@ -287,8 +292,8 @@ class Init {
 	public function event_status( int $event_id ) : string {
 		$status = '';
 
-		foreach ( $this->events as $component => $events ) {
-			foreach ( $events as $event => $obj ) {
+		foreach ( $this->events as $events ) {
+			foreach ( $events as $obj ) {
 				if ( $obj->event_id == $event_id ) {
 					$status = $obj->status;
 					break 2;
@@ -299,52 +304,57 @@ class Init {
 		return in_array( $status, array( 'active', 'inactive' ) ) ? $status : '';
 	}
 
-	public function register( string $category, string $component, string $component_label, string $event, string $label, string $icon, string $scope = '', string $status = 'active', string $object_type = '', array $rules = array() ) : bool {
+	public function register_component( string $category, string $component, array $args = array() ) {
+		$this->components[ $component ] = (object) array(
+			'category'  => $category,
+			'component' => $component,
+			'label'     => $args[ 'label' ] ?? $this->_generate_component_label( $component ),
+			'icon'      => $args[ 'icon' ] ?? 'ui-folder',
+			'loaded'    => true
+		);
+	}
+
+	public function register_event( string $component, string $event, array $args = array(), array $rules = array() ) : bool {
 		$obj = (object) array(
-			'event_id'        => 0,
-			'category'        => $category,
-			'component'       => $component,
-			'component_label' => $component_label,
-			'component_icon'  => $icon,
-			'event'           => $event,
-			'status'          => $status,
-			'rules'           => $rules,
-			'label'           => $label,
-			'loaded'          => true,
-			'scope'           => $scope,
-			'object_type'     => $object_type
+			'event_id'     => 0,
+			'component'    => $component,
+			'event'        => $event,
+			'rules'        => $rules,
+			'loaded'       => true,
+			'status'       => $args[ 'status' ] ?? 'active',
+			'scope'        => $args[ 'scope' ] ?? '',
+			'label'        => $args[ 'label' ] ?? Str::slug_to_name( $event ),
+			'object_type'  => $args[ 'object_type' ] ?? '',
+			'is_security'  => $args[ 'is_security' ] ?? false,
+			'is_malicious' => $args[ 'is_malicious' ] ?? false,
+			'level'        => $args[ 'level' ] ?? 0
 		);
 
-		if ( ! isset( $this->components[ $component ] ) ) {
-			$this->components[ $component ]               = $component_label;
-			$this->icons[ $component ]                    = $icon;
-			$this->statistics[ 'components' ][ 'loaded' ] += 1;
-		}
-
-		if ( ! isset( $this->events[ $component ] ) ) {
-			$this->statistics[ 'components' ][ 'total' ] += 1;
-		}
-
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			$this->events[ $component ][ $event ]->loaded          = true;
-			$this->events[ $component ][ $event ]->label           = $label;
-			$this->events[ $component ][ $event ]->scope           = $scope;
-			$this->events[ $component ][ $event ]->object_type     = $object_type;
-			$this->events[ $component ][ $event ]->component_label = $component_label;
-			$this->events[ $component ][ $event ]->component_icon  = $icon;
-
+			$obj->status   = $this->events[ $component ][ $event ]->status;
+			$obj->rules    = $this->events[ $component ][ $event ]->rules;
 			$obj->event_id = $this->events[ $component ][ $event ]->event_id;
 
-			$this->list[ $obj->event_id ][ 'label' ]  = $label;
-			$this->statistics[ 'events' ][ 'loaded' ] += 1;
+			$this->events[ $component ][ $event ] = $obj;
+
+			$this->list[ $obj->event_id ] = array(
+				'name'  => $event,
+				'label' => $obj->label
+			);
 		} else {
-			$id = DB::instance()->add_new_event( $category, $component, $event, $status, $rules );
+			$category = $this->components[ $component ]->category;
+
+			$id = DB::instance()->add_new_event( $category, $component, $event, $obj->status, $rules );
 
 			if ( $id > 0 ) {
 				$obj->event_id = $id;
 
 				$this->events[ $component ][ $event ] = $obj;
-				$this->list[ $obj->event_id ]         = array( 'name' => $event, 'label' => $label );
+
+				$this->list[ $obj->event_id ] = array(
+					'name'  => $event,
+					'label' => $obj->label
+				);
 			}
 		}
 
