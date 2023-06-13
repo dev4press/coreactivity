@@ -23,7 +23,8 @@ class Cleanup {
 
 	public function auto_cleanup_log() {
 		$data = array(
-			'removed-logs' => 0
+			'keep-log-months' => coreactivity_settings()->get( 'auto_cleanup_period' ),
+			'removed-logs'    => 0
 		);
 
 		do_action( 'coreactivity_cleanup_auto_completed', $data );

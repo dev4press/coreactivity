@@ -17,6 +17,7 @@ use Dev4Press\Plugin\CoreActivity\Table\LogsBlog;
 	}
 
 	$_grid->prepare_items();
+    $_grid->live_attributes();
 
 	?>
     <div class="d4p-grid-alternative-view-search">

@@ -170,5 +170,11 @@ class Plugin extends BasePlugin {
 	protected function extra_enqueue_scripts_plugin() {
 		$this->enqueue->css( 'coreactivity-admin' );
 		$this->enqueue->js( 'coreactivity-admin' );
+
+		$values = array(
+			'live_updates' => $this->settings()->get( 'logs_live_updates' ) ? 'Y' : 'N'
+		);
+
+		wp_localize_script( 'd4plib3-coreactivity-admin', 'coreactivity_data', $values );
 	}
 }

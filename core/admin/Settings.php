@@ -73,6 +73,19 @@ class Settings extends BaseSettings {
 							)
 						)
 					)
+				),
+				'logs-live'    => array(
+					'name'     => __( "Log Panel Updates", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'logs_live_updates', __( "Live Updates", "coreactivity" ), __( "Live AJAX requests every 15 seconds to get the latest logged events. The live functionality with take into account the Log panel current filters and view settings.", "coreactivity" ), Type::BOOLEAN )
+							)
+						)
+					)
 				)
 			),
 			'maintenance' => array(

@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
+use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
@@ -33,11 +34,7 @@ class Logs extends Table {
 	protected $_items_ips = array();
 
 	public function __construct( $args = array() ) {
-		parent::__construct( array(
-			'singular' => 'event',
-			'plural'   => 'events',
-			'ajax'     => false
-		) );
+		Display::instance();
 
 		$this->_current_ip = Core::instance()->get( 'ip' );
 		$this->_server_ip  = Core::instance()->get( 'server_ip' );
@@ -47,53 +44,11 @@ class Logs extends Table {
 		$this->_display_user_avatar        = coreactivity_settings()->get( 'display_user_avatar' );
 		$this->_display_request_column     = coreactivity_settings()->get( 'display_request_column' );
 
-		if ( ! is_multisite() ) {
-			$this->_filter_lock[ 'blog_id' ] = - 1;
-		}
-
-		if ( in_array( $this->_request_args[ 'view' ], array( 'user_id', 'blog_id', 'event_id', 'ip', 'object', 'component' ) ) ) {
-			$this->_current_view = $this->_request_args[ 'view' ];
-
-			switch ( $this->_current_view ) {
-				case 'component':
-					if ( ! isset( $this->_filter_lock[ 'component' ] ) && ! empty( $this->_request_args[ 'filter-component' ] ) ) {
-						$this->_filter_lock[ 'component' ] = $this->_request_args[ 'filter-component' ];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'event_id':
-					if ( ! isset( $this->_filter_lock[ 'event_id' ] ) && ! empty( $this->_request_args[ 'filter-event_id' ] ) ) {
-						$this->_filter_lock[ 'event_id' ] = $this->_request_args[ 'filter-event_id' ];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'user_id':
-					if ( ! isset( $this->_filter_lock[ 'user_id' ] ) && ! empty( $this->_request_args[ 'filter-user_id' ] ) ) {
-						$this->_filter_lock[ 'user_id' ] = $this->_request_args[ 'filter-user_id' ];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'blog_id':
-					if ( ! isset( $this->_filter_lock[ 'blog_id' ] ) && ! empty( $this->_request_args[ 'filter-blog_id' ] ) ) {
-						$this->_filter_lock[ 'blog_id' ] = $this->_request_args[ 'filter-blog_id' ];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'ip':
-					if ( ! isset( $this->_filter_lock[ 'ip' ] ) && ! empty( $this->_request_args[ 'filter-ip' ] ) ) {
-						$this->_filter_lock[ 'ip' ] = $this->_request_args[ 'filter-ip' ];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-			}
-		}
-
-		Display::instance();
+		parent::__construct( array(
+			'singular' => 'event',
+			'plural'   => 'events',
+			'ajax'     => false
+		) );
 	}
 
 	public function prepare_items() {
@@ -146,6 +101,10 @@ class Logs extends Table {
 
 		if ( ! empty( $sel_blog_id ) && $sel_blog_id > 0 ) {
 			$sql[ 'where' ][] = $this->db()->prepare( 'l.`blog_id` = %d', $sel_blog_id );
+		}
+
+		if ( $this->get_request_arg( 'min_id' ) > 0 ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`log_id` > %d', $this->get_request_arg( 'min_id' ) );
 		}
 
 		if ( ! empty( $sel_user_id ) && $sel_user_id > 0 ) {
@@ -247,6 +206,17 @@ class Logs extends Table {
 		echo '</tr>';
 	}
 
+	public function live_attributes() {
+		$data = array(
+			'lock'  => $this->_filter_lock,
+			'atts'  => $this->_request_args,
+			'id'    => DB::instance()->get_last_log_id(),
+			'nonce' => wp_create_nonce( 'coreactivity-live-update' )
+		);
+
+		wp_localize_script( 'd4plib3-coreactivity-admin', 'coreactivity_live', $data );
+	}
+
 	protected function _view( string $view, string $args ) : string {
 		return $this->_url() . '&view=' . $view . '&' . $args;
 	}
@@ -300,6 +270,7 @@ class Logs extends Table {
 			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
 			'order'              => $this->_get_field( 'order', 'DESC' ),
 			'paged'              => $this->_get_field( 'paged' ),
+			'min_id'             => 0
 		);
 
 		if ( ! empty( $this->_request_args[ 'filter-component' ] ) && ! Init::instance()->is_component_valid( $this->_request_args[ 'filter-component' ] ) ) {
@@ -320,6 +291,56 @@ class Logs extends Table {
 
 		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
 			$this->_request_args[ 'filter-component' ] = '';
+		}
+
+		if ( ! is_multisite() ) {
+			$this->_filter_lock[ 'blog_id' ] = - 1;
+		}
+
+		$this->prepare_the_view();
+	}
+
+	protected function prepare_the_view() {
+		if ( in_array( $this->_request_args[ 'view' ], array( 'user_id', 'blog_id', 'event_id', 'ip', 'object', 'component' ) ) ) {
+			$this->_current_view = $this->_request_args[ 'view' ];
+
+			switch ( $this->_current_view ) {
+				case 'component':
+					if ( ! isset( $this->_filter_lock[ 'component' ] ) && ! empty( $this->_request_args[ 'filter-component' ] ) ) {
+						$this->_filter_lock[ 'component' ] = $this->_request_args[ 'filter-component' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'event_id':
+					if ( ! isset( $this->_filter_lock[ 'event_id' ] ) && ! empty( $this->_request_args[ 'filter-event_id' ] ) ) {
+						$this->_filter_lock[ 'event_id' ] = $this->_request_args[ 'filter-event_id' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'user_id':
+					if ( ! isset( $this->_filter_lock[ 'user_id' ] ) && ! empty( $this->_request_args[ 'filter-user_id' ] ) ) {
+						$this->_filter_lock[ 'user_id' ] = $this->_request_args[ 'filter-user_id' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'blog_id':
+					if ( ! isset( $this->_filter_lock[ 'blog_id' ] ) && ! empty( $this->_request_args[ 'filter-blog_id' ] ) ) {
+						$this->_filter_lock[ 'blog_id' ] = $this->_request_args[ 'filter-blog_id' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'ip':
+					if ( ! isset( $this->_filter_lock[ 'ip' ] ) && ! empty( $this->_request_args[ 'filter-ip' ] ) ) {
+						$this->_filter_lock[ 'ip' ] = $this->_request_args[ 'filter-ip' ];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+			}
 		}
 	}
 

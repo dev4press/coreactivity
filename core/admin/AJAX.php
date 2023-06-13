@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Table\Live;
 use Dev4Press\v42\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_coreactivity_toggle_event', array( $this, 'toggle_event' ) );
+		add_action( 'wp_ajax_coreactivity_live_logs', array( $this, 'live_logs' ) );
 	}
 
 	public static function instance() : AJAX {
@@ -52,5 +54,32 @@ class AJAX {
 		}
 
 		$this->json_respond( array( 'toggle' => $toggle ) );
+	}
+
+	public function live_logs() {
+		$output = '';
+
+		if ( isset( $_REQUEST[ 'args' ] ) ) {
+			$request = json_decode( wp_unslash( $_REQUEST[ 'args' ] ), true );
+
+			if ( isset( $request[ 'nonce' ] ) && wp_verify_nonce( $request[ 'nonce' ], 'coreactivity-live-update' ) ) {
+				$request[ 'atts' ][ 'min_id' ] = Sanitize::absint( $request[ 'id' ] );
+
+				$_grid = new Live();
+				$_grid->update( $request[ 'atts' ], $request[ 'lock' ] );
+				$_grid->prepare_items();
+
+				ob_start();
+				$_grid->display();
+				$output = ob_get_contents();
+				ob_end_clean();
+
+				if ( ! empty( $output ) ) {
+					$output = DB::instance()->get_last_log_id() . '.' . $output;
+				}
+			}
+		}
+
+		die( $output );
 	}
 }

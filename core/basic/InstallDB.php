@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class InstallDB extends BaseInstallDB {
 	protected $prefix = 'coreactivity';
+	protected $plugin = 'coreactivity';
 	protected $tables = array(
 		'events'  => array(
 			'name'    => 'events',

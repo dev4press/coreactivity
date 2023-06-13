@@ -3,12 +3,12 @@
         tbody {
             tr:nth-child(4n + 1	),
             tr:nth-child(4n + 2	) {
-                background-color: #F2F2F2 !important;
+                background-color: #F2F2F2;
             }
 
             tr:nth-child(4n	),
             tr:nth-child(4n -1	) {
-                background-color: #FFF !important;;
+                background-color: #FFF;
             }
         }
     }

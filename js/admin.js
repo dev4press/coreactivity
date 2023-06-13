@@ -1,4 +1,5 @@
 /*jslint regexp: true, nomen: true, undef: true, sloppy: true, eqeq: true, vars: true, white: true, plusplus: true, maxerr: 50, indent: 4 */
+/*global d4plib_admin_data, coreactivity_data, coreactivity_live*/
 
 ;(function($, window, document, undefined) {
     window.wp = window.wp || {};
@@ -71,10 +72,47 @@
                     }
                 });
             }
+        },
+        live: {
+            init: function() {
+                setTimeout(wp.coreactivity.admin.live.ajax, 15000);
+            },
+            ajax: function() {
+                $(".coreactivity-live-row").addClass("coreactivity-old-live-row").removeClass("coreactivity-standout").removeClass("coreactivity-live-row");
+
+                $.ajax({
+                    url: ajaxurl + "?action=coreactivity_live_logs",
+                    type: "post",
+                    dataType: "html",
+                    data: {
+                        args: JSON.stringify(coreactivity_live)
+                    },
+                    success: function(html) {
+                        if (html.length > 0) {
+                            var dot = html.indexOf("."),
+                                id = html.substring(0, dot),
+                                tr = html.substring(dot + 1);
+
+                            coreactivity_live.id = parseInt(id);
+
+                            $(".coreactivity-grid-logs #the-list").prepend(tr);
+                            $(".coreactivity-live-row").addClass("coreactivity-standout");
+                        }
+
+                        setTimeout(wp.coreactivity.admin.live.ajax, 15000);
+                    }
+                });
+            }
         }
     };
 
     $(document).ready(function() {
         window.wp.coreactivity.admin.init();
+
+        if (d4plib_admin_data.plugin.name === 'coreactivity' && d4plib_admin_data.page.panel === 'logs') {
+            if (coreactivity_data.live_updates === 'Y') {
+                wp.coreactivity.admin.live.init();
+            }
+        }
     });
 })(jQuery, window, document);

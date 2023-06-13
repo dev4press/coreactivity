@@ -40,11 +40,11 @@
 
 .coreactivity-grid-logs.striped tbody tr:nth-child(4n+1),
 .coreactivity-grid-logs.striped tbody tr:nth-child(4n+2) {
-  background-color: #F2F2F2 !important;
+  background-color: #F2F2F2;
 }
 .coreactivity-grid-logs.striped tbody tr:nth-child(4n),
 .coreactivity-grid-logs.striped tbody tr:nth-child(4n-1) {
-  background-color: #FFF !important;
+  background-color: #FFF;
 }
 .coreactivity-grid-logs tr th.column-blog_id, .coreactivity-grid-logs tr th.column-log_id {
   width: 80px;
@@ -196,6 +196,16 @@
 }
 .subsubsub a.coreactivity-view-button i {
   vertical-align: top;
+}
+
+.coreactivity-grid-logs.striped tbody tr {
+  transition: background-color 2000ms linear;
+}
+.coreactivity-grid-logs.striped tbody tr.coreactivity-old-live-row {
+  background-color: #dedede !important;
+}
+.coreactivity-grid-logs.striped tbody tr.coreactivity-live-row.coreactivity-standout {
+  background-color: lightblue !important;
 }
 
 .coreactivity-overall-components {

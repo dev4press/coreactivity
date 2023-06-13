@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
+use Dev4Press\v42\Core\Helpers\Source;
 use Dev4Press\v42\WordPress as LibWordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,6 +15,7 @@ class WordPress extends Component {
 	protected $name = 'wordpress';
 	protected $icon = 'brand-wordpress';
 	protected $wp_version = '';
+	protected $plugin_name = '';
 
 	public function tracking() {
 		if ( $this->is_active( 'cron-schedule' ) ) {
@@ -22,6 +24,11 @@ class WordPress extends Component {
 
 		if ( $this->is_active( 'content-export' ) ) {
 			add_filter( 'export_wp', array( $this, 'event_content_export' ) );
+		}
+
+		if ( $this->is_active( 'database-delta' ) ) {
+			add_filter( 'd4p_install_db_delta', array( $this, 'prepare_db_delta' ) );
+			add_filter( 'dbdelta_queries', array( $this, 'event_db_delta' ) );
 		}
 
 		if ( $this->is_active( 'update-core' ) || $this->is_active( 'update-core-auto' ) ) {
@@ -39,7 +46,8 @@ class WordPress extends Component {
 			'update-core'      => array( 'label' => __( "WordPress Update", "coreactivity" ), 'scope' => 'network' ),
 			'update-core-auto' => array( 'label' => __( "WordPress Auto Update", "coreactivity" ), 'scope' => 'network' ),
 			'cron-schedule'    => array( 'label' => __( "CRON Event Scheduled", "coreactivity" ), 'scope' => 'blog' ),
-			'content-export'   => array( 'label' => __( "Content Export", "coreactivity" ), 'scope' => 'blog' )
+			'content-export'   => array( 'label' => __( "Content Export", "coreactivity" ), 'scope' => 'blog' ),
+			'database-delta'   => array( 'label' => __( "Database Delta Queries", "coreactivity" ), 'scope' => 'both' )
 		);
 	}
 
@@ -51,6 +59,10 @@ class WordPress extends Component {
 		return $message;
 	}
 
+	public function prepare_db_delta( $plugin ) {
+		$this->plugin_name = $plugin;
+	}
+
 	public function event_schedule_event( $event ) {
 		if ( $event ) {
 			$caller = wp_debug_backtrace_summary( null, 4, false );
@@ -59,7 +71,7 @@ class WordPress extends Component {
 				$this->log( 'cron-schedule', array( 'object_type' => 'cron', 'object_name' => $event->hook ), array(
 					'timestamp' => $event->timestamp,
 					'schedule'  => $event->schedule,
-					'caller'    => $caller
+					'source'    => $this->caller( array( 'wp_schedule_single_event', 'wp_schedule_event' ) )
 				) );
 			}
 		}
@@ -82,5 +94,44 @@ class WordPress extends Component {
 				'to'   => $wp_version
 			) );
 		}
+	}
+
+	public function event_db_delta( $queries ) {
+		$result = $this->caller( 'dbDelta' );
+
+		if ( ! empty( $result ) && ! empty( $queries ) ) {
+			$source = ! empty( $this->plugin_name ) ? array( 'plugin' => $this->plugin_name ) : $result;
+
+			$this->log( 'database-delta', array(),
+				array(
+					'source' => $source
+				) );
+		}
+	}
+
+	protected function caller( $functions ) : array {
+		$backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
+		$functions = (array) $functions;
+		$file_path = '';
+		$file_line = '';
+
+		foreach ( $backtrace as $item ) {
+			if ( isset( $item[ 'file' ] ) && isset( $item[ 'line' ] ) && isset( $item[ 'function' ] ) ) {
+				if ( in_array( $item[ 'function' ], $functions ) ) {
+					$file_path = $item[ 'file' ];
+					$file_line = $item[ 'line' ];
+					break;
+				}
+			}
+		}
+
+		if ( ! empty( $file_path ) ) {
+			$result           = Source::instance()->origin( $file_path );
+			$result[ 'line' ] = $file_line;
+
+			return $result;
+		}
+
+		return array();
 	}
 }

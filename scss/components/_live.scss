@@ -1,0 +1,17 @@
+.coreactivity-grid-logs.striped {
+    tbody {
+        tr {
+            transition: background-color 2000ms linear;
+
+            &.coreactivity-old-live-row {
+                background-color: #dedede !important;
+            }
+
+            &.coreactivity-live-row {
+                &.coreactivity-standout {
+                    background-color: lightblue !important;
+                }
+            }
+        }
+    }
+}

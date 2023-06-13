@@ -2,10 +2,12 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
+use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
 use Dev4Press\Plugin\CoreActivity\Log\Init as LogInit;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\v42\Core\Plugins\Core;
+use Dev4Press\v42\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -46,9 +48,15 @@ class Plugin extends Core {
 		add_filter( 'coreactivity_log_purge', array( $this, 'log_purge' ) );
 
 		if ( ! wp_next_scheduled( 'coreactivity_log_purge' ) ) {
-			$cron_time = mktime( 3, 5, 0, date( 'm' ), date( 'd' ), date( 'Y' ) );
+			if ( $this->s()->get( 'auto_cleanup_active' ) ) {
+				$cron_time = mktime( 3, 5, 0, date( 'm' ), date( 'd' ), date( 'Y' ) );
 
-			wp_schedule_event( $cron_time, 'daily', 'coreactivity_log_purge' );
+				wp_schedule_event( $cron_time, 'daily', 'coreactivity_log_purge' );
+			}
+		} else {
+			if ( ! $this->s()->get( 'auto_cleanup_active' ) ) {
+				WPR::remove_cron( 'coreactivity_log_purge' );
+			}
 		}
 	}
 
@@ -66,6 +74,6 @@ class Plugin extends Core {
 	}
 
 	public function log_purge() {
-
+		Cleanup::instance()->auto_cleanup_log();
 	}
 }

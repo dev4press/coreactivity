@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
 use Dev4Press\v42\Core\Plugins\DB as BaseDB;
+use Dev4Press\v42\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -100,5 +101,11 @@ class DB extends BaseDB {
 		$raw = $this->get_results( $sql );
 
 		return empty( $raw ) ? array() : $this->pluck( $raw, 'logs', 'component' );
+	}
+
+	public function get_last_log_id() : int {
+		$sql = "SELECT MAX(`log_id`) FROM " . $this->logs;
+
+		return Sanitize::absint( $this->get_var( $sql ) );
 	}
 }
