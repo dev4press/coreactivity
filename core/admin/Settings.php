@@ -10,8 +10,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Settings extends BaseSettings {
+	private $_tools_cleanup = array(
+		'period' => ''
+	);
+
 	protected function value( $name, $group = 'settings', $default = null ) {
+		if ( $group == 'tools-cleanup' ) {
+			return $this->_tools_cleanup[ $name ];
+		}
+
 		return coreactivity_settings()->get( $name, $group, $default );
+	}
+
+	public function tools_cleanup() : array {
+		return array(
+			'cleanup-basic' => array(
+				'name'     => __( "Cleanup Period", "coreactivity" ),
+				'sections' => array(
+					array(
+						'label'    => '',
+						'name'     => '',
+						'class'    => '',
+						'settings' => array(
+							$this->i( 'tools-cleanup', 'period', __( "Log entries age", "coreactivity" ), '', Type::SELECT )->data( 'array', $this->get_period_list() ),
+						)
+					)
+				)
+			)
+		);
 	}
 
 	protected function init() {
@@ -98,12 +124,32 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'auto_cleanup_active', __( "Remove old entries", "coreactivity" ), __( "If enabled, maintenance will be run once a day, and all old entries will be removed.", "coreactivity" ), Type::BOOLEAN ),
-								$this->i( 'settings', 'auto_cleanup_period', __( "Log entries to keep", "coreactivity" ), __( "All entries older than the number of months specified here, will be removed during the maintenance.", "coreactivity" ), Type::ABSINT )->args( array( 'label_unit' => __( "months", "coreactivity" ) ) )
+								$this->i( 'settings', 'auto_cleanup_period', __( "Log entries to keep", "coreactivity" ), __( "All entries older than the number of months specified here, will be removed during the maintenance.", "coreactivity" ), Type::ABSINT )->args( array(
+									'min'        => 1,
+									'label_unit' => __( "months", "coreactivity" )
+								) )
 							)
 						)
 					)
 				)
 			)
+		);
+	}
+
+	protected function get_period_list() : array {
+		return array(
+			''     => __( "Select the data age", "coreactivity" ),
+			'd000' => __( "All logged data", "coreactivity" ),
+			'd001' => __( "Logged data older than 1 day", "coreactivity" ),
+			'd003' => __( "Logged data older than 3 days", "coreactivity" ),
+			'd007' => __( "Logged data older than 7 days", "coreactivity" ),
+			'd014' => __( "Logged data older than 14 days", "coreactivity" ),
+			'd030' => __( "Logged data older than 30 days", "coreactivity" ),
+			'd060' => __( "Logged data older than 60 days", "coreactivity" ),
+			'd090' => __( "Logged data older than 90 days", "coreactivity" ),
+			'd180' => __( "Logged data older than 180 days", "coreactivity" ),
+			'm012' => __( "Logged data older than 1 year", "coreactivity" ),
+			'm024' => __( "Logged data older than 2 years", "coreactivity" )
 		);
 	}
 }
