@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
+use Dev4Press\Plugin\CoreActivity\Log\Init;
 use Dev4Press\v42\Core\Options\Settings as BaseSettings;
 use Dev4Press\v42\Core\Options\Type;
 
@@ -11,7 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Settings extends BaseSettings {
 	private $_tools_cleanup = array(
-		'period' => ''
+		'period' => '',
+		'events' => true
 	);
 
 	protected function value( $name, $group = 'settings', $default = null ) {
@@ -33,6 +35,19 @@ class Settings extends BaseSettings {
 						'class'    => '',
 						'settings' => array(
 							$this->i( 'tools-cleanup', 'period', __( "Log entries age", "coreactivity" ), '', Type::SELECT )->data( 'array', $this->get_period_list() ),
+						)
+					)
+				)
+			),
+			'cleanup-events' => array(
+				'name'     => __( "Cleanup Events", "coreactivity" ),
+				'sections' => array(
+					array(
+						'label'    => '',
+						'name'     => '',
+						'class'    => '',
+						'settings' => array(
+							$this->i( 'tools-cleanup', 'events', __( "Events to remove", "coreactivity" ), '', Type::CHECKBOXES_GROUP )->data( 'array', Init::instance()->get_select_events() ),
 						)
 					)
 				)
