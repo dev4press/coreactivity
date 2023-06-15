@@ -41,10 +41,13 @@ abstract class Component {
 	protected $registered = array();
 
 	public function __construct() {
+		add_action( 'coreactivity_init', array( $this, 'init' ) );
+
 		add_action( 'coreactivity_component_registration', array( $this, 'register_component' ) );
 		add_action( 'coreactivity_events_registration', array( $this, 'register_events' ) );
+		add_action( 'coreactivity_registered_object_types', array( $this, 'registered_object_types' ) );
+
 		add_action( 'coreactivity_tracking_ready', array( $this, 'tracking' ) );
-		add_action( 'coreactivity_init', array( $this, 'init' ) );
 	}
 
 	/** @return static */
@@ -82,6 +85,10 @@ abstract class Component {
 				$this->registered[] = $event;
 			}
 		}
+	}
+
+	public function registered_object_types( array $object_types ) : array {
+		return $object_types;
 	}
 
 	public function code() : string {

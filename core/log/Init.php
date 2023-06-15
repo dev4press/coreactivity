@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Cache;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
+use Dev4Press\Plugin\CoreActivity\Components\Attachment;
 use Dev4Press\Plugin\CoreActivity\Components\Comment;
 use Dev4Press\Plugin\CoreActivity\Components\Error;
 use Dev4Press\Plugin\CoreActivity\Components\Internal;
@@ -64,7 +65,7 @@ class Init {
 	private function _generate_component_label( string $component ) : string {
 		$parts = explode( '/', $component );
 
-		return isset( $parts[ 1 ] ) ? Str::slug_to_name( $parts[ 1 ] ) : $component;
+		return isset( $parts[ 1 ] ) ? Str::slug_to_name( $parts[ 1 ], '-' ) : $component;
 	}
 
 	private function _init_events() {
@@ -107,15 +108,12 @@ class Init {
 		Post::instance();
 		Term::instance();
 		Comment::instance();
+		Attachment::instance();
 	}
 
 	private function _init_plugins() {
 		if ( WPR::is_plugin_active( 'duplicate-post/duplicate-post.php' ) ) {
 			DuplicatePost::instance();
-		}
-
-		if ( WPR::is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
-			GravityForms::instance();
 		}
 
 		if ( WPR::is_plugin_active( 'user-switching/user-switching.php' ) ) {
@@ -124,6 +122,10 @@ class Init {
 
 		if ( WPR::is_plugin_active( 'sweeppress/sweeppress.php' ) ) {
 			SweepPress::instance();
+		}
+
+		if ( WPR::is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+			GravityForms::instance();
 		}
 	}
 
@@ -147,6 +149,7 @@ class Init {
 
 		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
 			'post'         => __( "Post", "coreactivity" ),
+			'attachment'   => __( "Attachment", "coreactivity" ),
 			'term'         => __( "Term", "coreactivity" ),
 			'comment'      => __( "Comment", "coreactivity" ),
 			'user'         => __( "User", "coreactivity" ),
@@ -239,7 +242,7 @@ class Init {
 					);
 				}
 
-				$list[ $component ][ 'values' ][ $event->event_id ] = $simplified ? ( empty( $event->label ) ? Str::slug_to_name( $event->event ) : $event->label ) : $event->event;
+				$list[ $component ][ 'values' ][ $event->event_id ] = $simplified ? ( empty( $event->label ) ? Str::slug_to_name( $event->event, '-' ) : $event->label ) : $event->event;
 			}
 		}
 
@@ -323,7 +326,7 @@ class Init {
 			'loaded'       => true,
 			'status'       => $args[ 'status' ] ?? 'active',
 			'scope'        => $args[ 'scope' ] ?? '',
-			'label'        => $args[ 'label' ] ?? Str::slug_to_name( $event ),
+			'label'        => $args[ 'label' ] ?? Str::slug_to_name( $event, '-' ),
 			'object_type'  => $args[ 'object_type' ] ?? '',
 			'is_security'  => $args[ 'is_security' ] ?? false,
 			'is_malicious' => $args[ 'is_malicious' ] ?? false,

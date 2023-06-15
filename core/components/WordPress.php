@@ -107,6 +107,8 @@ class WordPress extends Component {
 					'source' => $source
 				) );
 		}
+
+		return $queries;
 	}
 
 	protected function caller( $functions ) : array {

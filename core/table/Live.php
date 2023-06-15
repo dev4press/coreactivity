@@ -27,6 +27,10 @@ class Live extends Logs {
 		return coreactivity_admin();
 	}
 
+	protected function rows_per_page() : int {
+		return 100;
+	}
+
 	protected function get_row_classes( $item, $classes = array() ) : array {
 		$classes[] = 'coreactivity-live-row';
 

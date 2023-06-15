@@ -99,7 +99,7 @@ class Events extends Table {
 		$per_page = get_user_option( 'coreactivity_events_rows_per_page' );
 
 		if ( empty( $per_page ) || $per_page < 1 ) {
-			$per_page = 50;
+			$per_page = 40;
 		}
 
 		return $per_page;

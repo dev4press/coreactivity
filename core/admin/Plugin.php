@@ -24,8 +24,8 @@ class Plugin extends BasePlugin {
 
 	public $enqueue_wp = array( 'dialog' => true, 'color_picker' => true );
 	public $per_page_options = array(
-		'coreactivity_log_rows_per_page',
-		'coreactivity_items_rows_per_page'
+		'coreactivity_logs_rows_per_page',
+		'coreactivity_events_rows_per_page'
 	);
 
 	public function constructor() {

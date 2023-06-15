@@ -248,7 +248,7 @@ class Logs extends Table {
 		$per_page = get_user_option( 'coreactivity_logs_rows_per_page' );
 
 		if ( empty( $per_page ) || $per_page < 1 ) {
-			$per_page = 25;
+			$per_page = 20;
 		}
 
 		return $per_page;
