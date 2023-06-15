@@ -26,7 +26,7 @@ class Settings extends BaseSettings {
 
 	public function tools_cleanup() : array {
 		return array(
-			'cleanup-basic' => array(
+			'cleanup-basic'  => array(
 				'name'     => __( "Cleanup Period", "coreactivity" ),
 				'sections' => array(
 					array(

@@ -147,6 +147,9 @@ class Plugin extends BasePlugin {
 
 	public function message_process( $code, $msg ) {
 		switch ( $code ) {
+			case 'cleanup-completed':
+				$msg[ 'message' ] = __( "The cleanup operation has been completed.", "coreactivity" );
+				break;
 			case 'events-updated':
 				$msg[ 'message' ] = __( "Events activity status has been updated.", "coreactivity" );
 				break;

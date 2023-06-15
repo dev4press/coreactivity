@@ -3,7 +3,9 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
+use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\v42\Core\Admin\PostBack as BasePostBack;
+use Dev4Press\v42\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,6 +16,34 @@ class PostBack extends BasePostBack {
 		parent::process();
 
 		do_action( 'coreactivity_admin_postback_handler', $this->p() );
+	}
+
+	protected function tools() {
+		if ( $this->a()->subpanel == 'cleanup' ) {
+			$this->cleanup();
+		} else {
+			parent::tools();
+		}
+	}
+
+	protected function cleanup() {
+		$data = $_POST[ 'coreactivity' ][ 'tools-cleanup' ] ?? array();
+
+		$when = $data[ 'period' ] ?? '';
+		$what = $data[ 'events' ] ?? array();
+		$msg  = 'nothing';
+
+		if ( ! empty( $when ) && ! empty( $what ) && strlen( $when ) == 4 ) {
+
+			$what = Sanitize::ids_list( $what );
+
+			Cleanup::instance()->cleanup_log( $when, $what );
+
+			$msg = 'cleanup-completed';
+		}
+
+		wp_redirect( $this->a()->current_url() . '&message=' . $msg );
+		exit;
 	}
 
 	protected function remove() {

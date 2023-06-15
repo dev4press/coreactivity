@@ -15,6 +15,10 @@ class Internal extends Component {
 	protected $category = 'internal';
 
 	public function tracking() {
+		if ( $this->is_active( 'log-cleanup' ) ) {
+			add_action( 'coreactivity_cleanup_completed', array( $this, 'event_cleanup' ) );
+		}
+
 		if ( $this->is_active( 'log-cleanup-auto' ) ) {
 			add_action( 'coreactivity_cleanup_auto_completed', array( $this, 'event_cleanup_auto' ) );
 		}
@@ -33,5 +37,9 @@ class Internal extends Component {
 
 	public function event_cleanup_auto( $data ) {
 		$this->log( 'log-cleanup-auto', array(), $data );
+	}
+
+	public function event_cleanup( $data ) {
+		$this->log( 'log-cleanup', array(), $data );
 	}
 }

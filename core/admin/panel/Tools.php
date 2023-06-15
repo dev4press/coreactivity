@@ -15,11 +15,11 @@ class Tools extends PanelTools {
 		$this->subpanels = array_slice( $this->subpanels, 0, 2 ) +
 		                   array(
 			                   'cleanup' => array(
-				                   'title'        => __( "Data Cleanup", "gd-bbpress-toolbox" ),
+				                   'title'        => __( "Data Cleanup", "coreactivity" ),
 				                   'icon'         => 'ui-trash',
 				                   'method'       => 'post',
-				                   'button_label' => __( "Cleanup", "gd-bbpress-toolbox" ),
-				                   'info'         => __( "Using this tool, you can cleanup log entries.", "gd-bbpress-toolbox" )
+				                   'button_label' => __( "Cleanup", "coreactivity" ),
+				                   'info'         => __( "Using this tool, you can cleanup log entries.", "coreactivity" )
 			                   )
 		                   ) +
 		                   array_slice( $this->subpanels, 2 );

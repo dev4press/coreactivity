@@ -69,13 +69,13 @@ abstract class Component {
 		foreach ( $this->events() as $event => $data ) {
 			$event  = strtolower( $event );
 			$status = $init->register_event( $this->code(), $event, array(
-				'label'           => $data[ 'label' ],
-				'scope'           => $data[ 'scope' ] ?? $this->scope,
-				'status'          => $data[ 'status' ] ?? 'active',
-				'object_type'     => $data[ 'object_type' ] ?? $this->object_type,
-				'is_security'     => $data[ 'is_security' ] ?? false,
-				'is_malicious'    => $data[ 'is_malicious' ] ?? false,
-				'level'           => $data[ 'level' ] ?? 0
+				'label'        => $data[ 'label' ],
+				'scope'        => $data[ 'scope' ] ?? $this->scope,
+				'status'       => $data[ 'status' ] ?? 'active',
+				'object_type'  => $data[ 'object_type' ] ?? $this->object_type,
+				'is_security'  => $data[ 'is_security' ] ?? false,
+				'is_malicious' => $data[ 'is_malicious' ] ?? false,
+				'level'        => $data[ 'level' ] ?? 0
 			), $data[ 'rules' ] ?? array() );
 
 			if ( $status ) {

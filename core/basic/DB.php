@@ -108,4 +108,10 @@ class DB extends BaseDB {
 
 		return Sanitize::absint( $this->get_var( $sql ) );
 	}
+
+	public function remove_log_meta_orphans() {
+		$sql = "DELETE m FROM $this->logmeta m LEFT JOIN $this->logs l ON l.log_id = m.log_id WHERE l.log_id IS NULL";
+
+		return $this->query( $sql );
+	}
 }

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 06/12/2023 06:18:09 PM\n"
+"POT-Creation-Date: 06/15/2023 12:51:17 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,8 +18,8 @@ msgstr ""
 #: core/admin/panel/Dashboard.php:27
 #: core/admin/Plugin.php:111
 #: core/table/Events.php:76
-#: core/table/Logs.php:532
-#: core/table/Logs.php:559
+#: core/table/Logs.php:554
+#: core/table/Logs.php:581
 msgid "Logs"
 msgstr ""
 
@@ -29,12 +29,12 @@ msgid "Rows"
 msgstr ""
 
 #: core/admin/panel/Logs.php:37
-#: core/table/Logs.php:541
+#: core/table/Logs.php:563
 msgid "Server IP"
 msgstr ""
 
 #: core/admin/panel/Logs.php:42
-#: core/table/Logs.php:545
+#: core/table/Logs.php:567
 msgid "Current Request IP"
 msgstr ""
 
@@ -60,6 +60,18 @@ msgstr ""
 
 #: core/admin/panel/Settings.php:30
 msgid "Settings related to maintenance and cleanup of the log database tables."
+msgstr ""
+
+#: core/admin/panel/Tools.php:17
+msgid "Data Cleanup"
+msgstr ""
+
+#: core/admin/panel/Tools.php:20
+msgid "Cleanup"
+msgstr ""
+
+#: core/admin/panel/Tools.php:21
+msgid "Using this tool, you can cleanup log entries."
 msgstr ""
 
 #: core/admin/Plugin.php:80
@@ -103,103 +115,183 @@ msgid "Tools"
 msgstr ""
 
 #: core/admin/Plugin.php:150
+msgid "The cleanup operation has been completed."
+msgstr ""
+
+#: core/admin/Plugin.php:153
 msgid "Events activity status has been updated."
 msgstr ""
 
-#: core/admin/Settings.php:20
-msgid "Standard Meta Data"
+#: core/admin/Settings.php:29
+msgid "Cleanup Period"
 msgstr ""
 
-#: core/admin/Settings.php:27
-msgid "User Agent"
+#: core/admin/Settings.php:36
+msgid "Log entries age"
 msgstr ""
 
-#: core/admin/Settings.php:27
-msgid "If the request has user agent string, it will be logged as the log entry meta data."
-msgstr ""
-
-#: core/admin/Settings.php:28
-msgid "Referer"
-msgstr ""
-
-#: core/admin/Settings.php:28
-msgid "If the request has referer, it will be logged as the log entry meta data."
-msgstr ""
-
-#: core/admin/Settings.php:34
-msgid "Event Specific Meta Data"
-msgstr ""
-
-#: core/admin/Settings.php:41
-msgid "Plugin or Theme Descriptions"
-msgstr ""
-
-#: core/admin/Settings.php:41
-msgid "Descriptions are available for plugins and themes, but they can be on the longer side, and usually are not useful for log analysis."
+#: core/admin/Settings.php:42
+msgid "Cleanup Events"
 msgstr ""
 
 #: core/admin/Settings.php:49
+msgid "Events to remove"
+msgstr ""
+
+#: core/admin/Settings.php:61
+msgid "Standard Meta Data"
+msgstr ""
+
+#: core/admin/Settings.php:68
+msgid "User Agent"
+msgstr ""
+
+#: core/admin/Settings.php:68
+msgid "If the request has user agent string, it will be logged as the log entry meta data."
+msgstr ""
+
+#: core/admin/Settings.php:69
+msgid "Referer"
+msgstr ""
+
+#: core/admin/Settings.php:69
+msgid "If the request has referer, it will be logged as the log entry meta data."
+msgstr ""
+
+#: core/admin/Settings.php:75
+msgid "Event Specific Meta Data"
+msgstr ""
+
+#: core/admin/Settings.php:82
+msgid "Plugin or Theme Descriptions"
+msgstr ""
+
+#: core/admin/Settings.php:82
+msgid "Descriptions are available for plugins and themes, but they can be on the longer side, and usually are not useful for log analysis."
+msgstr ""
+
+#: core/admin/Settings.php:90
 msgid "Content Display"
 msgstr ""
 
-#: core/admin/Settings.php:56
+#: core/admin/Settings.php:97
 msgid "Simplified values"
 msgstr ""
 
-#: core/admin/Settings.php:56
+#: core/admin/Settings.php:97
 msgid "Values for columns Component and Event will be displayed using labels."
 msgstr ""
 
-#: core/admin/Settings.php:57
+#: core/admin/Settings.php:98
 msgid "IP GEO location flag"
 msgstr ""
 
-#: core/admin/Settings.php:57
+#: core/admin/Settings.php:98
 msgid "Show country for the logged IP."
 msgstr ""
 
-#: core/admin/Settings.php:58
+#: core/admin/Settings.php:99
 msgid "User avatar"
 msgstr ""
 
-#: core/admin/Settings.php:58
+#: core/admin/Settings.php:99
 msgid "Show user avatar for logs that are related to the user."
 msgstr ""
 
-#: core/admin/Settings.php:64
+#: core/admin/Settings.php:105
 msgid "Table Layout"
 msgstr ""
 
-#: core/admin/Settings.php:71
+#: core/admin/Settings.php:112
 msgid "Request as Column"
 msgstr ""
 
-#: core/admin/Settings.php:71
+#: core/admin/Settings.php:112
 msgid "Request value can be quite long, and it can cause layout issues if displayed as column. If this option is displayed, Request will be displayed as Meta value in the hidden Meta row."
 msgstr ""
 
-#: core/admin/Settings.php:79
+#: core/admin/Settings.php:118
+msgid "Log Panel Updates"
+msgstr ""
+
+#: core/admin/Settings.php:125
+msgid "Live Updates"
+msgstr ""
+
+#: core/admin/Settings.php:125
+msgid "Live AJAX requests every 15 seconds to get the latest logged events. The live functionality with take into account the Log panel current filters and view settings."
+msgstr ""
+
+#: core/admin/Settings.php:133
 msgid "Auto Cleanup"
 msgstr ""
 
-#: core/admin/Settings.php:86
+#: core/admin/Settings.php:140
 msgid "Remove old entries"
 msgstr ""
 
-#: core/admin/Settings.php:86
+#: core/admin/Settings.php:140
 msgid "If enabled, maintenance will be run once a day, and all old entries will be removed."
 msgstr ""
 
-#: core/admin/Settings.php:87
+#: core/admin/Settings.php:141
 msgid "Log entries to keep"
 msgstr ""
 
-#: core/admin/Settings.php:87
+#: core/admin/Settings.php:141
 msgid "All entries older than the number of months specified here, will be removed during the maintenance."
 msgstr ""
 
-#: core/admin/Settings.php:87
+#: core/admin/Settings.php:143
 msgid "months"
+msgstr ""
+
+#: core/admin/Settings.php:155
+msgid "Select the data age"
+msgstr ""
+
+#: core/admin/Settings.php:156
+msgid "All logged data"
+msgstr ""
+
+#: core/admin/Settings.php:157
+msgid "Logged data older than 1 day"
+msgstr ""
+
+#: core/admin/Settings.php:158
+msgid "Logged data older than 3 days"
+msgstr ""
+
+#: core/admin/Settings.php:159
+msgid "Logged data older than 7 days"
+msgstr ""
+
+#: core/admin/Settings.php:160
+msgid "Logged data older than 14 days"
+msgstr ""
+
+#: core/admin/Settings.php:161
+msgid "Logged data older than 30 days"
+msgstr ""
+
+#: core/admin/Settings.php:162
+msgid "Logged data older than 60 days"
+msgstr ""
+
+#: core/admin/Settings.php:163
+msgid "Logged data older than 90 days"
+msgstr ""
+
+#: core/admin/Settings.php:164
+msgid "Logged data older than 180 days"
+msgstr ""
+
+#: core/admin/Settings.php:165
+msgid "Logged data older than 1 year"
+msgstr ""
+
+#: core/admin/Settings.php:166
+msgid "Logged data older than 2 years"
 msgstr ""
 
 #: core/components/Comment.php:26
@@ -238,17 +330,17 @@ msgstr ""
 msgid "404 Not Found Style"
 msgstr ""
 
-#: core/components/Internal.php:23
-#: core/log/Init.php:117
-#: core/log/Init.php:243
+#: core/components/Internal.php:27
+#: core/log/Init.php:132
+#: core/log/Init.php:255
 msgid "Internal"
 msgstr ""
 
-#: core/components/Internal.php:28
+#: core/components/Internal.php:32
 msgid "Log Cleanup"
 msgstr ""
 
-#: core/components/Internal.php:29
+#: core/components/Internal.php:33
 msgid "Auto Log Cleanup"
 msgstr ""
 
@@ -273,7 +365,7 @@ msgid "Unknown Email Failed"
 msgstr ""
 
 #: core/components/Plugin.php:35
-#: core/log/Init.php:247
+#: core/log/Init.php:259
 msgid "Plugins"
 msgstr ""
 
@@ -349,26 +441,30 @@ msgstr ""
 msgid "Failed Login"
 msgstr ""
 
-#: core/components/WordPress.php:33
-#: core/log/Init.php:116
-#: core/log/Init.php:239
+#: core/components/WordPress.php:40
+#: core/log/Init.php:131
+#: core/log/Init.php:251
 msgid "WordPress"
 msgstr ""
 
-#: core/components/WordPress.php:38
+#: core/components/WordPress.php:45
 msgid "WordPress Update"
 msgstr ""
 
-#: core/components/WordPress.php:39
+#: core/components/WordPress.php:46
 msgid "WordPress Auto Update"
 msgstr ""
 
-#: core/components/WordPress.php:40
+#: core/components/WordPress.php:47
 msgid "CRON Event Scheduled"
 msgstr ""
 
-#: core/components/WordPress.php:41
+#: core/components/WordPress.php:48
 msgid "Content Export"
+msgstr ""
+
+#: core/components/WordPress.php:49
+msgid "Database Delta Queries"
 msgstr ""
 
 #: core/log/Display.php:59
@@ -392,7 +488,7 @@ msgid "ID: %s &middot; Term: %s<br/>Taxonomy: %s"
 msgstr ""
 
 #: core/log/Display.php:62
-#: core/log/Init.php:137
+#: core/log/Init.php:153
 msgid "Theme"
 msgstr ""
 
@@ -408,8 +504,8 @@ msgid "Version"
 msgstr ""
 
 #: core/log/Display.php:80
-#: core/log/Init.php:118
-#: core/log/Init.php:136
+#: core/log/Init.php:133
+#: core/log/Init.php:152
 msgid "Plugin"
 msgstr ""
 
@@ -430,34 +526,34 @@ msgid "Invalid"
 msgstr ""
 
 #: core/log/Display.php:121
-#: core/table/Logs.php:450
-#: core/table/Logs.php:578
+#: core/table/Logs.php:472
+#: core/table/Logs.php:600
 msgid "Not Found"
 msgstr ""
 
-#: core/log/Init.php:132
+#: core/log/Init.php:148
 msgid "Post"
 msgstr ""
 
-#: core/log/Init.php:133
+#: core/log/Init.php:149
 msgid "Term"
 msgstr ""
 
-#: core/log/Init.php:134
+#: core/log/Init.php:150
 msgid "Comment"
 msgstr ""
 
-#: core/log/Init.php:135
-#: core/table/Logs.php:208
-#: core/table/Logs.php:452
+#: core/log/Init.php:151
+#: core/table/Logs.php:167
+#: core/table/Logs.php:474
 msgid "User"
 msgstr ""
 
-#: core/log/Init.php:138
+#: core/log/Init.php:154
 msgid "Cron"
 msgstr ""
 
-#: core/log/Init.php:139
+#: core/log/Init.php:155
 msgid "Notification"
 msgstr ""
 
@@ -467,6 +563,10 @@ msgstr ""
 
 #: core/plugins/DuplicatePost.php:40
 msgid "Post Duplicated"
+msgstr ""
+
+#: core/plugins/GravityForms.php:16
+msgid "Gravity Forms"
 msgstr ""
 
 #: core/plugins/SweepPress.php:23
@@ -498,7 +598,7 @@ msgid "Switched Back"
 msgstr ""
 
 #: core/table/Events.php:71
-#: core/table/Logs.php:206
+#: core/table/Logs.php:165
 msgid "ID"
 msgstr ""
 
@@ -511,14 +611,14 @@ msgid "Category"
 msgstr ""
 
 #: core/table/Events.php:74
-#: core/table/Logs.php:209
-#: core/table/Logs.php:418
+#: core/table/Logs.php:168
+#: core/table/Logs.php:439
 msgid "Component"
 msgstr ""
 
 #: core/table/Events.php:75
-#: core/table/Logs.php:210
-#: core/table/Logs.php:428
+#: core/table/Logs.php:169
+#: core/table/Logs.php:450
 msgid "Event"
 msgstr ""
 
@@ -535,14 +635,14 @@ msgid "All Categories"
 msgstr ""
 
 #: core/table/Events.php:115
-#: core/table/Logs.php:334
+#: core/table/Logs.php:355
 msgid "All Components"
 msgstr ""
 
 #: core/table/Events.php:119
 #: core/table/Events.php:163
 #: core/table/Events.php:176
-#: core/table/Logs.php:394
+#: core/table/Logs.php:415
 msgid "Filter"
 msgstr ""
 
@@ -575,89 +675,89 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: core/table/Logs.php:207
+#: core/table/Logs.php:166
 msgid "Blog"
 msgstr ""
 
-#: core/table/Logs.php:211
+#: core/table/Logs.php:170
 msgid "Context"
 msgstr ""
 
-#: core/table/Logs.php:212
+#: core/table/Logs.php:171
 msgid "Method"
 msgstr ""
 
-#: core/table/Logs.php:213
+#: core/table/Logs.php:172
 msgid "Protocol"
 msgstr ""
 
-#: core/table/Logs.php:214
-#: core/table/Logs.php:436
+#: core/table/Logs.php:173
+#: core/table/Logs.php:458
 msgid "IP"
 msgstr ""
 
-#: core/table/Logs.php:215
+#: core/table/Logs.php:174
 msgid "Request"
 msgstr ""
 
-#: core/table/Logs.php:216
+#: core/table/Logs.php:175
 msgid "Object Type"
 msgstr ""
 
-#: core/table/Logs.php:217
+#: core/table/Logs.php:176
 msgid "Object"
 msgstr ""
 
-#: core/table/Logs.php:218
+#: core/table/Logs.php:177
 msgid "Logged"
 msgstr ""
 
-#: core/table/Logs.php:342
+#: core/table/Logs.php:363
 msgid "All Events"
 msgstr ""
 
-#: core/table/Logs.php:350
+#: core/table/Logs.php:371
 msgid "All Contexts"
 msgstr ""
 
-#: core/table/Logs.php:351
+#: core/table/Logs.php:372
 msgid "Normal"
 msgstr ""
 
-#: core/table/Logs.php:366
+#: core/table/Logs.php:387
 msgid "All Methods"
 msgstr ""
 
-#: core/table/Logs.php:381
+#: core/table/Logs.php:402
 msgid "All Object Types"
 msgstr ""
 
-#: core/table/Logs.php:412
+#: core/table/Logs.php:433
 msgid "All Logs"
 msgstr ""
 
-#: core/table/Logs.php:481
+#: core/table/Logs.php:503
 msgid "Delete"
 msgstr ""
 
-#: core/table/Logs.php:219
-#: core/table/Logs.php:219
+#: core/table/Logs.php:178
+#: core/table/Logs.php:178
 msgid "Toggle Meta"
 msgstr ""
 
-#: core/table/Logs.php:622
+#: core/table/Logs.php:644
 msgid "Show Log Meta Data"
 msgstr ""
 
-#: core/table/Logs.php:495
+#: core/table/Logs.php:517
 msgid "request"
 msgstr ""
 
-#: core/table/Logs.php:567
+#: core/table/Logs.php:589
 msgid "Not a User"
 msgstr ""
 
-#: core/table/Logs.php:582
+#: core/table/Logs.php:604
 msgid "Edit"
 msgstr ""
 
@@ -678,7 +778,7 @@ msgid "Last 30 days statistics"
 msgstr ""
 
 #: forms/content-events.php:14
-#: forms/content-logs.php:25
+#: forms/content-logs.php:26
 msgid "Search"
 msgstr ""
 
@@ -694,6 +794,14 @@ msgstr ""
 #: forms/content-install.php:27
 #: forms/content-update.php:27
 msgid "Click here to continue"
+msgstr ""
+
+#: forms/content-tools-cleanup.php:10
+msgid "Important"
+msgstr ""
+
+#: forms/content-tools-cleanup.php:12
+msgid "These tools will remove logged data from the database. Create database backup before using these tools to avoid data loss in case you change your mind."
 msgstr ""
 
 #: forms/content-tools-export.php:8
