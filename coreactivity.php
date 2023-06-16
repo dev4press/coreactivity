@@ -3,7 +3,7 @@
 /*
 Plugin Name:       CoreActivity
 Plugin URI:        https://plugins.dev4press.com/coreactivity/
-Description:       Monitor and log all kinds of activity happening in the WordPress website, with fine control over events to log, detailed log and events panels, and more.
+Description:       Monitor and log all kinds of activity happening on the WordPress website, with fine control over events to log, detailed log and events panels, and more.
 Author:            Milan Petrovic
 Author URI:        https://www.dev4press.com/
 Text Domain:       coreactivity
