@@ -11,10 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Settings extends BaseSettings {
 	public $base = 'coreactivity';
 	public $scope = 'network';
+	public $has_db = true;
 
 	public $settings = array(
 		'core'     => array(
-			'activated' => 0
+			'installed'  => '',
+			'updated'    => '',
+			'db_version' => 0
 		),
 		'settings' => array(
 			'log_if_available_user_agent'  => true,
@@ -36,7 +39,7 @@ class Settings extends BaseSettings {
 		add_action( 'coreactivity_load_settings', array( $this, 'init' ), 2 );
 	}
 
-	protected function _db() {
-		InstallDB::instance()->install();
+	protected function _install_db() {
+		return InstallDB::instance();
 	}
 }
