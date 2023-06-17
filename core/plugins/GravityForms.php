@@ -13,7 +13,7 @@ class GravityForms extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'gravityforms';
 	protected $object_type = 'gform';
-	protected $icon = 'ui-table';
+	protected $icon = 'brand-gravityforms';
 	protected $category = 'plugin';
 
 	public function registered_object_types( array $object_types ) : array {
