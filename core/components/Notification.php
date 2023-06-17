@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Notification extends Component {
 	protected $plugin = 'coreactivity';
-	protected $name = 'notifications';
+	protected $name = 'notification';
 	protected $icon = 'ui-envelope';
 	protected $object_type = 'notification';
 	protected $storage = array();

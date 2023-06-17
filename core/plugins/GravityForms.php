@@ -23,6 +23,10 @@ class GravityForms extends Component {
 	}
 
 	public function tracking() {
+		if ( ! WPR::is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
+			return;
+		}
+
 		if ( $this->is_active( 'created' ) ) {
 			add_action( 'gform_after_save_form', array( $this, 'event_after_save_form' ), 10, 2 );
 		}

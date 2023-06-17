@@ -15,6 +15,10 @@ class SweepPress extends Component {
 	protected $category = 'plugin';
 
 	public function tracking() {
+		if ( ! WPR::is_plugin_active( 'sweeppress/sweeppress.php' ) ) {
+			return;
+		}
+
 		if ( $this->is_active( 'completed' ) ) {
 			add_action( 'sweeppress_sweep_completed', array( $this, 'event_completed' ) );
 		}

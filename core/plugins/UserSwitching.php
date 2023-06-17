@@ -15,6 +15,10 @@ class UserSwitching extends Component {
 	protected $category = 'plugin';
 
 	public function tracking() {
+		if ( ! WPR::is_plugin_active( 'user-switching/user-switching.php' ) ) {
+			return;
+		}
+
 		if ( $this->is_active( 'switch-to-user' ) ) {
 			add_action( 'switch_to_user', array( $this, 'event_switch_to_user' ), 10, 2 );
 		}

@@ -9,6 +9,7 @@ use Dev4Press\Plugin\CoreActivity\Components\Comment;
 use Dev4Press\Plugin\CoreActivity\Components\Error;
 use Dev4Press\Plugin\CoreActivity\Components\Internal;
 use Dev4Press\Plugin\CoreActivity\Components\Notification;
+use Dev4Press\Plugin\CoreActivity\Components\Option;
 use Dev4Press\Plugin\CoreActivity\Components\Plugin;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
 use Dev4Press\Plugin\CoreActivity\Components\Term;
@@ -100,6 +101,7 @@ class Init {
 	private function _init_components() {
 		Internal::instance();
 		WordPress::instance();
+		Option::instance();
 		Notification::instance();
 		Error::instance();
 		Plugin::instance();
@@ -112,21 +114,10 @@ class Init {
 	}
 
 	private function _init_plugins() {
-		if ( WPR::is_plugin_active( 'duplicate-post/duplicate-post.php' ) ) {
-			DuplicatePost::instance();
-		}
-
-		if ( WPR::is_plugin_active( 'user-switching/user-switching.php' ) ) {
-			UserSwitching::instance();
-		}
-
-		if ( WPR::is_plugin_active( 'sweeppress/sweeppress.php' ) ) {
-			SweepPress::instance();
-		}
-
-		if ( WPR::is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
-			GravityForms::instance();
-		}
+		DuplicatePost::instance();
+		UserSwitching::instance();
+		SweepPress::instance();
+		GravityForms::instance();
 	}
 
 	public function ready() {

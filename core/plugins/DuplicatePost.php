@@ -18,6 +18,10 @@ class DuplicatePost extends Component {
 	protected $do_not_log = array();
 
 	public function tracking() {
+		if ( ! WPR::is_plugin_active( 'duplicate-post/duplicate-post.php' ) ) {
+			return;
+		}
+
 		if ( $this->is_active( 'duplicated' ) ) {
 			add_action( 'dp_duplicate_post', array( $this, 'event_duplicated' ), 100, 2 );
 			add_action( 'dp_duplicate_page', array( $this, 'event_duplicated' ), 100, 2 );
