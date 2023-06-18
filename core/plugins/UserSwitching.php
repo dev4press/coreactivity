@@ -2,23 +2,19 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
-use Dev4Press\Plugin\CoreActivity\Base\Component;
+use Dev4Press\Plugin\CoreActivity\Base\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class UserSwitching extends Component {
+class UserSwitching extends Plugin {
 	protected $plugin = 'coreactivity';
 	protected $name = 'user-switching';
 	protected $icon = 'ui-user-group';
-	protected $category = 'plugin';
+	protected $plugin_file = 'user-switching/user-switching.php';
 
 	public function tracking() {
-		if ( ! WPR::is_plugin_active( 'user-switching/user-switching.php' ) ) {
-			return;
-		}
-
 		if ( $this->is_active( 'switch-to-user' ) ) {
 			add_action( 'switch_to_user', array( $this, 'event_switch_to_user' ), 10, 2 );
 		}

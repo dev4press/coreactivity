@@ -2,23 +2,19 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
-use Dev4Press\Plugin\CoreActivity\Base\Component;
+use Dev4Press\Plugin\CoreActivity\Base\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class SweepPress extends Component {
+class SweepPress extends Plugin {
 	protected $plugin = 'coreactivity';
 	protected $name = 'sweeppress';
 	protected $icon = 'plugin-sweeppress';
-	protected $category = 'plugin';
+	protected $plugin_file = 'sweeppress/sweeppress.php';
 
 	public function tracking() {
-		if ( ! WPR::is_plugin_active( 'sweeppress/sweeppress.php' ) ) {
-			return;
-		}
-
 		if ( $this->is_active( 'completed' ) ) {
 			add_action( 'sweeppress_sweep_completed', array( $this, 'event_completed' ) );
 		}

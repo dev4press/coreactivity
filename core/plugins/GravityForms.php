@@ -2,19 +2,20 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
-use Dev4Press\Plugin\CoreActivity\Base\Component;
+
+use Dev4Press\Plugin\CoreActivity\Base\Plugin;
 use Dev4Press\v42\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class GravityForms extends Component {
+class GravityForms extends Plugin {
 	protected $plugin = 'coreactivity';
 	protected $name = 'gravityforms';
 	protected $object_type = 'gform';
 	protected $icon = 'brand-gravityforms';
-	protected $category = 'plugin';
+	protected $plugin_file = 'gravityforms/gravityforms.php';
 
 	public function registered_object_types( array $object_types ) : array {
 		$object_types[ 'gform' ] = __( "Gravity Form" );
@@ -23,10 +24,6 @@ class GravityForms extends Component {
 	}
 
 	public function tracking() {
-		if ( ! WPR::is_plugin_active( 'gravityforms/gravityforms.php' ) ) {
-			return;
-		}
-
 		if ( $this->is_active( 'created' ) ) {
 			add_action( 'gform_after_save_form', array( $this, 'event_after_save_form' ), 10, 2 );
 		}

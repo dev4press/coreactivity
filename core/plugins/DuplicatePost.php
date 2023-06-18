@@ -2,26 +2,23 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
-use Dev4Press\Plugin\CoreActivity\Base\Component;
+
+use Dev4Press\Plugin\CoreActivity\Base\Plugin;
 use WP_Post;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class DuplicatePost extends Component {
+class DuplicatePost extends Plugin {
 	protected $plugin = 'coreactivity';
 	protected $name = 'duplicate-post';
 	protected $object_type = 'post';
 	protected $icon = 'ui-paste';
-	protected $category = 'plugin';
+	protected $plugin_file = 'duplicate-post/duplicate-post.php';
 	protected $do_not_log = array();
 
 	public function tracking() {
-		if ( ! WPR::is_plugin_active( 'duplicate-post/duplicate-post.php' ) ) {
-			return;
-		}
-
 		if ( $this->is_active( 'duplicated' ) ) {
 			add_action( 'dp_duplicate_post', array( $this, 'event_duplicated' ), 100, 2 );
 			add_action( 'dp_duplicate_page', array( $this, 'event_duplicated' ), 100, 2 );

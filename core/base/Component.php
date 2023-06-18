@@ -39,15 +39,18 @@ abstract class Component {
 	 * @var array
 	 */
 	protected $registered = array();
+	protected $is_security = false;
+	protected $is_malicious = false;
 
 	public function __construct() {
-		add_action( 'coreactivity_init', array( $this, 'init' ) );
-
 		add_action( 'coreactivity_component_registration', array( $this, 'register_component' ) );
 		add_action( 'coreactivity_events_registration', array( $this, 'register_events' ) );
-		add_action( 'coreactivity_registered_object_types', array( $this, 'registered_object_types' ) );
 
-		add_action( 'coreactivity_tracking_ready', array( $this, 'tracking' ) );
+		if ( $this->is_available() ) {
+			add_action( 'coreactivity_registered_object_types', array( $this, 'registered_object_types' ) );
+			add_action( 'coreactivity_tracking_ready', array( $this, 'tracking' ) );
+			add_action( 'coreactivity_init', array( $this, 'init' ) );
+		}
 	}
 
 	/** @return static */
@@ -59,6 +62,10 @@ abstract class Component {
 		}
 
 		return $instance[ static::class ];
+	}
+
+	public function is_available() : bool {
+		return true;
 	}
 
 	public function register_component( Init $init ) {
@@ -73,11 +80,11 @@ abstract class Component {
 			$event  = strtolower( $event );
 			$status = $init->register_event( $this->code(), $event, array(
 				'label'        => $data[ 'label' ],
-				'scope'        => $data[ 'scope' ] ?? $this->scope,
 				'status'       => $data[ 'status' ] ?? 'active',
+				'scope'        => $data[ 'scope' ] ?? $this->scope,
 				'object_type'  => $data[ 'object_type' ] ?? $this->object_type,
-				'is_security'  => $data[ 'is_security' ] ?? false,
-				'is_malicious' => $data[ 'is_malicious' ] ?? false,
+				'is_security'  => $data[ 'is_security' ] ?? $this->is_security,
+				'is_malicious' => $data[ 'is_malicious' ] ?? $this->is_malicious,
 				'level'        => $data[ 'level' ] ?? 0
 			), $data[ 'rules' ] ?? array() );
 
@@ -129,6 +136,30 @@ abstract class Component {
 
 	public function is_active( string $event ) : bool {
 		return $this->is_registered( $event );
+	}
+
+	public function are_active( array $events, bool $any = true ) : bool {
+		if ( $any ) {
+			$is = false;
+
+			foreach ( $events as $event ) {
+				if ( $this->is_active( $event ) ) {
+					$is = true;
+					break;
+				}
+			}
+		} else {
+			$is = true;
+
+			foreach ( $events as $event ) {
+				if ( ! $this->is_active( $event ) ) {
+					$is = false;
+					break;
+				}
+			}
+		}
+
+		return $is;
 	}
 
 	protected function find_differences( array $old, array $new ) : array {

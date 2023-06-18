@@ -18,9 +18,9 @@ use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\Plugin\CoreActivity\Components\WordPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\DuplicatePost;
 use Dev4Press\Plugin\CoreActivity\Plugins\GravityForms;
+use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
-use Dev4Press\v42\Core\Quick\WPR;
 use Dev4Press\v42\Core\Quick\Sanitize;
 use Dev4Press\v42\Core\Quick\Str;
 use stdClass;
@@ -118,6 +118,7 @@ class Init {
 		UserSwitching::instance();
 		SweepPress::instance();
 		GravityForms::instance();
+		Jetpack::instance();
 	}
 
 	public function ready() {
