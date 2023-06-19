@@ -32,14 +32,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Init {
 	public $statistics = array(
 		'components' => array(
-			'total'  => 0,
-			'db'     => 0,
-			'loaded' => 0
+			'total'     => 0,
+			'available' => 0
 		),
 		'events'     => array(
-			'total'  => 0,
-			'db'     => 0,
-			'loaded' => 0
+			'total'     => 0,
+			'available' => 0
 		)
 	);
 
@@ -61,64 +59,6 @@ class Init {
 		}
 
 		return $instance;
-	}
-
-	private function _generate_component_label( string $component ) : string {
-		$parts = explode( '/', $component );
-
-		return isset( $parts[ 1 ] ) ? Str::slug_to_name( $parts[ 1 ], '-' ) : $component;
-	}
-
-	private function _init_events() {
-		$events = Cache::instance()->get_all_registered_events();
-
-		foreach ( $events as $event ) {
-			if ( ! isset( $this->events[ $event->component ] ) ) {
-				$this->components[ $event->component ] = (object) array(
-					'category'  => $event->category,
-					'component' => $event->component,
-					'label'     => $this->_generate_component_label( $event->component ),
-					'icon'      => 'ui-folder',
-					'loaded'    => false
-				);
-
-				$this->events[ $event->component ] = array();
-			}
-
-			$event->event_id = Sanitize::absint( $event->event_id );
-			$event->rules    = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
-			$event->loaded   = false;
-
-			$this->events[ $event->component ][ $event->event ] = $event;
-
-			$this->list[ $event->event_id ] = array(
-				'name'  => $event->event,
-				'label' => $event->event
-			);
-		}
-	}
-
-	private function _init_components() {
-		Internal::instance();
-		WordPress::instance();
-		Option::instance();
-		Notification::instance();
-		Error::instance();
-		Plugin::instance();
-		Theme::instance();
-		User::instance();
-		Post::instance();
-		Term::instance();
-		Comment::instance();
-		Attachment::instance();
-	}
-
-	private function _init_plugins() {
-		DuplicatePost::instance();
-		UserSwitching::instance();
-		SweepPress::instance();
-		GravityForms::instance();
-		Jetpack::instance();
 	}
 
 	public function ready() {
@@ -150,6 +90,24 @@ class Init {
 			'cron'         => __( "Cron", "coreactivity" ),
 			'notification' => __( "Notification", "coreactivity" )
 		) );
+
+		foreach ( $this->components as $component ) {
+			$this->statistics[ 'components' ][ 'total' ] ++;
+
+			if ( $component->is_available ) {
+				$this->statistics[ 'components' ][ 'available' ] ++;
+			}
+		}
+
+		foreach ( $this->events as $name => $component ) {
+			foreach ( $component as $events ) {
+				$this->statistics[ 'events' ][ 'total' ] ++;
+
+				if ( $this->components[ $name ]->is_available ) {
+					$this->statistics[ 'events' ][ 'available' ] ++;
+				}
+			}
+		}
 	}
 
 	public function get_event( string $component, string $event ) {
@@ -182,7 +140,7 @@ class Init {
 
 	public function get_event_description( string $component, string $event ) : string {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			if ( $this->events[ $component ][ $event ]->loaded ) {
+			if ( $this->components[ $component ]->is_available ) {
 				return $this->components[ $component ]->label . ' / ' . $this->events[ $component ][ $event ]->label;
 			}
 		}
@@ -268,9 +226,9 @@ class Init {
 		return array_values( $list );
 	}
 
-	public function is_event_loaded( string $component, string $event ) : bool {
+	public function is_event_available( string $component, string $event ) : bool {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			return $this->events[ $component ][ $event ]->loaded;
+			return $this->components[ $component ]->is_available;
 		}
 
 		return false;
@@ -301,11 +259,11 @@ class Init {
 
 	public function register_component( string $category, string $component, array $args = array() ) {
 		$this->components[ $component ] = (object) array(
-			'category'  => $category,
-			'component' => $component,
-			'label'     => $args[ 'label' ] ?? $this->_generate_component_label( $component ),
-			'icon'      => $args[ 'icon' ] ?? 'ui-folder',
-			'loaded'    => true
+			'category'     => $category,
+			'component'    => $component,
+			'label'        => $args[ 'label' ] ?? $this->_generate_component_label( $component ),
+			'icon'         => $args[ 'icon' ] ?? 'ui-folder',
+			'is_available' => $args[ 'is_available' ] ?? false
 		);
 	}
 
@@ -315,7 +273,6 @@ class Init {
 			'component'    => $component,
 			'event'        => $event,
 			'rules'        => $rules,
-			'loaded'       => true,
 			'status'       => $args[ 'status' ] ?? 'active',
 			'scope'        => $args[ 'scope' ] ?? '',
 			'label'        => $args[ 'label' ] ?? Str::slug_to_name( $event, '-' ),
@@ -354,5 +311,62 @@ class Init {
 		}
 
 		return $obj->event_id > 0;
+	}
+
+	private function _generate_component_label( string $component ) : string {
+		$parts = explode( '/', $component );
+
+		return isset( $parts[ 1 ] ) ? Str::slug_to_name( $parts[ 1 ], '-' ) : $component;
+	}
+
+	private function _init_events() {
+		$events = Cache::instance()->get_all_registered_events();
+
+		foreach ( $events as $event ) {
+			if ( ! isset( $this->events[ $event->component ] ) ) {
+				$this->components[ $event->component ] = (object) array(
+					'category'     => $event->category,
+					'component'    => $event->component,
+					'label'        => $this->_generate_component_label( $event->component ),
+					'icon'         => 'ui-folder',
+					'is_available' => false
+				);
+
+				$this->events[ $event->component ] = array();
+			}
+
+			$event->event_id = Sanitize::absint( $event->event_id );
+			$event->rules    = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
+
+			$this->events[ $event->component ][ $event->event ] = $event;
+
+			$this->list[ $event->event_id ] = array(
+				'name'  => $event->event,
+				'label' => $event->event
+			);
+		}
+	}
+
+	private function _init_components() {
+		Internal::instance();
+		WordPress::instance();
+		Option::instance();
+		Notification::instance();
+		Error::instance();
+		Plugin::instance();
+		Theme::instance();
+		User::instance();
+		Post::instance();
+		Term::instance();
+		Comment::instance();
+		Attachment::instance();
+	}
+
+	private function _init_plugins() {
+		DuplicatePost::instance();
+		UserSwitching::instance();
+		SweepPress::instance();
+		GravityForms::instance();
+		Jetpack::instance();
 	}
 }

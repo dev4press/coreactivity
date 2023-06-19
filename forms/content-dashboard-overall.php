@@ -1,14 +1,78 @@
 <?php
 
+use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
+use Dev4Press\v42\Core\Quick\File;
 
 $statistics = Statistics::instance()->overall();
+$db_stats   = DB::instance()->get_statistics();
 
 ?>
 
 <div class="d4p-group d4p-dashboard-card d4p-card-double">
-	<h3><?php esc_html_e( "Overall Statistics", "coreactivity" ); ?></h3>
-	<div class="d4p-group-inner">
-
-	</div>
+    <h3><?php esc_html_e( "Overall Statistics", "coreactivity" ); ?></h3>
+    <div class="d4p-group-inner">
+        <div class="coreactivity-overall-wrapper">
+            <div class="coreactivity-overall-for-components">
+                <i class="d4p-icon d4p-ui-folder d4p-icon-7x d4p-icon-fw"></i>
+                <div>
+                    <h4><?php _e( "Components" ); ?></h4>
+                    <div class="__available">
+                        <strong><?php echo esc_html( $statistics[ 'components' ][ 'available' ] ); ?></strong> <?php esc_html_e( "Available" ); ?>
+                    </div>
+                    <div>
+                        <strong><?php echo esc_html( $statistics[ 'components' ][ 'total' ] ); ?></strong> <?php esc_html_e( "Total Registered" ); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="coreactivity-overall-for-events">
+                <i class="d4p-icon d4p-ui-radar d4p-icon-7x d4p-icon-fw"></i>
+                <div>
+                    <h4><?php _e( "Events" ); ?></h4>
+                    <div class="__available">
+                        <strong><?php echo esc_html( $statistics[ 'events' ][ 'available' ] ); ?></strong> <?php esc_html_e( "Available" ); ?>
+                    </div>
+                    <div>
+                        <strong><?php echo esc_html( $statistics[ 'events' ][ 'total' ] ); ?></strong> <?php esc_html_e( "Total Registered" ); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="coreactivity-overall-sep"/>
+        <div class="coreactivity-database-wrapper">
+            <i class="d4p-icon d4p-ui-database d4p-icon-5x d4p-icon-fw"></i>
+            <div>
+                <div class="__element">
+                    <strong><?php echo esc_html( $db_stats[ 'tables' ][ 'logs' ][ 'rows' ] ); ?></strong> <?php esc_html_e( "Log Entries" ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( File::size_format( $db_stats[ 'tables' ][ 'logs' ][ 'total' ], 2, ' ', false ) ); ?></strong> <?php esc_html_e( "Log Size" ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( $db_stats[ 'tables' ][ 'logmeta' ][ 'rows' ] ); ?></strong> <?php esc_html_e( "Metadata Rows" ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( File::size_format( $db_stats[ 'tables' ][ 'logmeta' ][ 'total' ], 2, ' ', false ) ); ?></strong> <?php esc_html_e( "Metadata Size" ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( $db_stats[ 'tables' ][ 'events' ][ 'rows' ] ); ?></strong> <?php esc_html_e( "Events Records" ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( File::size_format( $db_stats[ 'tables' ][ 'events' ][ 'total' ], 2, ' ', false ) ); ?></strong> <?php esc_html_e( "Events Size" ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( $db_stats[ 'oldest' ] ); ?></strong> <?php esc_html_e( "Oldest Entry Day" ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( $db_stats[ 'range' ] . ' ' . __( "days" ) ); ?></strong> <?php esc_html_e( "Log Range" ); ?>
+                </div>
+                <div class="__element">
+                    <strong>3</strong> <?php esc_html_e( "Database Tables" ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( File::size_format( $db_stats[ 'size' ], 2, ' ', false ) ); ?></strong> <?php esc_html_e( "Total Tables Size" ); ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

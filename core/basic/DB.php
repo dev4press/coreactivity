@@ -41,6 +41,48 @@ class DB extends BaseDB {
 		return $this->get_results( $sql );
 	}
 
+	public function get_statistics() : array {
+		$prefix  = $this->base_prefix() . 'coreactivity_';
+		$sql     = "SHOW TABLE STATUS FROM `" . DB_NAME . "` WHERE `Name` LIKE '" . $prefix . "%'";
+		$data    = $this->get_results( $sql, ARRAY_A );
+		$results = array(
+			'tables' => array()
+		);
+
+		foreach ( $data as $row ) {
+			$_table_name  = strtolower( $row[ 'Name' ] );
+			$_actual_name = str_replace( $prefix, '', $_table_name );
+			$_total       = absint( $row[ 'Data_length' ] ) + absint( $row[ 'Index_length' ] ) + absint( $row[ 'Data_free' ] );
+
+			$results[ 'tables' ][ $_actual_name ] = array(
+				'table'            => $_table_name,
+				'engine'           => $row[ 'Engine' ],
+				'total'            => $_total,
+				'size'             => absint( $row[ 'Data_length' ] ),
+				'free'             => absint( $row[ 'Data_free' ] ),
+				'index'            => absint( $row[ 'Index_length' ] ),
+				'rows'             => absint( $row[ 'Rows' ] ),
+				'average_row_size' => absint( $row[ 'Avg_row_length' ] ),
+				'auto_increment'   => $row[ 'Auto_increment' ],
+				'created'          => $row[ 'Create_time' ],
+				'updated'          => $row[ 'Update_time' ],
+				'collation'        => $row[ 'Collation' ],
+			);
+		}
+
+		$results[ 'size' ] = $results[ 'tables' ][ 'logs' ][ 'total' ] + $results[ 'tables' ][ 'logmeta' ][ 'total' ] + $results[ 'tables' ][ 'events' ][ 'total' ];
+
+		$sql  = "SELECT DATE(MIN(`logged`)) as `oldest`, DATEDIFF(NOW(), MIN(`logged`)) as `range` FROM " . $this->logs;
+		$data = $this->get_row( $sql, ARRAY_A );
+
+		if ( ! empty( $data ) ) {
+			$results[ 'oldest' ] = $data[ 'oldest' ];
+			$results[ 'range' ]  = $data[ 'range' ];
+		}
+
+		return $results;
+	}
+
 	public function log_event( array $data = array(), array $meta = array() ) : int {
 		$input  = array();
 		$format = array();

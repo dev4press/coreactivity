@@ -115,6 +115,10 @@ class Option extends Component {
 		'wp_force_deactivated_plugins'
 	);
 
+	protected $skip = array(
+		'cron'
+	);
+
 	public function tracking() {
 		if ( $this->is_active( 'core-option-edited' ) || $this->is_active( 'option-edited' ) ) {
 			add_action( 'updated_option', array( $this, 'event_updated_option' ), 10, 3 );
@@ -144,7 +148,7 @@ class Option extends Component {
 	}
 
 	public function event_updated_option( $option, $old_value, $value ) {
-		if ( $this->is_transient( $option ) ) {
+		if ( $this->is_transient( $option ) || in_array( $option, $this->skip ) ) {
 			return;
 		}
 

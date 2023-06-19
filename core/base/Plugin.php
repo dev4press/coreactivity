@@ -13,6 +13,6 @@ abstract class Plugin extends Component {
 	protected $plugin_file = '';
 
 	public function is_available() : bool {
-		return WPR::is_plugin_active( 'sweeppress/sweeppress.php' );
+		return WPR::is_plugin_active( $this->plugin_file );
 	}
 }

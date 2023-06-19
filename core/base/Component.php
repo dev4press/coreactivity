@@ -70,8 +70,9 @@ abstract class Component {
 
 	public function register_component( Init $init ) {
 		$init->register_component( $this->category, $this->code(), array(
-			'label' => $this->label(),
-			'icon'  => $this->icon
+			'label'        => $this->label(),
+			'icon'         => $this->icon,
+			'is_available' => $this->is_available()
 		) );
 	}
 

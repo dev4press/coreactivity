@@ -202,10 +202,76 @@
   transition: background-color 2000ms linear;
 }
 .coreactivity-grid-logs.striped tbody tr.coreactivity-old-live-row {
-  background-color: #dedede !important;
+  background-color: #DEDEDE !important;
 }
 .coreactivity-grid-logs.striped tbody tr.coreactivity-live-row.coreactivity-standout {
   background-color: lightblue !important;
+}
+
+.coreactivity-database-wrapper {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+.coreactivity-database-wrapper i {
+  flex-shrink: 0;
+  color: var(--d4p-color-layout-accent);
+}
+.coreactivity-database-wrapper > div {
+  flex-grow: 1;
+  display: flex;
+  column-gap: 20px;
+  row-gap: 5px;
+  flex-wrap: wrap;
+  font-size: 1.1em;
+}
+.coreactivity-database-wrapper > div .__element strong {
+  color: var(--d4p-color-layout-accent);
+  font-size: 1.3em;
+}
+@media screen and (max-width: 959px) {
+  .coreactivity-database-wrapper > div {
+    font-size: 1em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .coreactivity-database-wrapper > div {
+    font-size: 0.9em;
+  }
+}
+
+.coreactivity-overall-wrapper {
+  display: flex;
+  column-gap: 40px;
+  row-gap: 20px;
+  flex-wrap: nowrap;
+}
+.coreactivity-overall-wrapper > div {
+  flex: 1 1 50%;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+.coreactivity-overall-wrapper > div h4 {
+  color: var(--d4p-color-layout-accent);
+  margin: 0 0 5px !important;
+  font-size: 1.3em !important;
+}
+.coreactivity-overall-wrapper > div i {
+  color: var(--d4p-color-layout-accent);
+}
+.coreactivity-overall-wrapper > div .__available {
+  font-size: 1.4em;
+}
+@media screen and (max-width: 959px) {
+  .coreactivity-overall-wrapper {
+    flex-direction: column;
+  }
+}
+
+.coreactivity-overall-sep {
+  margin: 1.25em 0 !important;
+  border-top: 2px solid var(--d4p-color-layout-accent) !important;
 }
 
 .coreactivity-overall-components {
@@ -235,7 +301,7 @@
 }
 .coreactivity-overall-components .coreactivity-component .__bar {
   flex-grow: 1;
-  background: #f4f4f4;
+  background: #F4F4F4;
   position: relative;
   overflow: hidden;
 }

@@ -68,6 +68,12 @@ Currently, plugin has 16 components and supports total of 68 events.
 = Where can I configure the plugin? =
 Open the newly added top level `CoreActivity` panel, and there you will find the 'Settings' page.
 
+= How the events detection is working? =
+Plugin uses system of filters and actions in WordPress (and supported plugins) to hook and process information and log events based on that. If the changes to the website are done by direct database manipulation via queries or custom functions that don't use established procedures, plugin can't detect such events.
+
+= How are the log entries stored? =
+Plugin creates 3 new database tables where all events are registered, and all the events logged.
+
 == Changelog ==
 = 1.0 (2020.09.16) =
 * First official release

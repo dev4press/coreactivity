@@ -31,6 +31,7 @@ class Events extends Table {
 		$this->prepare_column_headers();
 
 		$per_page      = $this->rows_per_page();
+		$sel_group     = $this->get_request_arg( 'filter-group' );
 		$sel_component = $this->get_request_arg( 'filter-component' );
 		$sel_search    = $this->get_request_arg( 'search' );
 
@@ -46,6 +47,10 @@ class Events extends Table {
 			'group'  => 'e.`event_id`',
 			'where'  => array()
 		);
+
+		if ( ! empty( $sel_group ) ) {
+			$sql[ 'where' ][] = coreactivity_db()->prepare( '`category` = %s', $sel_group );
+		}
 
 		if ( ! empty( $sel_component ) ) {
 			$sql[ 'where' ][] = coreactivity_db()->prepare( '`component` = %s', $sel_component );
@@ -76,7 +81,7 @@ class Events extends Table {
 			'event'       => __( "Event", "coreactivity" ),
 			'logs'        => __( "Logs", "coreactivity" ),
 			'description' => __( "Description", "coreactivity" ),
-			'loaded'      => __( "Loaded", "coreactivity" )
+			'available'   => __( "Available", "coreactivity" )
 		);
 	}
 
@@ -124,7 +129,7 @@ class Events extends Table {
 	protected function get_row_classes( $item, $classes = array() ) : array {
 		$classes = array();
 
-		if ( ! Init::instance()->is_event_loaded( $item->component, $item->event ) ) {
+		if ( ! Init::instance()->is_event_available( $item->component, $item->event ) ) {
 			$classes[] = '__is-not-loaded';
 		}
 
@@ -187,8 +192,8 @@ class Events extends Table {
 		return Init::instance()->get_event_description( $item->component, $item->event );
 	}
 
-	protected function column_loaded( $item ) : string {
-		return Init::instance()->is_event_loaded( $item->component, $item->event ) ? __( "Yes", "coreactivity" ) : __( "No", "coreactivity" );
+	protected function column_available( $item ) : string {
+		return Init::instance()->is_event_available( $item->component, $item->event ) ? __( "Yes", "coreactivity" ) : __( "No", "coreactivity" );
 	}
 
 	protected function column_status( $item ) : string {

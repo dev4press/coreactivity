@@ -519,7 +519,7 @@ class Logs extends Table {
 		}
 
 		foreach ( $item->meta as $key => $value ) {
-			$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 10 ? $this->print_array( $value ) : json_encode( $value ) );
+			$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? $this->print_array( $value ) : json_encode( $value ) );
 
 			if ( in_array( $key, $metas ) ) {
 				$left[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';

@@ -2,7 +2,6 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
-
 use Dev4Press\Plugin\CoreActivity\Base\Plugin;
 use Dev4Press\v42\Core\Quick\Sanitize;
 
