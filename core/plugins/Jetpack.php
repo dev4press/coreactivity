@@ -18,7 +18,7 @@ class Jetpack extends Plugin {
 	protected $modules = array();
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types[ 'jetmodule' ] = __( "Jetpack Module" );
+		$object_types[ 'jetmodule' ] = __( "Jetpack Module", "coreactivity" );
 
 		return $object_types;
 	}

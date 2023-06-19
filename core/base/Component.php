@@ -136,7 +136,7 @@ abstract class Component {
 	}
 
 	public function is_active( string $event ) : bool {
-		return $this->is_registered( $event );
+		return Init::instance()->is_event_active( $this->name, $event );
 	}
 
 	public function are_active( array $events, bool $any = true ) : bool {

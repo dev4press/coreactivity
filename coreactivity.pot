@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 06/15/2023 12:51:17 PM\n"
+"POT-Creation-Date: 06/19/2023 11:44:23 AM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12,12 +12,13 @@ msgstr ""
 
 #: core/admin/panel/Dashboard.php:19
 #: core/admin/Plugin.php:118
+#: forms/content-dashboard-overall.php:30
 msgid "Events"
 msgstr ""
 
 #: core/admin/panel/Dashboard.php:27
 #: core/admin/Plugin.php:111
-#: core/table/Events.php:76
+#: core/table/Events.php:81
 #: core/table/Logs.php:554
 #: core/table/Logs.php:581
 msgid "Logs"
@@ -294,12 +295,32 @@ msgstr ""
 msgid "Logged data older than 2 years"
 msgstr ""
 
-#: core/components/Comment.php:26
+#: core/components/Attachment.php:31
+msgid "Attachments"
+msgstr ""
+
+#: core/components/Attachment.php:36
+msgid "Attachment Uploaded"
+msgstr ""
+
+#: core/components/Attachment.php:37
+msgid "Attachment Edited"
+msgstr ""
+
+#: core/components/Attachment.php:38
+msgid "Attachment Deleted"
+msgstr ""
+
+#: core/components/Comment.php:38
 msgid "Comments"
 msgstr ""
 
-#: core/components/Comment.php:31
+#: core/components/Comment.php:43
 msgid "Comment Status Change"
+msgstr ""
+
+#: core/components/Comment.php:44
+msgid "Comment Deleted"
 msgstr ""
 
 #: core/components/Error.php:26
@@ -331,8 +352,8 @@ msgid "404 Not Found Style"
 msgstr ""
 
 #: core/components/Internal.php:27
-#: core/log/Init.php:132
-#: core/log/Init.php:255
+#: core/log/Init.php:66
+#: core/log/Init.php:208
 msgid "Internal"
 msgstr ""
 
@@ -364,8 +385,32 @@ msgstr ""
 msgid "Unknown Email Failed"
 msgstr ""
 
+#: core/components/Option.php:136
+msgid "Options"
+msgstr ""
+
+#: core/components/Option.php:141
+msgid "Core Option Changed"
+msgstr ""
+
+#: core/components/Option.php:142
+msgid "Core Option Deleted"
+msgstr ""
+
+#: core/components/Option.php:143
+msgid "Option Added"
+msgstr ""
+
+#: core/components/Option.php:144
+msgid "Option Changed"
+msgstr ""
+
+#: core/components/Option.php:145
+msgid "Option Deleted"
+msgstr ""
+
 #: core/components/Plugin.php:35
-#: core/log/Init.php:259
+#: core/log/Init.php:212
 msgid "Plugins"
 msgstr ""
 
@@ -389,12 +434,16 @@ msgstr ""
 msgid "Plugin Network Deactivated"
 msgstr ""
 
-#: core/components/Post.php:30
+#: core/components/Post.php:37
 msgid "Posts"
 msgstr ""
 
-#: core/components/Post.php:35
+#: core/components/Post.php:42
 msgid "Post Status Change"
+msgstr ""
+
+#: core/components/Post.php:43
+msgid "Post Deleted"
 msgstr ""
 
 #: core/components/Term.php:43
@@ -425,25 +474,69 @@ msgstr ""
 msgid "Theme Switched"
 msgstr ""
 
-#: core/components/User.php:36
+#: core/components/User.php:79
 msgid "Users"
 msgstr ""
 
-#: core/components/User.php:41
+#: core/components/User.php:84
 msgid "Login"
 msgstr ""
 
-#: core/components/User.php:42
+#: core/components/User.php:85
 msgid "Logout"
 msgstr ""
 
-#: core/components/User.php:43
+#: core/components/User.php:86
 msgid "Failed Login"
 msgstr ""
 
+#: core/components/User.php:87
+msgid "Password Reset"
+msgstr ""
+
+#: core/components/User.php:88
+msgid "Request Password Reset Invalid"
+msgstr ""
+
+#: core/components/User.php:89
+msgid "Request Password Reset"
+msgstr ""
+
+#: core/components/User.php:90
+msgid "User Deleted"
+msgstr ""
+
+#: core/components/User.php:91
+msgid "User Role Changed"
+msgstr ""
+
+#: core/components/User.php:92
+msgid "Edited Password"
+msgstr ""
+
+#: core/components/User.php:93
+msgid "Edited Email"
+msgstr ""
+
+#: core/components/User.php:94
+msgid "Edited URL"
+msgstr ""
+
+#: core/components/User.php:95
+msgid "Edited Display Name"
+msgstr ""
+
+#: core/components/User.php:96
+msgid "Edited Meta"
+msgstr ""
+
+#: core/components/User.php:164
+msgid "There is no account with that username or email address."
+msgstr ""
+
 #: core/components/WordPress.php:40
-#: core/log/Init.php:131
-#: core/log/Init.php:251
+#: core/log/Init.php:65
+#: core/log/Init.php:204
 msgid "WordPress"
 msgstr ""
 
@@ -488,7 +581,7 @@ msgid "ID: %s &middot; Term: %s<br/>Taxonomy: %s"
 msgstr ""
 
 #: core/log/Display.php:62
-#: core/log/Init.php:153
+#: core/log/Init.php:88
 msgid "Theme"
 msgstr ""
 
@@ -504,8 +597,8 @@ msgid "Version"
 msgstr ""
 
 #: core/log/Display.php:80
-#: core/log/Init.php:133
-#: core/log/Init.php:152
+#: core/log/Init.php:67
+#: core/log/Init.php:87
 msgid "Plugin"
 msgstr ""
 
@@ -531,29 +624,33 @@ msgstr ""
 msgid "Not Found"
 msgstr ""
 
-#: core/log/Init.php:148
+#: core/log/Init.php:82
 msgid "Post"
 msgstr ""
 
-#: core/log/Init.php:149
+#: core/log/Init.php:83
+msgid "Attachment"
+msgstr ""
+
+#: core/log/Init.php:84
 msgid "Term"
 msgstr ""
 
-#: core/log/Init.php:150
+#: core/log/Init.php:85
 msgid "Comment"
 msgstr ""
 
-#: core/log/Init.php:151
+#: core/log/Init.php:86
 #: core/table/Logs.php:167
 #: core/table/Logs.php:474
 msgid "User"
 msgstr ""
 
-#: core/log/Init.php:154
+#: core/log/Init.php:89
 msgid "Cron"
 msgstr ""
 
-#: core/log/Init.php:155
+#: core/log/Init.php:90
 msgid "Notification"
 msgstr ""
 
@@ -565,16 +662,68 @@ msgstr ""
 msgid "Post Duplicated"
 msgstr ""
 
-#: core/plugins/GravityForms.php:16
+#: core/plugins/GravityForms.php:19
+msgid "Gravity Form"
+msgstr ""
+
+#: core/plugins/GravityForms.php:51
 msgid "Gravity Forms"
 msgstr ""
 
-#: core/plugins/SweepPress.php:23
+#: core/plugins/GravityForms.php:56
+msgid "Form Created"
+msgstr ""
+
+#: core/plugins/GravityForms.php:57
+msgid "Form Deleted"
+msgstr ""
+
+#: core/plugins/GravityForms.php:58
+msgid "Form Trashed"
+msgstr ""
+
+#: core/plugins/GravityForms.php:59
+msgid "Form Restored"
+msgstr ""
+
+#: core/plugins/GravityForms.php:60
+msgid "Form Activated"
+msgstr ""
+
+#: core/plugins/GravityForms.php:61
+msgid "Form Deactivated"
+msgstr ""
+
+#: core/plugins/Jetpack.php:20
+msgid "Jetpack Module"
+msgstr ""
+
+#: core/plugins/Jetpack.php:36
+msgid "Jetpack"
+msgstr ""
+
+#: core/plugins/Jetpack.php:41
+msgid "Activated Module"
+msgstr ""
+
+#: core/plugins/Jetpack.php:42
+msgid "Deactivated Module"
+msgstr ""
+
+#: core/plugins/SweepPress.php:31
 msgid "SweepPress"
 msgstr ""
 
-#: core/plugins/SweepPress.php:28
+#: core/plugins/SweepPress.php:36
 msgid "Sweeping Completed"
+msgstr ""
+
+#: core/plugins/SweepPress.php:37
+msgid "Run CRON job"
+msgstr ""
+
+#: core/plugins/SweepPress.php:38
+msgid "Deleted CRON job"
 msgstr ""
 
 #: core/plugins/UserSwitching.php:31
@@ -597,81 +746,83 @@ msgstr ""
 msgid "Switched Back"
 msgstr ""
 
-#: core/table/Events.php:71
+#: core/table/Events.php:76
 #: core/table/Logs.php:165
 msgid "ID"
 msgstr ""
 
-#: core/table/Events.php:72
+#: core/table/Events.php:77
 msgid "Status"
 msgstr ""
 
-#: core/table/Events.php:73
+#: core/table/Events.php:78
 msgid "Category"
 msgstr ""
 
-#: core/table/Events.php:74
+#: core/table/Events.php:79
 #: core/table/Logs.php:168
 #: core/table/Logs.php:439
 msgid "Component"
 msgstr ""
 
-#: core/table/Events.php:75
+#: core/table/Events.php:80
 #: core/table/Logs.php:169
 #: core/table/Logs.php:450
 msgid "Event"
 msgstr ""
 
-#: core/table/Events.php:77
+#: core/table/Events.php:82
 msgid "Description"
 msgstr ""
 
-#: core/table/Events.php:78
-msgid "Loaded"
+#: core/table/Events.php:83
+#: forms/content-dashboard-overall.php:20
+#: forms/content-dashboard-overall.php:32
+msgid "Available"
 msgstr ""
 
-#: core/table/Events.php:109
+#: core/table/Events.php:114
 msgid "All Categories"
 msgstr ""
 
-#: core/table/Events.php:115
+#: core/table/Events.php:120
 #: core/table/Logs.php:355
 msgid "All Components"
 msgstr ""
 
-#: core/table/Events.php:119
-#: core/table/Events.php:163
-#: core/table/Events.php:176
+#: core/table/Events.php:124
+#: core/table/Events.php:168
+#: core/table/Events.php:181
 #: core/table/Logs.php:415
 msgid "Filter"
 msgstr ""
 
-#: core/table/Events.php:144
+#: core/table/Events.php:149
 msgid "Enable"
 msgstr ""
 
-#: core/table/Events.php:145
+#: core/table/Events.php:150
 msgid "Disable"
 msgstr ""
 
-#: core/table/Events.php:190
+#: core/table/Events.php:195
 msgid "Yes"
 msgstr ""
 
-#: core/table/Events.php:190
+#: core/table/Events.php:195
 msgid "No"
 msgstr ""
 
-#: core/table/Events.php:194
+#: core/table/Events.php:199
 msgid "Active"
 msgstr ""
 
-#: core/table/Events.php:194
+#: core/table/Events.php:199
 msgid "Disabled"
 msgstr ""
 
-#: core/table/Events.php:164
-#: core/table/Events.php:177
+#: core/table/Events.php:169
+#: core/table/Events.php:182
 msgid "View"
 msgstr ""
 
@@ -769,8 +920,61 @@ msgstr ""
 msgid "For more information, see <a href='%s'>the changelog</a>."
 msgstr ""
 
-#: forms/content-dashboard-overall.php:9
+#: forms/content-dashboard-overall.php:18
+msgid "Components"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:12
 msgid "Overall Statistics"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:23
+#: forms/content-dashboard-overall.php:35
+msgid "Total Registered"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:45
+msgid "Log Entries"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:48
+msgid "Log Size"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:51
+msgid "Metadata Rows"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:54
+msgid "Metadata Size"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:57
+msgid "Events Records"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:60
+msgid "Events Size"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:63
+msgid "Oldest Entry Day"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:66
+msgid "Log Range"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:69
+msgid "Database Tables"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:72
+msgid "Total Tables Size"
+msgstr ""
+
+#: forms/content-dashboard-overall.php:66
+msgid "days"
 msgstr ""
 
 #: forms/content-dashboard-statistics.php:9

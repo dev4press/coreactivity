@@ -17,7 +17,7 @@ class GravityForms extends Plugin {
 	protected $plugin_file = 'gravityforms/gravityforms.php';
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types[ 'gform' ] = __( "Gravity Form" );
+		$object_types[ 'gform' ] = __( "Gravity Form", "coreactivity" );
 
 		return $object_types;
 	}

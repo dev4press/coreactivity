@@ -134,7 +134,7 @@ class Option extends Component {
 	}
 
 	public function label() : string {
-		return __( "Options" );
+		return __( "Options", "coreactivity" );
 	}
 
 	protected function get_events() : array {

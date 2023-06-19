@@ -29,7 +29,7 @@ class Attachment extends Component {
 	}
 
 	public function label() : string {
-		return __( "Attachments" );
+		return __( "Attachments", "coreactivity" );
 	}
 
 	protected function get_events() : array {

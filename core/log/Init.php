@@ -234,6 +234,14 @@ class Init {
 		return false;
 	}
 
+	public function is_event_active( string $component, string $event ) : bool {
+		if ( isset( $this->events[ $component ][ $event ] ) ) {
+			return $this->components[ $component ]->status == 'active';
+		}
+
+		return false;
+	}
+
 	public function is_component_valid( string $component ) : bool {
 		return isset( $this->events[ $component ] );
 	}
