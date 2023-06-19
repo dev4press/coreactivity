@@ -72,7 +72,7 @@ class Events extends Table {
 	}
 
 	public function get_columns() : array {
-		return array(
+		$columns = array(
 			'cb'          => '<input type="checkbox" />',
 			'event_id'    => __( "ID", "coreactivity" ),
 			'status'      => __( "Status", "coreactivity" ),
@@ -83,6 +83,12 @@ class Events extends Table {
 			'description' => __( "Description", "coreactivity" ),
 			'available'   => __( "Available", "coreactivity" )
 		);
+
+		if ( is_network_admin() ) {
+			unset( $columns[ 'available' ] );
+		}
+
+		return $columns;
 	}
 
 	protected function db() : ?DBLite {
@@ -129,8 +135,10 @@ class Events extends Table {
 	protected function get_row_classes( $item, $classes = array() ) : array {
 		$classes = array();
 
-		if ( ! Init::instance()->is_event_available( $item->component, $item->event ) ) {
-			$classes[] = '__is-not-loaded';
+		if ( ! is_network_admin() ) {
+			if ( ! Init::instance()->is_event_available( $item->component, $item->event ) ) {
+				$classes[] = '__is-not-loaded';
+			}
 		}
 
 		return $classes;

@@ -16,6 +16,18 @@ class Notification extends Component {
 	protected $object_type = 'notification';
 	protected $storage = array();
 
+	protected $network = array(
+		'wp-network-signup-blog-confirmation',
+		'wp-network-signup-user-confirmation',
+		'wp-network-delete-site-email-content',
+		'wp-network-welcome-blog',
+		'wp-network-welcome-user',
+		'wp-network-new-blog-siteadmin',
+		'wp-network-new-user-siteadmin',
+		'wp-network-network-admin-email-confirmation',
+		'wp-network-network-admin-email-notification'
+	);
+
 	public function tracking() {
 		Detection::instance();
 
@@ -65,9 +77,13 @@ class Notification extends Component {
 
 	protected function event_final( $event, $email_data, $error = '' ) {
 		if ( $this->is_active( $event ) ) {
-			$this->log( $event, array(
-				'object_name' => $this->storage[ 'name' ] ?? ''
-			), array(
+			$data = array( 'object_name' => $this->storage[ 'name' ] ?? '' );
+
+			if ( in_array( $this->storage[ 'name' ], $this->network ) ) {
+				$data[ 'blog_id' ] = 0;
+			}
+
+			$this->log( $event, $data, array(
 				'subject' => isset( $email_data[ 'subject' ] ) ? esc_sql( $email_data[ 'subject' ] ) : '',
 				'email'   => isset( $email_data[ 'to' ] ) ? esc_sql( $email_data[ 'to' ] ) : '',
 				'error'   => $error,

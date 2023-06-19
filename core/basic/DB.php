@@ -42,6 +42,10 @@ class DB extends BaseDB {
 	}
 
 	public function get_statistics() : array {
+		$this->analyze_table( $this->events );
+		$this->analyze_table( $this->logs );
+		$this->analyze_table( $this->logmeta );
+
 		$prefix  = $this->base_prefix() . 'coreactivity_';
 		$sql     = "SHOW TABLE STATUS FROM `" . DB_NAME . "` WHERE `Name` LIKE '" . $prefix . "%'";
 		$data    = $this->get_results( $sql, ARRAY_A );

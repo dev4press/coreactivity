@@ -120,9 +120,7 @@ abstract class Component {
 			$event_id = Init::instance()->get_event_id( $this->code(), $event );
 
 			if ( $event_id > 0 ) {
-				if ( ( isset( $data[ 'object_id' ] ) || isset( $data[ 'object_name' ] ) ) && ! isset( $data[ 'object_type' ] ) ) {
-					$data[ 'object_type' ] = $this->object_type;
-				}
+				$data = $this->prepare_data_for_log( $event, $data );
 
 				return Core::instance()->log( $event_id, $data, $meta );
 			}
@@ -136,7 +134,7 @@ abstract class Component {
 	}
 
 	public function is_active( string $event ) : bool {
-		return Init::instance()->is_event_active( $this->name, $event );
+		return Init::instance()->is_event_active( $this->code(), $event );
 	}
 
 	public function are_active( array $events, bool $any = true ) : bool {
@@ -161,6 +159,14 @@ abstract class Component {
 		}
 
 		return $is;
+	}
+
+	protected function prepare_data_for_log( string $event, array $data = array() ) : array {
+		if ( ( isset( $data[ 'object_id' ] ) || isset( $data[ 'object_name' ] ) ) && ! isset( $data[ 'object_type' ] ) ) {
+			$data[ 'object_type' ] = $this->object_type;
+		}
+
+		return $data;
 	}
 
 	protected function find_differences( array $old, array $new ) : array {

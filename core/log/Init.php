@@ -8,10 +8,12 @@ use Dev4Press\Plugin\CoreActivity\Components\Attachment;
 use Dev4Press\Plugin\CoreActivity\Components\Comment;
 use Dev4Press\Plugin\CoreActivity\Components\Error;
 use Dev4Press\Plugin\CoreActivity\Components\Internal;
+use Dev4Press\Plugin\CoreActivity\Components\Network;
 use Dev4Press\Plugin\CoreActivity\Components\Notification;
 use Dev4Press\Plugin\CoreActivity\Components\Option;
 use Dev4Press\Plugin\CoreActivity\Components\Plugin;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
+use Dev4Press\Plugin\CoreActivity\Components\Sitemeta;
 use Dev4Press\Plugin\CoreActivity\Components\Term;
 use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
@@ -77,8 +79,6 @@ class Init {
 
 		Cache::instance()->set( 'events', 'registered', $this->events );
 
-		do_action( 'coreactivity_tracking_ready', $this );
-
 		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
 			'post'         => __( "Post", "coreactivity" ),
 			'attachment'   => __( "Attachment", "coreactivity" ),
@@ -108,6 +108,8 @@ class Init {
 				}
 			}
 		}
+
+		do_action( 'coreactivity_tracking_ready', $this );
 	}
 
 	public function get_event( string $component, string $event ) {
@@ -236,7 +238,7 @@ class Init {
 
 	public function is_event_active( string $component, string $event ) : bool {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			return $this->components[ $component ]->status == 'active';
+			return $this->components[ $component ]->is_available && $this->events[ $component ][ $event ]->status == 'active';
 		}
 
 		return false;
@@ -357,6 +359,8 @@ class Init {
 
 	private function _init_components() {
 		Internal::instance();
+		Network::instance();
+		Sitemeta::instance();
 		WordPress::instance();
 		Option::instance();
 		Notification::instance();

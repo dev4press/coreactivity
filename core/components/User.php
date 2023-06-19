@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
 use Dev4Press\v42\Core\Quick\Request;
+use WP_Error;
 use WP_User;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -47,7 +48,8 @@ class User extends Component {
 			add_action( 'wp_login_failed', array( $this, 'event_failed_login' ), 10, 2 );
 		}
 
-		if ( Request::is_post() && $this->are_active( array( 'password-reset-request', 'password-reset-request-invalid' ) ) ) {
+		if (
+			Request::is_post() && $this->are_active( array( 'password-reset-request', 'password-reset-request-invalid' ) ) ) {
 			add_action( 'login_form_lostpassword', array( $this, 'prepare_form_lostpassword' ) );
 		}
 
@@ -70,6 +72,22 @@ class User extends Component {
 		if ( $this->is_active( 'edited-meta-data' ) ) {
 			add_filter( 'insert_user_meta', array( $this, 'event_insert_user_meta' ), 10, 4 );
 		}
+
+		if ( $this->is_active( 'user-signup' ) ) {
+			add_action( 'after_signup_user', array( $this, 'event_after_signup_user' ), 10, 4 );
+		}
+
+		if ( $this->is_active( 'failed-user-signup' ) ) {
+			add_filter( 'wpmu_validate_user_signup', array( $this, 'event_validate_user_signup' ) );
+		}
+
+		if ( $this->is_active( 'activate-user' ) ) {
+			add_action( 'wpmu_activate_user', array( $this, 'event_activate_user' ) );
+		}
+
+		if ( $this->is_active( 'registered' ) ) {
+			add_action( 'user_register', array( $this, 'event_user_register' ) );
+		}
 	}
 
 	public function init() {
@@ -88,13 +106,17 @@ class User extends Component {
 			'password-reset'                 => array( 'label' => __( "Password Reset", "coreactivity" ), 'is_security' => true ),
 			'password-reset-request-invalid' => array( 'label' => __( "Request Password Reset Invalid", "coreactivity" ), 'is_security' => true ),
 			'password-reset-request'         => array( 'label' => __( "Request Password Reset", "coreactivity" ) ),
+			'registered'                     => array( 'label' => __( "Registered", "coreactivity" ) ),
 			'deleted'                        => array( 'label' => __( "User Deleted", "coreactivity" ) ),
 			'role-changed'                   => array( 'label' => __( "User Role Changed", "coreactivity" ) ),
 			'edited-password'                => array( 'label' => __( "Edited Password", "coreactivity" ) ),
 			'edited-email'                   => array( 'label' => __( "Edited Email", "coreactivity" ) ),
 			'edited-url'                     => array( 'label' => __( "Edited URL", "coreactivity" ) ),
 			'edited-display-name'            => array( 'label' => __( "Edited Display Name", "coreactivity" ) ),
-			'edited-meta-data'               => array( 'label' => __( "Edited Meta", "coreactivity" ) )
+			'edited-meta-data'               => array( 'label' => __( "Edited Meta", "coreactivity" ) ),
+			'user-signup'                    => array( 'label' => __( "User Signup", "coreactivity" ), 'scope' => 'network' ),
+			'failed-user-signup'             => array( 'label' => __( "Failed User Signup", "coreactivity" ), 'scope' => 'network' ),
+			'activate-user'                  => array( 'label' => __( "Activate User", "coreactivity" ), 'scope' => 'network' )
 		);
 	}
 
@@ -122,7 +144,10 @@ class User extends Component {
 		}
 
 		if ( $user !== false ) {
-			$this->log( 'login', array( 'user_id' => $user->ID, 'object_id' => $user->ID ), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
+			$this->log( 'login', array(
+				'user_id'   => $user->ID,
+				'object_id' => $user->ID
+			), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
 		}
 	}
 
@@ -130,7 +155,10 @@ class User extends Component {
 		$user = get_user_by( 'id', $user_id );
 
 		if ( $user !== false ) {
-			$this->log( 'logout', array( 'user_id' => $user->ID, 'object_id' => $user->ID ), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
+			$this->log( 'logout', array(
+				'user_id'   => $user->ID,
+				'object_id' => $user->ID
+			), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
 		}
 	}
 
@@ -279,5 +307,34 @@ class User extends Component {
 		}
 
 		return $meta;
+	}
+
+	public function event_after_signup_user( $user, $user_email, $key, $meta ) {
+		$this->log( 'user-signup', array( 'blog_id' => 0 ), array(
+			'user_login' => $user,
+			'user_email' => $user_email,
+			'signup_key' => $key
+		) );
+	}
+
+	public function event_validate_user_signup( $results ) {
+		if ( isset( $results[ 'errors' ] ) && $results[ 'errors' ] instanceof WP_Error && $results[ 'errors' ]->has_errors() ) {
+			$this->log( 'failed-user-signup', array( 'blog_id' => 0 ), array(
+				'user_login'          => $results[ 'user_name' ],
+				'requested_user_name' => $results[ 'orig_username' ],
+				'user_email'          => $results[ 'user_email' ],
+				'errors'              => $results[ 'errors' ]->get_error_messages()
+			) );
+		}
+
+		return $results;
+	}
+
+	public function event_activate_user( $user_id ) {
+		$this->log( 'activate-user', array( 'blog_id' => 0, 'object_id' => $user_id ) );
+	}
+
+	public function event_user_register( $user_id ) {
+		$this->log( 'registered', array( 'object_id' => $user_id ) );
 	}
 }
