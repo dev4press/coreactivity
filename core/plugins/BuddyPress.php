@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
 use Dev4Press\Plugin\CoreActivity\Base\Plugin;
+use Dev4Press\v42\Core\Quick\Request;
 use Dev4Press\v42\Core\Quick\Sanitize;
 
 class BuddyPress extends Plugin {
@@ -32,7 +33,7 @@ class BuddyPress extends Plugin {
 
 	public function tracking() {
 		if ( $this->are_active( array( 'component-activated', 'component-deactivated' ) ) ) {
-			do_action( 'update_option_bp-active-components', array( $this, 'event_active_components' ), 10, 2 );
+			add_action( 'update_option_bp-active-components', array( $this, 'event_active_components' ), 10, 2 );
 		}
 
 		if ( $this->is_active( 'group-created' ) ) {
@@ -43,6 +44,11 @@ class BuddyPress extends Plugin {
 			add_filter( 'bp_after_groups_create_group_parse_args', array( $this, 'prepare_group_update' ) );
 			add_action( 'groups_update_group', array( $this, 'event_update_group' ), 10, 2 );
 			add_action( 'groups_details_updated', array( $this, 'event_details_updated' ), 10, 2 );
+
+			if ( is_admin() && Request::is_post() && isset( $_REQUEST[ 'gid' ] ) && isset( $_REQUEST[ 'page' ] ) && $_REQUEST[ 'page' ] == 'bp-groups' ) {
+				add_filter( 'groups_get_group', array( $this, 'prepare_get_group' ) );
+				add_action( 'bp_group_admin_edit_after', array( $this, 'event_admin_edit_after' ) );
+			}
 		}
 	}
 
@@ -69,6 +75,14 @@ class BuddyPress extends Plugin {
 		}
 
 		return $r;
+	}
+
+	public function prepare_get_group( $group ) {
+		if ( ! isset( $this->storage[ $group->id ] ) ) {
+			$this->storage[ $group->id ] = $group;
+		}
+
+		return $group;
 	}
 
 	public function event_create_group( $group_id, $member, $group ) {
@@ -111,6 +125,26 @@ class BuddyPress extends Plugin {
 
 		if ( ! empty( $changes ) ) {
 			$this->log( 'group-updated', array( 'object_id' => $group_id ), $changes );
+		}
+	}
+
+	public function event_admin_edit_after( $group_id ) {
+		if ( isset( $this->storage[ $group_id ] ) ) {
+			$previous = $this->storage[ $group_id ];
+			$group    = groups_get_group( $group_id );
+
+			$changes = array();
+
+			foreach ( $this->group_properties as $prop ) {
+				if ( $previous->$prop !== $group->$prop ) {
+					$changes[ 'old_' . $prop ] = $previous->$prop;
+					$changes[ 'new_' . $prop ] = $group->$prop;
+				}
+			}
+
+			if ( ! empty( $changes ) ) {
+				$this->log( 'group-updated', array( 'object_id' => $group_id ), $changes );
+			}
 		}
 	}
 

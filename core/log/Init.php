@@ -53,6 +53,7 @@ class Init {
 
 	public function __construct() {
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 15 );
+		add_action( 'coreactivity_init', array( $this, 'init' ), 1 );
 	}
 
 	public static function instance() : Init {
@@ -112,6 +113,10 @@ class Init {
 		}
 
 		do_action( 'coreactivity_tracking_ready', $this );
+	}
+
+	public function init() {
+
 	}
 
 	public function get_event( string $component, string $event ) {
