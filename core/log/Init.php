@@ -18,6 +18,8 @@ use Dev4Press\Plugin\CoreActivity\Components\Term;
 use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\Plugin\CoreActivity\Components\WordPress;
+use Dev4Press\Plugin\CoreActivity\Plugins\bbPress;
+use Dev4Press\Plugin\CoreActivity\Plugins\BuddyPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\DuplicatePost;
 use Dev4Press\Plugin\CoreActivity\Plugins\GravityForms;
 use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
@@ -380,5 +382,7 @@ class Init {
 		SweepPress::instance();
 		GravityForms::instance();
 		Jetpack::instance();
+		BuddyPress::instance();
+		bbPress::instance();
 	}
 }

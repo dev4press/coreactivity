@@ -32,6 +32,10 @@ class Network extends Component {
 			add_action( 'wp_uninitialize_site', array( $this, 'event_uninitialize_site' ) );
 		}
 
+		if ( $this->is_active( 'blog-updated' ) ) {
+			add_action( 'wp_update_site', array( $this, 'event_update_site' ) );
+		}
+
 		if ( $this->is_active( 'blog-status-delete' ) ) {
 			add_action( 'make_delete_blog', array( $this, 'event_delete_blog' ) );
 		}
@@ -91,6 +95,7 @@ class Network extends Component {
 		return array(
 			'blog-created'            => array( 'label' => __( "Blog Created", "coreactivity" ) ),
 			'blog-removed'            => array( 'label' => __( "Blog Removed", "coreactivity" ) ),
+			'blog-updated'            => array( 'label' => __( "Blog Updated", "coreactivity" ) ),
 			'blog-signup'             => array( 'label' => __( "Blog Signup", "coreactivity" ) ),
 			'failed-blog-signup'      => array( 'label' => __( "Failed Blog Signup", "coreactivity" ) ),
 			'blog-status-delete'      => array( 'label' => __( "Blog Status Deleted", "coreactivity" ) ),
@@ -101,9 +106,8 @@ class Network extends Component {
 			'blog-status-private'     => array( 'label' => __( "Blog Status Private", "coreactivity" ) ),
 			'blog-status-spam'        => array( 'label' => __( "Blog Status Spam", "coreactivity" ) ),
 			'blog-status-not-spam'    => array( 'label' => __( "Blog Status Not Spam", "coreactivity" ) ),
-
-			'blog-status-mature'     => array( 'label' => __( "Blog Status Mature", "coreactivity" ) ),
-			'blog-status-not-mature' => array( 'label' => __( "Blog Status Not Mature", "coreactivity" ) )
+			'blog-status-mature'      => array( 'label' => __( "Blog Status Mature", "coreactivity" ) ),
+			'blog-status-not-mature'  => array( 'label' => __( "Blog Status Not Mature", "coreactivity" ) )
 		);
 	}
 
@@ -118,6 +122,19 @@ class Network extends Component {
 			'blog_name' => get_blog_option( $old_site->blog_id, 'blogname' ),
 			'blog_url'  => get_home_url( $old_site->blog_id )
 		) );
+	}
+
+	public function event_update_site( $new_site, $old_site ) {
+		$meta = array(
+			'old_domain' => $old_site->domain != $new_site->domain ? $old_site->domain : '',
+			'old_path'   => $old_site->path != $new_site->path ? $old_site->path : ''
+		);
+
+		if ( ! empty( $meta[ 'old_domain' ] ) || ! empty( $meta[ 'old_path' ] ) ) {
+			$this->log( 'blog-updated', array(
+				'object_id' => $new_site->blog_id
+			), $meta );
+		}
 	}
 
 	public function event_after_signup_site( $domain, $path, $title, $user, $user_email, $key, $meta ) {
