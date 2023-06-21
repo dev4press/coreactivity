@@ -22,6 +22,10 @@ class DebugPress extends Plugin {
 	}
 
 	public function tracking() {
+		if ( $this->is_active( 'php-error' ) ) {
+			add_action( 'debugpress-tracker-error-logged', array( $this, 'event_php_error' ) );
+		}
+
 		if ( $this->is_active( 'doing-it-wrong' ) ) {
 			add_action( 'debugpress-tracker-doing-it-wrong-logged', array( $this, 'event_doing_it_wrong' ) );
 		}
@@ -61,6 +65,12 @@ class DebugPress extends Plugin {
 			'deprecated-constructor' => array( 'label' => __( "Deprecated Constructor", "coreactivity" ) ),
 			'deprecated-hook-run'    => array( 'label' => __( "Deprecated Hook Run", "coreactivity" ) )
 		);
+	}
+
+	public function event_php_error( $error ) {
+		if ( isset( $error[ 'errno' ] ) && ! empty( $error[ 'caller' ] ) ) {
+			$this->log( 'php-error', array( 'object_id' => $error[ 'errno' ] ?? 0 ), $error );
+		}
 	}
 
 	public function event_doing_it_wrong( $error ) {

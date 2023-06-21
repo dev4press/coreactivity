@@ -638,7 +638,7 @@ class Logs extends Table {
 	protected function column_logged( $item ) : string {
 		$timestamp = coreactivity()->datetime()->timestamp_gmt_to_local( strtotime( $item->logged ) );
 
-		return date( 'Y.m.d', $timestamp ) . '<br/>@ ' . date( 'H:m:s', $timestamp );
+		return date( 'Y.m.d', $timestamp ) . '<br/>@ ' . date( 'H:i:s', $timestamp );
 	}
 
 	protected function column_meta( $item ) : string {
