@@ -160,3 +160,26 @@
         }
     }
 }
+
+.coreactivity-about-counters {
+    font-size: 1.4em;
+    display: flex;
+    gap: 2em;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid var(--d4p-color-layout-accent);
+    margin: 1em 0 0;
+    padding: 1em 0 0;
+    font-weight: 100;
+
+    i {
+        font-size: 1.4em;
+        color: var(--d4p-color-layout-accent);
+    }
+
+    strong {
+        font-size: 1.4em;
+        font-weight: 900;
+        color: var(--d4p-color-layout-accent);
+    }
+}

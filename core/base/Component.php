@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Base;
 
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\v42\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -41,6 +42,7 @@ abstract class Component {
 	protected $registered = array();
 	protected $is_security = false;
 	protected $is_malicious = false;
+	protected $plugin_file = '';
 
 	public function __construct() {
 		add_action( 'coreactivity_component_registration', array( $this, 'register_component' ) );
@@ -65,7 +67,7 @@ abstract class Component {
 	}
 
 	public function is_available() : bool {
-		return true;
+		return empty( $this->plugin_file ) || WPR::is_plugin_active( $this->plugin_file );
 	}
 
 	public function register_component( Init $init ) {

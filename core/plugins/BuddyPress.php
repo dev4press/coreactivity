@@ -6,6 +6,10 @@ use Dev4Press\Plugin\CoreActivity\Base\Plugin;
 use Dev4Press\v42\Core\Quick\Request;
 use Dev4Press\v42\Core\Quick\Sanitize;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class BuddyPress extends Plugin {
 	protected $plugin = 'coreactivity';
 	protected $name = 'buddypress';
