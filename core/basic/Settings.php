@@ -27,7 +27,7 @@ class Settings extends BaseSettings {
 			'display_columns_simplified'   => false,
 			'display_ip_country_flag'      => false,
 			'display_user_avatar'          => false,
-			'display_request_column'       => true,
+			'display_request_column'       => false,
 			'auto_cleanup_active'          => true,
 			'auto_cleanup_period'          => 24
 		)
