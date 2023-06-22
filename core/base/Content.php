@@ -13,6 +13,7 @@ abstract class Content extends Component {
 
 	protected $do_not_log = array();
 	protected $do_log = array();
+	protected $skip_statuses = array( 'auto-draft' );
 
 	public function tracking() {
 		if ( $this->is_active( 'status-change' ) ) {
@@ -28,7 +29,13 @@ abstract class Content extends Component {
 		}
 	}
 
-	public function is_post_type_allowed( string $post_type ) : bool {
+	public function is_post_allowed( string $post_type, string $post_status = '' ) : bool {
+		if ( ! empty( $post_status ) ) {
+			if ( in_array( $post_status, $this->skip_statuses ) ) {
+				return false;
+			}
+		}
+
 		if ( empty( $this->do_log ) ) {
 			return ! in_array( $post_type, $this->do_not_log );
 		} else {
@@ -45,7 +52,7 @@ abstract class Content extends Component {
 	}
 
 	public function event_transition_post_status( $new_status, $old_status, $post ) {
-		if ( $post instanceof WP_Post && $this->is_post_type_allowed( $post->post_type ) ) {
+		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
 			if ( $old_status != $new_status ) {
 				$this->log( 'status-change', array(
 					'object_id' => $post->ID
@@ -58,7 +65,7 @@ abstract class Content extends Component {
 	}
 
 	public function event_delete_post( $post_id, $post ) {
-		if ( $post instanceof WP_Post && $this->is_post_type_allowed( $post->post_type ) ) {
+		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
 			$this->log( 'deleted', array(
 				'object_id' => $post->ID
 			), array(
@@ -73,7 +80,7 @@ abstract class Content extends Component {
 	public function event_object_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids ) {
 		$post = get_post( $object_id );
 
-		if ( $post instanceof WP_Post && $this->is_post_type_allowed( $post->post_type ) ) {
+		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
 			$old_terms = coreactivity_get_term_ids_from_taxonomy_term_ids( $old_tt_ids );
 			$new_terms = coreactivity_get_term_ids_from_taxonomy_term_ids( $tt_ids );
 
