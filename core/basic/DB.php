@@ -2,8 +2,8 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v42\Core\Plugins\DB as BaseDB;
-use Dev4Press\v42\Core\Quick\Sanitize;
+use Dev4Press\v43\Core\Plugins\DB as BaseDB;
+use Dev4Press\v43\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

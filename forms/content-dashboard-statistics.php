@@ -19,7 +19,7 @@ $statistics = Statistics::instance()->detailed();
 
                 <div class="coreactivity-component">
                     <div class="__label">
-                        <a href="<?php echo esc_url( \Dev4Press\v42\Functions\panel()->a()->panel_url( 'logs', '', 'view=component&filter-component=' . $component ) ); ?>">
+                        <a href="<?php echo esc_url( \Dev4Press\v43\Functions\panel()->a()->panel_url( 'logs', '', 'view=component&filter-component=' . $component ) ); ?>">
                             <i title="<?php echo esc_attr( $data[ 'label' ] ); ?>" class="d4p-icon d4p-<?php echo esc_attr( $data[ 'icon' ] ); ?> d4p-icon-fw"></i>
                         </a>
                     </div>

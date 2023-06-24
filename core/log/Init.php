@@ -26,8 +26,8 @@ use Dev4Press\Plugin\CoreActivity\Plugins\GravityForms;
 use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
-use Dev4Press\v42\Core\Quick\Sanitize;
-use Dev4Press\v42\Core\Quick\Str;
+use Dev4Press\v43\Core\Quick\Sanitize;
+use Dev4Press\v43\Core\Quick\Str;
 use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -54,6 +54,7 @@ class Init {
 
 	public function __construct() {
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 15 );
+		add_action( 'coreactivity_prepare', array( $this, 'prepare' ), 15 );
 		add_action( 'coreactivity_init', array( $this, 'init' ), 1 );
 	}
 
@@ -77,7 +78,9 @@ class Init {
 		$this->_init_events();
 		$this->_init_components();
 		$this->_init_plugins();
+	}
 
+	public function prepare() {
 		do_action( 'coreactivity_component_registration', $this );
 		do_action( 'coreactivity_events_registration', $this );
 

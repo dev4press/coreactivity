@@ -4,8 +4,8 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
 use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
-use Dev4Press\v42\Core\Admin\PostBack as BasePostBack;
-use Dev4Press\v42\Core\Quick\Sanitize;
+use Dev4Press\v43\Core\Admin\PostBack as BasePostBack;
+use Dev4Press\v43\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

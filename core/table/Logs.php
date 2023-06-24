@@ -6,11 +6,11 @@ use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
-use Dev4Press\v42\Core\Plugins\DBLite;
-use Dev4Press\v42\Core\Quick\Sanitize;
-use Dev4Press\v42\Core\UI\Elements;
-use Dev4Press\v42\Service\GEOIP\GEOJSIO;
-use Dev4Press\v42\WordPress\Admin\Table;
+use Dev4Press\v43\Core\Plugins\DBLite;
+use Dev4Press\v43\Core\Quick\Sanitize;
+use Dev4Press\v43\Core\UI\Elements;
+use Dev4Press\v43\Service\GEOIP\GEOJSIO;
+use Dev4Press\v43\WordPress\Admin\Table;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

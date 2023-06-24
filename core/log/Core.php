@@ -3,12 +3,12 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v42\Core\DateTime;
-use Dev4Press\v42\Core\Helpers\IP;
-use Dev4Press\v42\Core\Quick\Sanitize;
-use Dev4Press\v42\Core\Quick\URL;
-use Dev4Press\v42\Core\Scope;
-use Dev4Press\v42\WordPress;
+use Dev4Press\v43\Core\DateTime;
+use Dev4Press\v43\Core\Helpers\IP;
+use Dev4Press\v43\Core\Quick\Sanitize;
+use Dev4Press\v43\Core\Quick\URL;
+use Dev4Press\v43\Core\Scope;
+use Dev4Press\v43\WordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

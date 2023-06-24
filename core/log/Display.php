@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
-use Dev4Press\v42\Core\Mailer\Detection;
+use Dev4Press\v43\Core\Mailer\Detection;
 use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {

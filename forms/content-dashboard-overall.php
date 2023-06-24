@@ -2,7 +2,7 @@
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use Dev4Press\v42\Core\Quick\File;
+use Dev4Press\v43\Core\Quick\File;
 
 $statistics = Statistics::instance()->overall();
 $db_stats   = DB::instance()->get_statistics();

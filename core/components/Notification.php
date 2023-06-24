@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
-use Dev4Press\v42\Core\Mailer\Detection;
+use Dev4Press\v43\Core\Mailer\Detection;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

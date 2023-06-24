@@ -32,12 +32,13 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>
 */
 
-use Dev4Press\v42\WordPress;
+use Dev4Press\v43\WordPress;
 
 $coreactivity_dirname_basic = dirname( __FILE__ ) . '/';
 $coreactivity_urlname_basic = plugins_url( '/', __FILE__ );
 
-const COREACTIVITY_FILE = __FILE__;
+const COREACTIVITY_VERSION = '1.0';
+const COREACTIVITY_FILE  = __FILE__;
 
 define( 'COREACTIVITY_PATH', $coreactivity_dirname_basic );
 define( 'COREACTIVITY_URL', $coreactivity_urlname_basic );
@@ -57,6 +58,6 @@ if ( WordPress::instance()->is_admin() ) {
 	coreactivity_admin();
 }
 
-if (WordPress::instance()->is_ajax()) {
+if ( WordPress::instance()->is_ajax() ) {
 	coreactivity_ajax();
 }

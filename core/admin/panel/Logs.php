@@ -5,7 +5,7 @@ namespace Dev4Press\Plugin\CoreActivity\Admin\Panel;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Table\Logs as LogsTable;
 use Dev4Press\Plugin\CoreActivity\Admin\Panel;
-use Dev4Press\v42\Service\GEOIP\GEOJSIO;
+use Dev4Press\v43\Service\GEOIP\GEOJSIO;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

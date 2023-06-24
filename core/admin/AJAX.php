@@ -5,7 +5,7 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Init;
 use Dev4Press\Plugin\CoreActivity\Table\Live;
-use Dev4Press\v42\Core\Quick\Sanitize;
+use Dev4Press\v43\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
