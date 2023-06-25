@@ -5,7 +5,7 @@ use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 use Dev4Press\v43\Core\Quick\File;
 
 $statistics = Statistics::instance()->overall();
-$db_stats   = DB::instance()->get_statistics();
+$db_stats   = ! is_multisite() || is_network_admin() ? DB::instance()->get_statistics() : array();
 
 ?>
 
@@ -38,6 +38,7 @@ $db_stats   = DB::instance()->get_statistics();
                 </div>
             </div>
         </div>
+        <?php if (!empty($db_stats)) { ?>
         <hr class="coreactivity-overall-sep"/>
         <div class="coreactivity-database-wrapper">
             <i class="d4p-icon d4p-ui-database d4p-icon-5x d4p-icon-fw"></i>
@@ -74,5 +75,6 @@ $db_stats   = DB::instance()->get_statistics();
                 </div>
             </div>
         </div>
+        <?php } ?>
     </div>
 </div>

@@ -2,7 +2,8 @@
 
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 
-$statistics = Statistics::instance()->detailed();
+$blog_id    = is_multisite() && ! is_network_admin() ? get_current_blog_id() : - 1;
+$statistics = Statistics::instance()->detailed( 30, $blog_id );
 
 ?>
 
@@ -12,25 +13,36 @@ $statistics = Statistics::instance()->detailed();
         <div class="coreactivity-overall-components">
 			<?php
 
-			foreach ( $statistics[ 'components' ] as $component => $data ) {
-				$width = $statistics[ 'total' ] == 0 ? 0 : ( $data[ 'count' ] / $statistics[ 'total' ] ) * 100;
+			if ( $statistics[ 'total' ] == 0 ) {
+                ?>
 
-				?>
+                <p><?php esc_html_e("There are no events logged in the past 30 days."); ?></p>
 
-                <div class="coreactivity-component">
-                    <div class="__label">
-                        <a href="<?php echo esc_url( \Dev4Press\v43\Functions\panel()->a()->panel_url( 'logs', '', 'view=component&filter-component=' . $component ) ); ?>">
-                            <i title="<?php echo esc_attr( $data[ 'label' ] ); ?>" class="d4p-icon d4p-<?php echo esc_attr( $data[ 'icon' ] ); ?> d4p-icon-fw"></i>
-                        </a>
-                    </div>
-                    <div class="__bar">
-                        <div class="__component"><?php echo esc_html( $data[ 'label' ] ); ?><span> (<?php echo esc_html( $component ); ?>)</span></div>
-                        <div class="__inner" style="width: <?php echo esc_attr( $width ); ?>%;"></div>
-                    </div>
-                    <div class="__count"><?php echo esc_html( $data[ 'count' ] ); ?></div>
-                </div>
+                <?php
+			} else {
+				foreach ( $statistics[ 'components' ] as $component => $data ) {
+					$width = ( $data[ 'count' ] / $statistics[ 'total' ] ) * 100;
 
-				<?php
+					if ( $data[ 'count' ] > 0 ) {
+
+						?>
+
+                        <div class="coreactivity-component">
+                            <div class="__label">
+                                <a href="<?php echo esc_url( \Dev4Press\v43\Functions\panel()->a()->panel_url( 'logs', '', 'view=component&filter-component=' . $component ) ); ?>">
+                                    <i title="<?php echo esc_attr( $data[ 'label' ] ); ?>" class="d4p-icon d4p-<?php echo esc_attr( $data[ 'icon' ] ); ?> d4p-icon-fw"></i>
+                                </a>
+                            </div>
+                            <div class="__bar">
+                                <div class="__component"><?php echo esc_html( $data[ 'label' ] ); ?><span> (<?php echo esc_html( $component ); ?>)</span></div>
+                                <div class="__inner" style="width: <?php echo esc_attr( $width ); ?>%;"></div>
+                            </div>
+                            <div class="__count"><?php echo esc_html( $data[ 'count' ] ); ?></div>
+                        </div>
+
+						<?php
+					}
+				}
 			}
 
 			?>

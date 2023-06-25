@@ -12,11 +12,11 @@ class Information extends BaseInformation {
 	public $code = 'coreactivity';
 
 	public $version = '1.0';
-	public $build = 1;
+	public $build = 2;
 	public $edition = 'free';
-	public $status = 'stable';
-	public $updated = '2023.06.16';
-	public $released = '2023.06.16';
+	public $status = 'beta';
+	public $updated = '2023.06.26';
+	public $released = '2023.06.26';
 
 	public $github_url = 'https://github.com/dev4press/coreactivity';
 	public $wp_org_url = 'https://wordpress.org/plugins/coreactivity';

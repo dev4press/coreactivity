@@ -29,8 +29,8 @@ class Statistics {
 		return $stats;
 	}
 
-	public function detailed( int $days = 30 ) : array {
-		$counts  = DB::instance()->statistics_components_log( $days );
+	public function detailed( int $days = 30, int $blog_id = - 1 ) : array {
+		$counts  = DB::instance()->statistics_components_log( $days, $blog_id );
 		$results = array(
 			'total'      => 0,
 			'components' => array()

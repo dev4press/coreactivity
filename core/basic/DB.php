@@ -139,11 +139,28 @@ class DB extends BaseDB {
 		return empty( $raw ) ? array() : $this->pluck( $raw, 'logs', 'event_id' );
 	}
 
-	public function statistics_components_log( int $days = 30 ) : array {
-		$sql = $this->prepare( "SELECT e.`component`, COUNT(l.log_id) AS logs 
-				FROM $this->events e LEFT JOIN $this->logs l ON e.`event_id` = l.`event_id`
-				WHERE l.`logged` IS NULL OR l.`logged` > DATE_SUB(NOW(), INTERVAL %d DAY)
-				GROUP BY e.`component` ORDER BY e.`component`", $days );
+	public function statistics_components_log( int $days = 30, int $blog_id = - 1 ) : array {
+		$query = array(
+			'select' => array(
+				'e.`component`',
+				'COUNT(l.log_id) AS logs'
+			),
+			'from'   => array(
+				$this->events . ' e',
+				'LEFT JOIN ' . $this->logs . ' l ON e.`event_id` = l.`event_id`'
+			),
+			'where'  => array(
+				$this->prepare( 'l.`logged` IS NULL OR l.`logged` > DATE_SUB(NOW(), INTERVAL %d DAY)', $days )
+			),
+			'group'  => 'e.`component`',
+			'order'  => 'e.`component`'
+		);
+
+		if ( $blog_id > - 1 ) {
+			$query[ 'where' ][] = $this->prepare( 'l.`blog_id` = %d', $blog_id );
+		}
+
+		$sql = $this->build_query( $query, false );
 		$raw = $this->get_results( $sql );
 
 		return empty( $raw ) ? array() : $this->pluck( $raw, 'logs', 'component' );

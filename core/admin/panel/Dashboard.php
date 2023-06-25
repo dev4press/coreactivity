@@ -16,16 +16,18 @@ class Dashboard extends PanelDashboard {
 			$this->sidebar_links[ 'plugin' ][ 'events' ] = array(
 				'icon'  => $this->a()->menu_items[ 'events' ][ 'icon' ],
 				'class' => 'button-primary',
-				'url'   => $this->a()->panel_url( 'events' ),
-				'label' => __( "Events", "coreactivity" )
+				'url'   => $this->a()->panel_url( 'events', '', '', $this->a()->is_menu_item_network_only( 'events' ) ),
+				'label' => __( "Events", "coreactivity" ),
+				'scope' => $this->a()->menu_items[ 'events' ][ 'scope' ] ?? array()
 			);
 		}
 
 		$this->sidebar_links[ 'plugin' ][ 'logs' ] = array(
 			'icon'  => $this->a()->menu_items[ 'logs' ][ 'icon' ],
 			'class' => 'button-primary',
-			'url'   => $this->a()->panel_url( 'logs' ),
-			'label' => __( "Logs", "coreactivity" )
+			'url'   => $this->a()->panel_url( 'logs', '', '', $this->a()->is_menu_item_network_only( 'logs' ) ),
+			'label' => __( "Logs", "coreactivity" ),
+			'scope' => $this->a()->menu_items[ 'logs' ][ 'scope' ] ?? array()
 		);
 	}
 }
