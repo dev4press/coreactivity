@@ -70,8 +70,8 @@ class Init {
 
 	public function ready() {
 		$this->categories = array(
-			'wordpress' => __( "WordPress", "coreactivity" ),
 			'internal'  => __( "Internal", "coreactivity" ),
+			'wordpress' => __( "WordPress", "coreactivity" ),
 			'plugin'    => __( "Plugin", "coreactivity" )
 		);
 
@@ -283,6 +283,7 @@ class Init {
 			'category'     => $category,
 			'component'    => $component,
 			'label'        => $args[ 'label' ] ?? $this->_generate_component_label( $component ),
+			'plugin'       => $args[ 'plugin' ] ?? '',
 			'icon'         => $args[ 'icon' ] ?? 'ui-folder',
 			'is_available' => $args[ 'is_available' ] ?? false
 		);
@@ -294,6 +295,7 @@ class Init {
 			'component'    => $component,
 			'event'        => $event,
 			'rules'        => $rules,
+			'version'      => $args[ 'version' ] ?? '1.0',
 			'status'       => $args[ 'status' ] ?? 'active',
 			'scope'        => $args[ 'scope' ] ?? '',
 			'label'        => $args[ 'label' ] ?? Str::slug_to_name( $event, '-' ),
@@ -357,13 +359,14 @@ class Init {
 			}
 
 			$event->event_id = Sanitize::absint( $event->event_id );
-			$event->rules    = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
+			$event->label    = Str::slug_to_name( $event->event, '-' );
+			$event->rules = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
 
 			$this->events[ $event->component ][ $event->event ] = $event;
 
 			$this->list[ $event->event_id ] = array(
 				'name'  => $event->event,
-				'label' => $event->event
+				'label' => $event->label
 			);
 		}
 	}

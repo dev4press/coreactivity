@@ -57,11 +57,8 @@
 .coreactivity-grid-logs tr th.column-method, .coreactivity-grid-logs tr th.column-context, .coreactivity-grid-logs tr th.column-protocol {
   width: 100px;
 }
-.coreactivity-grid-logs tr th.column-user_id, .coreactivity-grid-logs tr th.column-component, .coreactivity-grid-logs tr th.column-event {
+.coreactivity-grid-logs tr th.column-user_id, .coreactivity-grid-logs tr th.column-component, .coreactivity-grid-logs tr th.column-event, .coreactivity-grid-logs tr th.column-ip {
   width: 240px;
-}
-.coreactivity-grid-logs tr th.column-ip {
-  width: 220px;
 }
 .coreactivity-grid-logs tr th.column-object_type, .coreactivity-grid-logs tr th.column-logged {
   width: 120px;
@@ -357,4 +354,36 @@
     column-gap: 3em;
     column-rule: 1px solid #DDD;
   }
+}
+
+.coreactivity-about-components {
+  line-height: 1.8;
+}
+@media screen and (min-width: 768px) {
+  .coreactivity-about-components {
+    column-count: 2;
+    column-gap: 3em;
+    column-rule: 1px solid #DDD;
+  }
+}
+.coreactivity-about-components h3 {
+  font-size: 1.5em;
+  background-color: #DDD;
+  border-bottom: 3px solid var(--d4p-color-layout-accent);
+  padding: 0 10px;
+}
+.coreactivity-about-components h3:first-child {
+  margin-top: 0;
+}
+.coreactivity-about-components h4 {
+  font-size: 1.2em;
+  padding: 0 0 5px;
+  border-bottom: 1px solid var(--d4p-color-layout-accent);
+}
+.coreactivity-about-components ul {
+  list-style: disc outside;
+  margin-left: 1.5em;
+}
+.coreactivity-about-components ul li {
+  padding: 0;
 }

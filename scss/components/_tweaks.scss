@@ -7,3 +7,39 @@
         }
     }
 }
+
+.coreactivity-about-components {
+    line-height: 1.8;
+
+    @media screen and (min-width: 768px) {
+        column-count: 2;
+        column-gap: 3em;
+        column-rule: 1px solid #DDD;
+    }
+
+    h3 {
+        font-size: 1.5em;
+        background-color: #DDD;
+        border-bottom: 3px solid var(--d4p-color-layout-accent);
+        padding: 0 10px;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    h4 {
+        font-size: 1.2em;
+        padding: 0 0 5px;
+        border-bottom: 1px solid var(--d4p-color-layout-accent);
+    }
+
+    ul {
+        list-style: disc outside;
+        margin-left: 1.5em;
+
+        li {
+            padding: 0;
+        }
+    }
+}

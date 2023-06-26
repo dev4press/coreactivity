@@ -13,8 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Plugin extends BasePlugin {
 	public $plugin = 'coreactivity';
 	public $plugin_prefix = 'coreactivity';
-	public $plugin_menu = 'CoreActivity';
-	public $plugin_title = 'CoreActivity';
+	public $plugin_menu = 'coreActivity';
+	public $plugin_title = 'coreActivity';
 	public $buy_me_a_coffee = true;
 	public $plugin_settings = 'network-only';
 

@@ -30,4 +30,8 @@ class Dashboard extends PanelDashboard {
 			'scope' => $this->a()->menu_items[ 'logs' ][ 'scope' ] ?? array()
 		);
 	}
+
+	public function header_fill() : string {
+		return coreactivity_panel_header_ip_block();
+	}
 }

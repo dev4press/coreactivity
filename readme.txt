@@ -1,4 +1,4 @@
-=== CoreActivity ===
+=== coreActivity ===
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, events, audit log, event log

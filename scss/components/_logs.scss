@@ -34,12 +34,9 @@
 
             &.column-user_id,
             &.column-component,
-            &.column-event {
-                width: 240px;
-            }
-
+            &.column-event,
             &.column-ip {
-                width: 220px;
+                width: 240px;
             }
 
             &.column-object_type,
