@@ -66,7 +66,7 @@ class AJAX {
 				$request[ 'atts' ][ 'min_id' ] = Sanitize::absint( $request[ 'id' ] );
 
 				$_grid = new Live();
-				$_grid->update( $request[ 'atts' ], $request[ 'lock' ], $request[ 'limit' ] );
+				$_grid->update( $request[ 'atts' ], $request[ 'lock' ], $request[ 'limit' ], $request[ 'filter' ] );
 				$_grid->prepare_items();
 
 				ob_start();

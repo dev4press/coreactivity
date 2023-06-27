@@ -31,7 +31,7 @@ class Logs extends Table {
 	public $_current_view = '';
 	public $_current_ip = '';
 	public $_server_ip = '';
-    public $_allow_filters = false;
+	public $_filter_key = 'coreactivity';
 
 	protected $_limit_lock = array();
 	protected $_filter_lock = array();
@@ -124,7 +124,7 @@ class Logs extends Table {
 			unset( $columns[ 'component' ] );
 		}
 
-		return $columns;
+		return apply_filters( $this->_filter_key . '_logs_columns', $columns, $this );
 	}
 
 	public function single_row( $item ) {
@@ -139,11 +139,12 @@ class Logs extends Table {
 
 	public function live_attributes() {
 		$data = array(
-			'lock'  => $this->_filter_lock,
-			'atts'  => $this->_request_args,
-			'limit' => $this->_limit_lock,
-			'id'    => DB::instance()->get_last_log_id(),
-			'nonce' => wp_create_nonce( 'coreactivity-live-update' )
+			'lock'   => $this->_filter_lock,
+			'atts'   => $this->_request_args,
+			'limit'  => $this->_limit_lock,
+			'filter' => $this->_filter_key,
+			'id'     => DB::instance()->get_last_log_id(),
+			'nonce'  => wp_create_nonce( 'coreactivity-live-update' )
 		);
 
 		wp_localize_script( 'd4plib3-coreactivity-admin', 'coreactivity_live', $data );
@@ -238,7 +239,7 @@ class Logs extends Table {
 			}
 		}
 
-		return $sel;
+		return apply_filters( $this->_filter_key . '_logs_selection', $sel, $this );
 	}
 
 	protected function prepare_query_arguments() : array {
@@ -301,7 +302,7 @@ class Logs extends Table {
 			$sql[ 'where' ][] = $this->_get_search_where( array( 'e.`component`', 'e.`ip`', 'e.`event`, l.`request`, l.`object_name`' ), $sel[ 'search' ] );
 		}
 
-		return $sql;
+		return apply_filters( $this->_filter_key . '_logs_sql', $sql, $this );
 	}
 
 	protected function get_select_components() : array {
@@ -612,6 +613,16 @@ class Logs extends Table {
 		echo '</td>';
 	}
 
+	protected function column_default( $item, $column_name ) : string {
+		$render  = isset( $item->$column_name ) ? (string) $item->$column_name : '/';
+		$actions = array();
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_' . $column_name, $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_' . $column_name, $actions, $item, $this );
+
+		return $render . $this->row_actions( $actions );
+	}
+
 	protected function column_component( $item ) : string {
 		$render = $this->_display_columns_simplified ? $this->i()->get_component_label( $item->component ) : $item->component;
 
@@ -619,8 +630,8 @@ class Logs extends Table {
 			'view' => '<a href="' . $this->_view( 'component', 'filter-component=' . $item->component ) . '">' . __( "Logs", "coreactivity" ) . '</a>'
 		);
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_component', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_component', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_component', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_component', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
@@ -646,8 +657,8 @@ class Logs extends Table {
 
 		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_ip', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_ip', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_ip', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_ip', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
@@ -686,8 +697,8 @@ class Logs extends Table {
 
 		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_user_id', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_user_id', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_user_id', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_user_id', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
@@ -699,8 +710,8 @@ class Logs extends Table {
 			'view' => '<a href="' . $this->_view( 'event_id', 'filter-event_id=' . $item->event_id ) . '">' . __( "Logs", "coreactivity" ) . '</a>'
 		);
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_event_id', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_event_id', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_event_id', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_event_id', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
@@ -716,15 +727,15 @@ class Logs extends Table {
 			unset( $actions[ 'view' ] );
 		}
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_object_type', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_object_type', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_object_type', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_object_type', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
 
 	protected function column_object_name( $item ) : string {
 		$render = $item->object_name ?? '';
-		$render = apply_filters( 'coreactivity_logs_field_render_object_name', (string) $render, $item );
+		$render = apply_filters( 'coreactivity_logs_field_render_object_name', (string) $render, $item, $this );
 
 		return $this->kses( $render );
 	}
@@ -734,8 +745,8 @@ class Logs extends Table {
 
 		$actions = array();
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_context', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_context', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_context', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_context', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
@@ -745,8 +756,8 @@ class Logs extends Table {
 
 		$actions = array();
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_method', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_method', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_method', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_method', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
@@ -756,8 +767,8 @@ class Logs extends Table {
 
 		$actions = array();
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_protocol', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_protocol', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_protocol', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_protocol', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
@@ -768,8 +779,8 @@ class Logs extends Table {
 
 		$actions = array();
 
-		$render  = apply_filters( 'coreactivity_logs_field_render_logged', $render, $item );
-		$actions = apply_filters( 'coreactivity_logs_field_actions_logged', $actions, $item );
+		$render  = apply_filters( 'coreactivity_logs_field_render_logged', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_logged', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}

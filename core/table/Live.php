@@ -10,10 +10,11 @@ class Live extends Logs {
 	protected function process_request_args() {
 	}
 
-	public function update( $args, $lock, $limit ) {
+	public function update( $args, $lock, $limit, $key ) {
 		$this->_request_args = $args;
 		$this->_filter_lock  = $lock;
 		$this->_limit_lock   = $limit;
+		$this->_filter_key   = $key;
 
 		$this->prepare_the_view();
 	}

@@ -28,50 +28,50 @@
                     }
                 });
             });
+        },
+        columns: function() {
+            $(document).on("change", ".hide-column-tog", function() {
+                var visible = $(".wp-list-table thead tr > *:not(.hidden)").length;
 
-            if ($("#coreactivity-form-logs").length === 1) {
-                $(document).on("change", ".hide-column-tog", function() {
-                    var visible = $(".wp-list-table thead tr > *:not(.hidden)").length;
+                $(".wp-list-table tbody tr.coreactivity-hidden-row td").attr("colspan", visible);
+            });
 
-                    $(".wp-list-table tbody tr.coreactivity-hidden-row td").attr("colspan", visible);
-                });
+            $(document).on("click", "thead th.column-meta, tfoot th.column-meta", function(e) {
+                e.preventDefault();
 
-                $(document).on("click", "thead th.column-meta", function(e) {
-                    e.preventDefault();
+                var i = $(this).find("i"),
+                    both = $("thead th.column-meta i, tfoot th.column-meta i"),
+                    table = $(this).closest("table"),
+                    rows = table.find("tbody tr.coreactivity-hidden-row"),
+                    buttons = table.find("tbody td.column-meta button i"),
+                    open = i.hasClass("d4p-ui-chevron-square-up");
 
-                    var i = $(this).find("i"),
-                        table = $(this).closest("table"),
-                        rows = table.find("tbody tr.coreactivity-hidden-row"),
-                        buttons = table.find("tbody td.column-meta button i"),
-                        open = i.hasClass("d4p-ui-chevron-square-up");
+                if (open) {
+                    rows.addClass("__hidden");
+                    buttons.removeClass("d4p-ui-chevron-square-up d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-down");
+                    both.removeClass("d4p-ui-chevron-square-up").addClass("d4p-ui-chevron-square-down");
+                } else {
+                    rows.removeClass("__hidden");
+                    buttons.removeClass("d4p-ui-chevron-square-up d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-up");
+                    both.removeClass("d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-up");
+                }
+            });
 
-                    if (open) {
-                        rows.addClass("__hidden");
-                        buttons.removeClass("d4p-ui-chevron-square-up d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-down");
-                        i.removeClass("d4p-ui-chevron-square-up").addClass("d4p-ui-chevron-square-down");
-                    } else {
-                        rows.removeClass("__hidden");
-                        buttons.removeClass("d4p-ui-chevron-square-up d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-up");
-                        i.removeClass("d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-up");
-                    }
-                });
+            $(document).on("click", "td.column-meta button", function(e) {
+                e.preventDefault();
 
-                $(document).on("click", "td.column-meta button", function(e) {
-                    e.preventDefault();
+                var i = $(this).find("i"),
+                    row = $(this).parent().parent().next(),
+                    open = i.hasClass("d4p-ui-chevron-square-up");
 
-                    var i = $(this).find("i"),
-                        row = $(this).parent().parent().next(),
-                        open = i.hasClass("d4p-ui-chevron-square-up");
-
-                    if (open) {
-                        row.addClass("__hidden");
-                        i.removeClass("d4p-ui-chevron-square-up").addClass("d4p-ui-chevron-square-down");
-                    } else {
-                        row.removeClass("__hidden");
-                        i.removeClass("d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-up");
-                    }
-                });
-            }
+                if (open) {
+                    row.addClass("__hidden");
+                    i.removeClass("d4p-ui-chevron-square-up").addClass("d4p-ui-chevron-square-down");
+                } else {
+                    row.removeClass("__hidden");
+                    i.removeClass("d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-up");
+                }
+            });
         },
         live: {
             init: function() {
@@ -109,7 +109,9 @@
     $(document).ready(function() {
         window.wp.coreactivity.admin.init();
 
-        if (d4plib_admin_data.plugin.name === 'coreactivity' && d4plib_admin_data.page.panel === 'logs') {
+        if ($(".coreactivity-grid-logs").length > 0) {
+            wp.coreactivity.admin.columns();
+
             if (coreactivity_data.live_updates === 'Y') {
                 wp.coreactivity.admin.live.init();
             }
