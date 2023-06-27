@@ -21,6 +21,8 @@ class GetBack extends BaseGetBack {
 				}
 			}
 		}
+
+		do_action( 'coreactivity_admin_getback_handler', $this->p(), $this->a() );
 	}
 
 	public function bulk_panel_events() {

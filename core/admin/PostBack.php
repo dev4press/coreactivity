@@ -15,7 +15,7 @@ class PostBack extends BasePostBack {
 	protected function process() {
 		parent::process();
 
-		do_action( 'coreactivity_admin_postback_handler', $this->p() );
+		do_action( 'coreactivity_admin_postback_handler', $this->p(), $this->a() );
 	}
 
 	protected function tools() {

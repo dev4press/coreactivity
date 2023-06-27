@@ -189,11 +189,13 @@ class Init {
 		return $this->list[ $event_id ][ 'label' ] ?? $event;
 	}
 
-	public function get_select_events( bool $simplified = false, string $only_component = '' ) : array {
+	public function get_select_events( bool $simplified = false, array $only_components = array() ) : array {
 		$list = array();
 
+		$single_component = ! empty( $only_components ) && count( $only_components ) == 1 ? $only_components[ 0 ] : '';
+
 		foreach ( $this->events as $component => $events ) {
-			if ( ! empty( $only_component ) && $only_component != $component ) {
+			if ( ! empty( $only_components ) && ! in_array( $component, $only_components ) ) {
 				continue;
 			}
 
@@ -209,7 +211,11 @@ class Init {
 			}
 		}
 
-		return array_values( $list );
+		if ( ! empty( $single_component ) ) {
+			return $list[ $single_component ][ 'values' ];
+		} else {
+			return array_values( $list );
+		}
 	}
 
 	public function get_select_event_components( bool $simplified = false ) : array {
@@ -237,6 +243,18 @@ class Init {
 		}
 
 		return array_values( $list );
+	}
+
+	public function get_components_by_plugin_source( $plugin ) : array {
+		$list = array();
+
+		foreach ( $this->components as $component => $obj ) {
+			if ( $obj->plugin == $plugin ) {
+				$list[] = $component;
+			}
+		}
+
+		return $list;
 	}
 
 	public function is_event_available( string $component, string $event ) : bool {
@@ -360,7 +378,7 @@ class Init {
 
 			$event->event_id = Sanitize::absint( $event->event_id );
 			$event->label    = Str::slug_to_name( $event->event, '-' );
-			$event->rules = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
+			$event->rules    = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
 
 			$this->events[ $event->component ][ $event->event ] = $event;
 

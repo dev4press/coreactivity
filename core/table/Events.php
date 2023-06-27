@@ -17,6 +17,8 @@ class Events extends Table {
 	public $_table_class_name = 'coreactivity-grid-events';
 	public $_checkbox_field = 'event_id';
 	public $_self_nonce_key = 'coreactivity-table-events';
+	public $_rows_per_page_key = 'coreactivity_events_rows_per_page';
+	public $_rows_per_page_default = 50;
 	public $_logged_counts = array();
 
 	public function __construct( $args = array() ) {
@@ -104,16 +106,6 @@ class Events extends Table {
 			'order'            => $this->_get_field( 'order', 'DESC' ),
 			'paged'            => $this->_get_field( 'paged' ),
 		);
-	}
-
-	protected function rows_per_page() : int {
-		$per_page = get_user_option( 'coreactivity_events_rows_per_page' );
-
-		if ( empty( $per_page ) || $per_page < 1 ) {
-			$per_page = 40;
-		}
-
-		return $per_page;
 	}
 
 	protected function filter_block_top() {

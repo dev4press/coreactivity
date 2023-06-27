@@ -170,7 +170,7 @@ class Plugin extends BasePlugin {
 		return Settings::instance();
 	}
 
-	protected function extra_enqueue_scripts_plugin() {
+	public function enqueue() {
 		$this->enqueue->css( 'coreactivity-admin' );
 		$this->enqueue->js( 'coreactivity-admin' );
 
@@ -179,5 +179,9 @@ class Plugin extends BasePlugin {
 		);
 
 		wp_localize_script( 'd4plib3-coreactivity-admin', 'coreactivity_data', $values );
+	}
+
+	protected function extra_enqueue_scripts_plugin() {
+		$this->enqueue();
 	}
 }

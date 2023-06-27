@@ -10,6 +10,7 @@ use Dev4Press\Plugin\CoreActivity\Table\Events;
 	<?php
 
 	$_grid = new Events();
+	$_grid->prepare_table();
 	$_grid->prepare_items();
 
 	$_grid->search_box( esc_html__( "Search", "coreactivity" ), 'events-search' );

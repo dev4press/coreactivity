@@ -21,6 +21,8 @@ class Logs extends Table {
 	public $_table_class_name = 'coreactivity-grid-logs';
 	public $_checkbox_field = 'log_id';
 	public $_self_nonce_key = 'coreactivity-table-logs';
+	public $_rows_per_page_key = 'coreactivity_logs_rows_per_page';
+	public $_rows_per_page_default = 25;
 	public $_views_separator = '';
 	public $_display_columns_simplified;
 	public $_display_ip_country_flag;
@@ -29,8 +31,11 @@ class Logs extends Table {
 	public $_current_view = '';
 	public $_current_ip = '';
 	public $_server_ip = '';
+    public $_allow_filters = false;
 
+	protected $_limit_lock = array();
 	protected $_filter_lock = array();
+	protected $_filter_remove = array();
 	protected $_items_ips = array();
 
 	public function __construct( $args = array() ) {
@@ -45,104 +50,30 @@ class Logs extends Table {
 		$this->_display_request_column     = coreactivity_settings()->get( 'display_request_column' );
 
 		parent::__construct( array(
-			'singular' => 'event',
-			'plural'   => 'events',
+			'singular' => 'log',
+			'plural'   => 'logs',
 			'ajax'     => false
 		) );
+	}
+
+	public function i() : Init {
+		return Init::instance();
+	}
+
+	public function set_limit_lock( $name, $value ) {
+		$this->_limit_lock[ $name ] = $value;
+	}
+
+	public function set_filter_lock( $name, $value ) {
+		$this->_filter_lock[ $name ] = $value;
 	}
 
 	public function prepare_items() {
 		$this->prepare_column_headers();
 
-		$per_page        = $this->rows_per_page();
-		$sel_search      = $this->get_request_arg( 'search' );
-		$sel_period      = $this->get_request_arg( 'period' );
-		$sel_blog_id     = $this->get_request_arg( 'filter-blog_id' );
-		$sel_user_id     = $this->get_request_arg( 'filter-user_id' );
-		$sel_event_id    = $this->get_request_arg( 'filter-event_id' );
-		$sel_ip          = $this->get_request_arg( 'filter-ip' );
-		$sel_component   = $this->get_request_arg( 'filter-component' );
-		$sel_context     = $this->get_request_arg( 'filter-context' );
-		$sel_method      = $this->get_request_arg( 'filter-method' );
-		$sel_object_type = $this->get_request_arg( 'filter-object_type' );
+		$sql = $this->prepare_query_arguments();
 
-		if ( isset( $this->_filter_lock[ 'blog_id' ] ) ) {
-			$sel_blog_id = $this->_filter_lock[ 'blog_id' ];
-		}
-
-		if ( isset( $this->_filter_lock[ 'user_id' ] ) ) {
-			$sel_user_id = $this->_filter_lock[ 'user_id' ];
-		}
-
-		if ( isset( $this->_filter_lock[ 'ip' ] ) ) {
-			$sel_ip = $this->_filter_lock[ 'ip' ];
-		}
-
-		if ( isset( $this->_filter_lock[ 'component' ] ) ) {
-			$sel_component = $this->_filter_lock[ 'component' ];
-
-			if ( isset( $this->_filter_lock[ 'event' ] ) ) {
-				$sel_event_id = Init::instance()->get_event_id( $sel_component, $this->_filter_lock[ 'event' ] );
-			}
-		}
-
-		$sql = array(
-			'select' => array(
-				'l.*',
-				'e.`component`',
-				'e.`event`'
-			),
-			'from'   => array(
-				coreactivity_db()->logs . ' l ',
-				'INNER JOIN ' . coreactivity_db()->events . ' e ON l.`event_id` = e.`event_id`'
-			),
-			'where'  => array()
-		);
-
-		if ( ! empty( $sel_blog_id ) && $sel_blog_id > 0 ) {
-			$sql[ 'where' ][] = $this->db()->prepare( 'l.`blog_id` = %d', $sel_blog_id );
-		}
-
-		if ( $this->get_request_arg( 'min_id' ) > 0 ) {
-			$sql[ 'where' ][] = $this->db()->prepare( 'l.`log_id` > %d', $this->get_request_arg( 'min_id' ) );
-		}
-
-		if ( ! empty( $sel_user_id ) && $sel_user_id > 0 ) {
-			$sql[ 'where' ][] = $this->db()->prepare( 'l.`user_id` = %d', $sel_user_id );
-		}
-
-		if ( ! empty( $sel_event_id ) && $sel_event_id > 0 ) {
-			$sql[ 'where' ][] = $this->db()->prepare( 'l.`event_id` = %d', $sel_event_id );
-		} else if ( ! empty( $sel_component ) ) {
-			$sql[ 'where' ][] = $this->db()->prepare( 'e.`component` = %s', $sel_component );
-		}
-
-		if ( ! empty( $sel_context ) ) {
-			$sel_context      = $sel_context == '-' ? '' : $sel_context;
-			$sql[ 'where' ][] = $this->db()->prepare( 'l.`context` = %s', $sel_context );
-		}
-
-		if ( ! empty( $sel_method ) ) {
-			$sql[ 'where' ][] = $this->db()->prepare( 'l.`method` = %s', $sel_method );
-		}
-
-		if ( ! empty( $sel_ip ) ) {
-			$sql[ 'where' ][] = $this->db()->prepare( 'l.`ip` = %s', $sel_ip );
-		}
-
-		if ( ! empty( $sel_object_type ) ) {
-			$sql[ 'where' ][] = $this->db()->prepare( 'l.`object_type` = %s', $sel_object_type );
-		}
-
-		if ( ! empty( $sel_period ) ) {
-			$sql[ 'where' ][] = $this->_get_period_where( $sel_period, 'l.`logged`' );
-		}
-
-		if ( ! empty( $sel_search ) ) {
-			$sql[ 'where' ][] = $this->_get_search_where( array( 'e.`component`', 'e.`ip`', 'e.`event`, l.`request`, l.`object_name`' ), $sel_search );
-		}
-
-		$this->query_items( $sql, $per_page, true, true, 'log_id' );
+		$this->query_items( $sql, $this->rows_per_page(), true, true, 'log_id' );
 		$this->query_metas( coreactivity_db()->logmeta, 'log_id' );
 
 		if ( $this->_display_ip_country_flag ) {
@@ -210,11 +141,185 @@ class Logs extends Table {
 		$data = array(
 			'lock'  => $this->_filter_lock,
 			'atts'  => $this->_request_args,
+			'limit' => $this->_limit_lock,
 			'id'    => DB::instance()->get_last_log_id(),
 			'nonce' => wp_create_nonce( 'coreactivity-live-update' )
 		);
 
 		wp_localize_script( 'd4plib3-coreactivity-admin', 'coreactivity_live', $data );
+	}
+
+	protected function process_request_args() {
+		$this->_request_args = array(
+			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id', '' ),
+			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id', '' ),
+			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id', '' ),
+			'filter-ip'          => Sanitize::_get_basic( 'filter-ip', '' ),
+			'filter-component'   => Sanitize::_get_basic( 'filter-component', '' ),
+			'filter-context'     => Sanitize::_get_basic( 'filter-context', '' ),
+			'filter-method'      => Sanitize::_get_basic( 'filter-method', '' ),
+			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type', '' ),
+			'view'               => $this->_get_field( 'view' ),
+			'search'             => $this->_get_field( 's' ),
+			'period'             => $this->_get_field( 'period' ),
+			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
+			'order'              => $this->_get_field( 'order', 'DESC' ),
+			'paged'              => $this->_get_field( 'paged' ),
+			'min_id'             => 0
+		);
+
+		if ( ! empty( $this->_request_args[ 'filter-component' ] ) && ! $this->i()->is_component_valid( $this->_request_args[ 'filter-component' ] ) ) {
+			$this->_request_args[ 'filter-component' ] = '';
+		}
+
+		if ( ! empty( $this->_request_args[ 'filter-event_id' ] ) && ! $this->i()->is_event_id_valid( $this->_request_args[ 'filter-event_id' ] ) ) {
+			$this->_request_args[ 'filter-event_id' ] = '';
+		}
+
+		foreach ( array_keys( $this->_filter_lock ) as $field ) {
+			$key = 'filter-' . $field;
+
+			if ( isset( $this->_request_args[ $key ] ) ) {
+				$this->_request_args[ $key ] = '';
+			}
+		}
+
+		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
+			$this->_request_args[ 'filter-component' ] = '';
+		}
+
+		if ( ! is_multisite() ) {
+			$this->_filter_lock[ 'blog_id' ] = - 1;
+		}
+
+		$this->prepare_the_view();
+	}
+
+	protected function prepare_query_settings() : array {
+		$sel = array(
+			'search'      => $this->get_request_arg( 'search' ),
+			'period'      => $this->get_request_arg( 'period' ),
+			'blog_id'     => $this->get_request_arg( 'filter-blog_id' ),
+			'user_id'     => $this->get_request_arg( 'filter-user_id' ),
+			'event_id'    => $this->get_request_arg( 'filter-event_id' ),
+			'ip'          => $this->get_request_arg( 'filter-ip' ),
+			'component'   => $this->get_request_arg( 'filter-component' ),
+			'context'     => $this->get_request_arg( 'filter-context' ),
+			'method'      => $this->get_request_arg( 'filter-method' ),
+			'object_type' => $this->get_request_arg( 'filter-object_type' ),
+			'min_id'      => $this->get_request_arg( 'min_id' )
+		);
+
+		if ( isset( $this->_filter_lock[ 'blog_id' ] ) ) {
+			$sel[ 'blog_id' ] = $this->_filter_lock[ 'blog_id' ];
+		}
+
+		if ( isset( $this->_filter_lock[ 'user_id' ] ) ) {
+			$sel[ 'user_id' ] = $this->_filter_lock[ 'user_id' ];
+		}
+
+		if ( isset( $this->_filter_lock[ 'ip' ] ) ) {
+			$sel[ 'ip' ] = $this->_filter_lock[ 'ip' ];
+		}
+
+		if ( isset( $this->_filter_lock[ 'object_type' ] ) ) {
+			$sel[ 'object_type' ] = $this->_filter_lock[ 'object_type' ];
+		}
+
+		if ( isset( $this->_filter_lock[ 'component' ] ) ) {
+			$sel[ 'component' ] = $this->_filter_lock[ 'component' ];
+
+			if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
+				$sel[ 'event_id' ] = $this->i()->get_event_id( $sel[ 'component' ], $this->_filter_lock[ 'event_id' ] );
+			}
+		} else {
+			if ( ! empty( $this->_limit_lock[ 'components' ] ) ) {
+				$sel[ 'component' ] = array_keys( $this->_limit_lock[ 'components' ] );
+			}
+		}
+
+		return $sel;
+	}
+
+	protected function prepare_query_arguments() : array {
+		$sel = $this->prepare_query_settings();
+
+		$sql = array(
+			'select' => array(
+				'l.*',
+				'e.`component`',
+				'e.`event`'
+			),
+			'from'   => array(
+				coreactivity_db()->logs . ' l ',
+				'INNER JOIN ' . coreactivity_db()->events . ' e ON l.`event_id` = e.`event_id`'
+			),
+			'where'  => array()
+		);
+
+		if ( ! empty( $sel[ 'blog_id' ] ) && $sel[ 'blog_id' ] > 0 ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`blog_id` = %d', $sel[ 'blog_id' ] );
+		}
+
+		if ( $sel[ 'min_id' ] > 0 ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`log_id` > %d', $sel[ 'min_id' ] );
+		}
+
+		if ( ! empty( $sel[ 'user_id' ] ) && $sel[ 'user_id' ] > 0 ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`user_id` = %d', $sel[ 'user_id' ] );
+		}
+
+		if ( ! empty( $sel[ 'event_id' ] ) && $sel[ 'event_id' ] > 0 ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`event_id` = %d', $sel[ 'event_id' ] );
+		} else if ( ! empty( $sel[ 'component' ] ) ) {
+			$in_components    = $this->db()->prepare_in_list( (array) $sel[ 'component' ] );
+			$sql[ 'where' ][] = 'e.`component` IN (' . $in_components . ')';
+		}
+
+		if ( ! empty( $sel[ 'context' ] ) ) {
+			$sel[ 'context' ] = $sel[ 'context' ] == '-' ? '' : $sel[ 'context' ];
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`context` = %s', $sel[ 'context' ] );
+		}
+
+		if ( ! empty( $sel[ 'method' ] ) ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`method` = %s', $sel[ 'method' ] );
+		}
+
+		if ( ! empty( $sel[ 'ip' ] ) ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`ip` = %s', $sel[ 'ip' ] );
+		}
+
+		if ( ! empty( $sel[ 'object_type' ] ) ) {
+			$sql[ 'where' ][] = $this->db()->prepare( 'l.`object_type` = %s', $sel[ 'object_type' ] );
+		}
+
+		if ( ! empty( $sel[ 'period' ] ) ) {
+			$sql[ 'where' ][] = $this->_get_period_where( $sel[ 'period' ], 'l.`logged`' );
+		}
+
+		if ( ! empty( $sel[ 'search' ] ) ) {
+			$sql[ 'where' ][] = $this->_get_search_where( array( 'e.`component`', 'e.`ip`', 'e.`event`, l.`request`, l.`object_name`' ), $sel[ 'search' ] );
+		}
+
+		return $sql;
+	}
+
+	protected function get_select_components() : array {
+		if ( ! empty( $this->_limit_lock[ 'components' ] ) ) {
+			return $this->_limit_lock[ 'components' ];
+		}
+
+		return $this->i()->get_select_event_components( $this->_display_columns_simplified );
+	}
+
+	protected function get_select_events() : array {
+		$component = $this->_filter_lock[ 'component' ] ?? '';
+
+		if ( empty( $component ) && ! empty( $this->_limit_lock[ 'components' ] ) ) {
+			$component = array_keys( $this->_limit_lock[ 'components' ] );
+		}
+
+		return $this->i()->get_select_events( $this->_display_columns_simplified, empty( $component ) ? array() : (array) $component );
 	}
 
 	protected function _view( string $view, string $args ) : string {
@@ -242,62 +347,6 @@ class Logs extends Table {
 
 	protected function db() : ?DBLite {
 		return coreactivity_db();
-	}
-
-	protected function rows_per_page() : int {
-		$per_page = get_user_option( 'coreactivity_logs_rows_per_page' );
-
-		if ( empty( $per_page ) || $per_page < 1 ) {
-			$per_page = 20;
-		}
-
-		return $per_page;
-	}
-
-	protected function process_request_args() {
-		$this->_request_args = array(
-			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id', '' ),
-			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id', '' ),
-			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id', '' ),
-			'filter-ip'          => Sanitize::_get_basic( 'filter-ip', '' ),
-			'filter-component'   => Sanitize::_get_basic( 'filter-component', '' ),
-			'filter-context'     => Sanitize::_get_basic( 'filter-context', '' ),
-			'filter-method'      => Sanitize::_get_basic( 'filter-method', '' ),
-			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type', '' ),
-			'view'               => $this->_get_field( 'view' ),
-			'search'             => $this->_get_field( 's' ),
-			'period'             => $this->_get_field( 'period' ),
-			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
-			'order'              => $this->_get_field( 'order', 'DESC' ),
-			'paged'              => $this->_get_field( 'paged' ),
-			'min_id'             => 0
-		);
-
-		if ( ! empty( $this->_request_args[ 'filter-component' ] ) && ! Init::instance()->is_component_valid( $this->_request_args[ 'filter-component' ] ) ) {
-			$this->_request_args[ 'filter-component' ] = '';
-		}
-
-		if ( ! empty( $this->_request_args[ 'filter-event_id' ] ) && ! Init::instance()->is_event_id_valid( $this->_request_args[ 'filter-event_id' ] ) ) {
-			$this->_request_args[ 'filter-event_id' ] = '';
-		}
-
-		foreach ( array_keys( $this->_filter_lock ) as $field ) {
-			$key = 'filter-' . $field;
-
-			if ( isset( $this->_request_args[ $key ] ) ) {
-				$this->_request_args[ $key ] = '';
-			}
-		}
-
-		if ( isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			$this->_request_args[ 'filter-component' ] = '';
-		}
-
-		if ( ! is_multisite() ) {
-			$this->_filter_lock[ 'blog_id' ] = - 1;
-		}
-
-		$this->prepare_the_view();
 	}
 
 	protected function prepare_the_view() {
@@ -359,7 +408,7 @@ class Logs extends Table {
 		) );
 
 		if ( ! isset( $this->_filter_lock[ 'component' ] ) && ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			Elements::instance()->select_grouped( Init::instance()->get_select_event_components( $this->_display_columns_simplified ), array(
+			Elements::instance()->select_grouped( $this->get_select_components(), array(
 				'empty'    => __( "All Components", "coreactivity" ),
 				'selected' => $this->get_request_arg( 'filter-component' ),
 				'name'     => 'filter-component'
@@ -367,7 +416,7 @@ class Logs extends Table {
 		}
 
 		if ( ! isset( $this->_filter_lock[ 'event_id' ] ) ) {
-			Elements::instance()->select_grouped( Init::instance()->get_select_events( $this->_display_columns_simplified, $this->_filter_lock[ 'component' ] ?? '' ), array(
+			Elements::instance()->select_grouped( $this->get_select_events(), array(
 				'empty'    => __( "All Events", "coreactivity" ),
 				'selected' => $this->get_request_arg( 'filter-event_id' ),
 				'name'     => 'filter-event_id'
@@ -405,19 +454,21 @@ class Logs extends Table {
 			) );
 		}
 
-		if ( ! isset( $this->_filter_lock[ 'object_type' ] ) ) {
-			$_types = array(
-				'' => __( "All Object Types", "coreactivity" )
-			);
+		if ( ! in_array( 'object_type', $this->_filter_remove ) ) {
+			if ( ! isset( $this->_filter_lock[ 'object_type' ] ) ) {
+				$_types = array(
+					'' => __( "All Object Types", "coreactivity" )
+				);
 
-			foreach ( Init::instance()->get_object_types() as $type => $value ) {
-				$_types[ $type ] = $value;
+				foreach ( $this->i()->get_object_types() as $type => $value ) {
+					$_types[ $type ] = $value;
+				}
+
+				Elements::instance()->select( $_types, array(
+					'selected' => $this->get_request_arg( 'filter-object_type' ),
+					'name'     => 'filter-object_type'
+				) );
 			}
-
-			Elements::instance()->select( $_types, array(
-				'selected' => $this->get_request_arg( 'filter-object_type' ),
-				'name'     => 'filter-object_type'
-			) );
 		}
 
 		submit_button( __( "Filter", "coreactivity" ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
@@ -444,7 +495,7 @@ class Logs extends Table {
 				case 'object_type':
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-archive"></i> ';
 					$current_view .= '<span>' . esc_html__( "Object Type", "coreactivity" ) . '</span>';
-					$current_view .= Init::instance()->get_object_type_label( $this->_filter_lock[ 'object_type' ] );
+					$current_view .= $this->i()->get_object_type_label( $this->_filter_lock[ 'object_type' ] );
 					$current_view .= '<span>[' . esc_html( $this->_filter_lock[ 'object_type' ] ) . ']</span>';
 					$current_view .= '</span>';
 
@@ -452,17 +503,17 @@ class Logs extends Table {
 					break;
 				case 'component':
 					$current_view = '<span class="coreactivity-view-button">';
-					$current_view .= '<i class="d4p-icon d4p-' . Init::instance()->get_component_icon( $this->_filter_lock[ 'component' ] ) . ' d4p-icon-fw"></i>';
+					$current_view .= '<i class="d4p-icon d4p-' . $this->i()->get_component_icon( $this->_filter_lock[ 'component' ] ) . ' d4p-icon-fw"></i>';
 					$current_view .= '<span>' . esc_html__( "Component", "coreactivity" ) . '</span>';
-					$current_view .= Init::instance()->get_component_label( $this->_filter_lock[ 'component' ] );
+					$current_view .= $this->i()->get_component_label( $this->_filter_lock[ 'component' ] );
 					$current_view .= '<span>[' . esc_html( $this->_filter_lock[ 'component' ] ) . ']</span>';
 					$current_view .= '</span>';
 
 					$current_key .= 'component';
 					break;
 				case 'event_id':
-					$event = Init::instance()->get_event_by_id( $this->_filter_lock[ 'event_id' ] );
-					$label = Init::instance()->get_component_label( $event->component );
+					$event = $this->i()->get_event_by_id( $this->_filter_lock[ 'event_id' ] );
+					$label = $this->i()->get_component_label( $event->component );
 
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <span>' . esc_html__( "Event", "coreactivity" ) . '</span>';
 					$current_view .= $label . ' / ' . $event->label;
@@ -562,7 +613,7 @@ class Logs extends Table {
 	}
 
 	protected function column_component( $item ) : string {
-		$render = $this->_display_columns_simplified ? Init::instance()->get_component_label( $item->component ) : $item->component;
+		$render = $this->_display_columns_simplified ? $this->i()->get_component_label( $item->component ) : $item->component;
 
 		$actions = array(
 			'view' => '<a href="' . $this->_view( 'component', 'filter-component=' . $item->component ) . '">' . __( "Logs", "coreactivity" ) . '</a>'
@@ -642,7 +693,7 @@ class Logs extends Table {
 	}
 
 	protected function column_event_id( $item ) : string {
-		$render = $this->_display_columns_simplified ? Init::instance()->get_event_label( absint( $item->event_id ), $item->event ) : $item->event;
+		$render = $this->_display_columns_simplified ? $this->i()->get_event_label( absint( $item->event_id ), $item->event ) : $item->event;
 
 		$actions = array(
 			'view' => '<a href="' . $this->_view( 'event_id', 'filter-event_id=' . $item->event_id ) . '">' . __( "Logs", "coreactivity" ) . '</a>'
@@ -655,7 +706,7 @@ class Logs extends Table {
 	}
 
 	protected function column_object_type( $item ) : string {
-		$render = ! empty( $item->object_type ) ? Init::instance()->get_object_type_label( $item->object_type ) : '/';
+		$render = ! empty( $item->object_type ) ? $this->i()->get_object_type_label( $item->object_type ) : '/';
 
 		$actions = array(
 			'view' => '<a href="' . $this->_view( 'object_type', 'filter-object_type=' . $item->object_type ) . '">' . __( "Logs", "coreactivity" ) . '</a>'
