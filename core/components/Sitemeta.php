@@ -15,6 +15,9 @@ class Sitemeta extends Component {
 	protected $object_type = 'option';
 	protected $scope = 'network';
 
+	protected $exceptions = array();
+	protected $skip = array();
+
 	protected $monitor = array(
 		'site_name',
 		'admin_email',
@@ -39,8 +42,6 @@ class Sitemeta extends Component {
 		'active_sitewide_plugins',
 		'WPLANG'
 	);
-
-	protected $skip = array();
 
 	public function is_available() : bool {
 		return is_multisite();
@@ -81,7 +82,7 @@ class Sitemeta extends Component {
 	}
 
 	public function event_updated_option( $option, $old_value, $value ) {
-		if ( $this->is_transient( $option ) || in_array( $option, $this->skip ) ) {
+		if ( $this->is_transient( $option ) || $this->is_skippable( $option ) || $this->is_exception( $option ) ) {
 			return;
 		}
 
@@ -125,5 +126,13 @@ class Sitemeta extends Component {
 
 	private function is_transient( $option ) : bool {
 		return substr( $option, 0, 11 ) == '_transient_' || substr( $option, 0, 16 ) == '_site_transient_';
+	}
+
+	private function is_exception( $option ) : bool {
+		return ! empty( $this->exceptions ) && in_array( $option, $this->exceptions );
+	}
+
+	private function is_skippable( $option ) : bool {
+		return ! empty( $this->skip ) && in_array( $option, $this->skip );
 	}
 }

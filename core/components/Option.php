@@ -115,9 +115,19 @@ class Option extends Component {
 		'wp_force_deactivated_plugins'
 	);
 
+	protected $partials = array();
+	protected $exceptions = array();
 	protected $skip = array(
 		'cron'
 	);
+
+	public function init() {
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_option_list' );
+
+		if ( coreactivity_settings()->get( 'exceptions_option_action_scheduler_lock' ) ) {
+			$this->partials[] = 'action_scheduler_lock_';
+		}
+	}
 
 	public function tracking() {
 		if ( $this->is_active( 'core-option-edited' ) || $this->is_active( 'option-edited' ) ) {
@@ -148,7 +158,7 @@ class Option extends Component {
 	}
 
 	public function event_updated_option( $option, $old_value, $value ) {
-		if ( $this->is_transient( $option ) || in_array( $option, $this->skip ) ) {
+		if ( $this->is_transient( $option ) || $this->is_skippable( $option ) || $this->is_exception( $option ) ) {
 			return;
 		}
 
@@ -192,5 +202,25 @@ class Option extends Component {
 
 	private function is_transient( $option ) : bool {
 		return substr( $option, 0, 11 ) == '_transient_' || substr( $option, 0, 16 ) == '_site_transient_';
+	}
+
+	private function is_exception( $option ) : bool {
+		if ( ! empty( $this->exceptions ) && in_array( $option, $this->exceptions ) ) {
+			return true;
+		}
+
+		if ( ! empty( $this->partials ) ) {
+			foreach ( $this->partials as $part ) {
+				if ( substr( $option, 0, strlen( $part ) ) == $part ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private function is_skippable( $option ) : bool {
+		return ! empty( $this->skip ) && in_array( $option, $this->skip );
 	}
 }
