@@ -86,6 +86,42 @@ class Settings extends BaseSettings {
 					)
 				)
 			),
+			'exceptions'  => array(
+				'exceptions-option'   => array(
+					'name'     => __( "Component: Options", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => __( "General Rules", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_option_action_scheduler_lock', __( "Action Scheduler Locks", "coreactivity" ), __( "Many WordPress plugins use Actions Scheduler (as a plugin or internal component), and it can often change one or more locking options flooding the log with entries. With this enabled, any locking option of the Action Scheduler will be ignored when logging options changes.", "coreactivity" ), Type::BOOLEAN )
+							)
+						),
+						array(
+							'label'    => __( "Specific Options", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_option_list', __( "Options to skip", "coreactivity" ), __( "Add one or more options (exact option name) to skip from logging.", "coreactivity" ), Type::EXPANDABLE_TEXT )
+							)
+						)
+					)
+				),
+				'exceptions-sitemeta' => array(
+					'name'     => __( "Component: Sitemeta", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => __( "Specific Options", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_sitemeta_list', __( "Options to skip", "coreactivity" ), __( "Add one or more options (exact option name) to skip from logging.", "coreactivity" ), Type::EXPANDABLE_TEXT )
+							)
+						)
+					)
+				)
+			),
 			'logs'        => array(
 				'logs-content' => array(
 					'name'     => __( "Content Display", "coreactivity" ),

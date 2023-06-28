@@ -20,16 +20,19 @@ class Settings extends BaseSettings {
 			'db_version' => 0
 		),
 		'settings' => array(
-			'log_if_available_user_agent'  => true,
-			'log_if_available_referer'     => false,
-			'log_if_available_description' => false,
-			'logs_live_updates'            => true,
-			'display_columns_simplified'   => false,
-			'display_ip_country_flag'      => false,
-			'display_user_avatar'          => false,
-			'display_request_column'       => false,
-			'auto_cleanup_active'          => true,
-			'auto_cleanup_period'          => 24
+			'log_if_available_user_agent'             => true,
+			'log_if_available_referer'                => false,
+			'log_if_available_description'            => false,
+			'logs_live_updates'                       => true,
+			'display_columns_simplified'              => false,
+			'display_ip_country_flag'                 => false,
+			'display_user_avatar'                     => false,
+			'display_request_column'                  => false,
+			'auto_cleanup_active'                     => true,
+			'auto_cleanup_period'                     => 24,
+			'exceptions_option_action_scheduler_lock' => true,
+			'exceptions_option_list'                  => array(),
+			'exceptions_sitemeta_list'                => array()
 		)
 	);
 

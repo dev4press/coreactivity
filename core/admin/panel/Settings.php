@@ -20,6 +20,11 @@ class Settings extends PanelSettings {
 					'icon'  => 'ui-terms',
 					'info'  => __( "Settings related to logging of optional data.", "coreactivity" )
 				),
+				'exceptions'        => array(
+					'title' => __( "Exceptions", "coreactivity" ),
+					'icon'  => 'ui-ban',
+					'info'  => __( "Some of the components can use these exceptions to limit the logging and skip some events.", "coreactivity" )
+				),
 				'logs'        => array(
 					'title' => __( "Logs Panel", "coreactivity" ),
 					'icon'  => 'ui-calendar-pen',
