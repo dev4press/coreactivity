@@ -14,11 +14,11 @@ $statistics = Statistics::instance()->detailed( 30, $blog_id );
 			<?php
 
 			if ( $statistics[ 'total' ] == 0 ) {
-                ?>
+				?>
 
-                <p><?php esc_html_e("There are no events logged in the past 30 days."); ?></p>
+                <p><?php esc_html_e( "There are no events logged in the past 30 days.", "coreactivity" ); ?></p>
 
-                <?php
+				<?php
 			} else {
 				foreach ( $statistics[ 'components' ] as $component => $data ) {
 					$width = ( $data[ 'count' ] / $statistics[ 'total' ] ) * 100;

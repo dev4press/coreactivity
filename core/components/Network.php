@@ -82,7 +82,7 @@ class Network extends Component {
 	}
 
 	public function label() : string {
-		return __( "Multisite Network" );
+		return __( "Multisite Network", "coreactivity" );
 	}
 
 	protected function prepare_data_for_log( string $event, array $data = array() ) : array {

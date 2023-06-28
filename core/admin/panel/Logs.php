@@ -2,10 +2,8 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin\Panel;
 
-
 use Dev4Press\Plugin\CoreActivity\Table\Logs as LogsTable;
 use Dev4Press\Plugin\CoreActivity\Admin\Panel;
-
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

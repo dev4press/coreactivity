@@ -5,7 +5,6 @@ use Dev4Press\Plugin\CoreActivity\Log\Init;
 $components = Init::instance()->get_all_components();
 $events     = Init::instance()->get_all_events();
 
-
 ?>
 <div class="coreactivity-about-components">
 	<?php
