@@ -143,6 +143,10 @@ class Init {
 		return $this->object_types;
 	}
 
+	public function get_object_type_label( string $object_type ) {
+		return $this->object_types[ $object_type ] ?? Str::slug_to_name( $object_type );
+	}
+
 	public function get_event_id( string $component, string $event ) : int {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
 			return $this->events[ $component ][ $event ]->event_id;
@@ -173,6 +177,28 @@ class Init {
 		return null;
 	}
 
+	public function get_event_label( int $event_id, string $event ) {
+		return $this->list[ $event_id ][ 'label' ] ?? $event;
+	}
+
+	public function get_events_for_component( string $component ) : array {
+		return $this->events[ $component ] ?? array();
+	}
+
+	public function get_event_ids_for_component( string $component ) : array {
+		$ids = array();
+
+		if ( isset( $this->events[ $component ] ) ) {
+			foreach ( $this->events[ $component ] as $event ) {
+				if ( $event->event_id > 0 ) {
+					$ids[] = $event->event_id;
+				}
+			}
+		}
+
+		return $ids;
+	}
+
 	public function get_component_label( string $component ) : string {
 		return $this->components[ $component ] ? $this->components[ $component ]->label : $component;
 	}
@@ -181,12 +207,16 @@ class Init {
 		return $this->components[ $component ] ? $this->components[ $component ]->icon : 'ui-folder';
 	}
 
-	public function get_object_type_label( string $object_type ) {
-		return $this->object_types[ $object_type ] ?? Str::slug_to_name( $object_type );
-	}
+	public function get_components_by_plugin_source( $plugin ) : array {
+		$list = array();
 
-	public function get_event_label( int $event_id, string $event ) {
-		return $this->list[ $event_id ][ 'label' ] ?? $event;
+		foreach ( $this->components as $component => $obj ) {
+			if ( $obj->plugin == $plugin ) {
+				$list[] = $component;
+			}
+		}
+
+		return $list;
 	}
 
 	public function get_select_events( bool $simplified = false, array $only_components = array() ) : array {
@@ -243,18 +273,6 @@ class Init {
 		}
 
 		return array_values( $list );
-	}
-
-	public function get_components_by_plugin_source( $plugin ) : array {
-		$list = array();
-
-		foreach ( $this->components as $component => $obj ) {
-			if ( $obj->plugin == $plugin ) {
-				$list[] = $component;
-			}
-		}
-
-		return $list;
 	}
 
 	public function is_event_available( string $component, string $event ) : bool {
