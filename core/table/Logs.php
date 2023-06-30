@@ -332,15 +332,7 @@ class Logs extends Table {
 
 		if ( ! empty( $this->_current_view ) ) {
 			$url .= '&view=' . $this->_current_view;
-
-			switch ( $this->_current_view ) {
-				case 'ip':
-					$url .= '&filter-ip=' . $this->_filter_lock[ 'ip' ];
-					break;
-				case 'user':
-					$url .= '&filter-user_id=' . $this->_filter_lock[ 'user_id' ];
-					break;
-			}
+			$url .= '&filter-' . $this->_current_view . '=' . $this->_filter_lock[ $this->_current_view ];
 		}
 
 		return $url;
