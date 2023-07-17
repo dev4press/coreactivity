@@ -1,3 +1,26 @@
+.coreactivity-badge {
+    padding: 2px 12px 5px;
+    font-size: 1.1em;
+    color: #FFF;
+    border-radius: 4px;
+
+    i {
+        color: #FFF !important;
+        margin-right: 5px;
+        vertical-align: top;
+        margin-top: 8px;
+    }
+
+    &.__badge-green {
+        background-color: #090;
+    }
+
+    &.__badge-red {
+        background-color: #900;
+    }
+}
+
+.coreactivity-activation-control,
 .coreactivity-database-wrapper {
     display: flex;
     gap: 10px;
@@ -11,15 +34,19 @@
     > div {
         flex-grow: 1;
         display: flex;
-        column-gap: 20px;
-        row-gap: 5px;
+        gap: 10px;
         flex-wrap: wrap;
         font-size: 1.1em;
+        align-content: flex-start;
 
         .__element {
             strong {
                 color: var(--d4p-color-layout-accent);
                 font-size: 1.3em;
+            }
+
+            &.__full-width {
+                flex: 1 1 100%;
             }
         }
 
@@ -33,11 +60,20 @@
     }
 }
 
+.coreactivity-activation-control {
+    .__full-width {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1em;
+    }
+}
+
 .coreactivity-overall-wrapper {
     display: flex;
-    column-gap: 40px;
-    row-gap: 20px;
     flex-wrap: nowrap;
+    gap: 20px;
 
     > div {
         flex: 1 1 50%;
@@ -53,6 +89,10 @@
 
         i {
             color: var(--d4p-color-layout-accent);
+        }
+
+        div {
+            flex-shrink: 0;
         }
 
         .__available {

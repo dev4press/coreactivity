@@ -188,43 +188,79 @@
   background-color: lightblue !important;
 }
 
+.coreactivity-badge {
+  padding: 2px 12px 5px;
+  font-size: 1.1em;
+  color: #FFF;
+  border-radius: 4px;
+}
+.coreactivity-badge i {
+  color: #FFF !important;
+  margin-right: 5px;
+  vertical-align: top;
+  margin-top: 8px;
+}
+.coreactivity-badge.__badge-green {
+  background-color: #090;
+}
+.coreactivity-badge.__badge-red {
+  background-color: #900;
+}
+
+.coreactivity-activation-control,
 .coreactivity-database-wrapper {
   display: flex;
   gap: 10px;
   flex-wrap: nowrap;
 }
+.coreactivity-activation-control i,
 .coreactivity-database-wrapper i {
   flex-shrink: 0;
   color: var(--d4p-color-layout-accent);
 }
+.coreactivity-activation-control > div,
 .coreactivity-database-wrapper > div {
   flex-grow: 1;
   display: flex;
-  column-gap: 20px;
-  row-gap: 5px;
+  gap: 10px;
   flex-wrap: wrap;
   font-size: 1.1em;
+  align-content: flex-start;
 }
+.coreactivity-activation-control > div .__element strong,
 .coreactivity-database-wrapper > div .__element strong {
   color: var(--d4p-color-layout-accent);
   font-size: 1.3em;
 }
+.coreactivity-activation-control > div .__element.__full-width,
+.coreactivity-database-wrapper > div .__element.__full-width {
+  flex: 1 1 100%;
+}
 @media screen and (max-width: 959px) {
+  .coreactivity-activation-control > div,
   .coreactivity-database-wrapper > div {
     font-size: 1em;
   }
 }
 @media screen and (max-width: 767px) {
+  .coreactivity-activation-control > div,
   .coreactivity-database-wrapper > div {
     font-size: 0.9em;
   }
 }
 
+.coreactivity-activation-control .__full-width {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
 .coreactivity-overall-wrapper {
   display: flex;
-  column-gap: 40px;
-  row-gap: 20px;
   flex-wrap: nowrap;
+  gap: 20px;
 }
 .coreactivity-overall-wrapper > div {
   flex: 1 1 50%;
@@ -239,6 +275,9 @@
 }
 .coreactivity-overall-wrapper > div i {
   color: var(--d4p-color-layout-accent);
+}
+.coreactivity-overall-wrapper > div div {
+  flex-shrink: 0;
 }
 .coreactivity-overall-wrapper > div .__available {
   font-size: 1.4em;

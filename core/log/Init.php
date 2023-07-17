@@ -42,7 +42,9 @@ class Init {
 		),
 		'events'     => array(
 			'total'     => 0,
-			'available' => 0
+			'available' => 0,
+			'active'    => 0,
+			'inactive'  => 0
 		)
 	);
 
@@ -107,11 +109,17 @@ class Init {
 		}
 
 		foreach ( $this->events as $name => $component ) {
-			foreach ( $component as $events ) {
+			foreach ( $component as $event ) {
 				$this->statistics[ 'events' ][ 'total' ] ++;
 
 				if ( $this->components[ $name ]->is_available ) {
 					$this->statistics[ 'events' ][ 'available' ] ++;
+
+					if ($event->status == 'active') {
+						$this->statistics[ 'events' ][ 'active' ] ++;
+					} else {
+						$this->statistics[ 'events' ][ 'inactive' ] ++;
+					}
 				}
 			}
 		}

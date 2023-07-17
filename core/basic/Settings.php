@@ -20,6 +20,7 @@ class Settings extends BaseSettings {
 			'db_version' => 0
 		),
 		'settings' => array(
+			'main_events_log_switch'                  => true,
 			'log_if_available_user_agent'             => true,
 			'log_if_available_referer'                => false,
 			'log_if_available_description'            => false,

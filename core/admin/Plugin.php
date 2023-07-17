@@ -184,4 +184,8 @@ class Plugin extends BasePlugin {
 	protected function extra_enqueue_scripts_plugin() {
 		$this->enqueue();
 	}
+
+	public function wizard() {
+		return null;
+	}
 }

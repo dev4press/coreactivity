@@ -86,4 +86,8 @@ class Plugin extends Core {
 	public function b() {
 		return null;
 	}
+
+	public function is_logging_active() : bool {
+		return coreactivity_settings()->get('main_events_log_switch');
+	}
 }
