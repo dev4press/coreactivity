@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin\Panel;
 
+use Dev4Press\Plugin\CoreActivity\Basic\Render;
 use Dev4Press\Plugin\CoreActivity\Table\Logs as LogsTable;
 use Dev4Press\Plugin\CoreActivity\Admin\Panel;
 
@@ -27,6 +28,6 @@ class Logs extends Panel {
 	}
 
 	public function header_fill() : string {
-		return coreactivity_panel_header_ip_block();
+		return Render::panel_header_ip_block();
 	}
 }

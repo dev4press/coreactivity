@@ -115,7 +115,7 @@ class Init {
 				if ( $this->components[ $name ]->is_available ) {
 					$this->statistics[ 'events' ][ 'available' ] ++;
 
-					if ($event->status == 'active') {
+					if ( $event->status == 'active' ) {
 						$this->statistics[ 'events' ][ 'active' ] ++;
 					} else {
 						$this->statistics[ 'events' ][ 'inactive' ] ++;

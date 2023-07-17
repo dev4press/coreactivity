@@ -183,6 +183,21 @@ class Settings extends BaseSettings {
 						)
 					)
 				)
+			),
+			'advanced' => array(
+				'advanced-notices' => array(
+					'name'     => __( "Notices", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'notice_if_logging_is_disabled', __( "Logging is Disabled", "coreactivity" ), __( "If the logging is disabled, on every admin page, plugin will display a notice about it, with link to the plugin dashboard.", "coreactivity" ), Type::BOOLEAN )
+							)
+						)
+					)
+				)
 			)
 		);
 	}

@@ -1,8 +1,7 @@
 <?php
 
-use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use Dev4Press\v43\Core\Quick\File;
+use function Dev4Press\v43\Functions\panel;
 
 $statistics = Statistics::instance()->overall();
 $active     = coreactivity()->is_logging_active();
@@ -50,10 +49,10 @@ $active     = coreactivity()->is_logging_active();
 
 					if ( $active ) {
 						?><?php esc_html_e( "Events Logging", "coreactivity" ); ?>: <span class="coreactivity-badge __badge-green">
-                        <i aria-hidden="true" class="d4p-icon d4p-ui-check-square"></i> <?php esc_html_e( "Active" ) ?></span><?php
+                        <i aria-hidden="true" class="d4p-icon d4p-ui-check-square"></i> <?php esc_html_e( "Active", "coreactivity" ) ?></span><?php
 					} else {
 						?><?php esc_html_e( "Events Logging", "coreactivity" ); ?>: <span class="coreactivity-badge __badge-red">
-                        <i aria-hidden="true" class="d4p-icon d4p-ui-close-square"></i> <?php esc_html_e( "Disabled" ) ?></span><?php
+                        <i aria-hidden="true" class="d4p-icon d4p-ui-close-square"></i> <?php esc_html_e( "Disabled", "coreactivity" ) ?></span><?php
 					}
 
 					?>
@@ -62,9 +61,11 @@ $active     = coreactivity()->is_logging_active();
 					<?php
 
 					if ( $active ) {
-						?><a class="button-secondary" href="#"><?php esc_html_e( "Disable all Events Logging", "coreactivity" ); ?></a><?php
+						?>
+                        <a class="button-secondary" href="<?php echo panel()->a()->action_url( 'disable-logging', 'coreactivity-disable-logging' ); ?>"><?php esc_html_e( "Disable all Events Logging", "coreactivity" ); ?></a><?php
 					} else {
-						?><a class="button-primary" href="#"><?php esc_html_e( "Enable Events Logging", "coreactivity" ); ?></a><?php
+						?>
+                        <a class="button-primary" href="<?php echo panel()->a()->action_url( 'enable-logging', 'coreactivity-enable-logging' ); ?>"><?php esc_html_e( "Enable Events Logging", "coreactivity" ); ?></a><?php
 					}
 
 					?>

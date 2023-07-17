@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin\Panel;
 
+use Dev4Press\Plugin\CoreActivity\Basic\Render;
 use Dev4Press\v43\Core\UI\Admin\PanelDashboard;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -32,6 +33,6 @@ class Dashboard extends PanelDashboard {
 	}
 
 	public function header_fill() : string {
-		return coreactivity_panel_header_ip_block();
+		return Render::panel_header_ip_block();
 	}
 }

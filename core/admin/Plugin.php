@@ -145,6 +145,27 @@ class Plugin extends BasePlugin {
 		new PostBack( $this );
 	}
 
+	public function admin_init() {
+		if ( ! coreactivity()->is_logging_active() ) {
+			if ( coreactivity_settings()->get( 'notice_if_logging_is_disabled' ) ) {
+				if ( is_super_admin() ) {
+					add_action( 'admin_notices', array( $this, 'notice_disabled' ) );
+				}
+			}
+		}
+	}
+
+	public function notice_disabled() {
+		?>
+
+        <div class="notice notice-error">
+            <p><?php esc_html_e( "coreActivity events logging has been disabled. You can enable it again from the plugin Dashboard.", "coreactivity" ); ?>
+                <a href="<?php echo esc_url( $this->panel_url() ); ?>"><?php esc_html_e( "coreActivity Dashboard", "coreactivity" ); ?></a></p>
+        </div>
+
+		<?php
+	}
+
 	public function message_process( $code, $msg ) {
 		switch ( $code ) {
 			case 'cleanup-completed':

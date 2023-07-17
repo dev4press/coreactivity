@@ -76,6 +76,10 @@ class Core {
 	}
 
 	public function log( int $event_id, array $data = array(), array $meta = array() ) : int {
+		if ( ! coreactivity()->is_logging_active() ) {
+			return - 1;
+		}
+
 		if ( apply_filters( 'coreactivity_skip_log', false, $event_id, $data, $meta ) === true ) {
 			return 0;
 		}

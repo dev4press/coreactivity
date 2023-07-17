@@ -21,6 +21,7 @@ class Settings extends BaseSettings {
 		),
 		'settings' => array(
 			'main_events_log_switch'                  => true,
+			'notice_if_logging_is_disabled'           => false,
 			'log_if_available_user_agent'             => true,
 			'log_if_available_referer'                => false,
 			'log_if_available_description'            => false,

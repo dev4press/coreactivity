@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Base;
 
+use Dev4Press\Plugin\CoreActivity\Basic\Helper;
 use WP_Post;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -43,14 +44,6 @@ abstract class Content extends Component {
 		}
 	}
 
-	protected function get_events() : array {
-		return array(
-			'status-change'            => array( 'label' => __( "Post Status Change", "coreactivity" ) ),
-			'deleted'                  => array( 'label' => __( "Post Deleted", "coreactivity" ) ),
-			'term-relationship-change' => array( 'label' => __( "Post Term Relationship Changes", "coreactivity" ) )
-		);
-	}
-
 	public function event_transition_post_status( $new_status, $old_status, $post ) {
 		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
 			if ( $old_status != $new_status ) {
@@ -81,8 +74,8 @@ abstract class Content extends Component {
 		$post = get_post( $object_id );
 
 		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
-			$old_terms = coreactivity_get_term_ids_from_taxonomy_term_ids( $old_tt_ids );
-			$new_terms = coreactivity_get_term_ids_from_taxonomy_term_ids( $tt_ids );
+			$old_terms = Helper::get_term_ids_from_taxonomy_term_ids( $old_tt_ids );
+			$new_terms = Helper::get_term_ids_from_taxonomy_term_ids( $tt_ids );
 
 			$this->log( 'term-relationship-change', array(
 				'object_id' => $object_id
@@ -92,5 +85,13 @@ abstract class Content extends Component {
 				'new_terms_ids' => $new_terms
 			) );
 		}
+	}
+
+	protected function get_events() : array {
+		return array(
+			'status-change'            => array( 'label' => __( "Post Status Change", "coreactivity" ) ),
+			'deleted'                  => array( 'label' => __( "Post Deleted", "coreactivity" ) ),
+			'term-relationship-change' => array( 'label' => __( "Post Term Relationship Changes", "coreactivity" ) )
+		);
 	}
 }

@@ -20,7 +20,7 @@ class Settings extends PanelSettings {
 					'icon'  => 'ui-terms',
 					'info'  => __( "Settings related to logging of optional data.", "coreactivity" )
 				),
-				'exceptions'        => array(
+				'exceptions'  => array(
 					'title' => __( "Exceptions", "coreactivity" ),
 					'icon'  => 'ui-ban',
 					'info'  => __( "Some of the components can use these exceptions to limit the logging and skip some events.", "coreactivity" )
@@ -34,6 +34,11 @@ class Settings extends PanelSettings {
 					'title' => __( "Maintenance", "coreactivity" ),
 					'icon'  => 'ui-trash',
 					'info'  => __( "Settings related to maintenance and cleanup of the log database tables.", "coreactivity" )
+				),
+				'advanced' => array(
+					'title' => __( "Advanced", "coreactivity" ),
+					'icon'  => 'ui-warning-triangle',
+					'info'  => __( "More advanced settings that should not be changed for most websites.", "coreactivity" )
 				)
 			);
 	}

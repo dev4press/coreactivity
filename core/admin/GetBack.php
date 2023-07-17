@@ -19,10 +19,30 @@ class GetBack extends BaseGetBack {
 				if ( $this->a()->panel == 'events' ) {
 					$this->bulk_panel_events();
 				}
+			} else {
+				if ( $this->a()->panel == 'dashboard' ) {
+					$this->action_dashboard();
+				}
 			}
 		}
 
 		do_action( 'coreactivity_admin_getback_handler', $this->p(), $this->a() );
+	}
+
+	public function action_dashboard() {
+		$action = $this->get_single_action();
+
+
+		if ( in_array( $action, array( 'disable-logging', 'enable-logging' ) ) ) {
+			check_admin_referer( 'coreactivity-' . $action );
+
+			$value = $action == 'enable-logging';
+
+			coreactivity_change_logging_status( $value );
+
+			wp_redirect( $this->a()->current_url() );
+			exit;
+		}
 	}
 
 	public function bulk_panel_events() {
