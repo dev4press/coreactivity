@@ -1,7 +1,7 @@
 <?php
 
-use Dev4Press\Plugin\CoreActivity\Log\Core;
-use Dev4Press\v43\Service\GEOIP\GEOJSIO;
+use Dev4Press\Plugin\CoreActivity\Basic\DB;
+use Dev4Press\Plugin\CoreActivity\Log\Init;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,4 +16,27 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function coreactivity_change_logging_status( bool $status ) {
 	coreactivity_settings()->set( 'main_events_log_switch', $status, 'settings', true );
+}
+
+/**
+ * Change the status of the event. It will activate or deactivate the event.
+ *
+ * @param string $component name of the component
+ * @param string $event     name of the event
+ * @param string $status    status for the event ('active', 'inactive')
+ *
+ * @return bool TRUE if the status has been changed, FALSE if the event is not found or status is not valid.
+ */
+function coreactivity_change_event_status( string $component, string $event, string $status ) : bool {
+	if ( ! in_array( $status, array( 'active', 'inactive' ) ) ) {
+		return false;
+	}
+
+	$event_id = Init::instance()->get_event_id( $component, $event );
+
+	if ( $event_id == 0 ) {
+		return false;
+	}
+
+	DB::instance()->change_event_status( $event_id, $status );
 }

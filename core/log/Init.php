@@ -135,6 +135,14 @@ class Init {
 		return $this->events[ $component ][ $event ] ?? null;
 	}
 
+	public function get_event_id( string $component, string $event ) : int {
+		if ( isset( $this->events[ $component ][ $event ] ) ) {
+			return $this->events[ $component ][ $event ]->event_id;
+		}
+
+		return 0;
+	}
+
 	public function get_all_events() : array {
 		return $this->events;
 	}
@@ -153,14 +161,6 @@ class Init {
 
 	public function get_object_type_label( string $object_type ) {
 		return $this->object_types[ $object_type ] ?? Str::slug_to_name( $object_type );
-	}
-
-	public function get_event_id( string $component, string $event ) : int {
-		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			return $this->events[ $component ][ $event ]->event_id;
-		}
-
-		return 0;
 	}
 
 	public function get_event_description( string $component, string $event ) : string {
@@ -219,7 +219,7 @@ class Init {
 		$list = array();
 
 		foreach ( $this->components as $component => $obj ) {
-			if ( $obj->plugin == $plugin ) {
+			if ( isset( $obj->plugin ) && $obj->plugin == $plugin ) {
 				$list[] = $component;
 			}
 		}

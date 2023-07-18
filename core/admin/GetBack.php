@@ -32,7 +32,6 @@ class GetBack extends BaseGetBack {
 	public function action_dashboard() {
 		$action = $this->get_single_action();
 
-
 		if ( in_array( $action, array( 'disable-logging', 'enable-logging' ) ) ) {
 			check_admin_referer( 'coreactivity-' . $action );
 

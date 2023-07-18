@@ -44,12 +44,17 @@ class User extends Component {
 			add_action( 'wp_logout', array( $this, 'event_logout' ) );
 		}
 
+		if ( $this->is_active( 'failed-login-cookie' ) ) {
+			add_action( 'auth_cookie_malformed', array( $this, 'event_failed_login_cookie_malformed' ), 10, 2 );
+			add_action( 'auth_cookie_bad_hash', array( $this, 'event_failed_login_cookie_bad_hash' ) );
+			add_action( 'auth_cookie_bad_username', array( $this, 'event_failed_login_cookie_bad_username' ) );
+		}
+
 		if ( $this->is_active( 'failed-login' ) ) {
 			add_action( 'wp_login_failed', array( $this, 'event_failed_login' ), 10, 2 );
 		}
 
-		if (
-			Request::is_post() && $this->are_active( array( 'password-reset-request', 'password-reset-request-invalid' ) ) ) {
+		if ( Request::is_post() && $this->are_active( array( 'password-reset-request', 'password-reset-request-invalid' ) ) ) {
 			add_action( 'login_form_lostpassword', array( $this, 'prepare_form_lostpassword' ) );
 		}
 
@@ -103,6 +108,7 @@ class User extends Component {
 			'login'                          => array( 'label' => __( "Login", "coreactivity" ) ),
 			'logout'                         => array( 'label' => __( "Logout", "coreactivity" ) ),
 			'failed-login'                   => array( 'label' => __( "Failed Login", "coreactivity" ), 'is_security' => true ),
+			'failed-login-cookie'            => array( 'label' => __( "Failed Login Cookie", "coreactivity" ), 'is_security' => true ),
 			'password-reset'                 => array( 'label' => __( "Password Reset", "coreactivity" ), 'is_security' => true ),
 			'password-reset-request-invalid' => array( 'label' => __( "Request Password Reset Invalid", "coreactivity" ), 'is_security' => true ),
 			'password-reset-request'         => array( 'label' => __( "Request Password Reset", "coreactivity" ) ),
@@ -160,6 +166,28 @@ class User extends Component {
 				'object_id' => $user->ID
 			), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
 		}
+	}
+
+	public function event_failed_login_cookie_malformed( $cookie, $scheme ) {
+		$this->log( 'failed-login-cookie', array(), array(
+			'reason' => 'malformed',
+			'scheme' => $scheme,
+			'cookie' => $cookie
+		) );
+	}
+
+	public function event_failed_login_cookie_bad_hash( $cookie_elements ) {
+		$this->log( 'failed-login-cookie', array(), array(
+			'reason' => 'bad_hash',
+			'cookie' => $cookie_elements
+		) );
+	}
+
+	public function event_failed_login_cookie_bad_username( $cookie_elements ) {
+		$this->log( 'failed-login-cookie', array(), array(
+			'reason' => 'bad_username',
+			'cookie' => $cookie_elements
+		) );
 	}
 
 	public function event_failed_login( $username, $error ) {
