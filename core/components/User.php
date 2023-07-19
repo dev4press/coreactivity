@@ -169,10 +169,14 @@ class User extends Component {
 	}
 
 	public function event_failed_login_cookie_malformed( $cookie, $scheme ) {
+		if ( empty( $cookie ) ) {
+			return;
+		}
+
 		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'malformed',
-			'scheme' => empty( $scheme ) ? 'EMPTY' : $scheme,
-			'cookie' => empty( $cookie ) ? 'EMPTY' : $cookie
+			'scheme' => $scheme,
+			'cookie' => $cookie
 		) );
 
 		remove_action( 'auth_cookie_malformed', array( $this, 'event_failed_login_cookie_malformed' ), 10 );

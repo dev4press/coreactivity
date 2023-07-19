@@ -120,6 +120,19 @@ class Settings extends BaseSettings {
 							)
 						)
 					)
+				),
+				'exceptions-error' => array(
+					'name'     => __( "Component: Errors", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => __( "File Names", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_error_file_regex_list', __( "Regular Expressions", "coreactivity" ), __( "If the request is for a file, it will be checked with provided regular expressions. If the file matches any of these, it will not be logged.", "coreactivity" ), Type::EXPANDABLE_TEXT )
+							)
+						)
+					)
 				)
 			),
 			'logs'          => array(

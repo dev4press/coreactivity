@@ -46,6 +46,12 @@ class Error extends Component {
 			$path  = parse_url( $url, PHP_URL_PATH );
 			$ext   = trim( strtolower( pathinfo( $path, PATHINFO_EXTENSION ) ) );
 
+			if ( ! empty( $ext ) ) {
+				if ( $this->check_for_exceptions( $url ) ) {
+					return;
+				}
+			}
+
 			$php    = in_array( $ext, $this->_files_php );
 			$style  = in_array( $ext, $this->_files_style );
 			$script = in_array( $ext, $this->_files_script );
@@ -69,5 +75,16 @@ class Error extends Component {
 				$this->log( '404', $data, $meta );
 			}
 		}
+	}
+
+	private function check_for_exceptions( $input ) : bool {
+		$rules = coreactivity_settings()->get( 'exceptions_error_file_regex_list' );
+		$regex = '/' . implode( '|', $rules ) . '/';
+
+		if ( preg_match( $regex, $input ) ) {
+			return true;
+		}
+
+		return false;
 	}
 }

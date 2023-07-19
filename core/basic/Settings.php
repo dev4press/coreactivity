@@ -34,7 +34,8 @@ class Settings extends BaseSettings {
 			'auto_cleanup_period'                     => 24,
 			'exceptions_option_action_scheduler_lock' => true,
 			'exceptions_option_list'                  => array(),
-			'exceptions_sitemeta_list'                => array()
+			'exceptions_sitemeta_list'                => array(),
+			'exceptions_error_file_regex_list'        => array( 'js\.map$', 'css\.map$' )
 		),
 		'notifications' => array(
 			'daily'                 => false,
