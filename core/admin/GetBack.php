@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
+use Dev4Press\Plugin\CoreActivity\Log\Init;
 use Dev4Press\v43\Core\Admin\GetBack as BaseGetBack;
 use Dev4Press\v43\Core\Quick\Sanitize;
 
@@ -54,10 +55,25 @@ class GetBack extends BaseGetBack {
 			$ids = Sanitize::ids_list( $ids );
 
 			if ( ! empty( $ids ) ) {
-				$new = $action == 'enable' ? 'active' : 'inactive';
+				if ( $action == 'enable' || $action == 'disable' ) {
+					$new = $action == 'enable' ? 'active' : 'inactive';
 
-				foreach ( $ids as $event_id ) {
-					DB::instance()->change_event_status( $event_id, $new );
+					foreach ( $ids as $event_id ) {
+						DB::instance()->change_event_status( $event_id, $new );
+					}
+				} else if ( substr( $action, 0, 13 ) == 'notifications' ) {
+					$elements = explode( '-', substr( $action, 14 ) );
+
+					if ( count( $elements ) == 2 ) {
+						$notification = $elements[ 0 ];
+						$status       = $elements[ 1 ];
+
+						if ( in_array( $notification, array( 'instant', 'daily', 'weekly' ), true ) && in_array( $status, array( 'on', 'off' ), true ) ) {
+							foreach ( $ids as $event_id ) {
+								Init::instance()->event_notification_toggle( $event_id, $notification, $status );
+							}
+						}
+					}
 				}
 			}
 

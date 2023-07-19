@@ -57,7 +57,7 @@ class Settings extends BaseSettings {
 
 	protected function init() {
 		$this->settings = array(
-			'optional'    => array(
+			'optional'      => array(
 				'optional-meta'  => array(
 					'name'     => __( "Standard Meta Data", "coreactivity" ),
 					'sections' => array(
@@ -86,7 +86,7 @@ class Settings extends BaseSettings {
 					)
 				)
 			),
-			'exceptions'  => array(
+			'exceptions'    => array(
 				'exceptions-option'   => array(
 					'name'     => __( "Component: Options", "coreactivity" ),
 					'sections' => array(
@@ -122,7 +122,7 @@ class Settings extends BaseSettings {
 					)
 				)
 			),
-			'logs'        => array(
+			'logs'          => array(
 				'logs-content' => array(
 					'name'     => __( "Content Display", "coreactivity" ),
 					'sections' => array(
@@ -165,7 +165,90 @@ class Settings extends BaseSettings {
 					)
 				)
 			),
-			'maintenance' => array(
+			'notifications' => array(
+				'notifications-instant' => array(
+					'name'     => __( "Instant Notifications", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'instant', __( "Status", "coreactivity" ), __( "If enabled, plugin will send instant notifications when eligible events are logged. The notifications will not be completely instant, because that can lead to the huge number of emails sent if some events occur often. Instead, after instant notification is sent, plugin will not send a new one during the predefined delay, and next one will include all eligible events from that period.", "coreactivity" ), Type::BOOLEAN ),
+								$this->i( 'notifications', 'instant_emails', __( "Emails", "coreactivity" ), __( "One or more emails to send the notifications. If empty, it will use the website admin email.", "coreactivity" ), Type::EXPANDABLE_TEXT )->args( array( 'type' => 'email' ) )
+							)
+						),
+						array(
+							'label'    => __( "Advanced", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'instant_delay_minutes', __( "Delay", "coreactivity" ), __( "This is the shortest delay between two instant notifications emails.", "coreactivity" ), Type::ABSINT )->args( array(
+									'label_unit' => __( "Minutes" ),
+									'min'        => 1,
+									'step'       => 1
+								) )
+							)
+						)
+					)
+				),
+				'notifications-daily'   => array(
+					'name'     => __( "Daily Digest Notifications", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'daily', __( "Status", "coreactivity" ), __( "If enabled, plugin will send daily digest email with all eligible events from the previous day.", "coreactivity" ), Type::BOOLEAN ),
+								$this->i( 'notifications', 'daily_emails', __( "Emails", "coreactivity" ), __( "One or more emails to send the notifications. If empty, it will use the website admin email.", "coreactivity" ), Type::EXPANDABLE_TEXT )->args( array( 'type' => 'email' ) )
+							)
+						),
+						array(
+							'label'    => __( "Advanced", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'daily_hour', __( "Hour", "coreactivity" ), __( "This is the hour of the day when the daily digest is created.", "coreactivity" ), Type::ABSINT )->args( array(
+									'label_unit' => __( "Hour" ),
+									'min'        => 0,
+									'step'       => 1,
+									'max'        => 23
+								) )
+							)
+						)
+					)
+				),
+				'notifications-weekly'  => array(
+					'name'     => __( "Weekly Digest Notifications", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'weekly', __( "Status", "coreactivity" ), __( "If enabled, plugin will send weekly digest email with all eligible events from the previous 7 days.", "coreactivity" ), Type::BOOLEAN ),
+								$this->i( 'notifications', 'weekly_emails', __( "Emails", "coreactivity" ), __( "One or more emails to send the notifications. If empty, it will use the website admin email.", "coreactivity" ), Type::EXPANDABLE_TEXT )->args( array( 'type' => 'email' ) )
+							)
+						),
+						array(
+							'label'    => __( "Advanced", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'weekly_day', __( "Day", "coreactivity" ), __( "This is day of the week when the daily digest is created.", "coreactivity" ), Type::SELECT )->data( 'array', $this->get_week_days() ),
+								$this->i( 'notifications', 'weekly_hour', __( "Hour", "coreactivity" ), __( "This is the hour of the day when the daily digest is created.", "coreactivity" ), Type::ABSINT )->args( array(
+									'label_unit' => __( "Hour" ),
+									'min'        => 0,
+									'step'       => 1,
+									'max'        => 23
+								) )
+							)
+						)
+					)
+				)
+			),
+			'maintenance'   => array(
 				'maintenance-settings' => array(
 					'name'     => __( "Auto Cleanup", "coreactivity" ),
 					'sections' => array(
@@ -184,7 +267,7 @@ class Settings extends BaseSettings {
 					)
 				)
 			),
-			'advanced' => array(
+			'advanced'      => array(
 				'advanced-notices' => array(
 					'name'     => __( "Notices", "coreactivity" ),
 					'sections' => array(
@@ -217,5 +300,17 @@ class Settings extends BaseSettings {
 			'm012' => __( "Logged data older than 1 year", "coreactivity" ),
 			'm024' => __( "Logged data older than 2 years", "coreactivity" )
 		);
+	}
+
+	protected function get_week_days() : array {
+		global $wp_locale;
+
+		$list = array();
+
+		for ( $day_index = 0; $day_index <= 6; $day_index ++ ) {
+			$list[ 'D' . $day_index ] = $wp_locale->get_weekday( $day_index );
+		}
+
+		return $list;
 	}
 }

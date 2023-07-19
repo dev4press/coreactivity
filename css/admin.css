@@ -1,3 +1,21 @@
+.coreactivity-grid-events button.coreactivity-toggle {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  vertical-align: top;
+  cursor: pointer;
+}
+.coreactivity-grid-events button.coreactivity-toggle i {
+  font-size: 1.7em;
+  vertical-align: middle;
+}
+.coreactivity-grid-events button.coreactivity-toggle i.d4p-ui-toggle-on {
+  color: green;
+}
+.coreactivity-grid-events button.coreactivity-toggle i.d4p-ui-toggle-off {
+  color: red;
+}
 .coreactivity-grid-events tr.__is-not-loaded {
   background: #FFDEDE;
 }
@@ -19,23 +37,24 @@
 .coreactivity-grid-events tr th.column-loaded {
   width: 160px;
 }
-.coreactivity-grid-events tr td.column-status button {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  background: none;
-  vertical-align: top;
-  cursor: pointer;
+.coreactivity-grid-events tr th.column-available {
+  width: 100px;
 }
 .coreactivity-grid-events tr td.column-status button i {
   vertical-align: top;
   font-size: 1.9em;
 }
-.coreactivity-grid-events tr td.column-status button i.d4p-ui-toggle-on {
-  color: green;
+.coreactivity-grid-events tr .coreactivity-event-notifications {
+  display: flex;
+  column-gap: 2em;
+  row-gap: 0.5em;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.coreactivity-grid-events tr td.column-status button i.d4p-ui-toggle-off {
-  color: red;
+.coreactivity-grid-events tr .coreactivity-event-notifications div {
+  display: flex;
+  gap: 5px;
+  flex-wrap: nowrap;
 }
 
 .coreactivity-grid-logs.striped tbody tr:nth-child(4n+1),

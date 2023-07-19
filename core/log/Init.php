@@ -173,6 +173,14 @@ class Init {
 		return 'N/A';
 	}
 
+	public function get_event_notifications( string $component, string $event ) : array {
+		if ( isset( $this->events[ $component ][ $event ] ) ) {
+			return $this->events[ $component ][ $event ]->notifications;
+		}
+
+		return array();
+	}
+
 	public function get_event_by_id( int $event_id ) : ?stdClass {
 		foreach ( $this->events as $events ) {
 			foreach ( $events as $obj ) {
@@ -322,6 +330,29 @@ class Init {
 		return in_array( $status, array( 'active', 'inactive' ) ) ? $status : '';
 	}
 
+	public function event_notification_toggle( int $event_id, string $notification, string $status = '' ) : ?bool {
+		$event = $this->list[ $event_id ] ?? array();
+
+		if ( ! empty( $event ) ) {
+			$event = $this->events[ $event[ 'component' ] ][ $event[ 'name' ] ];
+
+			if ( isset( $event->notifications[ $notification ] ) ) {
+				$status = empty( $status ) ? ! $event->notifications[ $notification ] : ( $status == 'on' );
+
+				$event->notifications[ $notification ] = $status;
+
+				$rules                    = $event->rules;
+				$rules[ 'notifications' ] = $event->notifications;
+
+				DB::instance()->change_event_rules( $event_id, $rules );
+
+				return $event->notifications[ $notification ];
+			}
+		}
+
+		return null;
+	}
+
 	public function register_component( string $category, string $component, array $args = array() ) {
 		$this->components[ $component ] = (object) array(
 			'category'     => $category,
@@ -350,15 +381,17 @@ class Init {
 		);
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			$obj->status   = $this->events[ $component ][ $event ]->status;
-			$obj->rules    = $this->events[ $component ][ $event ]->rules;
-			$obj->event_id = $this->events[ $component ][ $event ]->event_id;
+			$obj->status        = $this->events[ $component ][ $event ]->status;
+			$obj->rules         = $this->events[ $component ][ $event ]->rules;
+			$obj->event_id      = $this->events[ $component ][ $event ]->event_id;
+			$obj->notifications = $this->events[ $component ][ $event ]->notifications;
 
 			$this->events[ $component ][ $event ] = $obj;
 
 			$this->list[ $obj->event_id ] = array(
-				'name'  => $event,
-				'label' => $obj->label
+				'name'      => $event,
+				'label'     => $obj->label,
+				'component' => $component
 			);
 		} else {
 			$category = $this->components[ $component ]->category;
@@ -371,8 +404,9 @@ class Init {
 				$this->events[ $component ][ $event ] = $obj;
 
 				$this->list[ $obj->event_id ] = array(
-					'name'  => $event,
-					'label' => $obj->label
+					'name'      => $event,
+					'label'     => $obj->label,
+					'component' => $component
 				);
 			}
 		}
@@ -402,15 +436,33 @@ class Init {
 				$this->events[ $event->component ] = array();
 			}
 
-			$event->event_id = Sanitize::absint( $event->event_id );
-			$event->label    = Str::slug_to_name( $event->event, '-' );
-			$event->rules    = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
+			$event->event_id      = Sanitize::absint( $event->event_id );
+			$event->label         = Str::slug_to_name( $event->event, '-' );
+			$event->rules         = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
+			$event->notifications = array(
+				'daily'   => false,
+				'weekly'  => false,
+				'instant' => false
+			);
+
+			if ( isset( $event->rules[ 'notifications' ] ) ) {
+				foreach ( array( 'daily', 'weekly', 'instant' ) as $key ) {
+					$value = $event->rules[ 'notifications' ][ $key ] ?? false;
+
+					if ( is_bool( $value ) ) {
+						$event->notifications[ $key ] = $value;
+					}
+				}
+
+				unset( $event->rules[ 'notifications' ] );
+			}
 
 			$this->events[ $event->component ][ $event->event ] = $event;
 
 			$this->list[ $event->event_id ] = array(
-				'name'  => $event->event,
-				'label' => $event->label
+				'name'      => $event->event,
+				'label'     => $event->label,
+				'component' => $event->component
 			);
 		}
 	}

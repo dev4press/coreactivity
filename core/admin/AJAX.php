@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class AJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_coreactivity_toggle_event', array( $this, 'toggle_event' ) );
+		add_action( 'wp_ajax_coreactivity_toggle_notification', array( $this, 'toggle_notification' ) );
 		add_action( 'wp_ajax_coreactivity_live_logs', array( $this, 'live_logs' ) );
 	}
 
@@ -47,9 +48,25 @@ class AJAX {
 
 			if ( ! empty( $status ) ) {
 				$new    = $status == 'active' ? 'inactive' : 'active';
-				$toggle = $status == 'active' ? 'd4p-ui-toggle-off' : 'd4p-ui-toggle-on';
+				$toggle = $status == 'active' ? 'off' : 'on';
 
 				DB::instance()->change_event_status( $id, $new );
+			}
+		}
+
+		$this->json_respond( array( 'toggle' => $toggle ) );
+	}
+
+	public function toggle_notification() {
+		$id  = isset( $_POST[ 'event' ] ) ? Sanitize::absint( $_POST[ 'event' ] ) : 0;
+		$key = isset( $_POST[ 'notification' ] ) ? Sanitize::slug( $_POST[ 'notification' ] ) : '';
+
+		$toggle = '';
+		if ( $id > 0 && wp_verify_nonce( $_REQUEST[ '_ajax_nonce' ], 'coreactivity-toggle-notification-' . $key . '-' . $id ) ) {
+			$change = Init::instance()->event_notification_toggle( $id, $key );
+
+			if ( ! is_null( $change ) ) {
+				$toggle = $change ? 'on' : 'off';
 			}
 		}
 

@@ -14,12 +14,12 @@ class Settings extends BaseSettings {
 	public $has_db = true;
 
 	public $settings = array(
-		'core'     => array(
+		'core'          => array(
 			'installed'  => '',
 			'updated'    => '',
 			'db_version' => 0
 		),
-		'settings' => array(
+		'settings'      => array(
 			'main_events_log_switch'                  => true,
 			'notice_if_logging_is_disabled'           => false,
 			'log_if_available_user_agent'             => true,
@@ -35,6 +35,18 @@ class Settings extends BaseSettings {
 			'exceptions_option_action_scheduler_lock' => true,
 			'exceptions_option_list'                  => array(),
 			'exceptions_sitemeta_list'                => array()
+		),
+		'notifications' => array(
+			'daily'                 => false,
+			'daily_emails'          => array(),
+			'daily_hour'            => 2,
+			'weekly'                => false,
+			'weekly_emails'         => array(),
+			'weekly_hour'           => 2,
+			'weekly_day'            => 'D6',
+			'instant'               => false,
+			'instant_emails'        => array(),
+			'instant_delay_minutes' => 5
 		)
 	);
 

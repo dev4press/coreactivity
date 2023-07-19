@@ -6,8 +6,34 @@
     window.wp.coreactivity = window.wp.coreactivity || {};
 
     window.wp.coreactivity.admin = {
+        toggles: {
+            on: "d4p-ui-toggle-on",
+            off: "d4p-ui-toggle-off"
+        },
         init: function() {
-            $(document).on("click", ".coreactivity-event-toggle", function(e) {
+            $(document).on("click", ".coreactivity-toggle-notification", function(e) {
+                e.preventDefault();
+
+                var button = $(this),
+                    id = button.data("id"),
+                    key = button.data("key"),
+                    nonce = button.data("nonce");
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        event: id,
+                        notification: key
+                    },
+                    url: ajaxurl + "?action=coreactivity_toggle_notification&_ajax_nonce=" + nonce,
+                    success: function(json) {
+                        wp.coreactivity.admin.helpers.toggle(button, json);
+                    }
+                });
+            });
+
+            $(document).on("click", ".coreactivity-toggle-event", function(e) {
                 e.preventDefault();
 
                 var button = $(this),
@@ -22,9 +48,7 @@
                     },
                     url: ajaxurl + "?action=coreactivity_toggle_event&_ajax_nonce=" + nonce,
                     success: function(json) {
-                        if (json.hasOwnProperty('toggle') && json.toggle !== '') {
-                            button.find("i").removeClass("d4p-ui-toggle-on").removeClass("d4p-ui-toggle-off").addClass(json.toggle);
-                        }
+                        wp.coreactivity.admin.helpers.toggle(button, json);
                     }
                 });
             });
@@ -72,6 +96,16 @@
                     i.removeClass("d4p-ui-chevron-square-down").addClass("d4p-ui-chevron-square-up");
                 }
             });
+        },
+        helpers: {
+            toggle: function(button, json) {
+                if (json.hasOwnProperty('toggle') && json.toggle !== '') {
+                    var t = wp.coreactivity.admin.toggles;
+
+                    button.find("i").removeClass(t.on).removeClass(t.off).addClass(t[json.toggle]);
+                    button.find("span").html(button.data(json.toggle));
+                }
+            }
         },
         live: {
             init: function() {

@@ -69,7 +69,7 @@ class DebugPress extends Plugin {
 
 	public function event_php_error( $error ) {
 		if ( isset( $error[ 'errno' ] ) && ! empty( $error[ 'caller' ] ) ) {
-			$this->log( 'php-error', array( 'object_id' => $error[ 'errno' ] ?? 0 ), $error );
+			$this->log( 'php-error', array( 'object_id' => $error[ 'errno' ] ), $error );
 		}
 	}
 

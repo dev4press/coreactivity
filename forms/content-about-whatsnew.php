@@ -13,7 +13,7 @@
                 </p>
                 <div class="coreactivity-about-counters">
                     <div><i class="d4p-icon d4p-ui-folder d4p-icon-fw"></i> <strong>22</strong> Components</div>
-                    <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>107</strong> Events</div>
+                    <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>108</strong> Events</div>
                     <div><i class="d4p-icon d4p-ui-plug d4p-icon-fw"></i> <strong>8</strong> Plugins</div>
                 </div>
             </div>

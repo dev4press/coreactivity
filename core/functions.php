@@ -39,4 +39,6 @@ function coreactivity_change_event_status( string $component, string $event, str
 	}
 
 	DB::instance()->change_event_status( $event_id, $status );
+
+	return true;
 }

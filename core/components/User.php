@@ -169,25 +169,31 @@ class User extends Component {
 	}
 
 	public function event_failed_login_cookie_malformed( $cookie, $scheme ) {
-		$this->log( 'failed-login-cookie', array(), array(
+		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'malformed',
-			'scheme' => $scheme,
-			'cookie' => $cookie
+			'scheme' => empty( $scheme ) ? 'EMPTY' : $scheme,
+			'cookie' => empty( $cookie ) ? 'EMPTY' : $cookie
 		) );
+
+		remove_action( 'auth_cookie_malformed', array( $this, 'event_failed_login_cookie_malformed' ), 10 );
 	}
 
 	public function event_failed_login_cookie_bad_hash( $cookie_elements ) {
-		$this->log( 'failed-login-cookie', array(), array(
+		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'bad_hash',
 			'cookie' => $cookie_elements
 		) );
+
+		remove_action( 'auth_cookie_bad_hash', array( $this, 'event_failed_login_cookie_bad_hash' ) );
 	}
 
 	public function event_failed_login_cookie_bad_username( $cookie_elements ) {
-		$this->log( 'failed-login-cookie', array(), array(
+		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'bad_username',
 			'cookie' => $cookie_elements
 		) );
+
+		remove_action( 'auth_cookie_bad_username', array( $this, 'event_failed_login_cookie_bad_username' ) );
 	}
 
 	public function event_failed_login( $username, $error ) {

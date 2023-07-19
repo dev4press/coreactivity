@@ -1,4 +1,26 @@
 .coreactivity-grid-events {
+    button.coreactivity-toggle {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background: none;
+        vertical-align: top;
+        cursor: pointer;
+
+        i {
+            font-size: 1.7em;
+            vertical-align: middle;
+
+            &.d4p-ui-toggle-on {
+                color: green;
+            }
+
+            &.d4p-ui-toggle-off {
+                color: red;
+            }
+        }
+    }
+
     tr {
         &.__is-not-loaded {
             background: #FFDEDE;
@@ -29,31 +51,34 @@
             &.column-loaded {
                 width: 160px;
             }
+
+            &.column-available {
+                width: 100px;
+            }
         }
 
         td {
             &.column-status {
                 button {
-                    border: 0;
-                    padding: 0;
-                    margin: 0;
-                    background: none;
-                    vertical-align: top;
-                    cursor: pointer;
-
                     i {
                         vertical-align: top;
                         font-size: 1.9em;
-
-                        &.d4p-ui-toggle-on {
-                            color: green;
-                        }
-
-                        &.d4p-ui-toggle-off {
-                            color: red;
-                        }
                     }
                 }
+            }
+        }
+
+        .coreactivity-event-notifications {
+            display: flex;
+            column-gap: 2em;
+            row-gap: .5em;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            div {
+                display: flex;
+                gap: 5px;
+                flex-wrap: nowrap;
             }
         }
     }

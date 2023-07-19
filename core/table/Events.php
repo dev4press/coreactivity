@@ -39,7 +39,11 @@ class Events extends Table {
 
 		$sql = array(
 			'select' => array(
-				'e.*',
+				'e.event_id',
+				'e.category',
+				'e.component',
+				'e.event',
+				'e.status',
 				'COUNT(l.`log_id`) AS `logs`'
 			),
 			'from'   => array(
@@ -64,7 +68,9 @@ class Events extends Table {
 
 		$this->query_items( $sql, $per_page );
 
-		foreach ( $this->items as $item ) {
+		foreach ( $this->items as &$item ) {
+			$item->event_id = Sanitize::absint( $item->event_id );
+
 			if ( ! isset( $this->_logged_counts[ $item->component ] ) ) {
 				$this->_logged_counts[ $item->component ] = 0;
 			}
@@ -75,15 +81,16 @@ class Events extends Table {
 
 	public function get_columns() : array {
 		$columns = array(
-			'cb'          => '<input type="checkbox" />',
-			'event_id'    => __( "ID", "coreactivity" ),
-			'status'      => __( "Status", "coreactivity" ),
-			'category'    => __( "Category", "coreactivity" ),
-			'component'   => __( "Component", "coreactivity" ),
-			'event'       => __( "Event", "coreactivity" ),
-			'logs'        => __( "Logs", "coreactivity" ),
-			'description' => __( "Description", "coreactivity" ),
-			'available'   => __( "Available", "coreactivity" )
+			'cb'            => '<input type="checkbox" />',
+			'event_id'      => __( "ID", "coreactivity" ),
+			'status'        => __( "Status", "coreactivity" ),
+			'category'      => __( "Category", "coreactivity" ),
+			'component'     => __( "Component", "coreactivity" ),
+			'event'         => __( "Event", "coreactivity" ),
+			'logs'          => __( "Logs", "coreactivity" ),
+			'description'   => __( "Description", "coreactivity" ),
+			'available'     => __( "Available", "coreactivity" ),
+			'notifications' => __( "Notifications", "coreactivity" )
 		);
 
 		if ( is_network_admin() ) {
@@ -147,8 +154,14 @@ class Events extends Table {
 
 	protected function get_bulk_actions() : array {
 		return array(
-			'enable'  => __( "Enable", "coreactivity" ),
-			'disable' => __( "Disable", "coreactivity" )
+			'enable'                    => __( "Enable Events", "coreactivity" ),
+			'disable'                   => __( "Disable Events", "coreactivity" ),
+			'notifications-instant-on'  => __( "Enable Instant Notifications", "coreactivity" ),
+			'notifications-instant-off' => __( "Disable Instant Notifications", "coreactivity" ),
+			'notifications-daily-on'    => __( "Enable Daily Notifications", "coreactivity" ),
+			'notifications-daily-off'   => __( "Disable Daily Notifications", "coreactivity" ),
+			'notifications-weekly-on'   => __( "Enable Weekly Notifications", "coreactivity" ),
+			'notifications-weekly-off'  => __( "Disable Weekly Notifications", "coreactivity" )
 		);
 	}
 
@@ -196,10 +209,35 @@ class Events extends Table {
 		return Init::instance()->is_event_available( $item->component, $item->event ) ? __( "Yes", "coreactivity" ) : __( "No", "coreactivity" );
 	}
 
-	protected function column_status( $item ) : string {
-		$title  = $item->status == 'active' ? __( "Active", "coreactivity" ) : __( "Disabled", "coreactivity" );
-		$toggle = $item->status == 'active' ? 'd4p-ui-toggle-on' : 'd4p-ui-toggle-off';
+	protected function column_notifications( $item ) : string {
+		$notifications = Init::instance()->get_event_notifications( $item->component, $item->event );
 
-		return '<button class="coreactivity-event-toggle" data-id="' . esc_attr( $item->event_id ) . '" data-nonce="' . wp_create_nonce( 'coreactivity-toggle-event-' . $item->event_id ) . '" type="button"><i aria-hidden="true" class="d4p-icon ' . $toggle . '"></i><span class="d4p-accessibility-show-for-sr">' . $title . '</span></button>';
+		$render = '<div class="coreactivity-event-notifications">';
+		$render .= '<div>';
+		$render .= $this->toggle_switch( $notifications[ 'instant' ], 'instant', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-instant-' . $item->event_id, __( "Disable Instant Notifications", "coreactivity" ), __( "Enable Instant Notifications", "coreactivity" ) );
+		$render .= '<span>' . __( "Instant" ) . '</span>';
+		$render .= '</div>';
+		$render .= '<div>';
+		$render .= $this->toggle_switch( $notifications[ 'daily' ], 'daily', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-daily-' . $item->event_id, __( "Disable Daily Notifications", "coreactivity" ), __( "Enable Daily Notifications", "coreactivity" ) );
+		$render .= '<span>' . __( "Daily" ) . '</span>';
+		$render .= '</div>';
+		$render .= '<div>';
+		$render .= $this->toggle_switch( $notifications[ 'weekly' ], 'weekly', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-weekly-' . $item->event_id, __( "Disable Weekly Notifications", "coreactivity" ), __( "Enable Weekly Notifications", "coreactivity" ) );
+		$render .= '<span>' . __( "Weekly" ) . '</span>';
+		$render .= '</div>';
+		$render .= '</div>';
+
+		return $render;
+	}
+
+	protected function column_status( $item ) : string {
+		return $this->toggle_switch( $item->status == 'active', '', $item->event_id, 'coreactivity-toggle-event', 'coreactivity-toggle-event-' . $item->event_id, __( "Disable Event", "coreactivity" ), __( "Enable Event", "coreactivity" ) );
+	}
+
+	protected function toggle_switch( bool $value, string $key, int $id, string $class, string $nonce, string $active, string $inactive ) : string {
+		$title  = $value ? $active : $inactive;
+		$toggle = $value ? 'd4p-ui-toggle-on' : 'd4p-ui-toggle-off';
+
+		return '<button class="coreactivity-toggle ' . esc_attr( $class ) . '" data-key="' . esc_attr( $key ) . '" data-on="' . esc_attr( $active ) . '" data-off="' . esc_attr( $inactive ) . '" data-id="' . esc_attr( $id ) . '" data-nonce="' . wp_create_nonce( $nonce ) . '" type="button"><i aria-hidden="true" class="d4p-icon ' . $toggle . '"></i><span class="d4p-accessibility-show-for-sr">' . $title . '</span></button>';
 	}
 }
