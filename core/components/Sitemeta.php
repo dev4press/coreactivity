@@ -42,9 +42,10 @@ class Sitemeta extends Component {
 		'active_sitewide_plugins',
 		'WPLANG'
 	);
+	protected $transient_value;
 
-	public function is_available() : bool {
-		return is_multisite();
+	public function init() {
+		$this->transient_value = coreactivity_settings()->get( 'log_transient_value' );
 	}
 
 	public function tracking() {
@@ -58,6 +59,14 @@ class Sitemeta extends Component {
 
 		if ( $this->is_active( 'sitemeta-added' ) ) {
 			add_action( 'add_site_option', array( $this, 'event_added_option' ), 10, 2 );
+		}
+
+		if ( $this->is_active( 'transient-set' ) ) {
+			add_action( 'setted_site_transient', array( $this, 'event_set_transient' ), 10, 3 );
+		}
+
+		if ( $this->is_active( 'transient-deleted' ) ) {
+			add_action( 'deleted_site_transient', array( $this, 'event_deleted_transient' ) );
 		}
 	}
 
@@ -77,7 +86,9 @@ class Sitemeta extends Component {
 			'core-sitemeta-deleted' => array( 'label' => __( "Core Sitemeta Deleted", "coreactivity" ) ),
 			'sitemeta-added'        => array( 'label' => __( "Sitemeta Added", "coreactivity" ) ),
 			'sitemeta-edited'       => array( 'label' => __( "Sitemeta Changed", "coreactivity" ) ),
-			'sitemeta-deleted'      => array( 'label' => __( "Sitemeta Deleted", "coreactivity" ) )
+			'sitemeta-deleted'      => array( 'label' => __( "Sitemeta Deleted", "coreactivity" ) ),
+			'transient-set'         => array( 'label' => __( "Site Transient Set", "coreactivity" ), 'status' => 'inactive' ),
+			'transient-deleted'     => array( 'label' => __( "Site Transient Deleted", "coreactivity" ), 'status' => 'inactive' )
 		);
 	}
 
@@ -121,6 +132,23 @@ class Sitemeta extends Component {
 			'object_name' => $option
 		), array(
 			'value' => $value
+		) );
+	}
+
+	public function event_set_transient( $transient, $value, $expiration ) {
+		$this->log( 'transient-set', array(
+			'object_type' => 'transient',
+			'object_name' => $transient
+		), array(
+			'value'      => $this->transient_value ? $value : '',
+			'expiration' => $expiration
+		) );
+	}
+
+	public function event_deleted_transient( $transient ) {
+		$this->log( 'transient-deleted', array(
+			'object_type' => 'transient',
+			'object_name' => $transient
 		) );
 	}
 

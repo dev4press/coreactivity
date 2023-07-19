@@ -80,7 +80,8 @@ class Settings extends BaseSettings {
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
-								$this->i( 'settings', 'log_if_available_description', __( "Plugin or Theme Descriptions", "coreactivity" ), __( "Descriptions are available for plugins and themes, but they can be on the longer side, and usually are not useful for log analysis.", "coreactivity" ), Type::BOOLEAN )
+								$this->i( 'settings', 'log_if_available_description', __( "Plugin or Theme Descriptions", "coreactivity" ), __( "Descriptions are available for plugins and themes, but they can be on the longer side, and usually are not useful for log analysis.", "coreactivity" ), Type::BOOLEAN ),
+								$this->i( 'settings', 'log_transient_value', __( "Transient Value", "coreactivity" ), __( "In most cases, transient values can be huge, since transients are used as a cache of sorts, and it is not a good idea to log the actual value for transient. Transients are often changing and usually serialized.", "coreactivity" ), Type::BOOLEAN )
 							)
 						)
 					)

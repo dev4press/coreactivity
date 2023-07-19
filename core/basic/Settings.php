@@ -25,6 +25,7 @@ class Settings extends BaseSettings {
 			'log_if_available_user_agent'             => true,
 			'log_if_available_referer'                => false,
 			'log_if_available_description'            => false,
+			'log_transient_value'                     => false,
 			'logs_live_updates'                       => true,
 			'display_columns_simplified'              => false,
 			'display_ip_country_flag'                 => false,

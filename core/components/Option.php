@@ -120,9 +120,11 @@ class Option extends Component {
 	protected $skip = array(
 		'cron'
 	);
+	protected $transient_value;
 
 	public function init() {
-		$this->exceptions = coreactivity_settings()->get( 'exceptions_option_list' );
+		$this->exceptions      = coreactivity_settings()->get( 'exceptions_option_list' );
+		$this->transient_value = coreactivity_settings()->get( 'log_transient_value' );
 
 		if ( coreactivity_settings()->get( 'exceptions_option_action_scheduler_lock' ) ) {
 			$this->partials[] = 'action_scheduler_lock_';
@@ -141,6 +143,14 @@ class Option extends Component {
 		if ( $this->is_active( 'option-added' ) ) {
 			add_action( 'added_option', array( $this, 'event_added_option' ), 10, 2 );
 		}
+
+		if ( $this->is_active( 'transient-set' ) ) {
+			add_action( 'setted_transient', array( $this, 'event_set_transient' ), 10, 3 );
+		}
+
+		if ( $this->is_active( 'transient-deleted' ) ) {
+			add_action( 'deleted_transient', array( $this, 'event_deleted_transient' ) );
+		}
 	}
 
 	public function label() : string {
@@ -153,7 +163,9 @@ class Option extends Component {
 			'core-option-deleted' => array( 'label' => __( "Core Option Deleted", "coreactivity" ) ),
 			'option-added'        => array( 'label' => __( "Option Added", "coreactivity" ) ),
 			'option-edited'       => array( 'label' => __( "Option Changed", "coreactivity" ) ),
-			'option-deleted'      => array( 'label' => __( "Option Deleted", "coreactivity" ) )
+			'option-deleted'      => array( 'label' => __( "Option Deleted", "coreactivity" ) ),
+			'transient-set'       => array( 'label' => __( "Transient Set", "coreactivity" ), 'status' => 'inactive' ),
+			'transient-deleted'   => array( 'label' => __( "Transient Deleted", "coreactivity" ), 'status' => 'inactive' )
 		);
 	}
 
@@ -197,6 +209,23 @@ class Option extends Component {
 			'object_name' => $option
 		), array(
 			'value' => $value
+		) );
+	}
+
+	public function event_set_transient( $transient, $value, $expiration ) {
+		$this->log( 'transient-set', array(
+			'object_type' => 'transient',
+			'object_name' => $transient
+		), array(
+			'value'      => $this->transient_value ? $value : '',
+			'expiration' => $expiration
+		) );
+	}
+
+	public function event_deleted_transient( $transient ) {
+		$this->log( 'transient-deleted', array(
+			'object_type' => 'transient',
+			'object_name' => $transient
 		) );
 	}
 

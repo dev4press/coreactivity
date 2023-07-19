@@ -97,6 +97,8 @@ class Init {
 			'plugin'       => __( "Plugin", "coreactivity" ),
 			'theme'        => __( "Theme", "coreactivity" ),
 			'cron'         => __( "Cron", "coreactivity" ),
+			'option'       => __( "Option", "coreactivity" ),
+			'transient'    => __( "Transient", "coreactivity" ),
 			'notification' => __( "Notification", "coreactivity" )
 		) );
 
