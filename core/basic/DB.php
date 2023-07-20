@@ -186,8 +186,9 @@ class DB extends BaseDB {
 
 	public function count_entries_by_event_ids( array $events_ids, string $ip, int $seconds = 86400 ) : int {
 		$events_in = $this->prepare_in_list( $events_ids, '%d' );
+		$now_gmt   = $this->datetime();
 
-		$sql = $this->prepare( "SELECT COUNT(*) FROM " . $this->logs . " WHERE `ip` = %s AND `event_id` IN (" . $events_in . ") AND `logged` > DATE_SUB(NOW(), INTERVAL %d SECOND)", $ip, $seconds );
+		$sql = $this->prepare( "SELECT COUNT(*) FROM " . $this->logs . " WHERE `ip` = %s AND `event_id` IN (" . $events_in . ") AND `logged` > DATE_SUB(%s, INTERVAL %d SECOND)", $ip, $now_gmt, $seconds );
 		$raw = $this->get_var( $sql );
 
 		return Sanitize::absint( $raw );
@@ -195,8 +196,9 @@ class DB extends BaseDB {
 
 	public function count_entries_by_event_ids_expanded( array $events_ids, string $ip, int $seconds = 86400 ) : array {
 		$events_in = $this->prepare_in_list( $events_ids, '%d' );
+		$now_gmt   = $this->datetime();
 
-		$sql = $this->prepare( "SELECT COUNT(*) as `entries`, MIN(`logged`) as `start`, MAX(`logged`) as `end`, TIMESTAMPDIFF(SECOND, MIN(`logged`), MAX(`logged`)) as `period` FROM " . $this->logs . " WHERE `ip` = %s AND `event_id` IN (" . $events_in . ") AND `logged` > DATE_SUB(NOW(), INTERVAL %d SECOND)", $ip, $seconds );
+		$sql = $this->prepare( "SELECT COUNT(*) as `entries`, MIN(`logged`) as `start`, MAX(`logged`) as `end`, TIMESTAMPDIFF(SECOND, MIN(`logged`), MAX(`logged`)) as `period` FROM " . $this->logs . " WHERE `ip` = %s AND `event_id` IN (" . $events_in . ") AND `logged` > DATE_SUB(%s, INTERVAL %d SECOND)", $ip, $now_gmt, $seconds );
 		$raw = $this->get_row( $sql );
 
 		return array(
