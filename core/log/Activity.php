@@ -34,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Init {
+class Activity {
 	public $statistics = array(
 		'components' => array(
 			'total'     => 0,
@@ -60,11 +60,11 @@ class Init {
 		add_action( 'coreactivity_init', array( $this, 'init' ), 1 );
 	}
 
-	public static function instance() : Init {
+	public static function instance() : Activity {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
-			$instance = new Init();
+			$instance = new Activity();
 		}
 
 		return $instance;

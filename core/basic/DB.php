@@ -183,4 +183,27 @@ class DB extends BaseDB {
 
 		return $this->query( $sql );
 	}
+
+	public function count_entries_by_event_ids( array $events_ids, string $ip, int $seconds = 86400 ) : int {
+		$events_in = $this->prepare_in_list( $events_ids, '%d' );
+
+		$sql = $this->prepare( "SELECT COUNT(*) FROM " . $this->logs . " WHERE `ip` = %s AND `event_id` IN (" . $events_in . ") AND `logged` > DATE_SUB(NOW(), INTERVAL %d SECOND)", $ip, $seconds );
+		$raw = $this->get_var( $sql );
+
+		return Sanitize::absint( $raw );
+	}
+
+	public function count_entries_by_event_ids_expanded( array $events_ids, string $ip, int $seconds = 86400 ) : array {
+		$events_in = $this->prepare_in_list( $events_ids, '%d' );
+
+		$sql = $this->prepare( "SELECT COUNT(*) as `entries`, MIN(`logged`) as `start`, MAX(`logged`) as `end`, TIMESTAMPDIFF(SECOND, MIN(`logged`), MAX(`logged`)) as `period` FROM " . $this->logs . " WHERE `ip` = %s AND `event_id` IN (" . $events_in . ") AND `logged` > DATE_SUB(NOW(), INTERVAL %d SECOND)", $ip, $seconds );
+		$raw = $this->get_row( $sql );
+
+		return array(
+			'entries' => Sanitize::absint( $raw->entries ),
+			'period'  => Sanitize::absint( $raw->period ),
+			'start'   => $raw->start,
+			'end'     => $raw->end
+		);
+	}
 }

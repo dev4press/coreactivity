@@ -3,8 +3,8 @@
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
 use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
-use Dev4Press\Plugin\CoreActivity\Log\Init;
-use Dev4Press\Plugin\CoreActivity\Log\Init as LogInit;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
+use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\v43\Core\Plugins\Core;
 use Dev4Press\v43\Core\Quick\WPR;
@@ -35,7 +35,7 @@ class Plugin extends Core {
 	public function run() {
 		do_action( 'coreactivity_load_settings' );
 
-		LogInit::instance();
+		LogActivity::instance();
 		LogCore::instance();
 
 		do_action( 'coreactivity_plugin_core_ready' );
@@ -66,9 +66,9 @@ class Plugin extends Core {
 		if ( function_exists( 'debugpress_store_for_plugin' ) ) {
 			debugpress_store_for_plugin( COREACTIVITY_FILE, array(
 				'data' => array(
-					'components' => Init::instance()->get_all_components(),
-					'events'     => Init::instance()->get_all_events(),
-					'statistics' => Init::instance()->statistics
+					'components' => Activity::instance()->get_all_components(),
+					'events'     => Activity::instance()->get_all_events(),
+					'statistics' => Activity::instance()->statistics
 				),
 				'log'  => LogCore::instance()->get_current_page_log()
 			) );

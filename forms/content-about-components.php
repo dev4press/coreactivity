@@ -1,15 +1,15 @@
 <?php
 
-use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 
-$components = Init::instance()->get_all_components();
-$events     = Init::instance()->get_all_events();
+$components = Activity::instance()->get_all_components();
+$events     = Activity::instance()->get_all_events();
 
 ?>
 <div class="coreactivity-about-components">
 	<?php
 
-	foreach ( Init::instance()->get_all_categories() as $category => $label ) {
+	foreach ( Activity::instance()->get_all_categories() as $category => $label ) {
 		echo '<h3>' . $label . '</h3>';
 
 		foreach ( $components as $component ) {

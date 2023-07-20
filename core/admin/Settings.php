@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
-use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\v43\Core\Options\Settings as BaseSettings;
 use Dev4Press\v43\Core\Options\Type;
 
@@ -47,7 +47,7 @@ class Settings extends BaseSettings {
 						'name'     => '',
 						'class'    => '',
 						'settings' => array(
-							$this->i( 'tools-cleanup', 'events', __( "Events to remove", "coreactivity" ), '', Type::CHECKBOXES_GROUP )->data( 'array', Init::instance()->get_select_events() ),
+							$this->i( 'tools-cleanup', 'events', __( "Events to remove", "coreactivity" ), '', Type::CHECKBOXES_GROUP )->data( 'array', Activity::instance()->get_select_events() ),
 						)
 					)
 				)
@@ -122,7 +122,7 @@ class Settings extends BaseSettings {
 						)
 					)
 				),
-				'exceptions-error' => array(
+				'exceptions-error'    => array(
 					'name'     => __( "Component: Errors", "coreactivity" ),
 					'sections' => array(
 						array(

@@ -5,7 +5,7 @@ namespace Dev4Press\Plugin\CoreActivity\Table;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
-use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\v43\Core\Plugins\DBLite;
 use Dev4Press\v43\Core\Quick\Sanitize;
 use Dev4Press\v43\Core\UI\Elements;
@@ -56,8 +56,8 @@ class Logs extends Table {
 		) );
 	}
 
-	public function i() : Init {
-		return Init::instance();
+	public function i() : Activity {
+		return Activity::instance();
 	}
 
 	public function set_limit_lock( $name, $value ) {

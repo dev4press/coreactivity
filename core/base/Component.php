@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Base;
 
 use Dev4Press\Plugin\CoreActivity\Log\Core;
-use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\v43\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -70,7 +70,7 @@ abstract class Component {
 		return empty( $this->plugin_file ) || WPR::is_plugin_active( $this->plugin_file );
 	}
 
-	public function register_component( Init $init ) {
+	public function register_component( Activity $init ) {
 		$init->register_component( $this->category, $this->code(), array(
 			'plugin'       => $this->plugin,
 			'label'        => $this->label(),
@@ -79,7 +79,7 @@ abstract class Component {
 		) );
 	}
 
-	public function register_events( Init $init ) {
+	public function register_events( Activity $init ) {
 		foreach ( $this->events() as $event => $data ) {
 			$event  = strtolower( $event );
 			$status = $init->register_event( $this->code(), $event, array(
@@ -120,7 +120,7 @@ abstract class Component {
 
 	public function log( string $event, array $data = array(), array $meta = array() ) : int {
 		if ( $this->is_active( $event ) ) {
-			$event_id = Init::instance()->get_event_id( $this->code(), $event );
+			$event_id = Activity::instance()->get_event_id( $this->code(), $event );
 
 			if ( $event_id > 0 ) {
 				$data = $this->prepare_data_for_log( $event, $data );
@@ -137,7 +137,7 @@ abstract class Component {
 	}
 
 	public function is_active( string $event ) : bool {
-		return Init::instance()->is_event_active( $this->code(), $event );
+		return Activity::instance()->is_event_active( $this->code(), $event );
 	}
 
 	public function are_active( array $events, bool $any = true ) : bool {

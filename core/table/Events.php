@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
-use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\v43\Core\Quick\Sanitize;
 use Dev4Press\v43\Core\UI\Elements;
 use Dev4Press\v43\WordPress\Admin\Table;
@@ -117,12 +117,12 @@ class Events extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
-		Elements::instance()->select( array_merge( array( '' => __( "All Categories", "coreactivity" ) ), Init::instance()->get_all_categories() ), array(
+		Elements::instance()->select( array_merge( array( '' => __( "All Categories", "coreactivity" ) ), Activity::instance()->get_all_categories() ), array(
 			'selected' => $this->get_request_arg( 'filter-group' ),
 			'name'     => 'filter-group'
 		) );
 
-		Elements::instance()->select_grouped( Init::instance()->get_select_event_components( true ), array(
+		Elements::instance()->select_grouped( Activity::instance()->get_select_event_components( true ), array(
 			'empty'    => __( "All Components", "coreactivity" ),
 			'selected' => $this->get_request_arg( 'filter-component' ),
 			'name'     => 'filter-component'
@@ -135,7 +135,7 @@ class Events extends Table {
 		$classes = array();
 
 		if ( ! is_network_admin() ) {
-			if ( ! Init::instance()->is_event_available( $item->component, $item->event ) ) {
+			if ( ! Activity::instance()->is_event_available( $item->component, $item->event ) ) {
 				$classes[] = '__is-not-loaded';
 			}
 		}
@@ -175,7 +175,7 @@ class Events extends Table {
 
 	protected function column_component( $item ) : string {
 		$render = '<div class="coreactivity-field-wrapper">';
-		$render .= '<i class="d4p-icon d4p-' . Init::instance()->get_component_icon( $item->component ) . ' d4p-icon-fw"></i>';
+		$render .= '<i class="d4p-icon d4p-' . Activity::instance()->get_component_icon( $item->component ) . ' d4p-icon-fw"></i>';
 		$render .= '<span>' . $item->component . '</span>';
 
 		if ( $this->_logged_counts[ $item->component ] > 0 ) {
@@ -202,15 +202,15 @@ class Events extends Table {
 	}
 
 	protected function column_description( $item ) : string {
-		return Init::instance()->get_event_description( $item->component, $item->event );
+		return Activity::instance()->get_event_description( $item->component, $item->event );
 	}
 
 	protected function column_available( $item ) : string {
-		return Init::instance()->is_event_available( $item->component, $item->event ) ? __( "Yes", "coreactivity" ) : __( "No", "coreactivity" );
+		return Activity::instance()->is_event_available( $item->component, $item->event ) ? __( "Yes", "coreactivity" ) : __( "No", "coreactivity" );
 	}
 
 	protected function column_notifications( $item ) : string {
-		$notifications = Init::instance()->get_event_notifications( $item->component, $item->event );
+		$notifications = Activity::instance()->get_event_notifications( $item->component, $item->event );
 
 		$render = '<div class="coreactivity-event-notifications">';
 		$render .= '<div>';

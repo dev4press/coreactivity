@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\v43\Core\Admin\GetBack as BaseGetBack;
 use Dev4Press\v43\Core\Quick\Sanitize;
 
@@ -70,7 +70,7 @@ class GetBack extends BaseGetBack {
 
 						if ( in_array( $notification, array( 'instant', 'daily', 'weekly' ), true ) && in_array( $status, array( 'on', 'off' ), true ) ) {
 							foreach ( $ids as $event_id ) {
-								Init::instance()->event_notification_toggle( $event_id, $notification, $status );
+								Activity::instance()->event_notification_toggle( $event_id, $notification, $status );
 							}
 						}
 					}

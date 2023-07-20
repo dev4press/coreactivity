@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Table\Live;
 use Dev4Press\v43\Core\Quick\Sanitize;
 
@@ -44,7 +44,7 @@ class AJAX {
 
 		$toggle = '';
 		if ( $id > 0 && wp_verify_nonce( $_REQUEST[ '_ajax_nonce' ], 'coreactivity-toggle-event-' . $id ) ) {
-			$status = Init::instance()->event_status( $id );
+			$status = Activity::instance()->event_status( $id );
 
 			if ( ! empty( $status ) ) {
 				$new    = $status == 'active' ? 'inactive' : 'active';
@@ -63,7 +63,7 @@ class AJAX {
 
 		$toggle = '';
 		if ( $id > 0 && wp_verify_nonce( $_REQUEST[ '_ajax_nonce' ], 'coreactivity-toggle-notification-' . $key . '-' . $id ) ) {
-			$change = Init::instance()->event_notification_toggle( $id, $key );
+			$change = Activity::instance()->event_notification_toggle( $id, $key );
 
 			if ( ! is_null( $change ) ) {
 				$toggle = $change ? 'on' : 'off';

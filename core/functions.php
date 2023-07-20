@@ -1,7 +1,7 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\Plugin\CoreActivity\Log\Init;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -32,7 +32,7 @@ function coreactivity_change_event_status( string $component, string $event, str
 		return false;
 	}
 
-	$event_id = Init::instance()->get_event_id( $component, $event );
+	$event_id = Activity::instance()->get_event_id( $component, $event );
 
 	if ( $event_id == 0 ) {
 		return false;
