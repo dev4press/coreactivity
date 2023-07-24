@@ -215,15 +215,15 @@ class Events extends Table {
 		$render = '<div class="coreactivity-event-notifications">';
 		$render .= '<div>';
 		$render .= $this->toggle_switch( $notifications[ 'instant' ], 'instant', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-instant-' . $item->event_id, __( "Disable Instant Notifications", "coreactivity" ), __( "Enable Instant Notifications", "coreactivity" ) );
-		$render .= '<span>' . __( "Instant" ) . '</span>';
+		$render .= '<span>' . __( "Instant", "coreactivity" ) . '</span>';
 		$render .= '</div>';
 		$render .= '<div>';
 		$render .= $this->toggle_switch( $notifications[ 'daily' ], 'daily', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-daily-' . $item->event_id, __( "Disable Daily Notifications", "coreactivity" ), __( "Enable Daily Notifications", "coreactivity" ) );
-		$render .= '<span>' . __( "Daily" ) . '</span>';
+		$render .= '<span>' . __( "Daily", "coreactivity" ) . '</span>';
 		$render .= '</div>';
 		$render .= '<div>';
 		$render .= $this->toggle_switch( $notifications[ 'weekly' ], 'weekly', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-weekly-' . $item->event_id, __( "Disable Weekly Notifications", "coreactivity" ), __( "Enable Weekly Notifications", "coreactivity" ) );
-		$render .= '<span>' . __( "Weekly" ) . '</span>';
+		$render .= '<span>' . __( "Weekly", "coreactivity" ) . '</span>';
 		$render .= '</div>';
 		$render .= '</div>';
 

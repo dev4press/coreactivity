@@ -198,7 +198,7 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'notifications', 'instant_delay_minutes', __( "Delay", "coreactivity" ), __( "This is the shortest delay between two instant notifications emails.", "coreactivity" ), Type::ABSINT )->args( array(
-									'label_unit' => __( "Minutes" ),
+									'label_unit' => __( "Minutes", "coreactivity" ),
 									'min'        => 1,
 									'step'       => 1
 								) )
@@ -224,7 +224,7 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'notifications', 'daily_hour', __( "Hour", "coreactivity" ), __( "This is the hour of the day when the daily digest is created.", "coreactivity" ), Type::ABSINT )->args( array(
-									'label_unit' => __( "Hour" ),
+									'label_unit' => __( "Hour", "coreactivity" ),
 									'min'        => 0,
 									'step'       => 1,
 									'max'        => 23
@@ -252,7 +252,7 @@ class Settings extends BaseSettings {
 							'settings' => array(
 								$this->i( 'notifications', 'weekly_day', __( "Day", "coreactivity" ), __( "This is day of the week when the daily digest is created.", "coreactivity" ), Type::SELECT )->data( 'array', $this->get_week_days() ),
 								$this->i( 'notifications', 'weekly_hour', __( "Hour", "coreactivity" ), __( "This is the hour of the day when the daily digest is created.", "coreactivity" ), Type::ABSINT )->args( array(
-									'label_unit' => __( "Hour" ),
+									'label_unit' => __( "Hour", "coreactivity" ),
 									'min'        => 0,
 									'step'       => 1,
 									'max'        => 23

@@ -112,7 +112,11 @@ class Option extends Component {
 		'auto_update_core_dev',
 		'auto_update_core_minor',
 		'auto_update_core_major',
-		'wp_force_deactivated_plugins'
+		'wp_force_deactivated_plugins',
+		'theme_switch_menu_locations',
+		'theme_switched',
+		'current_theme',
+		'widget_block'
 	);
 
 	protected $partials = array();
