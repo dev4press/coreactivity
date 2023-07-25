@@ -20,6 +20,7 @@ use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\Plugin\CoreActivity\Components\WordPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\bbPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\BuddyPress;
+use Dev4Press\Plugin\CoreActivity\Plugins\ContactForm7;
 use Dev4Press\Plugin\CoreActivity\Plugins\DebugPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\DuplicatePost;
 use Dev4Press\Plugin\CoreActivity\Plugins\GravityForms;
@@ -487,13 +488,14 @@ class Activity {
 	}
 
 	private function _init_plugins() {
+		bbPress::instance();
+		BuddyPress::instance();
+		ContactForm7::instance();
 		DebugPress::instance();
 		DuplicatePost::instance();
-		UserSwitching::instance();
-		SweepPress::instance();
 		GravityForms::instance();
 		Jetpack::instance();
-		BuddyPress::instance();
-		bbPress::instance();
+		SweepPress::instance();
+		UserSwitching::instance();
 	}
 }
