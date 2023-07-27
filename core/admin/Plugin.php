@@ -139,7 +139,7 @@ class Plugin extends BasePlugin {
 
 		if ( $this->settings()->get( 'show_setup_wizard' ) ) {
 			$this->menu_items[ 'wizard' ] = array(
-				'title' => __( "Setup Wizard", "gd-knowledge-base" ),
+				'title' => __( "Setup Wizard", "coreactivity" ),
 				'icon'  => 'ui-magic',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Wizard'
 			);

@@ -26,6 +26,22 @@ class Wizard extends CoreWizard {
 				array( 'settings', 'display_user_avatar', array( 'yes' => true, 'no' => false ) )
 			)
 		),
+		'notifications' => array(
+			'instant'   => array(
+				array( 'notifications', 'instant', array( 'yes' => true, 'no' => false ) )
+			),
+			'daily' => array(
+				array( 'notifications', 'daily', array( 'yes' => true, 'no' => false ) )
+			),
+			'weekly' => array(
+				array( 'notifications', 'weekly', array( 'yes' => true, 'no' => false ) )
+			)
+		),
+		'finish'       => array(
+			'wizard' => array(
+				array( 'settings', 'show_setup_wizard', array( 'yes' => false, 'no' => true ) )
+			)
+		)
 	);
 
 	public function a() {
@@ -34,10 +50,10 @@ class Wizard extends CoreWizard {
 
 	protected function init_panels() {
 		$this->panels = array(
-			'intro'         => array( 'label' => __( "Intro", "coresecurity" ) ),
-			'log'           => array( 'label' => __( "Log", "coresecurity" ) ),
-			'notifications' => array( 'label' => __( "Notifications", "coresecurity" ) ),
-			'finish'        => array( 'label' => __( "Finish", "coresecurity" ) )
+			'intro'         => array( 'label' => __( "Intro", "coreactivity" ) ),
+			'log'           => array( 'label' => __( "Log", "coreactivity" ) ),
+			'notifications' => array( 'label' => __( "Notifications", "coreactivity" ) ),
+			'finish'        => array( 'label' => __( "Finish", "coreactivity" ) )
 		);
 
 		$this->setup_panel( $this->a()->subpanel );

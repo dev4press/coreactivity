@@ -15,6 +15,10 @@ class PostBack extends BasePostBack {
 	protected function process() {
 		parent::process();
 
+		if ( $this->p() == $this->get_page_name( 'wizard' ) ) {
+			coreactivity_wizard()->panel_postback();
+		}
+
 		do_action( 'coreactivity_admin_postback_handler', $this->p(), $this->a() );
 	}
 
