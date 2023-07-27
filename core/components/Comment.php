@@ -28,6 +28,13 @@ class Comment extends Component {
 	}
 
 	public function init() {
+		/**
+		 * Filter the list of post types not to log for the Comments component. Comments belonging to post types on this list will not be tracked or logged.
+		 *
+		 * @param array $taxonomies name of the post types not to log, by default is empty array.
+		 *
+		 * @return array array with names of post types not to log.
+		 */
 		$this->do_not_log = apply_filters( 'coreactivity_comment_do_not_log_post_types', array() );
 	}
 

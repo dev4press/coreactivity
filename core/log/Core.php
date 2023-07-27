@@ -82,7 +82,20 @@ class Core {
 			return - 1;
 		}
 
-		if ( apply_filters( 'coreactivity_skip_log', false, $event_id, $data, $meta ) === true ) {
+		$event = Activity::instance()->get_event_by_id( $event_id );
+
+		/**
+		 * Main control filter controlling if the event logging will proceed or not. Only hook to this filter if you want to control the logging process.
+		 *
+		 * @param bool   $skip     return TRUE to skip logging of the event
+		 * @param int    $event_id ID of the event that will be logged
+		 * @param object $event    event object with all the event information
+		 * @param array  $data     main data array to log about the event
+		 * @param array  $meta     additional data array to log about the event
+		 *
+		 * @return bool TRUE to skip logging, FALSE to proceed with logging.
+		 */
+		if ( apply_filters( 'coreactivity_skip_log', false, $event_id, $event, $data, $meta ) === true ) {
 			return 0;
 		}
 
@@ -94,14 +107,29 @@ class Core {
 		$id = DB::instance()->log_event( $data, $meta );
 
 		if ( $id ) {
-			do_action( 'coreactivity_event_logged', $id, $data, $meta );
+			/**
+			 * Action fired after the event has been logged successfully.
+			 *
+			 * @param int    $log_id ID of the log entry
+			 * @param array  $data   main data array
+			 * @param array  $meta   additional data array
+			 * @param object $event  event object with all the event information
+			 */
+			do_action( 'coreactivity_event_logged', $id, $data, $meta, $event );
 
 			$this->page_events[ $id ] = array(
 				'data' => $data,
 				'meta' => $meta
 			);
 		} else {
-			do_action( 'coreactivity_event_log_failed', $data, $meta );
+			/**
+			 * Action fired if the event has not been logged due to an error while adding log entry to the database.
+			 *
+			 * @param array  $data  main data array
+			 * @param array  $meta  additional data array
+			 * @param object $event event object with all the event information
+			 */
+			do_action( 'coreactivity_event_log_failed', $data, $meta, $event );
 		}
 
 		return $id;

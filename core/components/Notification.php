@@ -42,6 +42,15 @@ class Notification extends Component {
 			$this->do_not_log[] = 'coreactivity-instant-notification';
 		}
 
+		/**
+		 * Filter the list of notification types not to log. Notifications belonging to notification types on this list will not be tracked or logged.
+		 * All supported notification types are keys of the array returned by the following call:
+		 * `\Dev4Press\v43\Core\Mailer\Detection::instance()->get_supported_types()`
+		 *
+		 * @param array $taxonomies name of the post types not to log, by default is empty array.
+		 *
+		 * @return array array with names of post types not to log.
+		 */
 		$this->do_not_log = apply_filters( 'coreactivity_notification_do_not_log_notifications', $this->do_not_log );
 	}
 

@@ -25,6 +25,13 @@ class DuplicatePost extends Plugin {
 	}
 
 	public function init() {
+		/**
+		 * Filter the list of post types not to log for the Duplicate Post plugin. Posts belonging to post types on this list will not be logged when duplicated.
+		 *
+		 * @param array $taxonomies name of the post types not to log, by default is empty array.
+		 *
+		 * @return array array with names of post types not to log.
+		 */
 		$this->do_not_log = apply_filters( 'coreactivity_duplicate_post_do_not_log_post_types', array() );
 	}
 

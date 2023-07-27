@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin as CorePlugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings as CoreSettings;
+use Dev4Press\Plugin\CoreActivity\Basic\Wizard;
 use Dev4Press\v43\Core\Admin\Network\Plugin as BasePlugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -135,6 +136,14 @@ class Plugin extends BasePlugin {
 				'scope' => array( 'network' )
 			)
 		);
+
+		if ( $this->settings()->get( 'show_setup_wizard' ) ) {
+			$this->menu_items[ 'wizard' ] = array(
+				'title' => __( "Setup Wizard", "gd-knowledge-base" ),
+				'icon'  => 'ui-magic',
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Wizard'
+			);
+		}
 	}
 
 	public function run_getback() {
@@ -192,8 +201,8 @@ class Plugin extends BasePlugin {
 	}
 
 	public function enqueue() {
-		$this->enqueue->css( 'coreactivity-admin' );
-		$this->enqueue->js( 'coreactivity-admin' );
+		$this->e()->css( 'coreactivity-admin' );
+		$this->e()->js( 'coreactivity-admin' );
 
 		$values = array(
 			'live_updates' => $this->settings()->get( 'logs_live_updates' ) ? 'Y' : 'N'
@@ -207,6 +216,6 @@ class Plugin extends BasePlugin {
 	}
 
 	public function wizard() {
-		return null;
+		return Wizard::instance();
 	}
 }

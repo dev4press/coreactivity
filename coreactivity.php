@@ -7,7 +7,7 @@ Description:       Monitor and log all kinds of activity happening on the WordPr
 Author:            Milan Petrovic
 Author URI:        https://www.dev4press.com/
 Text Domain:       coreactivity
-Version:           1.0 Beta #3
+Version:           1.0 Beta #4
 Requires at least: 5.5
 Tested up to:      6.3
 Requires PHP:      7.3

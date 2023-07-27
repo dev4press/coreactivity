@@ -22,6 +22,7 @@ class Settings extends BaseSettings {
 			'instant_datetime'  => ''
 		),
 		'settings'      => array(
+			'show_setup_wizard'                       => true,
 			'main_events_log_switch'                  => true,
 			'notice_if_logging_is_disabled'           => false,
 			'log_if_available_user_agent'             => true,
@@ -53,11 +54,11 @@ class Settings extends BaseSettings {
 			'weekly_emails'         => array(),
 			'weekly_hour'           => 2,
 			'weekly_day'            => 'D6',
-			'weekly_skip_log'        => false,
+			'weekly_skip_log'       => false,
 			'instant'               => false,
 			'instant_emails'        => array(),
 			'instant_delay_minutes' => 5,
-			'instant_skip_log'        => false
+			'instant_skip_log'      => false
 		)
 	);
 

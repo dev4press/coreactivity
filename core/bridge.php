@@ -5,6 +5,7 @@ use Dev4Press\Plugin\CoreActivity\Admin\AJAX;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings;
+use Dev4Press\Plugin\CoreActivity\Basic\Wizard;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -28,4 +29,8 @@ function coreactivity_admin() : AdminPlugin {
 
 function coreactivity_ajax() : AJAX {
 	return AJAX::instance();
+}
+
+function coreactivity_wizard() : Wizard {
+	return Wizard::instance();
 }

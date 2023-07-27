@@ -106,6 +106,13 @@ https://plugins.dev4press.com/coreactivity/',
 			)
 		);
 
+		/**
+		 * Action fired before the daily digest email is created and sent. Period is specified as GMT/UTC values.
+		 *
+		 * @param array  $events components and events counts from the database for the specified date period
+		 * @param string $from   date period start date/time
+		 * @param string $to     date period end date/time
+		 */
 		do_action( 'coreactivity_notifications_daily_digest', $events, $from, $to );
 
 		$this->handle_email_sending( $notification, 'coreactivity_daily_digest_email' );
@@ -143,6 +150,13 @@ https://plugins.dev4press.com/coreactivity/',
 			)
 		);
 
+		/**
+		 * Action fired before the weekly digest email is created and sent. Period is specified as GMT/UTC values.
+		 *
+		 * @param array  $events components and events counts from the database for the specified date period
+		 * @param string $from   date period start date/time
+		 * @param string $to     date period end date/time
+		 */
 		do_action( 'coreactivity_notifications_weekly_digest', $events, $from, $to );
 
 		$this->handle_email_sending( $notification, 'coreactivity_weekly_digest_email' );
@@ -183,6 +197,13 @@ https://plugins.dev4press.com/coreactivity/',
 			)
 		);
 
+		/**
+		 * Action fired before the instant notification email is created and sent. Period is specified as GMT/UTC values.
+		 *
+		 * @param array  $events one or more log entries
+		 * @param string $from   date period start date/time, and it can be empty
+		 * @param string $to     date period end date/time, and it can be empty
+		 */
 		do_action( 'coreactivity_notifications_instant_notify', $events, $from, $to );
 
 		$this->handle_email_sending( $notification, 'coreactivity_instant_notification_email' );

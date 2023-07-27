@@ -13,7 +13,7 @@ $events     = Activity::instance()->get_all_events();
 		echo '<h3>' . $label . '</h3>';
 
 		foreach ( $components as $component ) {
-			if ( $component->category != $category || $component->plugin != 'coreactivity' ) {
+			if ( $component->category != $category || ! isset( $component->plugin ) || $component->plugin != 'coreactivity' ) {
 				continue;
 			}
 

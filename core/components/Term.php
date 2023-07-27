@@ -33,6 +33,13 @@ class Term extends Component {
 	}
 
 	public function init() {
+		/**
+		 * Filter the list of taxonomies not to log. Activity related to terms of the taxonomies on this list will not be tracked and logged.
+		 *
+		 * @param array $taxonomies name of the taxonomies not to log, by default is empty array.
+		 *
+		 * @return array array with names of taxonomies not to log.
+		 */
 		$this->do_not_log = apply_filters( 'coreactivity_term_do_not_log_taxonomies', array() );
 	}
 

@@ -318,6 +318,19 @@ class Settings extends BaseSettings {
 							)
 						)
 					)
+				),
+				'advanced-wizard'  => array(
+					'name'     => __( "Setup Wizard", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'show_setup_wizard', __( "Show Setup Wizard", "coreactivity" ), __( "If enabled, the Setup Wizard item will be included in the plugin admin side navigation.", "coreactivity" ), Type::BOOLEAN )
+							)
+						)
+					)
 				)
 			)
 		);
