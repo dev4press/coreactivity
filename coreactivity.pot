@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 07/27/2023 07:28:45 PM\n"
+"POT-Creation-Date: 07/27/2023 10:47:15 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,12 +17,14 @@ msgstr ""
 
 #: core/admin/panel/Dashboard.php:20
 #: core/admin/Plugin.php:119
+#: core/basic/AdminBar.php:56
 #: forms/content-dashboard-overall.php:29
 msgid "Events"
 msgstr ""
 
 #: core/admin/panel/Dashboard.php:29
 #: core/admin/Plugin.php:112
+#: core/basic/AdminBar.php:49
 #: core/table/Events.php:89
 #: core/table/Logs.php:621
 #: core/table/Logs.php:633
@@ -163,6 +165,7 @@ msgid "All the events registered for activity tracking and logging."
 msgstr ""
 
 #: core/admin/Plugin.php:126
+#: core/basic/AdminBar.php:63
 msgid "Settings"
 msgstr ""
 
@@ -531,6 +534,10 @@ msgstr ""
 
 #: core/base/Content.php:93
 msgid "Post Term Relationship Changes"
+msgstr ""
+
+#: core/basic/AdminBar.php:42
+msgid "CoreActivity"
 msgstr ""
 
 #: core/basic/Render.php:19

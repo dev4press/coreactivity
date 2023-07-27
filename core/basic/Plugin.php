@@ -45,6 +45,10 @@ class Plugin extends Core {
 
 		add_action( 'init', array( $this, 'init' ), 100 );
 		add_action( 'debugpress-tracker-plugins-call', array( $this, 'debugpress' ) );
+
+		if ( coreactivity_settings()->get( 'admin_bar_integration' ) ) {
+			AdminBar::instance();
+		}
 	}
 
 	public function after_setup_theme() {

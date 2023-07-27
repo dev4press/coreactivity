@@ -23,6 +23,7 @@ class Settings extends BaseSettings {
 		),
 		'settings'      => array(
 			'show_setup_wizard'                       => true,
+			'admin_bar_integration'                   => true,
 			'main_events_log_switch'                  => true,
 			'notice_if_logging_is_disabled'           => false,
 			'log_if_available_user_agent'             => true,

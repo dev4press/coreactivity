@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Wizard extends CoreWizard {
 	public $default = array(
-		'intro' => array(
+		'intro'         => array(
 			'referer'    => array(
 				array( 'settings', 'log_if_available_referer', array( 'yes' => true, 'no' => false ) )
 			),
@@ -18,7 +18,7 @@ class Wizard extends CoreWizard {
 				array( 'settings', 'log_if_available_user_agent', array( 'yes' => true, 'no' => false ) )
 			)
 		),
-		'log'   => array(
+		'log'           => array(
 			'flag'   => array(
 				array( 'settings', 'display_ip_country_flag', array( 'yes' => true, 'no' => false ) )
 			),
@@ -27,17 +27,17 @@ class Wizard extends CoreWizard {
 			)
 		),
 		'notifications' => array(
-			'instant'   => array(
+			'instant' => array(
 				array( 'notifications', 'instant', array( 'yes' => true, 'no' => false ) )
 			),
-			'daily' => array(
+			'daily'   => array(
 				array( 'notifications', 'daily', array( 'yes' => true, 'no' => false ) )
 			),
-			'weekly' => array(
+			'weekly'  => array(
 				array( 'notifications', 'weekly', array( 'yes' => true, 'no' => false ) )
 			)
 		),
-		'finish'       => array(
+		'finish'        => array(
 			'wizard' => array(
 				array( 'settings', 'show_setup_wizard', array( 'yes' => false, 'no' => true ) )
 			)
