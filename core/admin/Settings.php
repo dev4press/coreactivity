@@ -193,6 +193,14 @@ class Settings extends BaseSettings {
 							)
 						),
 						array(
+							'label'    => __( "Log", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'instant_skip_log', __( "Skip Logging", "coreactivity" ), __( "If enabled, this email notification will not be logged by the plugin.", "coreactivity" ), Type::BOOLEAN )
+							)
+						),
+						array(
 							'label'    => __( "Advanced", "coreactivity" ),
 							'name'     => '',
 							'class'    => '',
@@ -216,6 +224,14 @@ class Settings extends BaseSettings {
 							'settings' => array(
 								$this->i( 'notifications', 'daily', __( "Status", "coreactivity" ), __( "If enabled, plugin will send daily digest email with all eligible events from the previous day.", "coreactivity" ), Type::BOOLEAN ),
 								$this->i( 'notifications', 'daily_emails', __( "Emails", "coreactivity" ), __( "One or more emails to send the notifications. If empty, it will use the website admin email.", "coreactivity" ), Type::EXPANDABLE_TEXT )->args( array( 'type' => 'email' ) )
+							)
+						),
+						array(
+							'label'    => __( "Log", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'daily_skip_log', __( "Skip Logging", "coreactivity" ), __( "If enabled, this email notification will not be logged by the plugin.", "coreactivity" ), Type::BOOLEAN )
 							)
 						),
 						array(
@@ -243,6 +259,14 @@ class Settings extends BaseSettings {
 							'settings' => array(
 								$this->i( 'notifications', 'weekly', __( "Status", "coreactivity" ), __( "If enabled, plugin will send weekly digest email with all eligible events from the previous 7 days.", "coreactivity" ), Type::BOOLEAN ),
 								$this->i( 'notifications', 'weekly_emails', __( "Emails", "coreactivity" ), __( "One or more emails to send the notifications. If empty, it will use the website admin email.", "coreactivity" ), Type::EXPANDABLE_TEXT )->args( array( 'type' => 'email' ) )
+							)
+						),
+						array(
+							'label'    => __( "Log", "coreactivity" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'notifications', 'weekly_skip_log', __( "Skip Logging", "coreactivity" ), __( "If enabled, this email notification will not be logged by the plugin.", "coreactivity" ), Type::BOOLEAN )
 							)
 						),
 						array(

@@ -16,6 +16,9 @@ class WordPress extends Component {
 	protected $icon = 'brand-wordpress';
 	protected $wp_version = '';
 	protected $plugin_name = '';
+	protected $do_not_log = array(
+		'coreactivity_instant_notification'
+	);
 
 	public function tracking() {
 		if ( $this->is_active( 'cron-schedule' ) ) {
@@ -67,7 +70,7 @@ class WordPress extends Component {
 		if ( $event ) {
 			$caller = wp_debug_backtrace_summary( null, 4, false );
 
-			if ( ! in_array( 'wp_reschedule_event', $caller ) ) {
+			if ( ! in_array( 'wp_reschedule_event', $caller ) && ! in_array( $event->hook, $this->do_not_log ) ) {
 				$this->log( 'cron-schedule', array( 'object_type' => 'cron', 'object_name' => $event->hook ), array(
 					'timestamp' => $event->timestamp,
 					'schedule'  => $event->schedule,

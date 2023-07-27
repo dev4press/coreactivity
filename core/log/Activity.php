@@ -134,6 +134,32 @@ class Activity {
 
 	}
 
+	public function is_instant_notification_enabled( int $event_id ) : bool {
+		$event = $this->get_event_by_id( $event_id );
+
+		if ( $event ) {
+			if ( $event->notifications[ 'instant' ] ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function get_events_with_notifications( string $notification ) : array {
+		$ids = array();
+
+		foreach ( $this->events as $events ) {
+			foreach ( $events as $event ) {
+				if ( $event->notifications[ $notification ] ) {
+					$ids[] = $event->event_id;
+				}
+			}
+		}
+
+		return $ids;
+	}
+
 	public function get_event( string $component, string $event ) {
 		return $this->events[ $component ][ $event ] ?? null;
 	}
@@ -182,6 +208,17 @@ class Activity {
 		}
 
 		return array();
+	}
+
+	public function get_event_display( int $event_id ) : string {
+		$render = '';
+		$event  = $this->get_event_by_id( $event_id );
+
+		if ( ! is_null( $event ) ) {
+			$render = '[' . $event->component . '] ' . $event->event;
+		}
+
+		return $render;
 	}
 
 	public function get_event_by_id( int $event_id ) : ?stdClass {

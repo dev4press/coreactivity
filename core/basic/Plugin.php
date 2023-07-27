@@ -6,6 +6,7 @@ use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
+use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\v43\Core\Plugins\Core;
 use Dev4Press\v43\Core\Quick\WPR;
 
@@ -40,6 +41,8 @@ class Plugin extends Core {
 
 		do_action( 'coreactivity_plugin_core_ready' );
 
+		Notifications::instance();
+
 		add_action( 'init', array( $this, 'init' ), 100 );
 		add_action( 'debugpress-tracker-plugins-call', array( $this, 'debugpress' ) );
 	}
@@ -48,6 +51,9 @@ class Plugin extends Core {
 		do_action( 'coreactivity_prepare' );
 
 		add_filter( 'coreactivity_log_purge', array( $this, 'log_purge' ) );
+		add_filter( 'coreactivity_instant_notification', array( $this, 'instant_notification' ) );
+		add_filter( 'coreactivity_daily_digest', array( $this, 'daily_digest' ) );
+		add_filter( 'coreactivity_weekly_digest', array( $this, 'weekly_digest' ) );
 
 		if ( ! wp_next_scheduled( 'coreactivity_log_purge' ) ) {
 			if ( $this->s()->get( 'auto_cleanup_active' ) ) {
@@ -60,6 +66,8 @@ class Plugin extends Core {
 				WPR::remove_cron( 'coreactivity_log_purge' );
 			}
 		}
+
+		Notifications::instance()->schedule_digests();
 	}
 
 	public function debugpress() {
@@ -89,5 +97,17 @@ class Plugin extends Core {
 
 	public function is_logging_active() : bool {
 		return coreactivity_settings()->get( 'main_events_log_switch' );
+	}
+
+	public function instant_notification() {
+		Notifications::instance()->scheduled_instant();
+	}
+
+	public function daily_digest() {
+		Notifications::instance()->scheduled_daily();
+	}
+
+	public function weekly_digest() {
+		Notifications::instance()->scheduled_weekly();
 	}
 }

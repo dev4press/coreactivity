@@ -44,6 +44,10 @@ class Sitemeta extends Component {
 	);
 	protected $transient_value;
 
+	public function is_available() : bool {
+		return is_multisite();
+	}
+
 	public function init() {
 		$this->transient_value = coreactivity_settings()->get( 'log_transient_value' );
 	}

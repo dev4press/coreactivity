@@ -15,9 +15,11 @@ class Settings extends BaseSettings {
 
 	public $settings = array(
 		'core'          => array(
-			'installed'  => '',
-			'updated'    => '',
-			'db_version' => 0
+			'installed'         => '',
+			'updated'           => '',
+			'db_version'        => 0,
+			'instant_timestamp' => 0,
+			'instant_datetime'  => ''
 		),
 		'settings'      => array(
 			'main_events_log_switch'                  => true,
@@ -34,21 +36,28 @@ class Settings extends BaseSettings {
 			'auto_cleanup_active'                     => true,
 			'auto_cleanup_period'                     => 24,
 			'exceptions_option_action_scheduler_lock' => true,
+			'exceptions_notifications_list'           => array(),
 			'exceptions_option_list'                  => array(),
 			'exceptions_sitemeta_list'                => array(),
-			'exceptions_error_file_regex_list'        => array( 'js\.map$', 'css\.map$' )
+			'exceptions_error_file_regex_list'        => array(
+				'js\.map$',
+				'css\.map$'
+			)
 		),
 		'notifications' => array(
 			'daily'                 => false,
 			'daily_emails'          => array(),
 			'daily_hour'            => 2,
+			'daily_skip_log'        => false,
 			'weekly'                => false,
 			'weekly_emails'         => array(),
 			'weekly_hour'           => 2,
 			'weekly_day'            => 'D6',
+			'weekly_skip_log'        => false,
 			'instant'               => false,
 			'instant_emails'        => array(),
-			'instant_delay_minutes' => 5
+			'instant_delay_minutes' => 5,
+			'instant_skip_log'        => false
 		)
 	);
 

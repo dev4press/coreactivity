@@ -50,6 +50,8 @@ class Core {
 			'context'   => WordPress::instance()->context()
 		);
 
+		$this->cached_data[ 'anon' ] = in_array( $this->cached_data[ 'context' ], array( 'CLI', 'CRON' ) );
+
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );
 	}
 
@@ -150,10 +152,6 @@ class Core {
 			$data[ 'blog_id' ] = get_current_blog_id();
 		}
 
-		if ( ! isset( $data[ 'user_id' ] ) ) {
-			$data[ 'user_id' ] = get_current_user_id();
-		}
-
 		if ( ! isset( $data[ 'logged' ] ) ) {
 			$data[ 'logged' ] = DateTime::instance()->mysql_date();
 		}
@@ -176,6 +174,14 @@ class Core {
 
 		if ( ! isset( $data[ 'request' ] ) ) {
 			$data[ 'request' ] = $this->cached_data[ 'request' ];
+		}
+
+		if ( $this->cached_data[ 'anon' ] ) {
+			$data[ 'user_id' ] = 0;
+		} else {
+			if ( ! isset( $data[ 'user_id' ] ) ) {
+				$data[ 'user_id' ] = get_current_user_id();
+			}
 		}
 
 		return $data;

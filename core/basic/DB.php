@@ -184,6 +184,73 @@ class DB extends BaseDB {
 		return $this->query( $sql );
 	}
 
+	public function get_entries_by_event_ids_and_date_range( array $events_ids, string $from, string $to = '' ) : array {
+		$events_in = $this->prepare_in_list( $events_ids, '%d' );
+
+		if ( empty( $to ) ) {
+			$to = $this->datetime();
+		}
+
+		$sql = $this->prepare( "SELECT * FROM " . $this->logs . " WHERE `event_id` IN (" . $events_in . ") AND (`logged` BETWEEN %s AND %s )", $from, $to );
+		$raw = $this->run_and_index( $sql, 'log_id', ARRAY_A );
+
+		$entries = array();
+
+		if ( ! empty( $raw ) ) {
+			foreach ( $raw as $id => $entry ) {
+				$entry[ 'meta' ] = array();
+
+				$entries[ $id ] = $entry;
+			}
+
+			$ids = $this->pluck( $raw, 'log_id' );
+			$ids = $this->prepare_in_list( $ids, '%d' );
+
+			$sql  = "SELECT * FROM " . $this->logmeta . " WHERE `log_id` IN (" . $ids . ")";
+			$meta = $this->get_results( $sql );
+
+			foreach ( $meta as $item ) {
+				$id = absint( $item->log_id );
+
+				$entries[ $id ][ 'meta' ][ $item->meta_key ] = maybe_unserialize( $item->meta_value );
+			}
+		}
+
+		return $entries;
+	}
+
+	public function get_entries_counts_by_event_ids_and_date_range( array $events_ids, string $from, string $to = '' ) : array {
+		$events_in = $this->prepare_in_list( $events_ids, '%d' );
+
+		if ( empty( $to ) ) {
+			$to = $this->datetime();
+		}
+
+		$sql = $this->prepare( "SELECT e.`component`, e.`event`, COUNT(*) as `count` FROM " . $this->logs . " l
+				INNER JOIN " . $this->events . " e ON e.event_id = l.event_id
+				WHERE (l.`logged` BETWEEN %s AND %s) AND l.`event_id` IN (" . $events_in . ")
+				GROUP BY e.`component`, e.`event` ORDER BY e.`component`, e.`event`", $from, $to );
+		$raw = $this->get_results( $sql );
+
+		$data = array();
+
+		if ( ! empty( $raw ) ) {
+			foreach ( $raw as $row ) {
+				if ( ! isset( $data[ $row->component ] ) ) {
+					$data[ $row->component ] = array(
+						'events' => array(),
+						'total'  => 0
+					);
+				}
+
+				$data[ $row->component ][ 'total' ]                 += $row->count;
+				$data[ $row->component ][ 'events' ][ $row->event ] = $row->count;
+			}
+		}
+
+		return $data;
+	}
+
 	public function count_entries_by_event_ids( array $events_ids, string $ip, int $seconds = 86400 ) : int {
 		$events_in = $this->prepare_in_list( $events_ids, '%d' );
 		$now_gmt   = $this->datetime();

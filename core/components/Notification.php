@@ -15,6 +15,7 @@ class Notification extends Component {
 	protected $icon = 'ui-envelope';
 	protected $object_type = 'notification';
 	protected $storage = array();
+	protected $do_not_log = array();
 
 	protected $network = array(
 		'wp-network-signup-blog-confirmation',
@@ -27,6 +28,22 @@ class Notification extends Component {
 		'wp-network-network-admin-email-confirmation',
 		'wp-network-network-admin-email-notification'
 	);
+
+	public function init() {
+		if ( coreactivity_settings()->get( 'daily_skip_log', 'notifications' ) ) {
+			$this->do_not_log[] = 'coreactivity-daily-digest';
+		}
+
+		if ( coreactivity_settings()->get( 'weekly_skip_log', 'notifications' ) ) {
+			$this->do_not_log[] = 'coreactivity-weekly-digest';
+		}
+
+		if ( coreactivity_settings()->get( 'instant_skip_log', 'notifications' ) ) {
+			$this->do_not_log[] = 'coreactivity-instant-notification';
+		}
+
+		$this->do_not_log = apply_filters( 'coreactivity_notification_do_not_log_notifications', $this->do_not_log );
+	}
 
 	public function tracking() {
 		Detection::instance();
@@ -77,18 +94,20 @@ class Notification extends Component {
 
 	protected function event_final( $event, $email_data, $error = '' ) {
 		if ( $this->is_active( $event ) ) {
-			$data = array( 'object_name' => $this->storage[ 'name' ] ?? '' );
+			if ( ! in_array( $this->storage[ 'name' ], $this->do_not_log ) ) {
+				$data = array( 'object_name' => $this->storage[ 'name' ] ?? '' );
 
-			if ( in_array( $this->storage[ 'name' ], $this->network ) ) {
-				$data[ 'blog_id' ] = 0;
+				if ( in_array( $this->storage[ 'name' ], $this->network ) ) {
+					$data[ 'blog_id' ] = 0;
+				}
+
+				$this->log( $event, $data, array(
+					'subject' => isset( $email_data[ 'subject' ] ) ? esc_sql( $email_data[ 'subject' ] ) : '',
+					'email'   => isset( $email_data[ 'to' ] ) ? esc_sql( $email_data[ 'to' ] ) : '',
+					'error'   => $error,
+					'source'  => $this->storage[ 'call' ]
+				) );
 			}
-
-			$this->log( $event, $data, array(
-				'subject' => isset( $email_data[ 'subject' ] ) ? esc_sql( $email_data[ 'subject' ] ) : '',
-				'email'   => isset( $email_data[ 'to' ] ) ? esc_sql( $email_data[ 'to' ] ) : '',
-				'error'   => $error,
-				'source'  => $this->storage[ 'call' ]
-			) );
 		}
 	}
 }
