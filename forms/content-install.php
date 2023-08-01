@@ -25,7 +25,7 @@ use function Dev4Press\v43\Functions\panel;
             </div>
 
             <div class="d4p-install-confirm">
-                <a class="button-primary" href="<?php echo esc_url( panel()->a()->panel_url( 'about' ) ); ?>&install"><?php esc_html_e( "Click here to continue", "coreactivity" ); ?></a>
+                <a class="button-primary" href="<?php echo esc_url( panel()->a()->panel_url( 'about' ) ); ?>&install=on"><?php esc_html_e( "Click here to continue", "coreactivity" ); ?></a>
             </div>
         </div>
     </div>

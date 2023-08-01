@@ -16,6 +16,9 @@ class Wizard extends CoreWizard {
 			),
 			'user_agent' => array(
 				array( 'settings', 'log_if_available_user_agent', array( 'yes' => true, 'no' => false ) )
+			),
+			'admin_bar' => array(
+				array( 'settings', 'admin_bar_integration', array( 'yes' => true, 'no' => false ) )
 			)
 		),
 		'log'           => array(

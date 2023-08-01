@@ -319,6 +319,19 @@ class Settings extends BaseSettings {
 						)
 					)
 				),
+				'advanced-adminbar' => array(
+					'name'     => __( "Admin Bar Integration", "coreactivity" ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'admin_bar_integration', __( "Add Menu", "coreactivity" ), __( "Simple menu will be added to the WordPress admin bar, on both admin side and front end, only available to website administrators with quick links to the plugin panels.", "coreactivity" ), Type::BOOLEAN )
+							)
+						)
+					)
+				),
 				'advanced-wizard'  => array(
 					'name'     => __( "Setup Wizard", "coreactivity" ),
 					'sections' => array(

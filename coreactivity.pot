@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 07/27/2023 10:47:15 PM\n"
+"POT-Creation-Date: 08/01/2023 04:19:58 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: core/admin/panel/Settings.php:33
 #: core/admin/panel/Wizard.php:20
-#: core/basic/Wizard.php:54
+#: core/basic/Wizard.php:57
 #: core/components/Notification.php:71
 #: core/table/Events.php:92
 msgid "Notifications"
@@ -107,7 +107,7 @@ msgid "Using this tool, you can cleanup log entries."
 msgstr ""
 
 #: core/admin/panel/Wizard.php:14
-#: core/basic/Wizard.php:52
+#: core/basic/Wizard.php:55
 msgid "Intro"
 msgstr ""
 
@@ -115,12 +115,12 @@ msgstr ""
 #: core/admin/Settings.php:195
 #: core/admin/Settings.php:229
 #: core/admin/Settings.php:264
-#: core/basic/Wizard.php:53
+#: core/basic/Wizard.php:56
 msgid "Log"
 msgstr ""
 
 #: core/admin/panel/Wizard.php:23
-#: core/basic/Wizard.php:55
+#: core/basic/Wizard.php:58
 msgid "Finish"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgid "Tools"
 msgstr ""
 
 #: core/admin/Plugin.php:141
-#: core/admin/Settings.php:322
+#: core/admin/Settings.php:335
 msgid "Setup Wizard"
 msgstr ""
 
@@ -468,59 +468,71 @@ msgstr ""
 msgid "If the logging is disabled, on every admin page, plugin will display a notice about it, with link to the plugin dashboard."
 msgstr ""
 
-#: core/admin/Settings.php:329
-msgid "Show Setup Wizard"
+#: core/admin/Settings.php:322
+msgid "Admin Bar Integration"
 msgstr ""
 
 #: core/admin/Settings.php:329
-msgid "If enabled, the Setup Wizard item will be included in the plugin admin side navigation."
+msgid "Add Menu"
 msgstr ""
 
-#: core/admin/Settings.php:340
-msgid "Select the data age"
-msgstr ""
-
-#: core/admin/Settings.php:341
-msgid "All logged data"
+#: core/admin/Settings.php:329
+msgid "Simple menu will be added to the WordPress admin bar, on both admin side and front end, only available to website administrators with quick links to the plugin panels."
 msgstr ""
 
 #: core/admin/Settings.php:342
+msgid "Show Setup Wizard"
+msgstr ""
+
+#: core/admin/Settings.php:342
+msgid "If enabled, the Setup Wizard item will be included in the plugin admin side navigation."
+msgstr ""
+
+#: core/admin/Settings.php:353
+msgid "Select the data age"
+msgstr ""
+
+#: core/admin/Settings.php:354
+msgid "All logged data"
+msgstr ""
+
+#: core/admin/Settings.php:355
 msgid "Logged data older than 1 day"
 msgstr ""
 
-#: core/admin/Settings.php:343
+#: core/admin/Settings.php:356
 msgid "Logged data older than 3 days"
 msgstr ""
 
-#: core/admin/Settings.php:344
+#: core/admin/Settings.php:357
 msgid "Logged data older than 7 days"
 msgstr ""
 
-#: core/admin/Settings.php:345
+#: core/admin/Settings.php:358
 msgid "Logged data older than 14 days"
 msgstr ""
 
-#: core/admin/Settings.php:346
+#: core/admin/Settings.php:359
 msgid "Logged data older than 30 days"
 msgstr ""
 
-#: core/admin/Settings.php:347
+#: core/admin/Settings.php:360
 msgid "Logged data older than 60 days"
 msgstr ""
 
-#: core/admin/Settings.php:348
+#: core/admin/Settings.php:361
 msgid "Logged data older than 90 days"
 msgstr ""
 
-#: core/admin/Settings.php:349
+#: core/admin/Settings.php:362
 msgid "Logged data older than 180 days"
 msgstr ""
 
-#: core/admin/Settings.php:350
+#: core/admin/Settings.php:363
 msgid "Logged data older than 1 year"
 msgstr ""
 
-#: core/admin/Settings.php:351
+#: core/admin/Settings.php:364
 msgid "Logged data older than 2 years"
 msgstr ""
 
@@ -1505,8 +1517,12 @@ msgstr ""
 msgid "Maintenance and Security Releases"
 msgstr ""
 
-#: forms/content-about-minor.php:12
+#: forms/content-about-minor.php:11
 msgid "For more information, see <a href='%s'>the changelog</a>."
+msgstr ""
+
+#: forms/content-about-whatsnew.php:21
+msgid "Run Setup Wizard"
 msgstr ""
 
 #: forms/content-dashboard-database.php:11
@@ -1721,6 +1737,14 @@ msgstr ""
 
 #: forms/content-wizard-intro.php:23
 msgid "Each request contains User Agent of the software (usually browser) making the request. This value can be faked by the request source. CoreActivity currently has no use for this value, but other plugins using the log may use it for some additional processing."
+msgstr ""
+
+#: forms/content-wizard-intro.php:28
+msgid "Do you want to add Admin bar menu?"
+msgstr ""
+
+#: forms/content-wizard-intro.php:30
+msgid "Menu in the WordPress Admin bar will show quick links to the plugin panels for direct access from anywhere on the website where the admin bar is visible. It is only available to website administrators."
 msgstr ""
 
 #: forms/content-wizard-log.php:2

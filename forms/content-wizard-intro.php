@@ -25,4 +25,11 @@
 			<?php coreactivity_wizard()->render_yes_no( 'intro', 'user_agent', 'no' ); ?>
         </div>
     </div>
+    <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
+        <p><?php esc_html_e( "Do you want to add Admin bar menu?", "coreactivity" ); ?></p>
+        <div>
+            <em><?php esc_html_e( "Menu in the WordPress Admin bar will show quick links to the plugin panels for direct access from anywhere on the website where the admin bar is visible. It is only available to website administrators.", "coreactivity" ); ?></em>
+			<?php coreactivity_wizard()->render_yes_no( 'intro', 'admin_bar', 'no' ); ?>
+        </div>
+    </div>
 </div>
