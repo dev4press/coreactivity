@@ -31,7 +31,7 @@ class Comment extends Component {
 		/**
 		 * Filter the list of post types not to log for the Comments component. Comments belonging to post types on this list will not be tracked or logged.
 		 *
-		 * @param array $taxonomies name of the post types not to log, by default is empty array.
+		 * @param array $post_types name of the post types not to log, by default is empty array.
 		 *
 		 * @return array array with names of post types not to log.
 		 */

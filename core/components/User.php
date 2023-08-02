@@ -100,7 +100,7 @@ class User extends Component {
 		 * Filter the list of meta fields for Users to monitor and log if changed. Considering that a lot of user meta fields in WordPress are for things that often change,
 		 * like settings for a user, logging every change can be counterproductive, and it is better to have the list of fields to monitor and log.
 		 *
-		 * @param array $taxonomies name of the meta fields to monitor, by default is array with common WordPress user meta fields.
+		 * @param array $monitor_fields name of the meta fields to monitor, by default is array with common WordPress user meta fields.
 		 *
 		 * @return array array with names of meta fields to monitor and log changes.
 		 */
