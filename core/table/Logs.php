@@ -310,7 +310,9 @@ class Logs extends Table {
 			return $this->_limit_lock[ 'components' ];
 		}
 
-		return $this->i()->get_select_event_components( $this->_display_columns_simplified );
+		$components = $this->i()->get_select_event_components( $this->_display_columns_simplified );
+
+		return apply_filters( $this->_filter_key . '_select_components', $components, $this );
 	}
 
 	protected function get_select_events() : array {
@@ -320,7 +322,9 @@ class Logs extends Table {
 			$component = array_keys( $this->_limit_lock[ 'components' ] );
 		}
 
-		return $this->i()->get_select_events( $this->_display_columns_simplified, empty( $component ) ? array() : (array) $component );
+		$events = $this->i()->get_select_events( $this->_display_columns_simplified, empty( $component ) ? array() : (array) $component );
+
+		return apply_filters( $this->_filter_key . '_select_events', $events, $this );
 	}
 
 	protected function _view( string $view, string $args ) : string {
