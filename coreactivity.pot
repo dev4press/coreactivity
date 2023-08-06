@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 08/01/2023 04:19:58 PM\n"
+"POT-Creation-Date: 08/06/2023 11:07:46 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,11 +26,11 @@ msgstr ""
 #: core/admin/Plugin.php:112
 #: core/basic/AdminBar.php:49
 #: core/table/Events.php:89
-#: core/table/Logs.php:621
-#: core/table/Logs.php:633
-#: core/table/Logs.php:701
-#: core/table/Logs.php:714
-#: core/table/Logs.php:660
+#: core/table/Logs.php:627
+#: core/table/Logs.php:639
+#: core/table/Logs.php:707
+#: core/table/Logs.php:720
+#: core/table/Logs.php:666
 msgid "Logs"
 msgstr ""
 
@@ -553,12 +553,12 @@ msgid "CoreActivity"
 msgstr ""
 
 #: core/basic/Render.php:19
-#: core/table/Logs.php:642
+#: core/table/Logs.php:648
 msgid "Server IP"
 msgstr ""
 
 #: core/basic/Render.php:24
-#: core/table/Logs.php:646
+#: core/table/Logs.php:652
 msgid "Current Request IP"
 msgstr ""
 
@@ -977,7 +977,7 @@ msgstr ""
 
 #: core/log/Activity.php:96
 #: core/table/Logs.php:98
-#: core/table/Logs.php:534
+#: core/table/Logs.php:538
 msgid "User"
 msgstr ""
 
@@ -1137,8 +1137,8 @@ msgstr ""
 
 #: core/log/Display.php:223
 #: core/log/Display.php:408
-#: core/table/Logs.php:532
-#: core/table/Logs.php:679
+#: core/table/Logs.php:536
+#: core/table/Logs.php:685
 msgid "Not Found"
 msgstr ""
 
@@ -1323,13 +1323,13 @@ msgstr ""
 
 #: core/table/Events.php:87
 #: core/table/Logs.php:99
-#: core/table/Logs.php:499
+#: core/table/Logs.php:503
 msgid "Component"
 msgstr ""
 
 #: core/table/Events.php:88
 #: core/table/Logs.php:100
-#: core/table/Logs.php:510
+#: core/table/Logs.php:514
 msgid "Event"
 msgstr ""
 
@@ -1348,14 +1348,14 @@ msgid "All Categories"
 msgstr ""
 
 #: core/table/Events.php:125
-#: core/table/Logs.php:404
+#: core/table/Logs.php:408
 msgid "All Components"
 msgstr ""
 
 #: core/table/Events.php:129
 #: core/table/Events.php:181
 #: core/table/Events.php:194
-#: core/table/Logs.php:466
+#: core/table/Logs.php:470
 msgid "Filter"
 msgstr ""
 
@@ -1443,7 +1443,7 @@ msgid "Protocol"
 msgstr ""
 
 #: core/table/Logs.php:104
-#: core/table/Logs.php:518
+#: core/table/Logs.php:522
 msgid "IP"
 msgstr ""
 
@@ -1452,7 +1452,7 @@ msgid "Request"
 msgstr ""
 
 #: core/table/Logs.php:106
-#: core/table/Logs.php:489
+#: core/table/Logs.php:493
 msgid "Object Type"
 msgstr ""
 
@@ -1464,31 +1464,31 @@ msgstr ""
 msgid "Logged"
 msgstr ""
 
-#: core/table/Logs.php:412
+#: core/table/Logs.php:416
 msgid "All Events"
 msgstr ""
 
-#: core/table/Logs.php:420
+#: core/table/Logs.php:424
 msgid "All Contexts"
 msgstr ""
 
-#: core/table/Logs.php:421
+#: core/table/Logs.php:425
 msgid "Normal"
 msgstr ""
 
-#: core/table/Logs.php:436
+#: core/table/Logs.php:440
 msgid "All Methods"
 msgstr ""
 
-#: core/table/Logs.php:452
+#: core/table/Logs.php:456
 msgid "All Object Types"
 msgstr ""
 
-#: core/table/Logs.php:484
+#: core/table/Logs.php:488
 msgid "All Logs"
 msgstr ""
 
-#: core/table/Logs.php:563
+#: core/table/Logs.php:567
 msgid "Delete"
 msgstr ""
 
@@ -1497,19 +1497,19 @@ msgstr ""
 msgid "Toggle Meta"
 msgstr ""
 
-#: core/table/Logs.php:780
+#: core/table/Logs.php:786
 msgid "Show Log Meta Data"
 msgstr ""
 
-#: core/table/Logs.php:577
+#: core/table/Logs.php:581
 msgid "request"
 msgstr ""
 
-#: core/table/Logs.php:668
+#: core/table/Logs.php:674
 msgid "Not a User"
 msgstr ""
 
-#: core/table/Logs.php:683
+#: core/table/Logs.php:689
 msgid "Edit"
 msgstr ""
 
