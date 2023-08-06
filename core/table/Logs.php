@@ -578,13 +578,15 @@ class Logs extends Table {
 			$left[] = '<li><strong>' . esc_html__( "request", "coreactivity" ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
 		}
 
-		foreach ( $item->meta as $key => $value ) {
-			$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? $this->print_array( $value ) : json_encode( $value ) );
+		if ( isset( $item->meta ) ) {
+			foreach ( $item->meta as $key => $value ) {
+				$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? $this->print_array( $value ) : json_encode( $value ) );
 
-			if ( in_array( $key, $metas ) ) {
-				$left[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
-			} else {
-				$right[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
+				if ( in_array( $key, $metas ) ) {
+					$left[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
+				} else {
+					$right[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
+				}
 			}
 		}
 
