@@ -476,7 +476,7 @@ class Activity {
 				$this->events[ $event->component ] = array();
 			}
 
-			$event->event_id      = Sanitize::absint( $event->event_id );
+			$event->event_id      = absint( $event->event_id );
 			$event->label         = Str::slug_to_name( $event->event, '-' );
 			$event->rules         = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
 			$event->notifications = array(

@@ -2,6 +2,10 @@
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $components = Activity::instance()->get_all_components();
 $events     = Activity::instance()->get_all_events();
 

@@ -2,6 +2,10 @@
 
 use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="d4p-install-block">
     <h4>

@@ -2,6 +2,10 @@
 
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $blog_id    = is_multisite() && ! is_network_admin() ? get_current_blog_id() : - 1;
 $statistics = Statistics::instance()->detailed( 30, $blog_id );
 

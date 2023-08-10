@@ -175,7 +175,7 @@ class DB extends BaseDB {
 	public function get_last_log_id() : int {
 		$sql = "SELECT MAX(`log_id`) FROM " . $this->logs;
 
-		return Sanitize::absint( $this->get_var( $sql ) );
+		return absint( $this->get_var( $sql ) );
 	}
 
 	public function remove_log_meta_orphans() {
@@ -258,7 +258,7 @@ class DB extends BaseDB {
 		$sql = $this->prepare( "SELECT COUNT(*) FROM " . $this->logs . " WHERE `ip` = %s AND `event_id` IN (" . $events_in . ") AND `logged` > DATE_SUB(%s, INTERVAL %d SECOND)", $ip, $now_gmt, $seconds );
 		$raw = $this->get_var( $sql );
 
-		return Sanitize::absint( $raw );
+		return absint( $raw );
 	}
 
 	public function count_entries_by_event_ids_expanded( array $events_ids, string $ip, int $seconds = 86400 ) : array {
@@ -269,8 +269,8 @@ class DB extends BaseDB {
 		$raw = $this->get_row( $sql );
 
 		return array(
-			'entries' => Sanitize::absint( $raw->entries ),
-			'period'  => Sanitize::absint( $raw->period ),
+			'entries' => absint( $raw->entries ),
+			'period'  => absint( $raw->period ),
 			'start'   => $raw->start,
 			'end'     => $raw->end
 		);

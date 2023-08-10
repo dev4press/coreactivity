@@ -2,6 +2,10 @@
 
 use Dev4Press\Plugin\CoreActivity\Table\Events;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="d4p-content">
     <input type="hidden" name="page" value="coreactivity-events"/>

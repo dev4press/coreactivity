@@ -2,6 +2,10 @@
 
 use function Dev4Press\v43\Functions\panel;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( "Maintenance and Security Releases", "coreactivity" ); ?></h3>

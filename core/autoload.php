@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function d4p_plugin_coreactivity_autoload( $class ) {
+function dev4press_plugin_coreactivity_autoload( $class ) {
 	$path = dirname( __FILE__ ) . '/';
 	$base = 'Dev4Press\\Plugin\\CoreActivity\\';
 
@@ -27,4 +27,4 @@ function d4p_plugin_coreactivity_autoload( $class ) {
 	}
 }
 
-spl_autoload_register( 'd4p_plugin_coreactivity_autoload' );
+spl_autoload_register( 'dev4press_plugin_coreactivity_autoload' );

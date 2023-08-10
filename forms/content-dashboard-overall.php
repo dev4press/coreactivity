@@ -3,6 +3,10 @@
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 use function Dev4Press\v43\Functions\panel;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $statistics = Statistics::instance()->overall();
 $active     = coreactivity()->is_logging_active();
 

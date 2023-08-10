@@ -26,7 +26,7 @@ class Cleanup {
 
 	public function cleanup_log( $when, $what ) {
 		$interval = substr( $when, 0, 1 );
-		$value    = Sanitize::absint( substr( $when, 1 ) );
+		$value    = absint( substr( $when, 1 ) );
 		$keep_key = 'keep-log-' . ( $interval == 'd' ? 'days' : 'months' );
 
 		$data = array(
@@ -68,6 +68,6 @@ class Cleanup {
 
 		DB::instance()->remove_log_meta_orphans();
 
-		return is_numeric( $rows ) ? Sanitize::absint( $rows ) : 0;
+		return is_numeric( $rows ) ? absint( $rows ) : 0;
 	}
 }

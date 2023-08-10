@@ -40,7 +40,7 @@ class AJAX {
 	}
 
 	public function toggle_event() {
-		$id = isset( $_POST[ 'event' ] ) ? Sanitize::absint( $_POST[ 'event' ] ) : 0;
+		$id = isset( $_POST[ 'event' ] ) ? absint( $_POST[ 'event' ] ) : 0;
 
 		$toggle = '';
 		if ( $id > 0 && wp_verify_nonce( $_REQUEST[ '_ajax_nonce' ], 'coreactivity-toggle-event-' . $id ) ) {
@@ -58,7 +58,7 @@ class AJAX {
 	}
 
 	public function toggle_notification() {
-		$id  = isset( $_POST[ 'event' ] ) ? Sanitize::absint( $_POST[ 'event' ] ) : 0;
+		$id  = isset( $_POST[ 'event' ] ) ? absint( $_POST[ 'event' ] ) : 0;
 		$key = isset( $_POST[ 'notification' ] ) ? Sanitize::slug( $_POST[ 'notification' ] ) : '';
 
 		$toggle = '';
@@ -80,7 +80,7 @@ class AJAX {
 			$request = json_decode( wp_unslash( $_REQUEST[ 'args' ] ), true );
 
 			if ( isset( $request[ 'nonce' ] ) && wp_verify_nonce( $request[ 'nonce' ], 'coreactivity-live-update' ) ) {
-				$request[ 'atts' ][ 'min_id' ] = Sanitize::absint( $request[ 'id' ] );
+				$request[ 'atts' ][ 'min_id' ] = absint( $request[ 'id' ] );
 
 				$_grid = new Live();
 				$_grid->update( $request[ 'atts' ], $request[ 'lock' ], $request[ 'limit' ], $request[ 'filter' ] );

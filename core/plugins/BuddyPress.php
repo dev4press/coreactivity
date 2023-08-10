@@ -73,7 +73,7 @@ class BuddyPress extends Plugin {
 		$group_id = $r[ 'group_id' ] ?? 0;
 
 		if ( $group_id > 0 ) {
-			$group_id = Sanitize::absint( $group_id );
+			$group_id = absint( $group_id );
 
 			$this->storage[ $group_id ] = groups_get_group( $group_id );
 		}
@@ -97,7 +97,7 @@ class BuddyPress extends Plugin {
 	}
 
 	public function event_update_group( $group_id, $group ) {
-		$group_id = Sanitize::absint( $group_id );
+		$group_id = absint( $group_id );
 
 		if ( isset( $this->storage[ $group_id ] ) ) {
 			$previous = $this->storage[ $group_id ];

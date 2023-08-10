@@ -4,7 +4,6 @@
     </p>
 </div>
 
-
 <div class="d4p-wizard-panel-content">
     <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
         <p><?php esc_html_e( "Do you want to show the Geolocation information based on IP?", "coreactivity" ); ?></p>

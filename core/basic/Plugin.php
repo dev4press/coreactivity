@@ -61,7 +61,7 @@ class Plugin extends Core {
 
 		if ( ! wp_next_scheduled( 'coreactivity_log_purge' ) ) {
 			if ( $this->s()->get( 'auto_cleanup_active' ) ) {
-				$cron_time = mktime( 3, 5, 0, date( 'm' ), date( 'd' ), date( 'Y' ) );
+				$cron_time = mktime( 3, 5, 0, gmdate( 'm' ), gmdate( 'd' ), gmdate( 'Y' ) );
 
 				wp_schedule_event( $cron_time, 'daily', 'coreactivity_log_purge' );
 			}

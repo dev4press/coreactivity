@@ -2,6 +2,10 @@
 
 use function Dev4Press\v43\Functions\panel;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // include( COREACTIVITY_PATH . 'forms/content-about-minor.php' );
 
 ?>

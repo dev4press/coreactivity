@@ -66,27 +66,27 @@ class GravityForms extends Plugin {
 
 	public function event_after_save_form( $meta, $is_new ) {
 		if ( $is_new ) {
-			$this->log( 'created', array( 'object_id' => Sanitize::absint( $meta[ 'id' ] ) ) );
+			$this->log( 'created', array( 'object_id' => absint( $meta[ 'id' ] ) ) );
 		}
 	}
 
 	public function event_before_delete_form( $form_id ) {
-		$this->log( 'deleted', array( 'object_id' => Sanitize::absint( $form_id ) ) );
+		$this->log( 'deleted', array( 'object_id' => absint( $form_id ) ) );
 	}
 
 	public function event_post_form_trashed( $form_id ) {
-		$this->log( 'trashed', array( 'object_id' => Sanitize::absint( $form_id ) ) );
+		$this->log( 'trashed', array( 'object_id' => absint( $form_id ) ) );
 	}
 
 	public function event_post_form_restored( $form_id ) {
-		$this->log( 'restored', array( 'object_id' => Sanitize::absint( $form_id ) ) );
+		$this->log( 'restored', array( 'object_id' => absint( $form_id ) ) );
 	}
 
 	public function event_post_form_activated( $form_id ) {
-		$this->log( 'activated', array( 'object_id' => Sanitize::absint( $form_id ) ) );
+		$this->log( 'activated', array( 'object_id' => absint( $form_id ) ) );
 	}
 
 	public function event_post_form_deactivated( $form_id ) {
-		$this->log( 'deactivated', array( 'object_id' => Sanitize::absint( $form_id ) ) );
+		$this->log( 'deactivated', array( 'object_id' => absint( $form_id ) ) );
 	}
 }

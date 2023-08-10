@@ -4,6 +4,10 @@ use Dev4Press\Plugin\CoreActivity\Admin\Settings;
 use Dev4Press\v43\Core\Options\Render;
 use function Dev4Press\v43\Functions\panel;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="d4p-content">

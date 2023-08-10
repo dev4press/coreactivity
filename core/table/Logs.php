@@ -773,7 +773,7 @@ class Logs extends Table {
 
 	protected function column_logged( $item ) : string {
 		$timestamp = coreactivity()->datetime()->timestamp_gmt_to_local( strtotime( $item->logged ) );
-		$render    = date( 'Y.m.d', $timestamp ) . '<br/>@ ' . date( 'H:i:s', $timestamp );
+		$render    = gmdate( 'Y.m.d', $timestamp ) . '<br/>@ ' . gmdate( 'H:i:s', $timestamp );
 
 		$actions = array();
 

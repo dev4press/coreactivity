@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
 <div class="d4p-wizard-panel-header">
     <p>
 		<?php use function Dev4Press\v43\Functions\panel;

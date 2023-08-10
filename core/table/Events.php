@@ -69,7 +69,7 @@ class Events extends Table {
 		$this->query_items( $sql, $per_page );
 
 		foreach ( $this->items as &$item ) {
-			$item->event_id = Sanitize::absint( $item->event_id );
+			$item->event_id = absint( $item->event_id );
 
 			if ( ! isset( $this->_logged_counts[ $item->component ] ) ) {
 				$this->_logged_counts[ $item->component ] = 0;
