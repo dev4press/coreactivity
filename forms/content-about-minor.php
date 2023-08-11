@@ -13,6 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
         <strong><?php esc_html_e( "Version", "coreactivity" ); ?> <span>1.1</span></strong> &minus;
     </p>
     <p>
-		<?php printf( __( "For more information, see <a href='%s'>the changelog</a>.", "coreactivity" ), panel()->a()->panel_url( 'about', 'changelog' ) ); ?>
+		<?php printf( esc_html__( "For more information, see <a href='%s'>the changelog</a>.", "coreactivity" ), esc_url_raw( panel()->a()->panel_url( 'about', 'changelog' ) ) ); ?>
     </p>
 </div>

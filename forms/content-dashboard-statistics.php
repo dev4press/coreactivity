@@ -1,13 +1,14 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
+use function Dev4Press\v43\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$blog_id    = is_multisite() && ! is_network_admin() ? get_current_blog_id() : - 1;
-$statistics = Statistics::instance()->detailed( 30, $blog_id );
+$_blog_id   = is_multisite() && ! is_network_admin() ? get_current_blog_id() : - 1;
+$statistics = Statistics::instance()->detailed( 30, $_blog_id );
 
 ?>
 
@@ -33,7 +34,7 @@ $statistics = Statistics::instance()->detailed( 30, $blog_id );
 
                         <div class="coreactivity-component">
                             <div class="__label">
-                                <a href="<?php echo esc_url( \Dev4Press\v43\Functions\panel()->a()->panel_url( 'logs', '', 'view=component&filter-component=' . $component ) ); ?>">
+                                <a href="<?php echo esc_url( panel()->a()->panel_url( 'logs', '', 'view=component&filter-component=' . $component ) ); ?>">
                                     <i title="<?php echo esc_attr( $data['label'] ); ?>" class="d4p-icon d4p-<?php echo esc_attr( $data['icon'] ); ?> d4p-icon-fw"></i>
                                 </a>
                             </div>

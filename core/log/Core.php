@@ -153,7 +153,7 @@ class Core {
 
 	private function get_user_agent() : string {
 		if ( coreactivity_settings()->get( 'log_if_available_user_agent' ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			return Sanitize::basic( trim( $_SERVER['HTTP_USER_AGENT'] ) );
+			return Sanitize::basic( trim( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		}
 
 		return '';
@@ -170,7 +170,7 @@ class Core {
 	}
 
 	private function get_request_method() : string {
-		$method = strtoupper( trim( $_SERVER['REQUEST_METHOD'] ) );
+		$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_key( $_SERVER['REQUEST_METHOD'] ) ) : 'GET'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		return in_array( $method, $this->request_methods ) ? $method : '';
 	}
@@ -230,7 +230,7 @@ class Core {
 
 		if ( ! isset( $meta['ajax_action'] ) ) {
 			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) {
-				$meta['ajax_action'] = sanitize_text_field( $_REQUEST['action'] );
+				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 

@@ -19,7 +19,7 @@ $active     = coreactivity()->is_logging_active();
             <div class="coreactivity-overall-for-components">
                 <i class="d4p-icon d4p-ui-folder d4p-icon-5x d4p-icon-fw"></i>
                 <div>
-                    <h4><?php _e( "Components", "coreactivity" ); ?></h4>
+                    <h4><?php esc_html_e( "Components", "coreactivity" ); ?></h4>
                     <div class="__available">
                         <strong><?php echo esc_html( $statistics['components']['available'] ); ?></strong> <?php esc_html_e( "Available", "coreactivity" ); ?>
                     </div>
@@ -31,7 +31,7 @@ $active     = coreactivity()->is_logging_active();
             <div class="coreactivity-overall-for-events">
                 <i class="d4p-icon d4p-ui-radar d4p-icon-5x d4p-icon-fw"></i>
                 <div>
-                    <h4><?php _e( "Events", "coreactivity" ); ?></h4>
+                    <h4><?php esc_html_e( "Events", "coreactivity" ); ?></h4>
                     <div class="__available">
                         <strong><?php echo esc_html( $statistics['events']['available'] ); ?></strong> <?php esc_html_e( "Available", "coreactivity" ); ?>
                     </div>
@@ -66,10 +66,10 @@ $active     = coreactivity()->is_logging_active();
 
 					if ( $active ) {
 						?>
-                        <a class="button-secondary" href="<?php echo panel()->a()->action_url( 'disable-logging', 'coreactivity-disable-logging' ); ?>"><?php esc_html_e( "Disable all Events Logging", "coreactivity" ); ?></a><?php
+                        <a class="button-secondary" href="<?php echo esc_url_raw( panel()->a()->action_url( 'disable-logging', 'coreactivity-disable-logging' ) ); ?>"><?php esc_html_e( "Disable all Events Logging", "coreactivity" ); ?></a><?php
 					} else {
 						?>
-                        <a class="button-primary" href="<?php echo panel()->a()->action_url( 'enable-logging', 'coreactivity-enable-logging' ); ?>"><?php esc_html_e( "Enable Events Logging", "coreactivity" ); ?></a><?php
+                        <a class="button-primary" href="<?php echo esc_url_raw( panel()->a()->action_url( 'enable-logging', 'coreactivity-enable-logging' ) ); ?>"><?php esc_html_e( "Enable Events Logging", "coreactivity" ); ?></a><?php
 					}
 
 					?>

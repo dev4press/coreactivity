@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="d4p-content">
     <div class="d4p-group d4p-group-information">
-        <h3><?php _e( "Important", "coreactivity" ); ?></h3>
+        <h3><?php esc_html_e( "Important", "coreactivity" ); ?></h3>
         <div class="d4p-group-inner">
-			<?php _e( "These tools will remove logged data from the database. Create database backup before using these tools to avoid data loss in case you change your mind.", "coreactivity" ); ?>
+			<?php esc_html_e( "These tools will remove logged data from the database. Create database backup before using these tools to avoid data loss in case you change your mind.", "coreactivity" ); ?>
         </div>
     </div>
 

@@ -14,20 +14,20 @@ $events     = Activity::instance()->get_all_events();
 	<?php
 
 	foreach ( Activity::instance()->get_all_categories() as $category => $label ) {
-		echo '<h3>' . $label . '</h3>';
+		echo '<h3>' . esc_html( $label ) . '</h3>';
 
 		foreach ( $components as $component ) {
 			if ( $component->category != $category || ! isset( $component->plugin ) || $component->plugin != 'coreactivity' ) {
 				continue;
 			}
 
-			echo '<h4><i class="d4p-icon d4p-' . $component->icon . ' d4p-icon-fw"></i> ' . $component->label;
-			echo ' <span>(' . $component->component . ')</span></h4>';
+			echo '<h4><i class="d4p-icon d4p-' . esc_attr( $component->icon ) . ' d4p-icon-fw"></i> ' . esc_html( $component->label );
+			echo ' <span>(' . esc_html( $component->component ) . ')</span></h4>';
 			echo '<ul>';
 
 			foreach ( $events[ $component->component ] as $event ) {
 				$version = isset( $event->version ) && $event->version != '1.0' ? ' <em>- v' . $event->version . '</em>' : '';
-				echo '<li>' . $event->label . ' <span>(' . $event->event . ')</span>' . $version . '</li>';
+				echo '<li>' . esc_html( $event->label ) . ' <span>(' . esc_html( $event->event ) . ')</span>' . $version . '</li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			echo '</ul>';

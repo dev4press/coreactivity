@@ -31,7 +31,7 @@ class PostBack extends BasePostBack {
 	}
 
 	protected function cleanup() {
-		$data = $_POST['coreactivity']['tools-cleanup'] ?? array();
+		$data = $_POST['coreactivity']['tools-cleanup'] ?? array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		$when = $data['period'] ?? '';
 		$what = $data['events'] ?? array();
@@ -51,7 +51,7 @@ class PostBack extends BasePostBack {
 	}
 
 	protected function remove() {
-		$data = $_POST['coreactivitytools'];
+		$data = $_POST['coreactivitytools'] ?? array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		$remove  = isset( $data['remove'] ) ? (array) $data['remove'] : array();
 		$message = 'nothing-removed';

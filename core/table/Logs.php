@@ -596,16 +596,16 @@ class Logs extends Table {
 
 		$description = apply_filters( 'coreactivity_logs_log_item_descriptions', '', $item );
 
-		echo '<td colspan="' . $total . '">';
+		echo '<td colspan="' . esc_attr( $total ) . '">';
 
 		if ( ! empty( $description ) ) {
-			echo '<div>' . $this->kses( $description ) . '</div>';
+			echo '<div>' . $this->kses( $description ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		echo '<div>';
 
-		echo '<ul>' . join( '', $right ) . '</ul>';
-		echo '<ul>' . join( '', $left ) . '</ul>';
+		echo '<ul>' . join( '', $right ) . '</ul>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<ul>' . join( '', $left ) . '</ul>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		echo '</div>';
 		echo '</td>';

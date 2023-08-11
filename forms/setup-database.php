@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		if ( ! empty( $list_db ) ) {
 			echo '<h5>' . esc_html__( "Database Upgrade Notices", "coreactivity" ) . '</h5>';
-			echo join( '<br/>', $list_db );
+			echo join( '<br/>', $list_db ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		echo '<h5>' . esc_html__( "Database Tables Check", "coreactivity" ) . '</h5>';
@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 		}
 
-		echo join( '<br/>', $msg );
+		echo join( '<br/>', $msg ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		?>
     </div>

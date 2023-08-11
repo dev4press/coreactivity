@@ -43,7 +43,7 @@ class AJAX {
 		$id = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
 
 		$toggle = '';
-		if ( $id > 0 && wp_verify_nonce( $_REQUEST['_ajax_nonce'], 'coreactivity-toggle-event-' . $id ) ) {
+		if ( $id > 0 && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-toggle-event-' . $id ) ) {
 			$status = Activity::instance()->event_status( $id );
 
 			if ( ! empty( $status ) ) {
@@ -59,10 +59,10 @@ class AJAX {
 
 	public function toggle_notification() {
 		$id  = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
-		$key = isset( $_POST['notification'] ) ? Sanitize::slug( $_POST['notification'] ) : '';
+		$key = isset( $_POST['notification'] ) ? Sanitize::slug( $_POST['notification'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		$toggle = '';
-		if ( $id > 0 && wp_verify_nonce( $_REQUEST['_ajax_nonce'], 'coreactivity-toggle-notification-' . $key . '-' . $id ) ) {
+		if ( $id > 0 && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-toggle-notification-' . $key . '-' . $id ) ) {
 			$change = Activity::instance()->event_notification_toggle( $id, $key );
 
 			if ( ! is_null( $change ) ) {
@@ -77,7 +77,7 @@ class AJAX {
 		$output = '';
 
 		if ( isset( $_REQUEST['args'] ) ) {
-			$request = json_decode( wp_unslash( $_REQUEST['args'] ), true );
+			$request = json_decode( wp_unslash( $_REQUEST['args'] ), true ); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 			if ( isset( $request['nonce'] ) && wp_verify_nonce( $request['nonce'], 'coreactivity-live-update' ) ) {
 				$request['atts']['min_id'] = absint( $request['id'] );
@@ -97,6 +97,6 @@ class AJAX {
 			}
 		}
 
-		die( $output );
+		die( $output ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

@@ -51,7 +51,7 @@ class GetBack extends BaseGetBack {
 		$action = $this->get_bulk_action();
 
 		if ( $action != '' ) {
-			$ids = isset( $_GET['event'] ) ? (array) $_GET['event'] : array();
+			$ids = isset( $_GET['event'] ) ? (array) $_GET['event'] : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$ids = Sanitize::ids_list( $ids );
 
 			if ( ! empty( $ids ) ) {
