@@ -38,11 +38,25 @@ class Plugin extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'deleted'             => array( 'label' => __( "Plugin Deleted", "coreactivity" ) ),
-			'activated'           => array( 'label' => __( "Plugin Activated", "coreactivity" ), 'scope' => 'blog' ),
-			'network-activated'   => array( 'label' => __( "Plugin Network Activated", "coreactivity" ), 'scope' => 'network' ),
-			'deactivated'         => array( 'label' => __( "Plugin Deactivated", "coreactivity" ), 'scope' => 'blog' ),
-			'network-deactivated' => array( 'label' => __( "Plugin Network Deactivated", "coreactivity" ), 'scope' => 'network' )
+			'deleted'             => array(
+				'label' => __( "Plugin Deleted", "coreactivity" ),
+			),
+			'activated'           => array(
+				'label' => __( "Plugin Activated", "coreactivity" ),
+				'scope' => 'blog',
+			),
+			'network-activated'   => array(
+				'label' => __( "Plugin Network Activated", "coreactivity" ),
+				'scope' => 'network',
+			),
+			'deactivated'         => array(
+				'label' => __( "Plugin Deactivated", "coreactivity" ),
+				'scope' => 'blog',
+			),
+			'network-deactivated' => array(
+				'label' => __( "Plugin Network Deactivated", "coreactivity" ),
+				'scope' => 'network',
+			),
 		);
 	}
 
@@ -84,20 +98,20 @@ class Plugin extends Component {
 
 	private function _plugin_meta( $plugin_file ) : array {
 		$meta = array(
-			'plugin_name'        => strip_tags( $this->storage[ $plugin_file ][ 'Name' ] ?? '' ),
-			'plugin_title'       => strip_tags( $this->storage[ $plugin_file ][ 'Title' ] ?? '' ),
-			'plugin_author'      => strip_tags( $this->storage[ $plugin_file ][ 'Author' ] ?? '' ),
-			'plugin_description' => strip_tags( $this->storage[ $plugin_file ][ 'Description' ] ?? '' ),
-			'plugin_version'     => $this->storage[ $plugin_file ][ 'Version' ] ?? '',
-			'plugin_url'         => $this->storage[ $plugin_file ][ 'PluginURI' ] ?? ''
+			'plugin_name'        => strip_tags( $this->storage[ $plugin_file ]['Name'] ?? '' ),
+			'plugin_title'       => strip_tags( $this->storage[ $plugin_file ]['Title'] ?? '' ),
+			'plugin_author'      => strip_tags( $this->storage[ $plugin_file ]['Author'] ?? '' ),
+			'plugin_description' => strip_tags( $this->storage[ $plugin_file ]['Description'] ?? '' ),
+			'plugin_version'     => $this->storage[ $plugin_file ]['Version'] ?? '',
+			'plugin_url'         => $this->storage[ $plugin_file ]['PluginURI'] ?? '',
 		);
 
-		if ( $meta[ 'plugin_name' ] == $meta[ 'plugin_title' ] ) {
-			unset( $meta[ 'plugin_name' ] );
+		if ( $meta['plugin_name'] == $meta['plugin_title'] ) {
+			unset( $meta['plugin_name'] );
 		}
 
 		if ( ! coreactivity_settings()->get( 'log_if_available_description' ) ) {
-			unset( $meta[ 'plugin_description' ] );
+			unset( $meta['plugin_description'] );
 		}
 
 		return $meta;

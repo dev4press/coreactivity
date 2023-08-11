@@ -39,15 +39,15 @@ class Statistics {
 		$counts  = $this->db()->statistics_components_log( $days, $blog_id );
 		$results = array(
 			'total'      => 0,
-			'components' => array()
+			'components' => array(),
 		);
 
 		foreach ( $counts as $component => $count ) {
-			$results[ 'total' ]                    += $count;
-			$results[ 'components' ][ $component ] = array(
+			$results['total']                    += $count;
+			$results['components'][ $component ] = array(
 				'label' => $this->a()->get_component_label( $component ),
 				'icon'  => $this->a()->get_component_icon( $component ),
-				'count' => $count
+				'count' => $count,
 			);
 		}
 
@@ -58,7 +58,7 @@ class Statistics {
 		$ids = array();
 
 		foreach ( $events as $event ) {
-			$event_id = $this->a()->get_event_id( $event[ 0 ], $event[ 1 ] );
+			$event_id = $this->a()->get_event_id( $event[0], $event[1] );
 
 			if ( $event_id > 0 && ! in_array( $event_id, $ids ) ) {
 				$ids[] = $event_id;

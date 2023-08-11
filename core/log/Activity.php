@@ -39,14 +39,14 @@ class Activity {
 	public $statistics = array(
 		'components' => array(
 			'total'     => 0,
-			'available' => 0
+			'available' => 0,
 		),
 		'events'     => array(
 			'total'     => 0,
 			'available' => 0,
 			'active'    => 0,
-			'inactive'  => 0
-		)
+			'inactive'  => 0,
+		),
 	);
 
 	private $components = array();
@@ -75,7 +75,7 @@ class Activity {
 		$this->categories = array(
 			'internal'  => __( "Internal", "coreactivity" ),
 			'wordpress' => __( "WordPress", "coreactivity" ),
-			'plugin'    => __( "Plugin", "coreactivity" )
+			'plugin'    => __( "Plugin", "coreactivity" ),
 		);
 
 		$this->_init_events();
@@ -100,28 +100,28 @@ class Activity {
 			'cron'         => __( "Cron", "coreactivity" ),
 			'option'       => __( "Option", "coreactivity" ),
 			'transient'    => __( "Transient", "coreactivity" ),
-			'notification' => __( "Notification", "coreactivity" )
+			'notification' => __( "Notification", "coreactivity" ),
 		) );
 
 		foreach ( $this->components as $component ) {
-			$this->statistics[ 'components' ][ 'total' ] ++;
+			$this->statistics['components']['total'] ++;
 
 			if ( $component->is_available ) {
-				$this->statistics[ 'components' ][ 'available' ] ++;
+				$this->statistics['components']['available'] ++;
 			}
 		}
 
 		foreach ( $this->events as $name => $component ) {
 			foreach ( $component as $event ) {
-				$this->statistics[ 'events' ][ 'total' ] ++;
+				$this->statistics['events']['total'] ++;
 
 				if ( $this->components[ $name ]->is_available ) {
-					$this->statistics[ 'events' ][ 'available' ] ++;
+					$this->statistics['events']['available'] ++;
 
 					if ( $event->status == 'active' ) {
-						$this->statistics[ 'events' ][ 'active' ] ++;
+						$this->statistics['events']['active'] ++;
 					} else {
-						$this->statistics[ 'events' ][ 'inactive' ] ++;
+						$this->statistics['events']['inactive'] ++;
 					}
 				}
 			}
@@ -138,7 +138,7 @@ class Activity {
 		$event = $this->get_event_by_id( $event_id );
 
 		if ( $event ) {
-			if ( $event->notifications[ 'instant' ] ) {
+			if ( $event->notifications['instant'] ) {
 				return true;
 			}
 		}
@@ -234,7 +234,7 @@ class Activity {
 	}
 
 	public function get_event_label( int $event_id, string $event ) {
-		return $this->list[ $event_id ][ 'label' ] ?? $event;
+		return $this->list[ $event_id ]['label'] ?? $event;
 	}
 
 	public function get_events_for_component( string $component ) : array {
@@ -278,7 +278,7 @@ class Activity {
 	public function get_select_events( bool $simplified = false, array $only_components = array() ) : array {
 		$list = array();
 
-		$single_component = ! empty( $only_components ) && count( $only_components ) == 1 ? $only_components[ 0 ] : '';
+		$single_component = ! empty( $only_components ) && count( $only_components ) == 1 ? $only_components[0] : '';
 
 		foreach ( $this->events as $component => $events ) {
 			if ( ! empty( $only_components ) && ! in_array( $component, $only_components ) ) {
@@ -289,16 +289,16 @@ class Activity {
 				if ( ! isset( $list[ $component ] ) ) {
 					$list[ $component ] = array(
 						'title'  => $simplified ? ( $this->components[ $component ] ? $this->components[ $component ]->label : $component ) : $component,
-						'values' => array()
+						'values' => array(),
 					);
 				}
 
-				$list[ $component ][ 'values' ][ $event->event_id ] = $simplified ? ( empty( $event->label ) ? Str::slug_to_name( $event->event, '-' ) : $event->label ) : $event->event;
+				$list[ $component ]['values'][ $event->event_id ] = $simplified ? ( empty( $event->label ) ? Str::slug_to_name( $event->event, '-' ) : $event->label ) : $event->event;
 			}
 		}
 
 		if ( ! empty( $single_component ) ) {
-			return $list[ $single_component ][ 'values' ];
+			return $list[ $single_component ]['values'];
 		} else {
 			return array_values( $list );
 		}
@@ -308,24 +308,24 @@ class Activity {
 		$list = array(
 			'wordpress' => array(
 				'title'  => $simplified ? __( "WordPress", "coreactivity" ) : 'wordpress',
-				'values' => array()
+				'values' => array(),
 			),
 			'internal'  => array(
 				'title'  => $simplified ? __( "Internal", "coreactivity" ) : 'internal',
-				'values' => array()
+				'values' => array(),
 			),
 			'plugin'    => array(
 				'title'  => $simplified ? __( "Plugins", "coreactivity" ) : 'plugin',
-				'values' => array()
-			)
+				'values' => array(),
+			),
 		);
 
 		foreach ( $this->components as $component => $obj ) {
-			$list[ $obj->category ][ 'values' ][ $component ] = $simplified ? $obj->label : $component;
+			$list[ $obj->category ]['values'][ $component ] = $simplified ? $obj->label : $component;
 		}
 
-		if ( empty( $list[ 'plugin' ][ 'values' ] ) ) {
-			unset( $list[ 'plugin' ] );
+		if ( empty( $list['plugin']['values'] ) ) {
+			unset( $list['plugin'] );
 		}
 
 		return array_values( $list );
@@ -374,15 +374,15 @@ class Activity {
 		$event = $this->list[ $event_id ] ?? array();
 
 		if ( ! empty( $event ) ) {
-			$event = $this->events[ $event[ 'component' ] ][ $event[ 'name' ] ];
+			$event = $this->events[ $event['component'] ][ $event['name'] ];
 
 			if ( isset( $event->notifications[ $notification ] ) ) {
 				$status = empty( $status ) ? ! $event->notifications[ $notification ] : ( $status == 'on' );
 
 				$event->notifications[ $notification ] = $status;
 
-				$rules                    = $event->rules;
-				$rules[ 'notifications' ] = $event->notifications;
+				$rules                  = $event->rules;
+				$rules['notifications'] = $event->notifications;
 
 				DB::instance()->change_event_rules( $event_id, $rules );
 
@@ -397,10 +397,10 @@ class Activity {
 		$this->components[ $component ] = (object) array(
 			'category'     => $category,
 			'component'    => $component,
-			'label'        => $args[ 'label' ] ?? $this->_generate_component_label( $component ),
-			'plugin'       => $args[ 'plugin' ] ?? '',
-			'icon'         => $args[ 'icon' ] ?? 'ui-folder',
-			'is_available' => $args[ 'is_available' ] ?? false
+			'label'        => $args['label'] ?? $this->_generate_component_label( $component ),
+			'plugin'       => $args['plugin'] ?? '',
+			'icon'         => $args['icon'] ?? 'ui-folder',
+			'is_available' => $args['is_available'] ?? false,
 		);
 	}
 
@@ -410,14 +410,14 @@ class Activity {
 			'component'    => $component,
 			'event'        => $event,
 			'rules'        => $rules,
-			'version'      => $args[ 'version' ] ?? '1.0',
-			'status'       => $args[ 'status' ] ?? 'active',
-			'scope'        => $args[ 'scope' ] ?? '',
-			'label'        => $args[ 'label' ] ?? Str::slug_to_name( $event, '-' ),
-			'object_type'  => $args[ 'object_type' ] ?? '',
-			'is_security'  => $args[ 'is_security' ] ?? false,
-			'is_malicious' => $args[ 'is_malicious' ] ?? false,
-			'level'        => $args[ 'level' ] ?? 0
+			'version'      => $args['version'] ?? '1.0',
+			'status'       => $args['status'] ?? 'active',
+			'scope'        => $args['scope'] ?? '',
+			'label'        => $args['label'] ?? Str::slug_to_name( $event, '-' ),
+			'object_type'  => $args['object_type'] ?? '',
+			'is_security'  => $args['is_security'] ?? false,
+			'is_malicious' => $args['is_malicious'] ?? false,
+			'level'        => $args['level'] ?? 0,
 		);
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
@@ -431,7 +431,7 @@ class Activity {
 			$this->list[ $obj->event_id ] = array(
 				'name'      => $event,
 				'label'     => $obj->label,
-				'component' => $component
+				'component' => $component,
 			);
 		} else {
 			$category = $this->components[ $component ]->category;
@@ -446,7 +446,7 @@ class Activity {
 				$this->list[ $obj->event_id ] = array(
 					'name'      => $event,
 					'label'     => $obj->label,
-					'component' => $component
+					'component' => $component,
 				);
 			}
 		}
@@ -457,7 +457,7 @@ class Activity {
 	private function _generate_component_label( string $component ) : string {
 		$parts = explode( '/', $component );
 
-		return isset( $parts[ 1 ] ) ? Str::slug_to_name( $parts[ 1 ], '-' ) : $component;
+		return isset( $parts[1] ) ? Str::slug_to_name( $parts[1], '-' ) : $component;
 	}
 
 	private function _init_events() {
@@ -470,7 +470,7 @@ class Activity {
 					'component'    => $event->component,
 					'label'        => $this->_generate_component_label( $event->component ),
 					'icon'         => 'ui-folder',
-					'is_available' => false
+					'is_available' => false,
 				);
 
 				$this->events[ $event->component ] = array();
@@ -482,19 +482,19 @@ class Activity {
 			$event->notifications = array(
 				'daily'   => false,
 				'weekly'  => false,
-				'instant' => false
+				'instant' => false,
 			);
 
-			if ( isset( $event->rules[ 'notifications' ] ) ) {
+			if ( isset( $event->rules['notifications'] ) ) {
 				foreach ( array( 'daily', 'weekly', 'instant' ) as $key ) {
-					$value = $event->rules[ 'notifications' ][ $key ] ?? false;
+					$value = $event->rules['notifications'][ $key ] ?? false;
 
 					if ( is_bool( $value ) ) {
 						$event->notifications[ $key ] = $value;
 					}
 				}
 
-				unset( $event->rules[ 'notifications' ] );
+				unset( $event->rules['notifications'] );
 			}
 
 			$this->events[ $event->component ][ $event->event ] = $event;
@@ -502,7 +502,7 @@ class Activity {
 			$this->list[ $event->event_id ] = array(
 				'name'      => $event->event,
 				'label'     => $event->label,
-				'component' => $event->component
+				'component' => $event->component,
 			);
 		}
 	}

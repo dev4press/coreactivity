@@ -48,8 +48,12 @@ class Comment extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'status-change' => array( 'label' => __( "Comment Status Change", "coreactivity" ) ),
-			'deleted'       => array( 'label' => __( "Comment Deleted", "coreactivity" ) )
+			'status-change' => array(
+				'label' => __( "Comment Status Change", "coreactivity" ),
+			),
+			'deleted'       => array(
+				'label' => __( "Comment Deleted", "coreactivity" ),
+			),
 		);
 	}
 
@@ -59,10 +63,10 @@ class Comment extends Component {
 
 			if ( $post instanceof WP_Post && $this->is_post_type_allowed( $post->post_type ) ) {
 				$this->log( 'status-change', array(
-					'object_id' => $comment->comment_ID
+					'object_id' => $comment->comment_ID,
 				), array(
 					'old_status' => $old_status,
-					'new_status' => $new_status
+					'new_status' => $new_status,
 				) );
 			}
 		}
@@ -74,7 +78,7 @@ class Comment extends Component {
 
 			if ( $post instanceof WP_Post && $this->is_post_type_allowed( $post->post_type ) ) {
 				$this->log( 'deleted', array(
-					'object_id' => $comment->comment_ID
+					'object_id' => $comment->comment_ID,
 				), array(
 					'post_id'              => $post->ID,
 					'comment_status'       => $comment->comment_approved,
@@ -82,7 +86,7 @@ class Comment extends Component {
 					'comment_author'       => $comment->comment_author,
 					'comment_author_email' => $comment->comment_author_email,
 					'comment_author_url'   => $comment->comment_author_url,
-					'comment_author_ip'    => $comment->comment_author_IP
+					'comment_author_ip'    => $comment->comment_author_IP,
 				) );
 			}
 		}

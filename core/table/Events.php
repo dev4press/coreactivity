@@ -25,7 +25,7 @@ class Events extends Table {
 		parent::__construct( array(
 			'singular' => 'event',
 			'plural'   => 'events',
-			'ajax'     => false
+			'ajax'     => false,
 		) );
 	}
 
@@ -44,26 +44,26 @@ class Events extends Table {
 				'e.component',
 				'e.event',
 				'e.status',
-				'COUNT(l.`log_id`) AS `logs`'
+				'COUNT(l.`log_id`) AS `logs`',
 			),
 			'from'   => array(
 				coreactivity_db()->events . ' e',
-				'LEFT JOIN ' . coreactivity_db()->logs . ' l ON l.`event_id` = e.`event_id`'
+				'LEFT JOIN ' . coreactivity_db()->logs . ' l ON l.`event_id` = e.`event_id`',
 			),
 			'group'  => 'e.`event_id`',
-			'where'  => array()
+			'where'  => array(),
 		);
 
 		if ( ! empty( $sel_group ) ) {
-			$sql[ 'where' ][] = coreactivity_db()->prepare( '`category` = %s', $sel_group );
+			$sql['where'][] = coreactivity_db()->prepare( '`category` = %s', $sel_group );
 		}
 
 		if ( ! empty( $sel_component ) ) {
-			$sql[ 'where' ][] = coreactivity_db()->prepare( '`component` = %s', $sel_component );
+			$sql['where'][] = coreactivity_db()->prepare( '`component` = %s', $sel_component );
 		}
 
 		if ( ! empty( $sel_search ) ) {
-			$sql[ 'where' ][] = $this->_get_search_where( array( '`component`', '`event`' ), $sel_search );
+			$sql['where'][] = $this->_get_search_where( array( '`component`', '`event`' ), $sel_search );
 		}
 
 		$this->query_items( $sql, $per_page );
@@ -90,11 +90,11 @@ class Events extends Table {
 			'logs'          => __( "Logs", "coreactivity" ),
 			'description'   => __( "Description", "coreactivity" ),
 			'available'     => __( "Available", "coreactivity" ),
-			'notifications' => __( "Notifications", "coreactivity" )
+			'notifications' => __( "Notifications", "coreactivity" ),
 		);
 
 		if ( is_network_admin() ) {
-			unset( $columns[ 'available' ] );
+			unset( $columns['available'] );
 		}
 
 		return $columns;
@@ -119,13 +119,13 @@ class Events extends Table {
 		echo '<div class="alignleft actions">';
 		Elements::instance()->select( array_merge( array( '' => __( "All Categories", "coreactivity" ) ), Activity::instance()->get_all_categories() ), array(
 			'selected' => $this->get_request_arg( 'filter-group' ),
-			'name'     => 'filter-group'
+			'name'     => 'filter-group',
 		) );
 
 		Elements::instance()->select_grouped( Activity::instance()->get_select_event_components( true ), array(
 			'empty'    => __( "All Components", "coreactivity" ),
 			'selected' => $this->get_request_arg( 'filter-component' ),
-			'name'     => 'filter-component'
+			'name'     => 'filter-component',
 		) );
 		submit_button( __( "Filter", "coreactivity" ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
 		echo '</div>';
@@ -148,7 +148,7 @@ class Events extends Table {
 			'event_id'  => array( 'e.event_id', false ),
 			'component' => array( 'e.component', false ),
 			'event'     => array( 'e.event', false ),
-			'logs'      => array( 'logs', false )
+			'logs'      => array( 'logs', false ),
 		);
 	}
 
@@ -161,7 +161,7 @@ class Events extends Table {
 			'notifications-daily-on'    => __( "Enable Daily Notifications", "coreactivity" ),
 			'notifications-daily-off'   => __( "Disable Daily Notifications", "coreactivity" ),
 			'notifications-weekly-on'   => __( "Enable Weekly Notifications", "coreactivity" ),
-			'notifications-weekly-off'  => __( "Disable Weekly Notifications", "coreactivity" )
+			'notifications-weekly-off'  => __( "Disable Weekly Notifications", "coreactivity" ),
 		);
 	}
 
@@ -214,15 +214,15 @@ class Events extends Table {
 
 		$render = '<div class="coreactivity-event-notifications">';
 		$render .= '<div>';
-		$render .= $this->toggle_switch( $notifications[ 'instant' ], 'instant', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-instant-' . $item->event_id, __( "Disable Instant Notifications", "coreactivity" ), __( "Enable Instant Notifications", "coreactivity" ) );
+		$render .= $this->toggle_switch( $notifications['instant'], 'instant', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-instant-' . $item->event_id, __( "Disable Instant Notifications", "coreactivity" ), __( "Enable Instant Notifications", "coreactivity" ) );
 		$render .= '<span>' . __( "Instant", "coreactivity" ) . '</span>';
 		$render .= '</div>';
 		$render .= '<div>';
-		$render .= $this->toggle_switch( $notifications[ 'daily' ], 'daily', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-daily-' . $item->event_id, __( "Disable Daily Notifications", "coreactivity" ), __( "Enable Daily Notifications", "coreactivity" ) );
+		$render .= $this->toggle_switch( $notifications['daily'], 'daily', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-daily-' . $item->event_id, __( "Disable Daily Notifications", "coreactivity" ), __( "Enable Daily Notifications", "coreactivity" ) );
 		$render .= '<span>' . __( "Daily", "coreactivity" ) . '</span>';
 		$render .= '</div>';
 		$render .= '<div>';
-		$render .= $this->toggle_switch( $notifications[ 'weekly' ], 'weekly', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-weekly-' . $item->event_id, __( "Disable Weekly Notifications", "coreactivity" ), __( "Enable Weekly Notifications", "coreactivity" ) );
+		$render .= $this->toggle_switch( $notifications['weekly'], 'weekly', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-weekly-' . $item->event_id, __( "Disable Weekly Notifications", "coreactivity" ), __( "Enable Weekly Notifications", "coreactivity" ) );
 		$render .= '<span>' . __( "Weekly", "coreactivity" ) . '</span>';
 		$render .= '</div>';
 		$render .= '</div>';

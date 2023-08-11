@@ -116,13 +116,13 @@ class Option extends Component {
 		'theme_switch_menu_locations',
 		'theme_switched',
 		'current_theme',
-		'widget_block'
+		'widget_block',
 	);
 
 	protected $partials = array();
 	protected $exceptions = array();
 	protected $skip = array(
-		'cron'
+		'cron',
 	);
 	protected $transient_value;
 
@@ -163,13 +163,29 @@ class Option extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'core-option-edited'  => array( 'label' => __( "Core Option Changed", "coreactivity" ) ),
-			'core-option-deleted' => array( 'label' => __( "Core Option Deleted", "coreactivity" ) ),
-			'option-added'        => array( 'label' => __( "Option Added", "coreactivity" ) ),
-			'option-edited'       => array( 'label' => __( "Option Changed", "coreactivity" ) ),
-			'option-deleted'      => array( 'label' => __( "Option Deleted", "coreactivity" ) ),
-			'transient-set'       => array( 'label' => __( "Transient Set", "coreactivity" ), 'status' => 'inactive' ),
-			'transient-deleted'   => array( 'label' => __( "Transient Deleted", "coreactivity" ), 'status' => 'inactive' )
+			'core-option-edited'  => array(
+				'label' => __( "Core Option Changed", "coreactivity" ),
+			),
+			'core-option-deleted' => array(
+				'label' => __( "Core Option Deleted", "coreactivity" ),
+			),
+			'option-added'        => array(
+				'label' => __( "Option Added", "coreactivity" ),
+			),
+			'option-edited'       => array(
+				'label' => __( "Option Changed", "coreactivity" ),
+			),
+			'option-deleted'      => array(
+				'label' => __( "Option Deleted", "coreactivity" ),
+			),
+			'transient-set'       => array(
+				'label'  => __( "Transient Set", "coreactivity" ),
+				'status' => 'inactive',
+			),
+			'transient-deleted'   => array(
+				'label'  => __( "Transient Deleted", "coreactivity" ),
+				'status' => 'inactive',
+			),
 		);
 	}
 
@@ -182,10 +198,10 @@ class Option extends Component {
 
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array(
-				'object_name' => $option
+				'object_name' => $option,
 			), array(
 				'old' => $old_value,
-				'new' => $value
+				'new' => $value,
 			) );
 		}
 	}
@@ -199,7 +215,7 @@ class Option extends Component {
 
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array(
-				'object_name' => $option
+				'object_name' => $option,
 			) );
 		}
 	}
@@ -210,26 +226,26 @@ class Option extends Component {
 		}
 
 		$this->log( 'option-added', array(
-			'object_name' => $option
+			'object_name' => $option,
 		), array(
-			'value' => $value
+			'value' => $value,
 		) );
 	}
 
 	public function event_set_transient( $transient, $value, $expiration ) {
 		$this->log( 'transient-set', array(
 			'object_type' => 'transient',
-			'object_name' => $transient
+			'object_name' => $transient,
 		), array(
 			'value'      => $this->transient_value ? $value : '',
-			'expiration' => $expiration
+			'expiration' => $expiration,
 		) );
 	}
 
 	public function event_deleted_transient( $transient ) {
 		$this->log( 'transient-deleted', array(
 			'object_type' => 'transient',
-			'object_name' => $transient
+			'object_name' => $transient,
 		) );
 	}
 

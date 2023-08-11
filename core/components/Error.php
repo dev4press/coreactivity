@@ -29,12 +29,24 @@ class Error extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'404'        => array( 'label' => __( "404 Not Found", "coreactivity" ) ),
-			'404-php'    => array( 'label' => __( "404 Not Found PHP", "coreactivity" ) ),
-			'404-file'   => array( 'label' => __( "404 Not Found File", "coreactivity" ) ),
-			'404-media'  => array( 'label' => __( "404 Not Found Media", "coreactivity" ) ),
-			'404-script' => array( 'label' => __( "404 Not Found Script", "coreactivity" ) ),
-			'404-style'  => array( 'label' => __( "404 Not Found Style", "coreactivity" ) )
+			'404'        => array(
+				'label' => __( "404 Not Found", "coreactivity" ),
+			),
+			'404-php'    => array(
+				'label' => __( "404 Not Found PHP", "coreactivity" ),
+			),
+			'404-file'   => array(
+				'label' => __( "404 Not Found File", "coreactivity" ),
+			),
+			'404-media'  => array(
+				'label' => __( "404 Not Found Media", "coreactivity" ),
+			),
+			'404-script' => array(
+				'label' => __( "404 Not Found Script", "coreactivity" ),
+			),
+			'404-style'  => array(
+				'label' => __( "404 Not Found Style", "coreactivity" ),
+			),
 		);
 	}
 
@@ -59,7 +71,10 @@ class Error extends Component {
 			$file   = ! empty( $ext ) && ! $php && ! $style && ! $script && ! $media;
 
 			$data = array();
-			$meta = array( 'ext' => $ext, 'query' => $query );
+			$meta = array(
+				'ext'   => $ext,
+				'query' => $query,
+			);
 
 			if ( $this->is_active( '404-php' ) && $php ) {
 				$this->log( '404-php', $data, $meta );

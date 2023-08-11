@@ -35,8 +35,12 @@ class Theme extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'deleted'  => array( 'label' => __( "Theme Deleted", "coreactivity" ) ),
-			'switched' => array( 'label' => __( "Theme Switched", "coreactivity" ) )
+			'deleted'  => array(
+				'label' => __( "Theme Deleted", "coreactivity" ),
+			),
+			'switched' => array(
+				'label' => __( "Theme Switched", "coreactivity" ),
+			),
 		);
 	}
 
@@ -57,7 +61,7 @@ class Theme extends Component {
 		$this->prepare_stylesheet( $old_theme->get_stylesheet() );
 
 		$this->log( 'switched', array(
-			'object_name' => $new_theme->get_stylesheet()
+			'object_name' => $new_theme->get_stylesheet(),
 		), array_merge(
 			array( 'old_stylesheet' => $old_theme->get_stylesheet() ),
 			$this->_get_theme( $old_theme->get_stylesheet(), 'old_' ),
@@ -73,7 +77,7 @@ class Theme extends Component {
 			$prefix . 'theme_author'      => strip_tags( $theme->get( 'Author' ) ),
 			$prefix . 'theme_description' => $theme->get( 'Description' ),
 			$prefix . 'theme_version'     => $theme->get( 'Version' ),
-			$prefix . 'theme_url'         => $theme->get( 'ThemeURI' )
+			$prefix . 'theme_url'         => $theme->get( 'ThemeURI' ),
 		);
 
 		if ( ! coreactivity_settings()->get( 'log_if_available_description' ) ) {

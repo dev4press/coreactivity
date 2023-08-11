@@ -35,7 +35,7 @@ class Display {
 			E_RECOVERABLE_ERROR => 'E_RECOVERABLE_ERROR',
 			E_DEPRECATED        => 'E_DEPRECATED',
 			E_USER_DEPRECATED   => 'E_USER_DEPRECATED',
-			E_ALL               => 'E_ALL'
+			E_ALL               => 'E_ALL',
 		);
 	}
 
@@ -161,12 +161,12 @@ class Display {
 		if ( empty( $item->object_name ) ) {
 			$render .= __( "Unknown Theme", "coreactivity" );
 		} else {
-			if ( isset( $item->meta[ 'theme_name' ] ) ) {
-				$render .= '<span>' . esc_html__( "Theme", "coreactivity" ) . ': <strong>' . $item->meta[ 'theme_name' ] . '</strong></span><br/>';
+			if ( isset( $item->meta['theme_name'] ) ) {
+				$render .= '<span>' . esc_html__( "Theme", "coreactivity" ) . ': <strong>' . $item->meta['theme_name'] . '</strong></span><br/>';
 			}
 			$render .= '<span>' . esc_html__( "Directory", "coreactivity" ) . ': <strong>' . $item->object_name . '</span>';
-			if ( isset( $item->meta[ 'theme_version' ] ) ) {
-				$render .= '<br/><span>' . esc_html__( "Version", "coreactivity" ) . ': <strong>' . $item->meta[ 'theme_version' ] . '</strong></span>';
+			if ( isset( $item->meta['theme_version'] ) ) {
+				$render .= '<br/><span>' . esc_html__( "Version", "coreactivity" ) . ': <strong>' . $item->meta['theme_version'] . '</strong></span>';
 			}
 		}
 
@@ -179,11 +179,11 @@ class Display {
 		if ( empty( $item->object_name ) ) {
 			$render .= __( "Unknown Plugin", "coreactivity" );
 		} else {
-			$plugin = $item->meta[ 'plugin_title' ] ?? '';
+			$plugin = $item->meta['plugin_title'] ?? '';
 			$render .= '<span>' . esc_html__( "Plugin", "coreactivity" ) . ': <strong>' . $plugin . '</strong></span>';
 			$render .= '<br/><span>' . esc_html__( "File", "coreactivity" ) . ': <strong>' . $item->object_name . '</strong></span>';
-			if ( isset( $item->meta[ 'plugin_version' ] ) ) {
-				$render .= '<br/><span>' . esc_html__( "Version", "coreactivity" ) . ': <strong>' . $item->meta[ 'plugin_version' ] . '</strong></span>';
+			if ( isset( $item->meta['plugin_version'] ) ) {
+				$render .= '<br/><span>' . esc_html__( "Version", "coreactivity" ) . ': <strong>' . $item->meta['plugin_version'] . '</strong></span>';
 			}
 		}
 
@@ -201,8 +201,8 @@ class Display {
 			$data = Detection::instance()->get_data( $item->object_name );
 
 			if ( ! empty( $data ) ) {
-				$render .= '<br/><span>' . esc_html__( "Source", "coreactivity" ) . ': <strong>' . $data[ 'source' ] . '</strong></span>';
-				$render .= '<br/><span>' . esc_html__( "Name", "coreactivity" ) . ': <strong>' . $data[ 'label' ] . '</strong></span>';
+				$render .= '<br/><span>' . esc_html__( "Source", "coreactivity" ) . ': <strong>' . $data['source'] . '</strong></span>';
+				$render .= '<br/><span>' . esc_html__( "Name", "coreactivity" ) . ': <strong>' . $data['label'] . '</strong></span>';
 			}
 		}
 
@@ -312,9 +312,9 @@ class Display {
 		if ( class_exists( '\GFAPI' ) ) {
 			if ( GFAPI::form_id_exists( $item->object_id ) ) {
 				$form = GFAPI::get_form( $item->object_id );
-				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form[ 'id' ] );
+				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form['id'] );
 
-				$render .= sprintf( __( "ID: %s &middot; Slug: %s<br/>Name: %s", "coreactivity" ), '<strong>' . $form[ 'id' ] . '</strong>', '<strong>' . $form[ 'form_slug' ] . '</strong>', '<strong><a href="' . $url . '">' . $form[ 'title' ] . '</a></strong>' );
+				$render .= sprintf( __( "ID: %s &middot; Slug: %s<br/>Name: %s", "coreactivity" ), '<strong>' . $form['id'] . '</strong>', '<strong>' . $form['form_slug'] . '</strong>', '<strong><a href="' . $url . '">' . $form['title'] . '</a></strong>' );
 			} else {
 				$render .= __( "MISSING", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
 			}
@@ -363,8 +363,8 @@ class Display {
 		if ( empty( $item->object_name ) ) {
 			$render .= __( "Unknown Theme", "coreactivity" );
 		} else {
-			if ( isset( $item->meta[ 'theme_name' ] ) ) {
-				$render .= esc_html__( "Theme", "coreactivity" ) . ': ' . $item->meta[ 'theme_name' ] . ' (' . $item->meta[ 'theme_version' ] . ')';
+			if ( isset( $item->meta['theme_name'] ) ) {
+				$render .= esc_html__( "Theme", "coreactivity" ) . ': ' . $item->meta['theme_name'] . ' (' . $item->meta['theme_version'] . ')';
 			}
 		}
 
@@ -377,7 +377,7 @@ class Display {
 		if ( empty( $item->object_name ) ) {
 			$render .= __( "Unknown Plugin", "coreactivity" );
 		} else {
-			$render .= esc_html__( "Plugin", "coreactivity" ) . ': ' . $item->meta[ 'plugin_title' ] . ' (' . $item->meta[ 'plugin_version' ] . ')';
+			$render .= esc_html__( "Plugin", "coreactivity" ) . ': ' . $item->meta['plugin_title'] . ' (' . $item->meta['plugin_version'] . ')';
 		}
 
 		return $render;
@@ -487,9 +487,9 @@ class Display {
 		if ( class_exists( '\GFAPI' ) ) {
 			if ( GFAPI::form_id_exists( $item->object_id ) ) {
 				$form = GFAPI::get_form( $item->object_id );
-				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form[ 'id' ] );
+				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form['id'] );
 
-				$render .= sprintf( __( "ID: %s · Slug: %s%sName: %s", "coreactivity" ), $form[ 'id' ], $form[ 'form_slug' ], ' · ', $form[ 'title' ] );
+				$render .= sprintf( __( "ID: %s · Slug: %s%sName: %s", "coreactivity" ), $form['id'], $form['form_slug'], ' · ', $form['title'] );
 			} else {
 				$render .= __( "MISSING", "coreactivity" ) . ': ' . $item->object_id;
 			}

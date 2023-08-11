@@ -40,7 +40,7 @@ class Sitemeta extends Component {
 		'user_count',
 		'initial_db_version',
 		'active_sitewide_plugins',
-		'WPLANG'
+		'WPLANG',
 	);
 	protected $transient_value;
 
@@ -79,20 +79,36 @@ class Sitemeta extends Component {
 	}
 
 	protected function prepare_data_for_log( string $event, array $data = array() ) : array {
-		$data[ 'blog_id' ] = 0;
+		$data['blog_id'] = 0;
 
 		return parent::prepare_data_for_log( $event, $data );
 	}
 
 	protected function get_events() : array {
 		return array(
-			'core-sitemeta-edited'  => array( 'label' => __( "Core Sitemeta Changed", "coreactivity" ) ),
-			'core-sitemeta-deleted' => array( 'label' => __( "Core Sitemeta Deleted", "coreactivity" ) ),
-			'sitemeta-added'        => array( 'label' => __( "Sitemeta Added", "coreactivity" ) ),
-			'sitemeta-edited'       => array( 'label' => __( "Sitemeta Changed", "coreactivity" ) ),
-			'sitemeta-deleted'      => array( 'label' => __( "Sitemeta Deleted", "coreactivity" ) ),
-			'transient-set'         => array( 'label' => __( "Site Transient Set", "coreactivity" ), 'status' => 'inactive' ),
-			'transient-deleted'     => array( 'label' => __( "Site Transient Deleted", "coreactivity" ), 'status' => 'inactive' )
+			'core-sitemeta-edited'  => array(
+				'label' => __( "Core Sitemeta Changed", "coreactivity" ),
+			),
+			'core-sitemeta-deleted' => array(
+				'label' => __( "Core Sitemeta Deleted", "coreactivity" ),
+			),
+			'sitemeta-added'        => array(
+				'label' => __( "Sitemeta Added", "coreactivity" ),
+			),
+			'sitemeta-edited'       => array(
+				'label' => __( "Sitemeta Changed", "coreactivity" ),
+			),
+			'sitemeta-deleted'      => array(
+				'label' => __( "Sitemeta Deleted", "coreactivity" ),
+			),
+			'transient-set'         => array(
+				'label'  => __( "Site Transient Set", "coreactivity" ),
+				'status' => 'inactive',
+			),
+			'transient-deleted'     => array(
+				'label'  => __( "Site Transient Deleted", "coreactivity" ),
+				'status' => 'inactive',
+			),
 		);
 	}
 
@@ -105,10 +121,10 @@ class Sitemeta extends Component {
 
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array(
-				'object_name' => $option
+				'object_name' => $option,
 			), array(
 				'old' => $old_value,
-				'new' => $value
+				'new' => $value,
 			) );
 		}
 	}
@@ -122,7 +138,7 @@ class Sitemeta extends Component {
 
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array(
-				'object_name' => $option
+				'object_name' => $option,
 			) );
 		}
 	}
@@ -133,26 +149,26 @@ class Sitemeta extends Component {
 		}
 
 		$this->log( 'sitemeta-added', array(
-			'object_name' => $option
+			'object_name' => $option,
 		), array(
-			'value' => $value
+			'value' => $value,
 		) );
 	}
 
 	public function event_set_transient( $transient, $value, $expiration ) {
 		$this->log( 'transient-set', array(
 			'object_type' => 'transient',
-			'object_name' => $transient
+			'object_name' => $transient,
 		), array(
 			'value'      => $this->transient_value ? $value : '',
-			'expiration' => $expiration
+			'expiration' => $expiration,
 		) );
 	}
 
 	public function event_deleted_transient( $transient ) {
 		$this->log( 'transient-deleted', array(
 			'object_type' => 'transient',
-			'object_name' => $transient
+			'object_name' => $transient,
 		) );
 	}
 

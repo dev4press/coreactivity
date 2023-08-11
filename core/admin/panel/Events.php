@@ -20,7 +20,7 @@ class Events extends Panel {
 		add_screen_option( 'per_page', array(
 			'label'   => __( "Rows", "coreactivity" ),
 			'default' => 50,
-			'option'  => 'coreactivity_events_rows_per_page'
+			'option'  => 'coreactivity_events_rows_per_page',
 		) );
 
 		new EventsTable();

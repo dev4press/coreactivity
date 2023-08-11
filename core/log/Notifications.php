@@ -97,13 +97,13 @@ https://plugins.dev4press.com/coreactivity/',
 				'SITE_URL'   => is_multisite() ? get_site_url( get_main_site_id() ) : site_url(),
 				'LOG_URL'    => network_admin_url( 'admin.php?page=coreactivity-logs' ),
 				'LOG_DIGEST' => $this->format_digest_for_email( $events ),
-				'LOG_PERIOD' => ! empty( $from ) && ! empty( $to ) ? PHP_EOL . 'For period: "' . $from . '" to "' . $to . '".' . PHP_EOL : ''
+				'LOG_PERIOD' => ! empty( $from ) && ! empty( $to ) ? PHP_EOL . 'For period: "' . $from . '" to "' . $to . '".' . PHP_EOL : '',
 			),
 			'events'  => $events,
 			'period'  => array(
 				'from' => $from,
-				'to'   => $to
-			)
+				'to'   => $to,
+			),
 		);
 
 		/**
@@ -141,13 +141,13 @@ https://plugins.dev4press.com/coreactivity/',
 				'SITE_URL'   => is_multisite() ? get_site_url( get_main_site_id() ) : site_url(),
 				'LOG_URL'    => network_admin_url( 'admin.php?page=coreactivity-logs' ),
 				'LOG_DIGEST' => $this->format_digest_for_email( $events ),
-				'LOG_PERIOD' => ! empty( $from ) && ! empty( $to ) ? PHP_EOL . 'For period: "' . $from . '" to "' . $to . '".' . PHP_EOL : ''
+				'LOG_PERIOD' => ! empty( $from ) && ! empty( $to ) ? PHP_EOL . 'For period: "' . $from . '" to "' . $to . '".' . PHP_EOL : '',
 			),
 			'events'  => $events,
 			'period'  => array(
 				'from' => $from,
-				'to'   => $to
-			)
+				'to'   => $to,
+			),
 		);
 
 		/**
@@ -188,13 +188,13 @@ https://plugins.dev4press.com/coreactivity/',
 				'SITE_URL'   => is_multisite() ? get_site_url( get_main_site_id() ) : site_url(),
 				'LOG_URL'    => network_admin_url( 'admin.php?page=coreactivity-logs' ),
 				'LOG_EVENTS' => $this->format_events_for_email( $events ),
-				'LOG_PERIOD' => ! empty( $from ) && ! empty( $to ) ? PHP_EOL . 'For period: "' . $from . '" to "' . $to . '".' . PHP_EOL : ''
+				'LOG_PERIOD' => ! empty( $from ) && ! empty( $to ) ? PHP_EOL . 'For period: "' . $from . '" to "' . $to . '".' . PHP_EOL : '',
 			),
 			'events'  => $events,
 			'period'  => array(
 				'from' => $from,
-				'to'   => $to
-			)
+				'to'   => $to,
+			),
 		);
 
 		/**
@@ -210,13 +210,13 @@ https://plugins.dev4press.com/coreactivity/',
 	}
 
 	public function check_for_instant( $id, $data, $meta ) {
-		if ( Activity::instance()->is_instant_notification_enabled( $data[ 'event_id' ] ) ) {
+		if ( Activity::instance()->is_instant_notification_enabled( $data['event_id'] ) ) {
 			if ( ! wp_next_scheduled( 'coreactivity_instant_notification' ) ) {
 				if ( ! $this->is_instant_allowed() ) {
 					wp_schedule_single_event( $this->next_instant_timestamp(), 'coreactivity_instant_notification' );
 				} else {
-					$data[ 'id' ]   = $id;
-					$data[ 'meta' ] = $meta;
+					$data['id']   = $id;
+					$data['meta'] = $meta;
 
 					$this->instant_notify( array( $data ), true );
 				}
@@ -268,24 +268,24 @@ https://plugins.dev4press.com/coreactivity/',
 			'D4' => 'Thursday',
 			'D5' => 'Friday',
 			'D6' => 'Saturday',
-			'D0' => 'Sunday'
+			'D0' => 'Sunday',
 		);
 
 		return $days[ $code ] ?? 'Saturday';
 	}
 
 	private function handle_email_sending( array $notification, string $filter ) {
-		if ( empty( $notification[ 'emails' ] ) ) {
-			$notification[ 'emails' ] = array( get_site_option( 'admin_email' ) );
+		if ( empty( $notification['emails'] ) ) {
+			$notification['emails'] = array( get_site_option( 'admin_email' ) );
 		}
 
 		$notification = apply_filters( $filter, $notification );
 
-		$notification[ 'subject' ] = Str::replace_tags( $notification[ 'subject' ], $notification[ 'tags' ] );
-		$notification[ 'message' ] = Str::replace_tags( $notification[ 'message' ], $notification[ 'tags' ] );
+		$notification['subject'] = Str::replace_tags( $notification['subject'], $notification['tags'] );
+		$notification['message'] = Str::replace_tags( $notification['message'], $notification['tags'] );
 
-		foreach ( $notification[ 'emails' ] as $email ) {
-			wp_mail( $email, wp_specialchars_decode( $notification[ 'subject' ] ), $notification[ 'message' ] );
+		foreach ( $notification['emails'] as $email ) {
+			wp_mail( $email, wp_specialchars_decode( $notification['subject'] ), $notification['message'] );
 		}
 	}
 
@@ -296,10 +296,10 @@ https://plugins.dev4press.com/coreactivity/',
 		foreach ( $events as $component => $data ) {
 			$item = str_pad( $i, 3, ' ', STR_PAD_LEFT ) . '. ';
 			$item .= '[' . $component . '] ' . Activity::instance()->get_component_label( $component ) . PHP_EOL;
-			$item .= '     Logged Entries: ' . $data[ 'total' ] . PHP_EOL;
+			$item .= '     Logged Entries: ' . $data['total'] . PHP_EOL;
 			$item .= '     View All in Log: ' . network_admin_url( 'admin.php?page=coreactivity-logs&view=component&filter-component=' . $component ) . PHP_EOL;
 
-			foreach ( $data[ 'events' ] as $event => $count ) {
+			foreach ( $data['events'] as $event => $count ) {
 				$event_id = Activity::instance()->get_event_id( $component, $event );
 
 				$item .= '     * [' . $event . '] ' . Activity::instance()->get_event_label( $event_id, $event ) . ': ' . $count . PHP_EOL;
@@ -321,14 +321,14 @@ https://plugins.dev4press.com/coreactivity/',
 			$object = Display::instance()->email_object_name( '', (object) $event );
 
 			$item = str_pad( $i, 4, ' ', STR_PAD_LEFT ) . '. ';
-			$item .= Activity::instance()->get_event_display( $event[ 'event_id' ] ) . PHP_EOL;
-			$item .= '      Logged: ' . $event[ 'logged' ] . PHP_EOL;
-			$item .= '      IP: ' . $event[ 'ip' ] . ' · ' . $event[ 'method' ] . ( empty( $event[ 'context' ] ) ? '' : ' · ' . $event[ 'context' ] );
+			$item .= Activity::instance()->get_event_display( $event['event_id'] ) . PHP_EOL;
+			$item .= '      Logged: ' . $event['logged'] . PHP_EOL;
+			$item .= '      IP: ' . $event['ip'] . ' · ' . $event['method'] . ( empty( $event['context'] ) ? '' : ' · ' . $event['context'] );
 
 			if ( ! empty( $object ) ) {
 				$item .= PHP_EOL . '      ' . $object . PHP_EOL;
 			}
-			$item .= '      REQUEST: ' . $event[ 'request' ];
+			$item .= '      REQUEST: ' . $event['request'];
 
 			$render[] = $item;
 

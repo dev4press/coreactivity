@@ -48,10 +48,10 @@ abstract class Content extends Component {
 		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
 			if ( $old_status != $new_status ) {
 				$this->log( 'status-change', array(
-					'object_id' => $post->ID
+					'object_id' => $post->ID,
 				), array(
 					'old_status' => $old_status,
-					'new_status' => $new_status
+					'new_status' => $new_status,
 				) );
 			}
 		}
@@ -60,12 +60,12 @@ abstract class Content extends Component {
 	public function event_delete_post( $post_id, $post ) {
 		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
 			$this->log( 'deleted', array(
-				'object_id' => $post->ID
+				'object_id' => $post->ID,
 			), array(
 				'post_type'   => $post->post_type,
 				'post_status' => $post->post_status,
 				'post_name'   => $post->post_name,
-				'post_title'  => $post->post_title
+				'post_title'  => $post->post_title,
 			) );
 		}
 	}
@@ -78,20 +78,26 @@ abstract class Content extends Component {
 			$new_terms = Helper::get_term_ids_from_taxonomy_term_ids( $tt_ids );
 
 			$this->log( 'term-relationship-change', array(
-				'object_id' => $object_id
+				'object_id' => $object_id,
 			), array(
 				'taxonomy'      => $taxonomy,
 				'old_terms_ids' => $old_terms,
-				'new_terms_ids' => $new_terms
+				'new_terms_ids' => $new_terms,
 			) );
 		}
 	}
 
 	protected function get_events() : array {
 		return array(
-			'status-change'            => array( 'label' => __( "Post Status Change", "coreactivity" ) ),
-			'deleted'                  => array( 'label' => __( "Post Deleted", "coreactivity" ) ),
-			'term-relationship-change' => array( 'label' => __( "Post Term Relationship Changes", "coreactivity" ) )
+			'status-change'            => array(
+				'label' => __( "Post Status Change", "coreactivity" ),
+			),
+			'deleted'                  => array(
+				'label' => __( "Post Deleted", "coreactivity" ),
+			),
+			'term-relationship-change' => array(
+				'label' => __( "Post Term Relationship Changes", "coreactivity" ),
+			),
 		);
 	}
 }

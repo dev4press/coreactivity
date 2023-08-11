@@ -40,10 +40,10 @@ class AJAX {
 	}
 
 	public function toggle_event() {
-		$id = isset( $_POST[ 'event' ] ) ? absint( $_POST[ 'event' ] ) : 0;
+		$id = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
 
 		$toggle = '';
-		if ( $id > 0 && wp_verify_nonce( $_REQUEST[ '_ajax_nonce' ], 'coreactivity-toggle-event-' . $id ) ) {
+		if ( $id > 0 && wp_verify_nonce( $_REQUEST['_ajax_nonce'], 'coreactivity-toggle-event-' . $id ) ) {
 			$status = Activity::instance()->event_status( $id );
 
 			if ( ! empty( $status ) ) {
@@ -58,11 +58,11 @@ class AJAX {
 	}
 
 	public function toggle_notification() {
-		$id  = isset( $_POST[ 'event' ] ) ? absint( $_POST[ 'event' ] ) : 0;
-		$key = isset( $_POST[ 'notification' ] ) ? Sanitize::slug( $_POST[ 'notification' ] ) : '';
+		$id  = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
+		$key = isset( $_POST['notification'] ) ? Sanitize::slug( $_POST['notification'] ) : '';
 
 		$toggle = '';
-		if ( $id > 0 && wp_verify_nonce( $_REQUEST[ '_ajax_nonce' ], 'coreactivity-toggle-notification-' . $key . '-' . $id ) ) {
+		if ( $id > 0 && wp_verify_nonce( $_REQUEST['_ajax_nonce'], 'coreactivity-toggle-notification-' . $key . '-' . $id ) ) {
 			$change = Activity::instance()->event_notification_toggle( $id, $key );
 
 			if ( ! is_null( $change ) ) {
@@ -76,14 +76,14 @@ class AJAX {
 	public function live_logs() {
 		$output = '';
 
-		if ( isset( $_REQUEST[ 'args' ] ) ) {
-			$request = json_decode( wp_unslash( $_REQUEST[ 'args' ] ), true );
+		if ( isset( $_REQUEST['args'] ) ) {
+			$request = json_decode( wp_unslash( $_REQUEST['args'] ), true );
 
-			if ( isset( $request[ 'nonce' ] ) && wp_verify_nonce( $request[ 'nonce' ], 'coreactivity-live-update' ) ) {
-				$request[ 'atts' ][ 'min_id' ] = absint( $request[ 'id' ] );
+			if ( isset( $request['nonce'] ) && wp_verify_nonce( $request['nonce'], 'coreactivity-live-update' ) ) {
+				$request['atts']['min_id'] = absint( $request['id'] );
 
 				$_grid = new Live();
-				$_grid->update( $request[ 'atts' ], $request[ 'lock' ], $request[ 'limit' ], $request[ 'filter' ] );
+				$_grid->update( $request['atts'], $request['lock'], $request['limit'], $request['filter'] );
 				$_grid->prepare_items();
 
 				ob_start();

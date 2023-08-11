@@ -17,31 +17,31 @@ $statistics = Statistics::instance()->detailed( 30, $blog_id );
         <div class="coreactivity-overall-components">
 			<?php
 
-			if ( $statistics[ 'total' ] == 0 ) {
+			if ( $statistics['total'] == 0 ) {
 				?>
 
                 <p><?php esc_html_e( "There are no events logged in the past 30 days.", "coreactivity" ); ?></p>
 
 				<?php
 			} else {
-				foreach ( $statistics[ 'components' ] as $component => $data ) {
-					$width = ( $data[ 'count' ] / $statistics[ 'total' ] ) * 100;
+				foreach ( $statistics['components'] as $component => $data ) {
+					$width = ( $data['count'] / $statistics['total'] ) * 100;
 
-					if ( $data[ 'count' ] > 0 ) {
+					if ( $data['count'] > 0 ) {
 
 						?>
 
                         <div class="coreactivity-component">
                             <div class="__label">
                                 <a href="<?php echo esc_url( \Dev4Press\v43\Functions\panel()->a()->panel_url( 'logs', '', 'view=component&filter-component=' . $component ) ); ?>">
-                                    <i title="<?php echo esc_attr( $data[ 'label' ] ); ?>" class="d4p-icon d4p-<?php echo esc_attr( $data[ 'icon' ] ); ?> d4p-icon-fw"></i>
+                                    <i title="<?php echo esc_attr( $data['label'] ); ?>" class="d4p-icon d4p-<?php echo esc_attr( $data['icon'] ); ?> d4p-icon-fw"></i>
                                 </a>
                             </div>
                             <div class="__bar">
-                                <div class="__component"><?php echo esc_html( $data[ 'label' ] ); ?><span> (<?php echo esc_html( $component ); ?>)</span></div>
+                                <div class="__component"><?php echo esc_html( $data['label'] ); ?><span> (<?php echo esc_html( $component ); ?>)</span></div>
                                 <div class="__inner" style="width: <?php echo esc_attr( $width ); ?>%;"></div>
                             </div>
-                            <div class="__count"><?php echo esc_html( $data[ 'count' ] ); ?></div>
+                            <div class="__count"><?php echo esc_html( $data['count'] ); ?></div>
                         </div>
 
 						<?php

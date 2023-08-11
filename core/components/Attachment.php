@@ -34,9 +34,15 @@ class Attachment extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'uploaded' => array( 'label' => __( "Attachment Uploaded", "coreactivity" ) ),
-			'edited'   => array( 'label' => __( "Attachment Edited", "coreactivity" ) ),
-			'deleted'  => array( 'label' => __( "Attachment Deleted", "coreactivity" ) )
+			'uploaded' => array(
+				'label' => __( "Attachment Uploaded", "coreactivity" ),
+			),
+			'edited'   => array(
+				'label' => __( "Attachment Edited", "coreactivity" ),
+			),
+			'deleted'  => array(
+				'label' => __( "Attachment Deleted", "coreactivity" ),
+			),
 		);
 	}
 
@@ -58,13 +64,13 @@ class Attachment extends Component {
 		$meta = array(
 			'attachment_filename' => basename( $file ),
 			'attachment_mime'     => get_post_mime_type( $attachment_id ),
-			'attachment_size'     => file_exists( $file ) ? filesize( $file ) : ''
+			'attachment_size'     => file_exists( $file ) ? filesize( $file ) : '',
 		);
 
 		$parent_id = wp_get_post_parent_id( $attachment_id );
 
 		if ( $parent_id > 0 ) {
-			$meta[ 'parent_post_id' ] = $parent_id;
+			$meta['parent_post_id'] = $parent_id;
 		}
 
 		return $meta;

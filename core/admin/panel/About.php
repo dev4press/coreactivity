@@ -17,8 +17,8 @@ class About extends PanelAbout {
 		                   array(
 			                   'components' => array(
 				                   'title' => __( "Components", "coreactivity" ),
-				                   'icon'  => ''
-			                   )
+				                   'icon'  => '',
+			                   ),
 		                   ) + array_slice( $this->subpanels(), 2 );
 	}
 }

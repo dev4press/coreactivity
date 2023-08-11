@@ -17,7 +17,7 @@ class WordPress extends Component {
 	protected $wp_version = '';
 	protected $plugin_name = '';
 	protected $do_not_log = array(
-		'coreactivity_instant_notification'
+		'coreactivity_instant_notification',
 	);
 
 	public function tracking() {
@@ -46,11 +46,26 @@ class WordPress extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'update-core'      => array( 'label' => __( "WordPress Update", "coreactivity" ), 'scope' => 'network' ),
-			'update-core-auto' => array( 'label' => __( "WordPress Auto Update", "coreactivity" ), 'scope' => 'network' ),
-			'cron-schedule'    => array( 'label' => __( "CRON Event Scheduled", "coreactivity" ), 'scope' => 'blog' ),
-			'content-export'   => array( 'label' => __( "Content Export", "coreactivity" ), 'scope' => 'blog' ),
-			'database-delta'   => array( 'label' => __( "Database Delta Queries", "coreactivity" ), 'scope' => 'both' )
+			'update-core'      => array(
+				'label' => __( "WordPress Update", "coreactivity" ),
+				'scope' => 'network',
+			),
+			'update-core-auto' => array(
+				'label' => __( "WordPress Auto Update", "coreactivity" ),
+				'scope' => 'network',
+			),
+			'cron-schedule'    => array(
+				'label' => __( "CRON Event Scheduled", "coreactivity" ),
+				'scope' => 'blog',
+			),
+			'content-export'   => array(
+				'label' => __( "Content Export", "coreactivity" ),
+				'scope' => 'blog',
+			),
+			'database-delta'   => array(
+				'label' => __( "Database Delta Queries", "coreactivity" ),
+				'scope' => 'both',
+			),
 		);
 	}
 
@@ -71,10 +86,13 @@ class WordPress extends Component {
 			$caller = wp_debug_backtrace_summary( null, 4, false );
 
 			if ( ! in_array( 'wp_reschedule_event', $caller ) && ! in_array( $event->hook, $this->do_not_log ) ) {
-				$this->log( 'cron-schedule', array( 'object_type' => 'cron', 'object_name' => $event->hook ), array(
+				$this->log( 'cron-schedule', array(
+					'object_type' => 'cron',
+					'object_name' => $event->hook,
+				), array(
 					'timestamp' => $event->timestamp,
 					'schedule'  => $event->schedule,
-					'source'    => $this->caller( array( 'wp_schedule_single_event', 'wp_schedule_event' ) )
+					'source'    => $this->caller( array( 'wp_schedule_single_event', 'wp_schedule_event' ) ),
 				) );
 			}
 		}
@@ -84,17 +102,17 @@ class WordPress extends Component {
 
 	public function event_content_export( $args ) {
 		$this->log( 'content-export', array(), array(
-			'export_args' => $args
+			'export_args' => $args,
 		) );
 	}
 
 	public function event_update( $wp_version ) {
-		$event = isset( $GLOBALS[ 'pagenow' ] ) && $GLOBALS[ 'pagenow' ] == 'update-core.php' ? 'update-core' : 'update-core-auto';
+		$event = isset( $GLOBALS['pagenow'] ) && $GLOBALS['pagenow'] == 'update-core.php' ? 'update-core' : 'update-core-auto';
 
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array(), array(
 				'from' => $this->wp_version,
-				'to'   => $wp_version
+				'to'   => $wp_version,
 			) );
 		}
 	}
@@ -107,7 +125,7 @@ class WordPress extends Component {
 
 			$this->log( 'database-delta', array(),
 				array(
-					'source' => $source
+					'source' => $source,
 				) );
 		}
 
@@ -121,18 +139,18 @@ class WordPress extends Component {
 		$file_line = '';
 
 		foreach ( $backtrace as $item ) {
-			if ( isset( $item[ 'file' ] ) && isset( $item[ 'line' ] ) && isset( $item[ 'function' ] ) ) {
-				if ( in_array( $item[ 'function' ], $functions ) ) {
-					$file_path = $item[ 'file' ];
-					$file_line = $item[ 'line' ];
+			if ( isset( $item['file'] ) && isset( $item['line'] ) && isset( $item['function'] ) ) {
+				if ( in_array( $item['function'], $functions ) ) {
+					$file_path = $item['file'];
+					$file_line = $item['line'];
 					break;
 				}
 			}
 		}
 
 		if ( ! empty( $file_path ) ) {
-			$result           = Source::instance()->origin( $file_path );
-			$result[ 'line' ] = $file_line;
+			$result         = Source::instance()->origin( $file_path );
+			$result['line'] = $file_line;
 
 			return $result;
 		}

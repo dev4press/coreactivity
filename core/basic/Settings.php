@@ -19,7 +19,7 @@ class Settings extends BaseSettings {
 			'updated'           => '',
 			'db_version'        => 0,
 			'instant_timestamp' => 0,
-			'instant_datetime'  => ''
+			'instant_datetime'  => '',
 		),
 		'settings'      => array(
 			'show_setup_wizard'                       => true,
@@ -43,8 +43,8 @@ class Settings extends BaseSettings {
 			'exceptions_sitemeta_list'                => array(),
 			'exceptions_error_file_regex_list'        => array(
 				'js\.map$',
-				'css\.map$'
-			)
+				'css\.map$',
+			),
 		),
 		'notifications' => array(
 			'daily'                 => false,
@@ -59,8 +59,8 @@ class Settings extends BaseSettings {
 			'instant'               => false,
 			'instant_emails'        => array(),
 			'instant_delay_minutes' => 5,
-			'instant_skip_log'      => false
-		)
+			'instant_skip_log'      => false,
+		),
 	);
 
 	protected function constructor() {

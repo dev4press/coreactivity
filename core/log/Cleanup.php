@@ -32,7 +32,7 @@ class Cleanup {
 		$data = array(
 			$keep_key      => $value,
 			'events-count' => count( $what ),
-			'removed-logs' => $this->cleanup( $interval, $value, $what )
+			'removed-logs' => $this->cleanup( $interval, $value, $what ),
 		);
 
 		do_action( 'coreactivity_cleanup_completed', $data );
@@ -40,10 +40,10 @@ class Cleanup {
 
 	public function auto_cleanup_log() {
 		$data = array(
-			'keep-log-months' => coreactivity_settings()->get( 'auto_cleanup_period' )
+			'keep-log-months' => coreactivity_settings()->get( 'auto_cleanup_period' ),
 		);
 
-		$data[ 'removed-logs' ] = $this->cleanup( 'm', $data[ 'keep-log-months' ] );
+		$data['removed-logs'] = $this->cleanup( 'm', $data['keep-log-months'] );
 
 		do_action( 'coreactivity_cleanup_auto_completed', $data );
 	}

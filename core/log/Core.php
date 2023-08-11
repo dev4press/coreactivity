@@ -22,7 +22,7 @@ class Core {
 		'AJAX',
 		'CRON',
 		'REST',
-		'CLI'
+		'CLI',
 	);
 
 	private $request_methods = array(
@@ -35,22 +35,22 @@ class Core {
 		'OPTIONS',
 		'TRACE',
 		'PATCH',
-		'SEARCH'
+		'SEARCH',
 	);
 
 	public function __construct() {
 		$this->cached_data = array(
 			'ip'        => IP::visitor(),
-			'server_ip' => isset( $_SERVER[ 'SERVER_ADDR' ] ) ? IP::server() : '',
+			'server_ip' => isset( $_SERVER['SERVER_ADDR'] ) ? IP::server() : '',
 			'ua'        => $this->get_user_agent(),
 			'referer'   => $this->get_referer(),
 			'method'    => $this->get_request_method(),
 			'protocol'  => wp_get_server_protocol(),
 			'request'   => URL::current_url_request(),
-			'context'   => WordPress::instance()->context()
+			'context'   => WordPress::instance()->context(),
 		);
 
-		$this->cached_data[ 'anon' ] = in_array( $this->cached_data[ 'context' ], array( 'CLI', 'CRON' ) );
+		$this->cached_data['anon'] = in_array( $this->cached_data['context'], array( 'CLI', 'CRON' ) );
 
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );
 	}
@@ -102,7 +102,7 @@ class Core {
 		$data = $this->prepare_data( $data );
 		$meta = $this->prepare_meta( $meta );
 
-		$data[ 'event_id' ] = $event_id;
+		$data['event_id'] = $event_id;
 
 		$id = DB::instance()->log_event( $data, $meta );
 
@@ -119,7 +119,7 @@ class Core {
 
 			$this->page_events[ $id ] = array(
 				'data' => $data,
-				'meta' => $meta
+				'meta' => $meta,
 			);
 		} else {
 			/**
@@ -152,8 +152,8 @@ class Core {
 	}
 
 	private function get_user_agent() : string {
-		if ( coreactivity_settings()->get( 'log_if_available_user_agent' ) && isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) ) {
-			return Sanitize::basic( trim( $_SERVER[ 'HTTP_USER_AGENT' ] ) );
+		if ( coreactivity_settings()->get( 'log_if_available_user_agent' ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			return Sanitize::basic( trim( $_SERVER['HTTP_USER_AGENT'] ) );
 		}
 
 		return '';
@@ -170,45 +170,45 @@ class Core {
 	}
 
 	private function get_request_method() : string {
-		$method = strtoupper( trim( $_SERVER[ 'REQUEST_METHOD' ] ) );
+		$method = strtoupper( trim( $_SERVER['REQUEST_METHOD'] ) );
 
 		return in_array( $method, $this->request_methods ) ? $method : '';
 	}
 
 	private function prepare_data( array $data = array() ) : array {
-		if ( ! isset( $data[ 'blog_id' ] ) ) {
-			$data[ 'blog_id' ] = get_current_blog_id();
+		if ( ! isset( $data['blog_id'] ) ) {
+			$data['blog_id'] = get_current_blog_id();
 		}
 
-		if ( ! isset( $data[ 'logged' ] ) ) {
-			$data[ 'logged' ] = DateTime::instance()->mysql_date();
+		if ( ! isset( $data['logged'] ) ) {
+			$data['logged'] = DateTime::instance()->mysql_date();
 		}
 
-		if ( ! isset( $data[ 'ip' ] ) ) {
-			$data[ 'ip' ] = $this->cached_data[ 'ip' ];
+		if ( ! isset( $data['ip'] ) ) {
+			$data['ip'] = $this->cached_data['ip'];
 		}
 
-		if ( ! isset( $data[ 'context' ] ) ) {
-			$data[ 'context' ] = $this->cached_data[ 'context' ];
+		if ( ! isset( $data['context'] ) ) {
+			$data['context'] = $this->cached_data['context'];
 		}
 
-		if ( ! isset( $data[ 'method' ] ) ) {
-			$data[ 'method' ] = $this->cached_data[ 'method' ];
+		if ( ! isset( $data['method'] ) ) {
+			$data['method'] = $this->cached_data['method'];
 		}
 
-		if ( ! isset( $data[ 'protocol' ] ) ) {
-			$data[ 'protocol' ] = $this->cached_data[ 'protocol' ];
+		if ( ! isset( $data['protocol'] ) ) {
+			$data['protocol'] = $this->cached_data['protocol'];
 		}
 
-		if ( ! isset( $data[ 'request' ] ) ) {
-			$data[ 'request' ] = $this->cached_data[ 'request' ];
+		if ( ! isset( $data['request'] ) ) {
+			$data['request'] = $this->cached_data['request'];
 		}
 
-		if ( $this->cached_data[ 'anon' ] ) {
-			$data[ 'user_id' ] = 0;
+		if ( $this->cached_data['anon'] ) {
+			$data['user_id'] = 0;
 		} else {
-			if ( ! isset( $data[ 'user_id' ] ) ) {
-				$data[ 'user_id' ] = get_current_user_id();
+			if ( ! isset( $data['user_id'] ) ) {
+				$data['user_id'] = get_current_user_id();
 			}
 		}
 
@@ -216,21 +216,21 @@ class Core {
 	}
 
 	private function prepare_meta( array $meta = array() ) : array {
-		if ( ! isset( $meta[ 'user_agent' ] ) ) {
-			if ( ! empty( $this->cached_data[ 'ua' ] ) ) {
-				$meta[ 'user_agent' ] = $this->cached_data[ 'ua' ];
+		if ( ! isset( $meta['user_agent'] ) ) {
+			if ( ! empty( $this->cached_data['ua'] ) ) {
+				$meta['user_agent'] = $this->cached_data['ua'];
 			}
 		}
 
-		if ( ! isset( $meta[ 'referer' ] ) ) {
-			if ( ! empty( $this->cached_data[ 'referer' ] ) ) {
-				$meta[ 'referer' ] = $this->cached_data[ 'referer' ];
+		if ( ! isset( $meta['referer'] ) ) {
+			if ( ! empty( $this->cached_data['referer'] ) ) {
+				$meta['referer'] = $this->cached_data['referer'];
 			}
 		}
 
-		if ( ! isset( $meta[ 'ajax_action' ] ) ) {
-			if ( $this->cached_data[ 'context' ] === 'AJAX' && isset( $_REQUEST[ 'action' ] ) ) {
-				$meta[ 'ajax_action' ] = sanitize_text_field( $_REQUEST[ 'action' ] );
+		if ( ! isset( $meta['ajax_action'] ) ) {
+			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) {
+				$meta['ajax_action'] = sanitize_text_field( $_REQUEST['action'] );
 			}
 		}
 

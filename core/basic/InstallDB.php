@@ -28,7 +28,7 @@ class InstallDB extends BaseInstallDB {
 			             "KEY category (category), \n" .
 			             "KEY component (component), \n" .
 			             "KEY event (event), \n" .
-			             "KEY status (status)"
+			             "KEY status (status)",
 		),
 		'logs'    => array(
 			'name'    => 'logs',
@@ -57,7 +57,7 @@ class InstallDB extends BaseInstallDB {
 			             "KEY method (method), \n" .
 			             "KEY object_type (object_type), \n" .
 			             "KEY object_id (object_id), \n" .
-			             "KEY object_name (object_name)"
+			             "KEY object_name (object_name)",
 		),
 		'logmeta' => array(
 			'name'    => 'logmeta',
@@ -69,7 +69,7 @@ class InstallDB extends BaseInstallDB {
 			             "meta_value longtext NULL DEFAULT NULL, \n" .
 			             "PRIMARY KEY  (meta_id), \n" .
 			             "KEY log_id (log_id), \n" .
-			             "KEY meta_key (meta_key)"
-		)
+			             "KEY meta_key (meta_key)",
+		),
 	);
 }

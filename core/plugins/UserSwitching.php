@@ -34,10 +34,18 @@ class UserSwitching extends Plugin {
 
 	protected function get_events() : array {
 		return array(
-			'switch-to-user'   => array( 'label' => __( "Switched to User", "coreactivity" ) ),
-			'switch-off-user'  => array( 'label' => __( "Switched Off", "coreactivity" ) ),
-			'switch-back-user' => array( 'label' => __( "Switched Back from User", "coreactivity" ) ),
-			'switch-back'      => array( 'label' => __( "Switched Back", "coreactivity" ) )
+			'switch-to-user'   => array(
+				'label' => __( "Switched to User", "coreactivity" ),
+			),
+			'switch-off-user'  => array(
+				'label' => __( "Switched Off", "coreactivity" ),
+			),
+			'switch-back-user' => array(
+				'label' => __( "Switched Back from User", "coreactivity" ),
+			),
+			'switch-back'      => array(
+				'label' => __( "Switched Back", "coreactivity" ),
+			),
 		);
 	}
 
@@ -48,9 +56,9 @@ class UserSwitching extends Plugin {
 			array(
 				'user_id'     => $old_user_id,
 				'object_type' => 'user',
-				'object_id'   => $user_id
+				'object_id'   => $user_id,
 			), array(
-				'switched_to_user' => $user->user_login ?? ''
+				'switched_to_user' => $user->user_login ?? '',
 			)
 		);
 	}
@@ -62,7 +70,7 @@ class UserSwitching extends Plugin {
 					array(
 						'user_id'     => $user_id,
 						'object_type' => 'user',
-						'object_id'   => $user_id
+						'object_id'   => $user_id,
 					)
 				);
 			}
@@ -74,9 +82,9 @@ class UserSwitching extends Plugin {
 					array(
 						'user_id'     => $old_user_id,
 						'object_type' => 'user',
-						'object_id'   => $user_id
+						'object_id'   => $user_id,
 					), array(
-						'switched_from_user' => $user->user_login ?? ''
+						'switched_from_user' => $user->user_login ?? '',
 					)
 				);
 			}
@@ -88,7 +96,7 @@ class UserSwitching extends Plugin {
 			array(
 				'user_id'     => $user_id,
 				'object_type' => 'user',
-				'object_id'   => $user_id
+				'object_id'   => $user_id,
 			)
 		);
 	}

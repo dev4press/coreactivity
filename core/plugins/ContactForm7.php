@@ -31,7 +31,7 @@ class ContactForm7 extends Plugin {
 	}
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types[ 'wpcf7form' ] = __( "Contact Form 7", "coreactivity" );
+		$object_types['wpcf7form'] = __( "Contact Form 7", "coreactivity" );
 
 		return $object_types;
 	}
@@ -58,9 +58,15 @@ class ContactForm7 extends Plugin {
 
 	protected function get_events() : array {
 		return array(
-			'form-deleted'      => array( 'label' => __( "Form Deleted", "coreactivity" ) ),
-			'submission-sent'   => array( 'label' => __( "Submission Sent", "coreactivity" ) ),
-			'submission-failed' => array( 'label' => __( "Submission Failed", "coreactivity" ) )
+			'form-deleted'      => array(
+				'label' => __( "Form Deleted", "coreactivity" ),
+			),
+			'submission-sent'   => array(
+				'label' => __( "Submission Sent", "coreactivity" ),
+			),
+			'submission-failed' => array(
+				'label' => __( "Submission Failed", "coreactivity" ),
+			),
 		);
 	}
 
@@ -68,12 +74,12 @@ class ContactForm7 extends Plugin {
 		$submission = array(
 			'data'   => $entry->get_posted_data(),
 			'fields' => $entry->get_contact_form()->scan_form_tags(),
-			'meta'   => array()
+			'meta'   => array(),
 		);
 
-		foreach ( $submission[ 'fields' ] as $field ) {
+		foreach ( $submission['fields'] as $field ) {
 			if ( in_array( 'coreactivity:log', $field->options ) ) {
-				$submission[ 'meta' ][ 'field_' . $field->name ] = $submission[ 'data' ][ $field->name ] ?? '';
+				$submission['meta'][ 'field_' . $field->name ] = $submission['data'][ $field->name ] ?? '';
 			}
 		}
 
@@ -85,32 +91,32 @@ class ContactForm7 extends Plugin {
 	public function event_send( $form ) {
 		if ( isset( $this->storage[ $form->id() ] ) ) {
 			$this->log( 'submission-sent', array(
-				'object_id' => $form->id()
-			), $this->storage[ $form->id() ][ 'meta' ] );
+				'object_id' => $form->id(),
+			), $this->storage[ $form->id() ]['meta'] );
 		}
 	}
 
 	public function event_failed( $form ) {
 		if ( isset( $this->storage[ $form->id() ] ) ) {
 			$this->log( 'submission-failed', array(
-				'object_id' => $form->id()
-			), $this->storage[ $form->id() ][ 'meta' ] );
+				'object_id' => $form->id(),
+			), $this->storage[ $form->id() ]['meta'] );
 		}
 	}
 
 	public function event_delete_post( $post_id, $post ) {
 		if ( $post instanceof WP_Post && $post->post_type == 'wpcf7_contact_form' ) {
 			$this->log( 'deleted', array(
-				'object_id' => $post->ID
+				'object_id' => $post->ID,
 			), array(
-				'post_title' => $post->post_title
+				'post_title' => $post->post_title,
 			) );
 		}
 	}
 
 	private function _post_types() : array {
 		return array(
-			'wpcf7_contact_form'
+			'wpcf7_contact_form',
 		);
 	}
 }

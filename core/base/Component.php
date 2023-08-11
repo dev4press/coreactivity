@@ -75,7 +75,7 @@ abstract class Component {
 			'plugin'       => $this->plugin,
 			'label'        => $this->label(),
 			'icon'         => $this->icon,
-			'is_available' => $this->is_available()
+			'is_available' => $this->is_available(),
 		) );
 	}
 
@@ -83,14 +83,14 @@ abstract class Component {
 		foreach ( $this->events() as $event => $data ) {
 			$event  = strtolower( $event );
 			$status = $init->register_event( $this->code(), $event, array(
-				'label'        => $data[ 'label' ],
-				'status'       => $data[ 'status' ] ?? 'active',
-				'scope'        => $data[ 'scope' ] ?? $this->scope,
-				'object_type'  => $data[ 'object_type' ] ?? $this->object_type,
-				'is_security'  => $data[ 'is_security' ] ?? $this->is_security,
-				'is_malicious' => $data[ 'is_malicious' ] ?? $this->is_malicious,
-				'level'        => $data[ 'level' ] ?? 0
-			), $data[ 'rules' ] ?? array() );
+				'label'        => $data['label'],
+				'status'       => $data['status'] ?? 'active',
+				'scope'        => $data['scope'] ?? $this->scope,
+				'object_type'  => $data['object_type'] ?? $this->object_type,
+				'is_security'  => $data['is_security'] ?? $this->is_security,
+				'is_malicious' => $data['is_malicious'] ?? $this->is_malicious,
+				'level'        => $data['level'] ?? 0,
+			), $data['rules'] ?? array() );
 
 			if ( $status ) {
 				$this->registered[] = $event;
@@ -165,8 +165,8 @@ abstract class Component {
 	}
 
 	protected function prepare_data_for_log( string $event, array $data = array() ) : array {
-		if ( ( isset( $data[ 'object_id' ] ) || isset( $data[ 'object_name' ] ) ) && ! isset( $data[ 'object_type' ] ) ) {
-			$data[ 'object_type' ] = $this->object_type;
+		if ( ( isset( $data['object_id'] ) || isset( $data['object_name'] ) ) && ! isset( $data['object_type'] ) ) {
+			$data['object_type'] = $this->object_type;
 		}
 
 		return $data;
@@ -176,24 +176,24 @@ abstract class Component {
 		$diff = array(
 			'added'    => array(),
 			'removed'  => array(),
-			'modified' => array()
+			'modified' => array(),
 		);
 
 		foreach ( $new as $key => $value ) {
 			if ( ! isset( $old[ $key ] ) ) {
-				$diff[ 'added' ][ $key ] = $value;
+				$diff['added'][ $key ] = $value;
 			}
 		}
 
 		foreach ( $old as $key => $value ) {
 			if ( ! isset( $new[ $key ] ) ) {
-				$diff[ 'removed' ][ $key ] = $value;
+				$diff['removed'][ $key ] = $value;
 			}
 		}
 
 		foreach ( $old as $key => $value ) {
 			if ( $new[ $key ] != $value ) {
-				$diff[ 'modified' ][ $key ] = $value;
+				$diff['modified'][ $key ] = $value;
 			}
 		}
 

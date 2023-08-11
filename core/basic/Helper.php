@@ -13,7 +13,7 @@ class Helper {
 		$query = new WP_Term_Query( array(
 			'term_taxonomy_id' => $tt_ids,
 			'hide_empty'       => false,
-			'fields'           => 'ids'
+			'fields'           => 'ids',
 		) );
 
 		return $query->terms;

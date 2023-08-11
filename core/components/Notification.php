@@ -26,7 +26,7 @@ class Notification extends Component {
 		'wp-network-new-blog-siteadmin',
 		'wp-network-new-user-siteadmin',
 		'wp-network-network-admin-email-confirmation',
-		'wp-network-network-admin-email-notification'
+		'wp-network-network-admin-email-notification',
 	);
 
 	public function init() {
@@ -74,10 +74,18 @@ class Notification extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'email-sent'           => array( 'label' => __( "Email Sent", "coreactivity" ) ),
-			'email-failed'         => array( 'label' => __( "Email Failed", "coreactivity" ) ),
-			'email-sent-unknown'   => array( 'label' => __( "Unknown Email Sent", "coreactivity" ) ),
-			'email-failed-unknown' => array( 'label' => __( "Unknown Email Failed", "coreactivity" ) )
+			'email-sent'           => array(
+				'label' => __( "Email Sent", "coreactivity" ),
+			),
+			'email-failed'         => array(
+				'label' => __( "Email Failed", "coreactivity" ),
+			),
+			'email-sent-unknown'   => array(
+				'label' => __( "Unknown Email Sent", "coreactivity" ),
+			),
+			'email-failed-unknown' => array(
+				'label' => __( "Unknown Email Failed", "coreactivity" ),
+			),
 		);
 	}
 
@@ -86,7 +94,7 @@ class Notification extends Component {
 	}
 
 	public function event_sent( $email_data ) {
-		$event = isset( $this->storage[ 'name' ] ) && ! empty( $this->storage[ 'name' ] ) ? 'email-sent' : 'email-sent-unknown';
+		$event = isset( $this->storage['name'] ) && ! empty( $this->storage['name'] ) ? 'email-sent' : 'email-sent-unknown';
 
 		$this->event_final( $event, $email_data );
 	}
@@ -95,7 +103,7 @@ class Notification extends Component {
 		if ( is_wp_error( $error ) ) {
 			$email_data = $error->get_error_data();
 
-			$event = isset( $this->storage[ 'name' ] ) && ! empty( $this->storage[ 'name' ] ) ? 'email-failed' : 'email-failed-unknown';
+			$event = isset( $this->storage['name'] ) && ! empty( $this->storage['name'] ) ? 'email-failed' : 'email-failed-unknown';
 
 			$this->event_final( $event, $email_data, $error->get_error_message() );
 		}
@@ -103,18 +111,18 @@ class Notification extends Component {
 
 	protected function event_final( $event, $email_data, $error = '' ) {
 		if ( $this->is_active( $event ) ) {
-			if ( ! in_array( $this->storage[ 'name' ], $this->do_not_log ) ) {
-				$data = array( 'object_name' => $this->storage[ 'name' ] ?? '' );
+			if ( ! in_array( $this->storage['name'], $this->do_not_log ) ) {
+				$data = array( 'object_name' => $this->storage['name'] ?? '' );
 
-				if ( in_array( $this->storage[ 'name' ], $this->network ) ) {
-					$data[ 'blog_id' ] = 0;
+				if ( in_array( $this->storage['name'], $this->network ) ) {
+					$data['blog_id'] = 0;
 				}
 
 				$this->log( $event, $data, array(
-					'subject' => isset( $email_data[ 'subject' ] ) ? esc_sql( $email_data[ 'subject' ] ) : '',
-					'email'   => isset( $email_data[ 'to' ] ) ? esc_sql( $email_data[ 'to' ] ) : '',
+					'subject' => isset( $email_data['subject'] ) ? esc_sql( $email_data['subject'] ) : '',
+					'email'   => isset( $email_data['to'] ) ? esc_sql( $email_data['to'] ) : '',
 					'error'   => $error,
-					'source'  => $this->storage[ 'call' ]
+					'source'  => $this->storage['call'],
 				) );
 			}
 		}

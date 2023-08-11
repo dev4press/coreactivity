@@ -40,7 +40,7 @@ class bbPress extends Content {
 		return array(
 			bbp_get_forum_post_type(),
 			bbp_get_topic_post_type(),
-			bbp_get_reply_post_type()
+			bbp_get_reply_post_type(),
 		);
 	}
 }

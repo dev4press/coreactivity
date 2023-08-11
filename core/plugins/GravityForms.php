@@ -17,8 +17,8 @@ class GravityForms extends Plugin {
 	protected $plugin_file = 'gravityforms/gravityforms.php';
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types[ 'gform' ]  = __( "Gravity Form", "coreactivity" );
-		$object_types[ 'gentry' ] = __( "Gravity Entry", "coreactivity" );
+		$object_types['gform']  = __( "Gravity Form", "coreactivity" );
+		$object_types['gentry'] = __( "Gravity Entry", "coreactivity" );
 
 		return $object_types;
 	}
@@ -55,18 +55,30 @@ class GravityForms extends Plugin {
 
 	protected function get_events() : array {
 		return array(
-			'created'     => array( 'label' => __( "Form Created", "coreactivity" ) ),
-			'deleted'     => array( 'label' => __( "Form Deleted", "coreactivity" ) ),
-			'trashed'     => array( 'label' => __( "Form Trashed", "coreactivity" ) ),
-			'restored'    => array( 'label' => __( "Form Restored", "coreactivity" ) ),
-			'activated'   => array( 'label' => __( "Form Activated", "coreactivity" ) ),
-			'deactivated' => array( 'label' => __( "Form Deactivated", "coreactivity" ) )
+			'created'     => array(
+				'label' => __( "Form Created", "coreactivity" ),
+			),
+			'deleted'     => array(
+				'label' => __( "Form Deleted", "coreactivity" ),
+			),
+			'trashed'     => array(
+				'label' => __( "Form Trashed", "coreactivity" ),
+			),
+			'restored'    => array(
+				'label' => __( "Form Restored", "coreactivity" ),
+			),
+			'activated'   => array(
+				'label' => __( "Form Activated", "coreactivity" ),
+			),
+			'deactivated' => array(
+				'label' => __( "Form Deactivated", "coreactivity" ),
+			),
 		);
 	}
 
 	public function event_after_save_form( $meta, $is_new ) {
 		if ( $is_new ) {
-			$this->log( 'created', array( 'object_id' => absint( $meta[ 'id' ] ) ) );
+			$this->log( 'created', array( 'object_id' => absint( $meta['id'] ) ) );
 		}
 	}
 

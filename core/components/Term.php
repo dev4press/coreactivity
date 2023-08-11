@@ -53,9 +53,15 @@ class Term extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'created' => array( 'label' => __( "Term Created", "coreactivity" ) ),
-			'deleted' => array( 'label' => __( "Term Deleted", "coreactivity" ) ),
-			'edited'  => array( 'label' => __( "Term Edited", "coreactivity" ) )
+			'created' => array(
+				'label' => __( "Term Created", "coreactivity" ),
+			),
+			'deleted' => array(
+				'label' => __( "Term Deleted", "coreactivity" ),
+			),
+			'edited'  => array(
+				'label' => __( "Term Edited", "coreactivity" ),
+			),
 		);
 	}
 
@@ -69,12 +75,12 @@ class Term extends Component {
 		if ( $term instanceof WP_Term ) {
 			if ( $this->is_taxonomy_allowed( $term->taxonomy ) ) {
 				$this->log( 'created', array(
-					'object_id' => $term->term_id
+					'object_id' => $term->term_id,
 				), array(
 					'term'     => $term->name,
 					'slug'     => $term->slug,
 					'taxonomy' => $term->taxonomy,
-					'parent'   => $term->parent
+					'parent'   => $term->parent,
 				) );
 			}
 		}
@@ -84,12 +90,12 @@ class Term extends Component {
 		if ( $term instanceof WP_Term ) {
 			if ( $this->is_taxonomy_allowed( $term->taxonomy ) ) {
 				$this->log( 'deleted', array(
-					'object_id' => $term->term_id
+					'object_id' => $term->term_id,
 				), array(
 					'term'     => $term->name,
 					'slug'     => $term->slug,
 					'taxonomy' => $term->taxonomy,
-					'parent'   => $term->parent
+					'parent'   => $term->parent,
 				) );
 			}
 		}
@@ -104,7 +110,7 @@ class Term extends Component {
 
 				if ( ! empty( $diff ) ) {
 					$this->log( 'edited', array(
-						'object_id' => $term->term_id
+						'object_id' => $term->term_id,
 					), $diff );
 				}
 			}

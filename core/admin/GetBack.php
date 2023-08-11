@@ -51,7 +51,7 @@ class GetBack extends BaseGetBack {
 		$action = $this->get_bulk_action();
 
 		if ( $action != '' ) {
-			$ids = isset( $_GET[ 'event' ] ) ? (array) $_GET[ 'event' ] : array();
+			$ids = isset( $_GET['event'] ) ? (array) $_GET['event'] : array();
 			$ids = Sanitize::ids_list( $ids );
 
 			if ( ! empty( $ids ) ) {
@@ -65,8 +65,8 @@ class GetBack extends BaseGetBack {
 					$elements = explode( '-', substr( $action, 14 ) );
 
 					if ( count( $elements ) == 2 ) {
-						$notification = $elements[ 0 ];
-						$status       = $elements[ 1 ];
+						$notification = $elements[0];
+						$status       = $elements[1];
 
 						if ( in_array( $notification, array( 'instant', 'daily', 'weekly' ), true ) && in_array( $status, array( 'on', 'off' ), true ) ) {
 							foreach ( $ids as $event_id ) {

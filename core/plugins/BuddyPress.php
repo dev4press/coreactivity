@@ -25,12 +25,12 @@ class BuddyPress extends Plugin {
 		'description',
 		'status',
 		'parent_id',
-		'enable_forum'
+		'enable_forum',
 	);
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types[ 'bpcomponent' ] = __( "BuddyPress Component", "coreactivity" );
-		$object_types[ 'bpgroup' ]     = __( "BuddyPress Group", "coreactivity" );
+		$object_types['bpcomponent'] = __( "BuddyPress Component", "coreactivity" );
+		$object_types['bpgroup']     = __( "BuddyPress Group", "coreactivity" );
 
 		return $object_types;
 	}
@@ -49,7 +49,7 @@ class BuddyPress extends Plugin {
 			add_action( 'groups_update_group', array( $this, 'event_update_group' ), 10, 2 );
 			add_action( 'groups_details_updated', array( $this, 'event_details_updated' ), 10, 2 );
 
-			if ( is_admin() && Request::is_post() && isset( $_REQUEST[ 'gid' ] ) && isset( $_REQUEST[ 'page' ] ) && $_REQUEST[ 'page' ] == 'bp-groups' ) {
+			if ( is_admin() && Request::is_post() && isset( $_REQUEST['gid'] ) && isset( $_REQUEST['page'] ) && $_REQUEST['page'] == 'bp-groups' ) {
 				add_filter( 'groups_get_group', array( $this, 'prepare_get_group' ) );
 				add_action( 'bp_group_admin_edit_after', array( $this, 'event_admin_edit_after' ) );
 			}
@@ -62,15 +62,23 @@ class BuddyPress extends Plugin {
 
 	protected function get_events() : array {
 		return array(
-			'group-created'         => array( 'label' => __( "Group Created", "coreactivity" ) ),
-			'group-updated'         => array( 'label' => __( "Group Updated", "coreactivity" ) ),
-			'component-activated'   => array( 'label' => __( "Component Activated", "coreactivity" ) ),
-			'component-deactivated' => array( 'label' => __( "Component Deactivated", "coreactivity" ) )
+			'group-created'         => array(
+				'label' => __( "Group Created", "coreactivity" ),
+			),
+			'group-updated'         => array(
+				'label' => __( "Group Updated", "coreactivity" ),
+			),
+			'component-activated'   => array(
+				'label' => __( "Component Activated", "coreactivity" ),
+			),
+			'component-deactivated' => array(
+				'label' => __( "Component Deactivated", "coreactivity" ),
+			),
 		);
 	}
 
 	public function prepare_group_update( $r ) {
-		$group_id = $r[ 'group_id' ] ?? 0;
+		$group_id = $r['group_id'] ?? 0;
 
 		if ( $group_id > 0 ) {
 			$group_id = absint( $group_id );
@@ -92,7 +100,7 @@ class BuddyPress extends Plugin {
 	public function event_create_group( $group_id, $member, $group ) {
 		$this->log( 'group-created', array( 'object_id' => $group_id ), array(
 			'group_name' => $group->name,
-			'group_slug' => $group->slug
+			'group_slug' => $group->slug,
 		) );
 	}
 
@@ -159,7 +167,10 @@ class BuddyPress extends Plugin {
 		if ( $this->is_active( 'component-deactivated' ) ) {
 			foreach ( $old as $component ) {
 				if ( ! in_array( $component, $new ) ) {
-					$this->log( 'component-deactivated', array( 'object_type' => 'bpcomponent', 'object_name' => $component ) );
+					$this->log( 'component-deactivated', array(
+						'object_type' => 'bpcomponent',
+						'object_name' => $component,
+					) );
 				}
 			}
 		}
@@ -167,7 +178,10 @@ class BuddyPress extends Plugin {
 		if ( $this->is_active( 'component-activated' ) ) {
 			foreach ( $new as $component ) {
 				if ( ! in_array( $component, $old ) ) {
-					$this->log( 'component-activated', array( 'object_type' => 'bpcomponent', 'object_name' => $component ) );
+					$this->log( 'component-activated', array(
+						'object_type' => 'bpcomponent',
+						'object_name' => $component,
+					) );
 				}
 			}
 		}

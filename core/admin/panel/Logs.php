@@ -21,7 +21,7 @@ class Logs extends Panel {
 		add_screen_option( 'per_page', array(
 			'label'   => __( "Rows", "coreactivity" ),
 			'default' => 25,
-			'option'  => 'coreactivity_logs_rows_per_page'
+			'option'  => 'coreactivity_logs_rows_per_page',
 		) );
 
 		new LogsTable();

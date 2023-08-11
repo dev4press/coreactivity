@@ -21,10 +21,10 @@ $active     = coreactivity()->is_logging_active();
                 <div>
                     <h4><?php _e( "Components", "coreactivity" ); ?></h4>
                     <div class="__available">
-                        <strong><?php echo esc_html( $statistics[ 'components' ][ 'available' ] ); ?></strong> <?php esc_html_e( "Available", "coreactivity" ); ?>
+                        <strong><?php echo esc_html( $statistics['components']['available'] ); ?></strong> <?php esc_html_e( "Available", "coreactivity" ); ?>
                     </div>
                     <div>
-                        <strong><?php echo esc_html( $statistics[ 'components' ][ 'total' ] ); ?></strong> <?php esc_html_e( "Total Registered", "coreactivity" ); ?>
+                        <strong><?php echo esc_html( $statistics['components']['total'] ); ?></strong> <?php esc_html_e( "Total Registered", "coreactivity" ); ?>
                     </div>
                 </div>
             </div>
@@ -33,13 +33,13 @@ $active     = coreactivity()->is_logging_active();
                 <div>
                     <h4><?php _e( "Events", "coreactivity" ); ?></h4>
                     <div class="__available">
-                        <strong><?php echo esc_html( $statistics[ 'events' ][ 'available' ] ); ?></strong> <?php esc_html_e( "Available", "coreactivity" ); ?>
+                        <strong><?php echo esc_html( $statistics['events']['available'] ); ?></strong> <?php esc_html_e( "Available", "coreactivity" ); ?>
                     </div>
                     <div>
-                        <strong><?php echo esc_html( $statistics[ 'events' ][ 'active' ] ); ?></strong> <?php esc_html_e( "Enabled Events", "coreactivity" ); ?>
+                        <strong><?php echo esc_html( $statistics['events']['active'] ); ?></strong> <?php esc_html_e( "Enabled Events", "coreactivity" ); ?>
                     </div>
                     <div>
-                        <strong><?php echo esc_html( $statistics[ 'events' ][ 'total' ] ); ?></strong> <?php esc_html_e( "Total Registered", "coreactivity" ); ?>
+                        <strong><?php echo esc_html( $statistics['events']['total'] ); ?></strong> <?php esc_html_e( "Total Registered", "coreactivity" ); ?>
                     </div>
                 </div>
             </div>

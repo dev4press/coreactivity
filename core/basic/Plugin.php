@@ -80,9 +80,9 @@ class Plugin extends Core {
 				'data' => array(
 					'components' => Activity::instance()->get_all_components(),
 					'events'     => Activity::instance()->get_all_events(),
-					'statistics' => Activity::instance()->statistics
+					'statistics' => Activity::instance()->statistics,
 				),
-				'log'  => LogCore::instance()->get_current_page_log()
+				'log'  => LogCore::instance()->get_current_page_log(),
 			) );
 		}
 	}

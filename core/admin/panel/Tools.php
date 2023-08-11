@@ -19,8 +19,8 @@ class Tools extends PanelTools {
 				                   'icon'         => 'ui-trash',
 				                   'method'       => 'post',
 				                   'button_label' => __( "Cleanup", "coreactivity" ),
-				                   'info'         => __( "Using this tool, you can cleanup log entries.", "coreactivity" )
-			                   )
+				                   'info'         => __( "Using this tool, you can cleanup log entries.", "coreactivity" ),
+			                   ),
 		                   ) +
 		                   array_slice( $this->subpanels, 2 );
 	}

@@ -22,9 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                     Version 1.0 brings support for huge number of different events it can log, it logs a lot of details, it has powerful Logs panel to find and filter events and much more.
                 </p>
 
-	            <?php if ( isset( $_GET[ 'install' ] ) && $_GET[ 'install' ] == 'on' ) { ?>
+				<?php if ( isset( $_GET['install'] ) && $_GET['install'] == 'on' ) { ?>
                     <a class="button-primary" href="<?php echo panel()->a()->panel_url( 'wizard' ) ?>"><?php esc_html_e( "Run Setup Wizard", "coreactivity" ); ?></a>
-	            <?php } ?>
+				<?php } ?>
                 <div class="coreactivity-about-counters">
                     <div><i class="d4p-icon d4p-ui-folder d4p-icon-fw"></i> <strong>23</strong> Components</div>
                     <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>117</strong> Events</div>

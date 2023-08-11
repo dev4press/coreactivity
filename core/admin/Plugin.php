@@ -23,10 +23,13 @@ class Plugin extends BasePlugin {
 	public $has_widgets = true;
 	public $has_metabox = true;
 
-	public $enqueue_wp = array( 'dialog' => true, 'color_picker' => true );
+	public $enqueue_wp = array(
+		'dialog'       => true,
+		'color_picker' => true,
+	);
 	public $per_page_options = array(
 		'coreactivity_logs_rows_per_page',
-		'coreactivity_events_rows_per_page'
+		'coreactivity_events_rows_per_page',
 	);
 
 	public function constructor() {
@@ -43,7 +46,7 @@ class Plugin extends BasePlugin {
 				'min'  => true,
 				'ver'  => coreactivity_settings()->file_version(),
 				'src'  => 'plugin',
-				'int'  => array( 'flags' )
+				'int'  => array( 'flags' ),
 			) )->register( 'js', 'coreactivity-admin',
 			array(
 				'path' => 'js/',
@@ -51,7 +54,7 @@ class Plugin extends BasePlugin {
 				'ext'  => 'js',
 				'min'  => true,
 				'ver'  => coreactivity_settings()->file_version(),
-				'src'  => 'plugin'
+				'src'  => 'plugin',
 			) );
 	}
 
@@ -84,7 +87,7 @@ class Plugin extends BasePlugin {
 				'type'  => 'setup',
 				'info'  => __( "Before you continue, make sure plugin installation was successful.", "coreactivity" ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Install',
-				'scope' => array( 'network' )
+				'scope' => array( 'network' ),
 			),
 			'update'  => array(
 				'title' => __( "Update", "coreactivity" ),
@@ -92,8 +95,8 @@ class Plugin extends BasePlugin {
 				'type'  => 'setup',
 				'info'  => __( "Before you continue, make sure plugin was successfully updated.", "coreactivity" ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Update',
-				'scope' => array( 'network' )
-			)
+				'scope' => array( 'network' ),
+			),
 		);
 
 		$this->menu_items = array(
@@ -101,47 +104,47 @@ class Plugin extends BasePlugin {
 				'title' => __( "Overview", "coreactivity" ),
 				'icon'  => 'ui-home',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Dashboard',
-				'scope' => array( 'blog', 'network' )
+				'scope' => array( 'blog', 'network' ),
 			),
 			'about'     => array(
 				'title' => __( "About", "coreactivity" ),
 				'icon'  => 'ui-info',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\About',
-				'scope' => array( 'blog', 'network' )
+				'scope' => array( 'blog', 'network' ),
 			),
 			'logs'      => array(
 				'title' => __( "Logs", "coreactivity" ),
 				'icon'  => 'ui-calendar-pen',
 				'info'  => __( "Detailed log with all the logged activities for all supported events.", "coreactivity" ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Logs',
-				'scope' => array( 'blog', 'network' )
+				'scope' => array( 'blog', 'network' ),
 			),
 			'events'    => array(
 				'title' => __( "Events", "coreactivity" ),
 				'icon'  => 'ui-radar',
 				'info'  => __( "All the events registered for activity tracking and logging.", "coreactivity" ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Events',
-				'scope' => array( 'network' )
+				'scope' => array( 'network' ),
 			),
 			'settings'  => array(
 				'title' => __( "Settings", "coreactivity" ),
 				'icon'  => 'ui-cog',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Settings',
-				'scope' => array( 'network' )
+				'scope' => array( 'network' ),
 			),
 			'tools'     => array(
 				'title' => __( "Tools", "coreactivity" ),
 				'icon'  => 'ui-wrench',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Tools',
-				'scope' => array( 'network' )
-			)
+				'scope' => array( 'network' ),
+			),
 		);
 
 		if ( $this->settings()->get( 'show_setup_wizard' ) ) {
-			$this->menu_items[ 'wizard' ] = array(
+			$this->menu_items['wizard'] = array(
 				'title' => __( "Setup Wizard", "coreactivity" ),
 				'icon'  => 'ui-magic',
-				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Wizard'
+				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Wizard',
 			);
 		}
 	}
@@ -178,10 +181,10 @@ class Plugin extends BasePlugin {
 	public function message_process( $code, $msg ) {
 		switch ( $code ) {
 			case 'cleanup-completed':
-				$msg[ 'message' ] = __( "The cleanup operation has been completed.", "coreactivity" );
+				$msg['message'] = __( "The cleanup operation has been completed.", "coreactivity" );
 				break;
 			case 'events-updated':
-				$msg[ 'message' ] = __( "Events activity status has been updated.", "coreactivity" );
+				$msg['message'] = __( "Events activity status has been updated.", "coreactivity" );
 				break;
 		}
 
@@ -205,7 +208,7 @@ class Plugin extends BasePlugin {
 		$this->e()->js( 'coreactivity-admin' );
 
 		$values = array(
-			'live_updates' => $this->settings()->get( 'logs_live_updates' ) ? 'Y' : 'N'
+			'live_updates' => $this->settings()->get( 'logs_live_updates' ) ? 'Y' : 'N',
 		);
 
 		wp_localize_script( 'd4plib3-coreactivity-admin', 'coreactivity_data', $values );

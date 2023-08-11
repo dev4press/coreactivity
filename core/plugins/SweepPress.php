@@ -34,24 +34,36 @@ class SweepPress extends Plugin {
 
 	protected function get_events() : array {
 		return array(
-			'completed'    => array( 'label' => __( "Sweeping Completed", "coreactivity" ) ),
-			'cron-run'     => array( 'label' => __( "Run CRON job", "coreactivity" ) ),
-			'cron-deleted' => array( 'label' => __( "Deleted CRON job", "coreactivity" ) )
+			'completed'    => array(
+				'label' => __( "Sweeping Completed", "coreactivity" ),
+			),
+			'cron-run'     => array(
+				'label' => __( "Run CRON job", "coreactivity" ),
+			),
+			'cron-deleted' => array(
+				'label' => __( "Deleted CRON job", "coreactivity" ),
+			),
 		);
 	}
 
 	public function event_completed( $results ) {
 		$this->log( 'completed', array(), array(
-			'source'   => $results[ 'stats' ][ 'source' ],
-			'sweepers' => array_keys( $results[ 'sweepers' ] )
+			'source'   => $results['stats']['source'],
+			'sweepers' => array_keys( $results['sweepers'] ),
 		) );
 	}
 
 	public function event_cron_job_run( $job ) {
-		$this->log( 'cron-run', array( 'object_type' => 'cron', 'object_name' => $job ) );
+		$this->log( 'cron-run', array(
+			'object_type' => 'cron',
+			'object_name' => $job,
+		) );
 	}
 
 	public function event_cron_deleted_run( $job ) {
-		$this->log( 'cron-deleted', array( 'object_type' => 'cron', 'object_name' => $job ) );
+		$this->log( 'cron-deleted', array(
+			'object_type' => 'cron',
+			'object_name' => $job,
+		) );
 	}
 }

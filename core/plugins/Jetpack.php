@@ -18,7 +18,7 @@ class Jetpack extends Plugin {
 	protected $modules = array();
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types[ 'jetmodule' ] = __( "Jetpack Module", "coreactivity" );
+		$object_types['jetmodule'] = __( "Jetpack Module", "coreactivity" );
 
 		return $object_types;
 	}
@@ -39,8 +39,12 @@ class Jetpack extends Plugin {
 
 	protected function get_events() : array {
 		return array(
-			'module-activated'   => array( 'label' => __( "Activated Module", "coreactivity" ) ),
-			'module-deactivated' => array( 'label' => __( "Deactivated Module", "coreactivity" ) )
+			'module-activated'   => array(
+				'label' => __( "Activated Module", "coreactivity" ),
+			),
+			'module-deactivated' => array(
+				'label' => __( "Deactivated Module", "coreactivity" ),
+			),
 		);
 	}
 
@@ -67,9 +71,9 @@ class Jetpack extends Plugin {
 		$info = $this->modules[ $module ] ?? array();
 
 		$this->log( 'module-activated', array(
-			'object_name' => $module
+			'object_name' => $module,
 		), array(
-			'module_name' => $info[ 'name' ] ?? ''
+			'module_name' => $info['name'] ?? '',
 		) );
 	}
 
@@ -83,9 +87,9 @@ class Jetpack extends Plugin {
 		$info = $this->modules[ $module ] ?? array();
 
 		$this->log( 'module-deactivated', array(
-			'object_name' => $module
+			'object_name' => $module,
 		), array(
-			'module_name' => $info[ 'name' ] ?? ''
+			'module_name' => $info['name'] ?? '',
 		) );
 	}
 }

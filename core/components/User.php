@@ -28,7 +28,7 @@ class User extends Component {
 		'comment_shortcuts',
 		'admin_color',
 		'show_admin_bar_front',
-		'locale'
+		'locale',
 	);
 	protected $storage = array();
 	protected $user_login = '';
@@ -113,36 +113,79 @@ class User extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'login'                          => array( 'label' => __( "Login", "coreactivity" ) ),
-			'logout'                         => array( 'label' => __( "Logout", "coreactivity" ) ),
-			'failed-login'                   => array( 'label' => __( "Failed Login", "coreactivity" ), 'is_security' => true ),
-			'failed-login-cookie'            => array( 'label' => __( "Failed Login Cookie", "coreactivity" ), 'is_security' => true ),
-			'password-reset'                 => array( 'label' => __( "Password Reset", "coreactivity" ), 'is_security' => true ),
-			'password-reset-request-invalid' => array( 'label' => __( "Request Password Reset Invalid", "coreactivity" ), 'is_security' => true ),
-			'password-reset-request'         => array( 'label' => __( "Request Password Reset", "coreactivity" ) ),
-			'registered'                     => array( 'label' => __( "Registered", "coreactivity" ) ),
-			'deleted'                        => array( 'label' => __( "User Deleted", "coreactivity" ) ),
-			'role-changed'                   => array( 'label' => __( "User Role Changed", "coreactivity" ) ),
-			'edited-password'                => array( 'label' => __( "Edited Password", "coreactivity" ) ),
-			'edited-email'                   => array( 'label' => __( "Edited Email", "coreactivity" ) ),
-			'edited-url'                     => array( 'label' => __( "Edited URL", "coreactivity" ) ),
-			'edited-display-name'            => array( 'label' => __( "Edited Display Name", "coreactivity" ) ),
-			'edited-meta-data'               => array( 'label' => __( "Edited Meta", "coreactivity" ) ),
-			'user-signup'                    => array( 'label' => __( "User Signup", "coreactivity" ), 'scope' => 'network' ),
-			'failed-user-signup'             => array( 'label' => __( "Failed User Signup", "coreactivity" ), 'scope' => 'network' ),
-			'activate-user'                  => array( 'label' => __( "Activate User", "coreactivity" ), 'scope' => 'network' )
+			'login'                          => array(
+				'label' => __( "Login", "coreactivity" ),
+			),
+			'logout'                         => array(
+				'label' => __( "Logout", "coreactivity" ),
+			),
+			'failed-login'                   => array(
+				'label'       => __( "Failed Login", "coreactivity" ),
+				'is_security' => true,
+			),
+			'failed-login-cookie'            => array(
+				'label'       => __( "Failed Login Cookie", "coreactivity" ),
+				'is_security' => true,
+			),
+			'password-reset'                 => array(
+				'label'       => __( "Password Reset", "coreactivity" ),
+				'is_security' => true,
+			),
+			'password-reset-request-invalid' => array(
+				'label'       => __( "Request Password Reset Invalid", "coreactivity" ),
+				'is_security' => true,
+			),
+			'password-reset-request'         => array(
+				'label' => __( "Request Password Reset", "coreactivity" ),
+			),
+			'registered'                     => array(
+				'label' => __( "Registered", "coreactivity" ),
+			),
+			'deleted'                        => array(
+				'label' => __( "User Deleted", "coreactivity" ),
+			),
+			'role-changed'                   => array(
+				'label' => __( "User Role Changed", "coreactivity" ),
+			),
+			'edited-password'                => array(
+				'label' => __( "Edited Password", "coreactivity" ),
+			),
+			'edited-email'                   => array(
+				'label' => __( "Edited Email", "coreactivity" ),
+			),
+			'edited-url'                     => array(
+				'label' => __( "Edited URL", "coreactivity" ),
+			),
+			'edited-display-name'            => array(
+				'label' => __( "Edited Display Name", "coreactivity" ),
+			),
+			'edited-meta-data'               => array(
+				'label' => __( "Edited Meta", "coreactivity" ),
+			),
+			'user-signup'                    => array(
+				'label' => __( "User Signup", "coreactivity" ),
+				'scope' => 'network',
+			),
+			'failed-user-signup'             => array(
+				'label' => __( "Failed User Signup", "coreactivity" ),
+				'scope' => 'network',
+			),
+			'activate-user'                  => array(
+				'label' => __( "Activate User", "coreactivity" ),
+				'scope' => 'network',
+			),
 		);
 	}
 
 	public function init_authenticate( $user, $username, $password ) {
-		$this->storage[ 'username' ] = $username;
-		$this->storage[ 'password' ] = $password;
+		$this->storage['username'] = $username;
+		$this->storage['password'] = $password;
 
 		return $user;
 	}
 
 	public function prepare_form_lostpassword() {
-		$this->user_login = $_POST[ 'user_login' ] ?? '';
+		$this->user_login = $_POST['user_login'] ?? '';
 		$this->user_login = trim( wp_unslash( $this->user_login ) );
 
 		add_action( 'lostpassword_post', array( $this, 'event_lostpassword_post' ), 10, 2 );
@@ -160,8 +203,11 @@ class User extends Component {
 		if ( $user !== false ) {
 			$this->log( 'login', array(
 				'user_id'   => $user->ID,
-				'object_id' => $user->ID
-			), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
+				'object_id' => $user->ID,
+			), array(
+				'username' => $user->user_login,
+				'email'    => $user->user_email,
+			) );
 		}
 	}
 
@@ -171,8 +217,11 @@ class User extends Component {
 		if ( $user !== false ) {
 			$this->log( 'logout', array(
 				'user_id'   => $user->ID,
-				'object_id' => $user->ID
-			), array( 'username' => $user->user_login, 'email' => $user->user_email ) );
+				'object_id' => $user->ID,
+			), array(
+				'username' => $user->user_login,
+				'email'    => $user->user_email,
+			) );
 		}
 	}
 
@@ -184,7 +233,7 @@ class User extends Component {
 		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'malformed',
 			'scheme' => $scheme,
-			'cookie' => $cookie
+			'cookie' => $cookie,
 		) );
 
 		remove_action( 'auth_cookie_malformed', array( $this, 'event_failed_login_cookie_malformed' ), 10 );
@@ -193,7 +242,7 @@ class User extends Component {
 	public function event_failed_login_cookie_bad_hash( $cookie_elements ) {
 		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'bad_hash',
-			'cookie' => $cookie_elements
+			'cookie' => $cookie_elements,
 		) );
 
 		remove_action( 'auth_cookie_bad_hash', array( $this, 'event_failed_login_cookie_bad_hash' ) );
@@ -202,7 +251,7 @@ class User extends Component {
 	public function event_failed_login_cookie_bad_username( $cookie_elements ) {
 		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'bad_username',
-			'cookie' => $cookie_elements
+			'cookie' => $cookie_elements,
 		) );
 
 		remove_action( 'auth_cookie_bad_username', array( $this, 'event_failed_login_cookie_bad_username' ) );
@@ -218,10 +267,10 @@ class User extends Component {
 		}
 
 		$this->log( 'failed-login', array(
-			'object_id' => $user_id
+			'object_id' => $user_id,
 		), array(
 			'login'    => $username,
-			'password' => $this->storage[ 'password' ]
+			'password' => $this->storage['password'],
 		) );
 	}
 
@@ -239,16 +288,16 @@ class User extends Component {
 					$meta = array( 'error' => __( "There is no account with that username or email address.", "coreactivity" ) );
 				}
 
-				$meta[ 'login' ] = $this->user_login;
+				$meta['login'] = $this->user_login;
 
 				$this->log( 'password-reset-request-invalid', $data, $meta );
 			}
 		} else {
 			if ( $this->is_active( 'password-reset-request' ) ) {
 				$this->log( 'password-reset-request', array(
-					'object_id' => $user_data->ID
+					'object_id' => $user_data->ID,
 				), array(
-					'login' => $this->user_login
+					'login' => $this->user_login,
 				) );
 			}
 		}
@@ -258,27 +307,27 @@ class User extends Component {
 		remove_action( 'after_password_reset', array( $this, 'event_after_password_reset' ) );
 
 		$this->log( 'password-reset', array(
-			'object_id' => $user->ID
+			'object_id' => $user->ID,
 		) );
 	}
 
 	public function event_deleted_user( $id, $reassign, $user ) {
 		$this->log( 'deleted', array(
-			'object_id' => $id
+			'object_id' => $id,
 		), array(
 			'user_email'          => $user->user_email,
 			'user_login'          => $user->user_login,
 			'user_roles'          => $user->roles,
-			'reassign_to_user_id' => $reassign
+			'reassign_to_user_id' => $reassign,
 		) );
 	}
 
 	public function event_set_user_role( $user_id, $role, $old_roles ) {
 		$this->log( 'role-changed', array(
-			'object_id' => $user_id
+			'object_id' => $user_id,
 		), array(
 			'role'           => $role,
-			'previous_roles' => $old_roles
+			'previous_roles' => $old_roles,
 		) );
 	}
 
@@ -286,36 +335,36 @@ class User extends Component {
 		if ( $update ) {
 			$user = get_user_by( 'id', $user_id );
 
-			if ( isset( $data[ 'user_pass' ] ) && $user->user_pass != $data[ 'user_pass' ] ) {
+			if ( isset( $data['user_pass'] ) && $user->user_pass != $data['user_pass'] ) {
 				$this->log( 'edited-password', array(
-					'object_id' => $user_id
+					'object_id' => $user_id,
 				) );
 			}
 
-			if ( isset( $data[ 'user_email' ] ) && $user->user_email != $data[ 'user_email' ] ) {
+			if ( isset( $data['user_email'] ) && $user->user_email != $data['user_email'] ) {
 				$this->log( 'edited-email', array(
-					'object_id' => $user_id
+					'object_id' => $user_id,
 				), array(
 					'old_email' => $user->user_email,
-					'new_email' => $data[ 'user_email' ]
+					'new_email' => $data['user_email'],
 				) );
 			}
 
-			if ( isset( $data[ 'user_url' ] ) && $user->user_url != $data[ 'user_url' ] ) {
+			if ( isset( $data['user_url'] ) && $user->user_url != $data['user_url'] ) {
 				$this->log( 'edited-url', array(
-					'object_id' => $user_id
+					'object_id' => $user_id,
 				), array(
 					'old_url' => $user->user_url,
-					'new_url' => $data[ 'user_url' ]
+					'new_url' => $data['user_url'],
 				) );
 			}
 
-			if ( isset( $data[ 'display_name' ] ) && $user->display_name != $data[ 'display_name' ] ) {
+			if ( isset( $data['display_name'] ) && $user->display_name != $data['display_name'] ) {
 				$this->log( 'edited-display-name', array(
-					'object_id' => $user_id
+					'object_id' => $user_id,
 				), array(
 					'old_display_name' => $user->display_name,
-					'new_display_name' => $data[ 'display_name' ]
+					'new_display_name' => $data['display_name'],
 				) );
 			}
 		}
@@ -331,7 +380,7 @@ class User extends Component {
 				if ( $meta[ $key ] != $user->get( $key ) ) {
 					$changed[] = array(
 						'old_' . $key => $user->get( $key ),
-						'new_' . $key => $meta[ $key ]
+						'new_' . $key => $meta[ $key ],
 					);
 				}
 			}
@@ -340,14 +389,14 @@ class User extends Component {
 				if ( isset( $userdata[ $key ] ) && $userdata[ $key ] != $user->get( $key ) ) {
 					$changed[] = array(
 						'old_' . $key => $user->get( $key ),
-						'new_' . $key => $userdata[ $key ]
+						'new_' . $key => $userdata[ $key ],
 					);
 				}
 			}
 
 			if ( ! empty( $changed ) ) {
 				$this->log( 'edited-meta-data', array(
-					'object_id' => $user->ID
+					'object_id' => $user->ID,
 				), $changed );
 			}
 		}
@@ -359,17 +408,17 @@ class User extends Component {
 		$this->log( 'user-signup', array( 'blog_id' => 0 ), array(
 			'user_login' => $user,
 			'user_email' => $user_email,
-			'signup_key' => $key
+			'signup_key' => $key,
 		) );
 	}
 
 	public function event_validate_user_signup( $results ) {
-		if ( isset( $results[ 'errors' ] ) && $results[ 'errors' ] instanceof WP_Error && $results[ 'errors' ]->has_errors() ) {
+		if ( isset( $results['errors'] ) && $results['errors'] instanceof WP_Error && $results['errors']->has_errors() ) {
 			$this->log( 'failed-user-signup', array( 'blog_id' => 0 ), array(
-				'user_login'          => $results[ 'user_name' ],
-				'requested_user_name' => $results[ 'orig_username' ],
-				'user_email'          => $results[ 'user_email' ],
-				'errors'              => $results[ 'errors' ]->get_error_messages()
+				'user_login'          => $results['user_name'],
+				'requested_user_name' => $results['orig_username'],
+				'user_email'          => $results['user_email'],
+				'errors'              => $results['errors']->get_error_messages(),
 			) );
 		}
 
@@ -377,7 +426,10 @@ class User extends Component {
 	}
 
 	public function event_activate_user( $user_id ) {
-		$this->log( 'activate-user', array( 'blog_id' => 0, 'object_id' => $user_id ) );
+		$this->log( 'activate-user', array(
+			'blog_id'   => 0,
+			'object_id' => $user_id,
+		) );
 	}
 
 	public function event_user_register( $user_id ) {

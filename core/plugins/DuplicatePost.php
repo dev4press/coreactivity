@@ -45,7 +45,9 @@ class DuplicatePost extends Plugin {
 
 	protected function get_events() : array {
 		return array(
-			'duplicated' => array( 'label' => __( "Post Duplicated", "coreactivity" ) )
+			'duplicated' => array(
+				'label' => __( "Post Duplicated", "coreactivity" ),
+			),
 		);
 	}
 
@@ -55,9 +57,9 @@ class DuplicatePost extends Plugin {
 		if ( $post instanceof WP_Post && $original_post instanceof WP_Post ) {
 			if ( $this->is_post_type_allowed( $post->post_type ) ) {
 				$this->log( 'duplicated', array(
-					'object_id' => $post->ID
+					'object_id' => $post->ID,
 				), array(
-					'source_post_id' => $original_post->ID
+					'source_post_id' => $original_post->ID,
 				) );
 			}
 		}

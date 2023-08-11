@@ -32,7 +32,7 @@ class DB extends BaseDB {
 		'request'     => '%s',
 		'object_type' => '%s',
 		'object_id'   => '%d',
-		'object_name' => '%s'
+		'object_name' => '%s',
 	);
 
 	public function get_all_registered_events() {
@@ -50,38 +50,38 @@ class DB extends BaseDB {
 		$sql     = "SHOW TABLE STATUS FROM `" . DB_NAME . "` WHERE `Name` LIKE '" . $prefix . "%'";
 		$data    = $this->get_results( $sql, ARRAY_A );
 		$results = array(
-			'tables' => array()
+			'tables' => array(),
 		);
 
 		foreach ( $data as $row ) {
-			$_table_name  = strtolower( $row[ 'Name' ] );
+			$_table_name  = strtolower( $row['Name'] );
 			$_actual_name = str_replace( $prefix, '', $_table_name );
-			$_total       = absint( $row[ 'Data_length' ] ) + absint( $row[ 'Index_length' ] ) + absint( $row[ 'Data_free' ] );
+			$_total       = absint( $row['Data_length'] ) + absint( $row['Index_length'] ) + absint( $row['Data_free'] );
 
-			$results[ 'tables' ][ $_actual_name ] = array(
+			$results['tables'][ $_actual_name ] = array(
 				'table'            => $_table_name,
-				'engine'           => $row[ 'Engine' ],
+				'engine'           => $row['Engine'],
 				'total'            => $_total,
-				'size'             => absint( $row[ 'Data_length' ] ),
-				'free'             => absint( $row[ 'Data_free' ] ),
-				'index'            => absint( $row[ 'Index_length' ] ),
-				'rows'             => absint( $row[ 'Rows' ] ),
-				'average_row_size' => absint( $row[ 'Avg_row_length' ] ),
-				'auto_increment'   => $row[ 'Auto_increment' ],
-				'created'          => $row[ 'Create_time' ],
-				'updated'          => $row[ 'Update_time' ],
-				'collation'        => $row[ 'Collation' ],
+				'size'             => absint( $row['Data_length'] ),
+				'free'             => absint( $row['Data_free'] ),
+				'index'            => absint( $row['Index_length'] ),
+				'rows'             => absint( $row['Rows'] ),
+				'average_row_size' => absint( $row['Avg_row_length'] ),
+				'auto_increment'   => $row['Auto_increment'],
+				'created'          => $row['Create_time'],
+				'updated'          => $row['Update_time'],
+				'collation'        => $row['Collation'],
 			);
 		}
 
-		$results[ 'size' ] = $results[ 'tables' ][ 'logs' ][ 'total' ] + $results[ 'tables' ][ 'logmeta' ][ 'total' ] + $results[ 'tables' ][ 'events' ][ 'total' ];
+		$results['size'] = $results['tables']['logs']['total'] + $results['tables']['logmeta']['total'] + $results['tables']['events']['total'];
 
 		$sql  = "SELECT DATE(MIN(`logged`)) as `oldest`, DATEDIFF(NOW(), MIN(`logged`)) as `range` FROM " . $this->logs;
 		$data = $this->get_row( $sql, ARRAY_A );
 
 		if ( ! empty( $data ) ) {
-			$results[ 'oldest' ] = $data[ 'oldest' ];
-			$results[ 'range' ]  = $data[ 'range' ];
+			$results['oldest'] = $data['oldest'];
+			$results['range']  = $data['range'];
 		}
 
 		return $results;
@@ -116,11 +116,11 @@ class DB extends BaseDB {
 			'category'  => $category,
 			'component' => $component,
 			'event'     => $event,
-			'status'    => $status
+			'status'    => $status,
 		);
 
 		if ( ! empty( $rules ) ) {
-			$data[ 'rules' ] = json_encode( $rules );
+			$data['rules'] = json_encode( $rules );
 		}
 
 		$result = $this->insert( $this->events, $data );
@@ -149,21 +149,21 @@ class DB extends BaseDB {
 		$query = array(
 			'select' => array(
 				'e.`component`',
-				'COUNT(l.log_id) AS logs'
+				'COUNT(l.log_id) AS logs',
 			),
 			'from'   => array(
 				$this->events . ' e',
-				'LEFT JOIN ' . $this->logs . ' l ON e.`event_id` = l.`event_id`'
+				'LEFT JOIN ' . $this->logs . ' l ON e.`event_id` = l.`event_id`',
 			),
 			'where'  => array(
-				$this->prepare( 'l.`logged` IS NULL OR l.`logged` > DATE_SUB(NOW(), INTERVAL %d DAY)', $days )
+				$this->prepare( 'l.`logged` IS NULL OR l.`logged` > DATE_SUB(NOW(), INTERVAL %d DAY)', $days ),
 			),
 			'group'  => 'e.`component`',
-			'order'  => 'e.`component`'
+			'order'  => 'e.`component`',
 		);
 
 		if ( $blog_id > - 1 ) {
-			$query[ 'where' ][] = $this->prepare( 'l.`blog_id` = %d', $blog_id );
+			$query['where'][] = $this->prepare( 'l.`blog_id` = %d', $blog_id );
 		}
 
 		$sql = $this->build_query( $query, false );
@@ -198,7 +198,7 @@ class DB extends BaseDB {
 
 		if ( ! empty( $raw ) ) {
 			foreach ( $raw as $id => $entry ) {
-				$entry[ 'meta' ] = array();
+				$entry['meta'] = array();
 
 				$entries[ $id ] = $entry;
 			}
@@ -212,7 +212,7 @@ class DB extends BaseDB {
 			foreach ( $meta as $item ) {
 				$id = absint( $item->log_id );
 
-				$entries[ $id ][ 'meta' ][ $item->meta_key ] = maybe_unserialize( $item->meta_value );
+				$entries[ $id ]['meta'][ $item->meta_key ] = maybe_unserialize( $item->meta_value );
 			}
 		}
 
@@ -239,12 +239,12 @@ class DB extends BaseDB {
 				if ( ! isset( $data[ $row->component ] ) ) {
 					$data[ $row->component ] = array(
 						'events' => array(),
-						'total'  => 0
+						'total'  => 0,
 					);
 				}
 
-				$data[ $row->component ][ 'total' ]                 += $row->count;
-				$data[ $row->component ][ 'events' ][ $row->event ] = $row->count;
+				$data[ $row->component ]['total']                 += $row->count;
+				$data[ $row->component ]['events'][ $row->event ] = $row->count;
 			}
 		}
 
@@ -272,7 +272,7 @@ class DB extends BaseDB {
 			'entries' => absint( $raw->entries ),
 			'period'  => absint( $raw->period ),
 			'start'   => $raw->start,
-			'end'     => $raw->end
+			'end'     => $raw->end,
 		);
 	}
 }
