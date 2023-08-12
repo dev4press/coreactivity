@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <h3><?php esc_html_e( "Remove plugin settings", "coreactivity" ); ?></h3>
         <div class="d4p-group-inner">
             <label>
-                <input type="checkbox" class="widefat" name="coreactivitytools[remove][settings]" value="on"/> <?php esc_html_e( "Main Plugin Settings", "coreactivity" ); ?>
+                <input type="checkbox" class="widefat" name="coreactivity-tools[remove][settings]" value="on"/> <?php esc_html_e( "Main Plugin Settings", "coreactivity" ); ?>
             </label>
         </div>
     </div>
@@ -33,10 +33,10 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="d4p-group-inner">
             <p style="font-weight: bold"><?php esc_html_e( "This will remove all shares and likes data!", "coreactivity" ); ?></p>
             <label>
-                <input type="checkbox" class="widefat" name="coreactivitytools[remove][drop]" value="on"/> <?php esc_html_e( "Remove plugins database table and all data in them", "coreactivity" ); ?>
+                <input type="checkbox" class="widefat" name="coreactivity-tools[remove][drop]" value="on"/> <?php esc_html_e( "Remove plugins database table and all data in them", "coreactivity" ); ?>
             </label>
             <label>
-                <input type="checkbox" class="widefat" name="coreactivitytools[remove][truncate]" value="on"/> <?php esc_html_e( "Remove all data from database table", "coreactivity" ); ?>
+                <input type="checkbox" class="widefat" name="coreactivity-tools[remove][truncate]" value="on"/> <?php esc_html_e( "Remove all data from database table", "coreactivity" ); ?>
             </label><br/>
             <hr/>
             <p><?php esc_html_e( "Database tables that will be affected", "coreactivity" ); ?>:</p>
@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <h3><?php esc_html_e( "Disable Plugin", "coreactivity" ); ?></h3>
         <div class="d4p-group-inner">
             <label>
-                <input type="checkbox" class="widefat" name="coreactivitytools[remove][disable]" value="on"/> <?php esc_html_e( "Disable plugin", "coreactivity" ); ?>
+                <input type="checkbox" class="widefat" name="coreactivity-tools[remove][disable]" value="on"/> <?php esc_html_e( "Disable plugin", "coreactivity" ); ?>
             </label>
         </div>
     </div>

@@ -51,27 +51,25 @@ class PostBack extends BasePostBack {
 	}
 
 	protected function remove() {
-		$data = $_POST['coreactivitytools'] ?? array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-
-		$remove  = isset( $data['remove'] ) ? (array) $data['remove'] : array();
 		$message = 'nothing-removed';
+		$remove  = Sanitize::_get_switch_array( 'coreactivity-tools', 'remove' );
 
 		if ( ! empty( $remove ) ) {
-			if ( isset( $remove['settings'] ) && $remove['settings'] == 'on' ) {
+			if ( in_array( 'settings', $remove ) ) {
 				$this->a()->settings()->remove_plugin_settings_by_group( 'settings' );
 			}
 
-			if ( isset( $remove['drop'] ) && $remove['drop'] == 'on' ) {
+			if ( in_array( 'drop', $remove ) ) {
 				InstallDB::instance()->drop();
 
 				if ( ! isset( $remove['disable'] ) ) {
 					$this->a()->settings()->mark_for_update();
 				}
-			} else if ( isset( $remove['truncate'] ) && $remove['truncate'] == 'on' ) {
+			} else if ( in_array( 'truncate', $remove ) ) {
 				InstallDB::instance()->truncate();
 			}
 
-			if ( isset( $remove['disable'] ) && $remove['disable'] == 'on' ) {
+			if ( in_array( 'disable', $remove ) ) {
 				coreactivity()->deactivate();
 
 				wp_redirect( admin_url( 'plugins.php' ) );
