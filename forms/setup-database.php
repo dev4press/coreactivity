@@ -31,9 +31,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( $data['status'] == 'error' ) {
 				$_proceed  = false;
 				$_error_db = true;
-				$msg[]     = '<span class="gdpc-error">[' . esc_html__( "ERROR", "coreactivity" ) . '] - <strong>' . $table . '</strong>: ' . $data['msg'] . '</span>';
+				$msg[]     = '<span class="gdpc-error">[' . esc_html__( "ERROR", "coreactivity" ) . '] - <strong>' . esc_html( $table ) . '</strong>: ' . esc_html( $data['msg'] ) . '</span>';
 			} else {
-				$msg[] = '<span class="gdpc-ok">[' . esc_html__( "OK", "coreactivity" ) . '] - <strong>' . $table . '</strong></span>';
+				$msg[] = '<span class="gdpc-ok">[' . esc_html__( "OK", "coreactivity" ) . '] - <strong>' . esc_html( $table ) . '</strong></span>';
 			}
 		}
 
