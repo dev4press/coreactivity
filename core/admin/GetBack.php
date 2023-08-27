@@ -30,7 +30,7 @@ class GetBack extends BaseGetBack {
 		do_action( 'coreactivity_admin_getback_handler', $this->p(), $this->a() );
 	}
 
-	public function action_dashboard() {
+	private function action_dashboard() {
 		$action = $this->get_single_action();
 
 		if ( in_array( $action, array( 'disable-logging', 'enable-logging' ) ) ) {
@@ -45,14 +45,13 @@ class GetBack extends BaseGetBack {
 		}
 	}
 
-	public function bulk_panel_events() {
+	private function bulk_panel_events() {
 		check_admin_referer( 'bulk-events' );
 
 		$action = $this->get_bulk_action();
 
 		if ( $action != '' ) {
-			$ids = isset( $_GET['event'] ) ? (array) $_GET['event'] : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			$ids = Sanitize::ids_list( $ids );
+			$ids = Sanitize::_get_ids( 'event' );
 
 			if ( ! empty( $ids ) ) {
 				if ( $action == 'enable' || $action == 'disable' ) {
