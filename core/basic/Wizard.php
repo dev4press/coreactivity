@@ -125,4 +125,8 @@ class Wizard extends CoreWizard {
 
 		$this->setup_panel( $this->a()->subpanel );
 	}
+
+	protected function init_data() {
+
+	}
 }
