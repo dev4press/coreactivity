@@ -90,13 +90,13 @@ abstract class Content extends Component {
 	protected function get_events() : array {
 		return array(
 			'status-change'            => array(
-				'label' => __( "Post Status Change", "coreactivity" ),
+				'label' => __( 'Post Status Change', 'coreactivity' ),
 			),
 			'deleted'                  => array(
-				'label' => __( "Post Deleted", "coreactivity" ),
+				'label' => __( 'Post Deleted', 'coreactivity' ),
 			),
 			'term-relationship-change' => array(
-				'label' => __( "Post Term Relationship Changes", "coreactivity" ),
+				'label' => __( 'Post Term Relationship Changes', 'coreactivity' ),
 			),
 		);
 	}

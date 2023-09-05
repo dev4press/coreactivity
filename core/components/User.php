@@ -108,70 +108,70 @@ class User extends Component {
 	}
 
 	public function label() : string {
-		return __( "Users", "coreactivity" );
+		return __( 'Users', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'login'                          => array(
-				'label' => __( "Login", "coreactivity" ),
+				'label' => __( 'Login', 'coreactivity' ),
 			),
 			'logout'                         => array(
-				'label' => __( "Logout", "coreactivity" ),
+				'label' => __( 'Logout', 'coreactivity' ),
 			),
 			'failed-login'                   => array(
-				'label'       => __( "Failed Login", "coreactivity" ),
+				'label'       => __( 'Failed Login', 'coreactivity' ),
 				'is_security' => true,
 			),
 			'failed-login-cookie'            => array(
-				'label'       => __( "Failed Login Cookie", "coreactivity" ),
+				'label'       => __( 'Failed Login Cookie', 'coreactivity' ),
 				'is_security' => true,
 			),
 			'password-reset'                 => array(
-				'label'       => __( "Password Reset", "coreactivity" ),
+				'label'       => __( 'Password Reset', 'coreactivity' ),
 				'is_security' => true,
 			),
 			'password-reset-request-invalid' => array(
-				'label'       => __( "Request Password Reset Invalid", "coreactivity" ),
+				'label'       => __( 'Request Password Reset Invalid', 'coreactivity' ),
 				'is_security' => true,
 			),
 			'password-reset-request'         => array(
-				'label' => __( "Request Password Reset", "coreactivity" ),
+				'label' => __( 'Request Password Reset', 'coreactivity' ),
 			),
 			'registered'                     => array(
-				'label' => __( "Registered", "coreactivity" ),
+				'label' => __( 'Registered', 'coreactivity' ),
 			),
 			'deleted'                        => array(
-				'label' => __( "User Deleted", "coreactivity" ),
+				'label' => __( 'User Deleted', 'coreactivity' ),
 			),
 			'role-changed'                   => array(
-				'label' => __( "User Role Changed", "coreactivity" ),
+				'label' => __( 'User Role Changed', 'coreactivity' ),
 			),
 			'edited-password'                => array(
-				'label' => __( "Edited Password", "coreactivity" ),
+				'label' => __( 'Edited Password', 'coreactivity' ),
 			),
 			'edited-email'                   => array(
-				'label' => __( "Edited Email", "coreactivity" ),
+				'label' => __( 'Edited Email', 'coreactivity' ),
 			),
 			'edited-url'                     => array(
-				'label' => __( "Edited URL", "coreactivity" ),
+				'label' => __( 'Edited URL', 'coreactivity' ),
 			),
 			'edited-display-name'            => array(
-				'label' => __( "Edited Display Name", "coreactivity" ),
+				'label' => __( 'Edited Display Name', 'coreactivity' ),
 			),
 			'edited-meta-data'               => array(
-				'label' => __( "Edited Meta", "coreactivity" ),
+				'label' => __( 'Edited Meta', 'coreactivity' ),
 			),
 			'user-signup'                    => array(
-				'label' => __( "User Signup", "coreactivity" ),
+				'label' => __( 'User Signup', 'coreactivity' ),
 				'scope' => 'network',
 			),
 			'failed-user-signup'             => array(
-				'label' => __( "Failed User Signup", "coreactivity" ),
+				'label' => __( 'Failed User Signup', 'coreactivity' ),
 				'scope' => 'network',
 			),
 			'activate-user'                  => array(
-				'label' => __( "Activate User", "coreactivity" ),
+				'label' => __( 'Activate User', 'coreactivity' ),
 				'scope' => 'network',
 			),
 		);
@@ -285,7 +285,7 @@ class User extends Component {
 					$data = array( 'object_id' => $user_data->ID );
 					$meta = array( 'error' => strip_tags( $errors->get_error_message() ) );
 				} else {
-					$meta = array( 'error' => __( "There is no account with that username or email address.", "coreactivity" ) );
+					$meta = array( 'error' => __( 'There is no account with that username or email address.', 'coreactivity' ) );
 				}
 
 				$meta['login'] = $this->user_login;

@@ -29,8 +29,8 @@ class BuddyPress extends Plugin {
 	);
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types['bpcomponent'] = __( "BuddyPress Component", "coreactivity" );
-		$object_types['bpgroup']     = __( "BuddyPress Group", "coreactivity" );
+		$object_types['bpcomponent'] = __( 'BuddyPress Component', 'coreactivity' );
+		$object_types['bpgroup']     = __( 'BuddyPress Group', 'coreactivity' );
 
 		return $object_types;
 	}
@@ -57,22 +57,22 @@ class BuddyPress extends Plugin {
 	}
 
 	public function label() : string {
-		return __( "BuddyPress", "coreactivity" );
+		return __( 'BuddyPress', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'group-created'         => array(
-				'label' => __( "Group Created", "coreactivity" ),
+				'label' => __( 'Group Created', 'coreactivity' ),
 			),
 			'group-updated'         => array(
-				'label' => __( "Group Updated", "coreactivity" ),
+				'label' => __( 'Group Updated', 'coreactivity' ),
 			),
 			'component-activated'   => array(
-				'label' => __( "Component Activated", "coreactivity" ),
+				'label' => __( 'Component Activated', 'coreactivity' ),
 			),
 			'component-deactivated' => array(
-				'label' => __( "Component Deactivated", "coreactivity" ),
+				'label' => __( 'Component Deactivated', 'coreactivity' ),
 			),
 		);
 	}

@@ -96,20 +96,20 @@ class Logs extends Table {
 	public function get_columns() : array {
 		$columns = array(
 			'cb'          => '<input type="checkbox" />',
-			'log_id'      => __( "ID", "coreactivity" ),
-			'blog_id'     => __( "Blog", "coreactivity" ),
-			'user_id'     => __( "User", "coreactivity" ),
-			'component'   => __( "Component", "coreactivity" ),
-			'event_id'    => __( "Event", "coreactivity" ),
-			'context'     => __( "Context", "coreactivity" ),
-			'method'      => __( "Method", "coreactivity" ),
-			'protocol'    => __( "Protocol", "coreactivity" ),
-			'ip'          => __( "IP", "coreactivity" ),
-			'request'     => __( "Request", "coreactivity" ),
-			'object_type' => __( "Object Type", "coreactivity" ),
-			'object_name' => __( "Object", "coreactivity" ),
-			'logged'      => __( "Logged", "coreactivity" ),
-			'meta'        => '<i class="vers d4p-icon d4p-ui-chevron-square-down d4p-icon-lg" title="' . esc_attr__( "Toggle Meta", "coreactivity" ) . '"></i><span class="screen-reader-text">' . esc_html__( "Toggle Meta", "coreactivity" ) . '</span>',
+			'log_id'      => __( 'ID', 'coreactivity' ),
+			'blog_id'     => __( 'Blog', 'coreactivity' ),
+			'user_id'     => __( 'User', 'coreactivity' ),
+			'component'   => __( 'Component', 'coreactivity' ),
+			'event_id'    => __( 'Event', 'coreactivity' ),
+			'context'     => __( 'Context', 'coreactivity' ),
+			'method'      => __( 'Method', 'coreactivity' ),
+			'protocol'    => __( 'Protocol', 'coreactivity' ),
+			'ip'          => __( 'IP', 'coreactivity' ),
+			'request'     => __( 'Request', 'coreactivity' ),
+			'object_type' => __( 'Object Type', 'coreactivity' ),
+			'object_name' => __( 'Object', 'coreactivity' ),
+			'logged'      => __( 'Logged', 'coreactivity' ),
+			'meta'        => '<i class="vers d4p-icon d4p-ui-chevron-square-down d4p-icon-lg" title="' . esc_attr__( 'Toggle Meta', 'coreactivity' ) . '"></i><span class="screen-reader-text">' . esc_html__( 'Toggle Meta', 'coreactivity' ) . '</span>',
 		);
 
 		if ( ! $this->_display_request_column ) {
@@ -412,7 +412,7 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock['component'] ) && ! isset( $this->_filter_lock['event_id'] ) ) {
 			Elements::instance()->select_grouped( $this->get_select_components(), array(
-				'empty'    => __( "All Components", "coreactivity" ),
+				'empty'    => __( 'All Components', 'coreactivity' ),
 				'selected' => $this->get_request_arg( 'filter-component' ),
 				'name'     => 'filter-component',
 			) );
@@ -420,7 +420,7 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock['event_id'] ) ) {
 			Elements::instance()->select_grouped( $this->get_select_events(), array(
-				'empty'    => __( "All Events", "coreactivity" ),
+				'empty'    => __( 'All Events', 'coreactivity' ),
 				'selected' => $this->get_request_arg( 'filter-event_id' ),
 				'name'     => 'filter-event_id',
 			) );
@@ -428,8 +428,8 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock['context'] ) ) {
 			$_contexts = array(
-				''  => __( "All Contexts", "coreactivity" ),
-				'-' => __( "Normal", "coreactivity" ),
+				''  => __( 'All Contexts', 'coreactivity' ),
+				'-' => __( 'Normal', 'coreactivity' ),
 			);
 
 			foreach ( Core::instance()->valid_request_contexts() as $context ) {
@@ -444,7 +444,7 @@ class Logs extends Table {
 
 		if ( ! isset( $this->_filter_lock['method'] ) ) {
 			$_methods = array(
-				'' => __( "All Methods", "coreactivity" ),
+				'' => __( 'All Methods', 'coreactivity' ),
 			);
 
 			foreach ( Core::instance()->valid_request_methods() as $method ) {
@@ -460,7 +460,7 @@ class Logs extends Table {
 		if ( ! in_array( 'object_type', $this->_filter_remove ) ) {
 			if ( ! isset( $this->_filter_lock['object_type'] ) ) {
 				$_types = array(
-					'' => __( "All Object Types", "coreactivity" ),
+					'' => __( 'All Object Types', 'coreactivity' ),
 				);
 
 				foreach ( $this->i()->get_object_types() as $type => $value ) {
@@ -474,7 +474,7 @@ class Logs extends Table {
 			}
 		}
 
-		submit_button( __( "Filter", "coreactivity" ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
+		submit_button( __( 'Filter', 'coreactivity' ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
 		echo '</div>';
 	}
 
@@ -492,12 +492,12 @@ class Logs extends Table {
 			$current_view = '';
 			$current_key  = 'view ';
 
-			$views['all'] = '<a class="coreactivity-view-button" href="' . $this->_url() . '"><i class="d4p-icon d4p-ui-angles-left"></i> ' . __( "All Logs", "coreactivity" ) . '</a>';
+			$views['all'] = '<a class="coreactivity-view-button" href="' . $this->_url() . '"><i class="d4p-icon d4p-ui-angles-left"></i> ' . __( 'All Logs', 'coreactivity' ) . '</a>';
 
 			switch ( $this->_current_view ) {
 				case 'object_type':
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-archive"></i> ';
-					$current_view .= '<span>' . esc_html__( "Object Type", "coreactivity" ) . '</span>';
+					$current_view .= '<span>' . esc_html__( 'Object Type', 'coreactivity' ) . '</span>';
 					$current_view .= $this->i()->get_object_type_label( $this->_filter_lock['object_type'] );
 					$current_view .= '<span>[' . esc_html( $this->_filter_lock['object_type'] ) . ']</span>';
 					$current_view .= '</span>';
@@ -507,7 +507,7 @@ class Logs extends Table {
 				case 'component':
 					$current_view = '<span class="coreactivity-view-button">';
 					$current_view .= '<i class="d4p-icon d4p-' . $this->i()->get_component_icon( $this->_filter_lock['component'] ) . ' d4p-icon-fw"></i>';
-					$current_view .= '<span>' . esc_html__( "Component", "coreactivity" ) . '</span>';
+					$current_view .= '<span>' . esc_html__( 'Component', 'coreactivity' ) . '</span>';
 					$current_view .= $this->i()->get_component_label( $this->_filter_lock['component'] );
 					$current_view .= '<span>[' . esc_html( $this->_filter_lock['component'] ) . ']</span>';
 					$current_view .= '</span>';
@@ -518,7 +518,7 @@ class Logs extends Table {
 					$event = $this->i()->get_event_by_id( $this->_filter_lock['event_id'] );
 					$label = $this->i()->get_component_label( $event->component );
 
-					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <span>' . esc_html__( "Event", "coreactivity" ) . '</span>';
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <span>' . esc_html__( 'Event', 'coreactivity' ) . '</span>';
 					$current_view .= $label . ' / ' . $event->label;
 					$current_view .= '<span>[' . $event->component . '/' . $event->event . ']</span>';
 					$current_view .= '</span>';
@@ -526,7 +526,7 @@ class Logs extends Table {
 					$current_key .= 'component';
 					break;
 				case 'ip':
-					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud d4p-icon-fw"></i> <span>' . esc_html__( "IP", "coreactivity" ) . '</span>';
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud d4p-icon-fw"></i> <span>' . esc_html__( 'IP', 'coreactivity' ) . '</span>';
 
 					if ( $this->_display_ip_country_flag ) {
 						$ip           = GEOJSIO::instance()->locate( $this->_filter_lock['ip'] );
@@ -540,9 +540,9 @@ class Logs extends Table {
 					break;
 				case 'user_id':
 					$user = get_user_by( 'id', $this->_filter_lock['user_id'] );
-					$name = ! $user ? __( "Not Found", "coreactivity" ) : $user->display_name;
+					$name = ! $user ? __( 'Not Found', 'coreactivity' ) : $user->display_name;
 
-					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-user d4p-icon-fw"></i> <span>' . esc_html__( "User", "coreactivity" ) . '</span>';
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-user d4p-icon-fw"></i> <span>' . esc_html__( 'User', 'coreactivity' ) . '</span>';
 					$current_view .= '<span>' . esc_html( $this->_filter_lock['user_id'] . ' : ' . $name ) . '</span>';
 
 					if ( $this->_filter_lock['user_id'] > 0 && $this->_display_user_avatar ) {
@@ -571,7 +571,7 @@ class Logs extends Table {
 
 	protected function get_bulk_actions() : array {
 		return array(
-			'delete' => __( "Delete", "coreactivity" ),
+			'delete' => __( 'Delete', 'coreactivity' ),
 		);
 	}
 
@@ -585,11 +585,11 @@ class Logs extends Table {
 		$right = array();
 
 		if ( ! $this->_display_protocol_column && ! empty( $item->protocol ) ) {
-			$left[] = '<li><strong>' . esc_html__( "protocol", "coreactivity" ) . ':</strong><span>' . esc_html( $item->protocol ) . '</span></li>';
+			$left[] = '<li><strong>' . esc_html__( 'protocol', 'coreactivity' ) . ':</strong><span>' . esc_html( $item->protocol ) . '</span></li>';
 		}
 
 		if ( ! $this->_display_request_column && ! empty( $item->request ) ) {
-			$left[] = '<li><strong>' . esc_html__( "request", "coreactivity" ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
+			$left[] = '<li><strong>' . esc_html__( 'request', 'coreactivity' ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
 		}
 
 		if ( isset( $item->meta ) ) {
@@ -635,7 +635,7 @@ class Logs extends Table {
 		$render = $this->_display_columns_simplified ? $this->i()->get_component_label( $item->component ) : $item->component;
 
 		$actions = array(
-			'view' => '<a href="' . $this->_view( 'component', 'filter-component=' . $item->component ) . '">' . __( "Logs", "coreactivity" ) . '</a>',
+			'view' => '<a href="' . $this->_view( 'component', 'filter-component=' . $item->component ) . '">' . __( 'Logs', 'coreactivity' ) . '</a>',
 		);
 
 		$render  = apply_filters( 'coreactivity_logs_field_render_component', $render, $item, $this );
@@ -647,7 +647,7 @@ class Logs extends Table {
 	protected function column_ip( $item ) : string {
 		$render  = '<span>' . $item->ip . '</span>';
 		$actions = array(
-			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( "Logs", "coreactivity" ) . '</a>',
+			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( 'Logs', 'coreactivity' ) . '</a>',
 		);
 
 		if ( $this->_display_ip_country_flag ) {
@@ -656,11 +656,11 @@ class Logs extends Table {
 		}
 
 		if ( $item->ip == $this->_server_ip ) {
-			$render .= '<i class="d4p-icon d4p-ui-database" title="' . esc_attr__( "Server IP", "coreactivity" ) . '"></i>';
+			$render .= '<i class="d4p-icon d4p-ui-database" title="' . esc_attr__( 'Server IP', 'coreactivity' ) . '"></i>';
 		}
 
 		if ( $item->ip == $this->_current_ip ) {
-			$render .= '<i class="d4p-icon d4p-ui-user-square" title="' . esc_attr__( "Current Request IP", "coreactivity" ) . '"></i>';
+			$render .= '<i class="d4p-icon d4p-ui-user-square" title="' . esc_attr__( 'Current Request IP', 'coreactivity' ) . '"></i>';
 		}
 
 		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
@@ -674,7 +674,7 @@ class Logs extends Table {
 	protected function column_user_id( $item ) : string {
 		$render  = '';
 		$actions = array(
-			'view' => '<a href="' . $this->_view( 'user_id', 'filter-user_id=' . $item->user_id ) . '">' . esc_html__( "Logs", "coreactivity" ) . '</a>',
+			'view' => '<a href="' . $this->_view( 'user_id', 'filter-user_id=' . $item->user_id ) . '">' . esc_html__( 'Logs', 'coreactivity' ) . '</a>',
 		);
 
 		if ( $item->user_id == 0 ) {
@@ -682,7 +682,7 @@ class Logs extends Table {
 				$render .= '<i class="d4p-icon d4p-ui-user-square"></i>';
 			}
 
-			$render .= '<span>ID: <strong>0</strong> &middot; ' . esc_html__( "Not a User", "coreactivity" ) . '</span>';
+			$render .= '<span>ID: <strong>0</strong> &middot; ' . esc_html__( 'Not a User', 'coreactivity' ) . '</span>';
 		} else {
 			if ( $this->_display_user_avatar ) {
 				$render .= get_avatar( $item->user_id, 20 );
@@ -693,11 +693,11 @@ class Logs extends Table {
 			$render .= '<span>ID: <strong>' . $item->user_id . '</strong> &middot; ';
 
 			if ( ! $user ) {
-				$render .= esc_html__( "Not Found", "coreactivity" );
+				$render .= esc_html__( 'Not Found', 'coreactivity' );
 			} else {
 				$render .= $user->display_name;
 
-				$actions['edit'] = '<a href="user-edit.php?user_id=' . $item->user_id . '">' . esc_html__( "Edit", "coreactivity" ) . '</a>';
+				$actions['edit'] = '<a href="user-edit.php?user_id=' . $item->user_id . '">' . esc_html__( 'Edit', 'coreactivity' ) . '</a>';
 			}
 
 			$render .= '</span>';
@@ -715,7 +715,7 @@ class Logs extends Table {
 		$render = $this->_display_columns_simplified ? $this->i()->get_event_label( absint( $item->event_id ), $item->event ) : $item->event;
 
 		$actions = array(
-			'view' => '<a href="' . $this->_view( 'event_id', 'filter-event_id=' . $item->event_id ) . '">' . __( "Logs", "coreactivity" ) . '</a>',
+			'view' => '<a href="' . $this->_view( 'event_id', 'filter-event_id=' . $item->event_id ) . '">' . __( 'Logs', 'coreactivity' ) . '</a>',
 		);
 
 		$render  = apply_filters( 'coreactivity_logs_field_render_event_id', $render, $item, $this );
@@ -728,7 +728,7 @@ class Logs extends Table {
 		$render = ! empty( $item->object_type ) ? $this->i()->get_object_type_label( $item->object_type ) : '/';
 
 		$actions = array(
-			'view' => '<a href="' . $this->_view( 'object_type', 'filter-object_type=' . $item->object_type ) . '">' . __( "Logs", "coreactivity" ) . '</a>',
+			'view' => '<a href="' . $this->_view( 'object_type', 'filter-object_type=' . $item->object_type ) . '">' . __( 'Logs', 'coreactivity' ) . '</a>',
 		);
 
 		if ( empty( $item->object_type ) ) {
@@ -794,7 +794,7 @@ class Logs extends Table {
 	}
 
 	protected function column_meta( $item ) : string {
-		return '<button type="button" aria-label="' . esc_attr__( "Show Log Meta Data", "coreactivity" ) . '"><i class="d4p-icon d4p-ui-chevron-square-down d4p-icon-lg"></i></button>';
+		return '<button type="button" aria-label="' . esc_attr__( 'Show Log Meta Data', 'coreactivity' ) . '"><i class="d4p-icon d4p-ui-chevron-square-down d4p-icon-lg"></i></button>';
 	}
 
 	private function print_array( $input ) : string {

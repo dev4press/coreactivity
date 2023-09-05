@@ -19,7 +19,7 @@ class Logs extends Panel {
 
 	public function screen_options_show() {
 		add_screen_option( 'per_page', array(
-			'label'   => __( "Rows", "coreactivity" ),
+			'label'   => __( 'Rows', 'coreactivity' ),
 			'default' => 25,
 			'option'  => 'coreactivity_logs_rows_per_page',
 		) );

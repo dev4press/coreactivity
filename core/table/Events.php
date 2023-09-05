@@ -82,15 +82,15 @@ class Events extends Table {
 	public function get_columns() : array {
 		$columns = array(
 			'cb'            => '<input type="checkbox" />',
-			'event_id'      => __( "ID", "coreactivity" ),
-			'status'        => __( "Status", "coreactivity" ),
-			'category'      => __( "Category", "coreactivity" ),
-			'component'     => __( "Component", "coreactivity" ),
-			'event'         => __( "Event", "coreactivity" ),
-			'logs'          => __( "Logs", "coreactivity" ),
-			'description'   => __( "Description", "coreactivity" ),
-			'available'     => __( "Available", "coreactivity" ),
-			'notifications' => __( "Notifications", "coreactivity" ),
+			'event_id'      => __( 'ID', 'coreactivity' ),
+			'status'        => __( 'Status', 'coreactivity' ),
+			'category'      => __( 'Category', 'coreactivity' ),
+			'component'     => __( 'Component', 'coreactivity' ),
+			'event'         => __( 'Event', 'coreactivity' ),
+			'logs'          => __( 'Logs', 'coreactivity' ),
+			'description'   => __( 'Description', 'coreactivity' ),
+			'available'     => __( 'Available', 'coreactivity' ),
+			'notifications' => __( 'Notifications', 'coreactivity' ),
 		);
 
 		if ( is_network_admin() ) {
@@ -117,17 +117,17 @@ class Events extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
-		Elements::instance()->select( array_merge( array( '' => __( "All Categories", "coreactivity" ) ), Activity::instance()->get_all_categories() ), array(
+		Elements::instance()->select( array_merge( array( '' => __( 'All Categories', 'coreactivity' ) ), Activity::instance()->get_all_categories() ), array(
 			'selected' => $this->get_request_arg( 'filter-group' ),
 			'name'     => 'filter-group',
 		) );
 
 		Elements::instance()->select_grouped( Activity::instance()->get_select_event_components( true ), array(
-			'empty'    => __( "All Components", "coreactivity" ),
+			'empty'    => __( 'All Components', 'coreactivity' ),
 			'selected' => $this->get_request_arg( 'filter-component' ),
 			'name'     => 'filter-component',
 		) );
-		submit_button( __( "Filter", "coreactivity" ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
+		submit_button( __( 'Filter', 'coreactivity' ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
 		echo '</div>';
 	}
 
@@ -154,14 +154,14 @@ class Events extends Table {
 
 	protected function get_bulk_actions() : array {
 		return array(
-			'enable'                    => __( "Enable Events", "coreactivity" ),
-			'disable'                   => __( "Disable Events", "coreactivity" ),
-			'notifications-instant-on'  => __( "Enable Instant Notifications", "coreactivity" ),
-			'notifications-instant-off' => __( "Disable Instant Notifications", "coreactivity" ),
-			'notifications-daily-on'    => __( "Enable Daily Notifications", "coreactivity" ),
-			'notifications-daily-off'   => __( "Disable Daily Notifications", "coreactivity" ),
-			'notifications-weekly-on'   => __( "Enable Weekly Notifications", "coreactivity" ),
-			'notifications-weekly-off'  => __( "Disable Weekly Notifications", "coreactivity" ),
+			'enable'                    => __( 'Enable Events', 'coreactivity' ),
+			'disable'                   => __( 'Disable Events', 'coreactivity' ),
+			'notifications-instant-on'  => __( 'Enable Instant Notifications', 'coreactivity' ),
+			'notifications-instant-off' => __( 'Disable Instant Notifications', 'coreactivity' ),
+			'notifications-daily-on'    => __( 'Enable Daily Notifications', 'coreactivity' ),
+			'notifications-daily-off'   => __( 'Disable Daily Notifications', 'coreactivity' ),
+			'notifications-weekly-on'   => __( 'Enable Weekly Notifications', 'coreactivity' ),
+			'notifications-weekly-off'  => __( 'Disable Weekly Notifications', 'coreactivity' ),
 		);
 	}
 
@@ -179,8 +179,8 @@ class Events extends Table {
 		$render .= '<span>' . $item->component . '</span>';
 
 		if ( $this->_logged_counts[ $item->component ] > 0 ) {
-			$render .= '<a href="admin.php?page=coreactivity-logs&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "Filter", "coreactivity" ) . '</span></a>';
-			$render .= '<a href="admin.php?page=coreactivity-logs&view=component&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "View", "coreactivity" ) . '</span></a>';
+			$render .= '<a href="admin.php?page=coreactivity-logs&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Filter', 'coreactivity' ) . '</span></a>';
+			$render .= '<a href="admin.php?page=coreactivity-logs&view=component&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'View', 'coreactivity' ) . '</span></a>';
 			$render .= '</div>';
 		}
 
@@ -192,8 +192,8 @@ class Events extends Table {
 		$render .= '<span>' . $item->event . '</span>';
 
 		if ( $item->logs > 0 ) {
-			$render .= '<a href="admin.php?page=coreactivity-logs&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "Filter", "coreactivity" ) . '</span></a>';
-			$render .= '<a href="admin.php?page=coreactivity-logs&view=event_id&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( "View", "coreactivity" ) . '</span></a>';
+			$render .= '<a href="admin.php?page=coreactivity-logs&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Filter', 'coreactivity' ) . '</span></a>';
+			$render .= '<a href="admin.php?page=coreactivity-logs&view=event_id&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'View', 'coreactivity' ) . '</span></a>';
 		}
 
 		$render .= '</div>';
@@ -206,7 +206,7 @@ class Events extends Table {
 	}
 
 	protected function column_available( $item ) : string {
-		return Activity::instance()->is_event_available( $item->component, $item->event ) ? __( "Yes", "coreactivity" ) : __( "No", "coreactivity" );
+		return Activity::instance()->is_event_available( $item->component, $item->event ) ? __( 'Yes', 'coreactivity' ) : __( 'No', 'coreactivity' );
 	}
 
 	protected function column_notifications( $item ) : string {
@@ -214,16 +214,16 @@ class Events extends Table {
 
 		$render = '<div class="coreactivity-event-notifications">';
 		$render .= '<div>';
-		$render .= $this->toggle_switch( $notifications['instant'], 'instant', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-instant-' . $item->event_id, __( "Disable Instant Notifications", "coreactivity" ), __( "Enable Instant Notifications", "coreactivity" ) );
-		$render .= '<span>' . __( "Instant", "coreactivity" ) . '</span>';
+		$render .= $this->toggle_switch( $notifications['instant'], 'instant', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-instant-' . $item->event_id, __( 'Disable Instant Notifications', 'coreactivity' ), __( 'Enable Instant Notifications', 'coreactivity' ) );
+		$render .= '<span>' . __( 'Instant', 'coreactivity' ) . '</span>';
 		$render .= '</div>';
 		$render .= '<div>';
-		$render .= $this->toggle_switch( $notifications['daily'], 'daily', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-daily-' . $item->event_id, __( "Disable Daily Notifications", "coreactivity" ), __( "Enable Daily Notifications", "coreactivity" ) );
-		$render .= '<span>' . __( "Daily", "coreactivity" ) . '</span>';
+		$render .= $this->toggle_switch( $notifications['daily'], 'daily', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-daily-' . $item->event_id, __( 'Disable Daily Notifications', 'coreactivity' ), __( 'Enable Daily Notifications', 'coreactivity' ) );
+		$render .= '<span>' . __( 'Daily', 'coreactivity' ) . '</span>';
 		$render .= '</div>';
 		$render .= '<div>';
-		$render .= $this->toggle_switch( $notifications['weekly'], 'weekly', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-weekly-' . $item->event_id, __( "Disable Weekly Notifications", "coreactivity" ), __( "Enable Weekly Notifications", "coreactivity" ) );
-		$render .= '<span>' . __( "Weekly", "coreactivity" ) . '</span>';
+		$render .= $this->toggle_switch( $notifications['weekly'], 'weekly', $item->event_id, 'coreactivity-toggle-notification', 'coreactivity-toggle-notification-weekly-' . $item->event_id, __( 'Disable Weekly Notifications', 'coreactivity' ), __( 'Enable Weekly Notifications', 'coreactivity' ) );
+		$render .= '<span>' . __( 'Weekly', 'coreactivity' ) . '</span>';
 		$render .= '</div>';
 		$render .= '</div>';
 
@@ -231,7 +231,7 @@ class Events extends Table {
 	}
 
 	protected function column_status( $item ) : string {
-		return $this->toggle_switch( $item->status == 'active', '', $item->event_id, 'coreactivity-toggle-event', 'coreactivity-toggle-event-' . $item->event_id, __( "Disable Event", "coreactivity" ), __( "Enable Event", "coreactivity" ) );
+		return $this->toggle_switch( $item->status == 'active', '', $item->event_id, 'coreactivity-toggle-event', 'coreactivity-toggle-event-' . $item->event_id, __( 'Disable Event', 'coreactivity' ), __( 'Enable Event', 'coreactivity' ) );
 	}
 
 	protected function toggle_switch( bool $value, string $key, int $id, string $class, string $nonce, string $active, string $inactive ) : string {

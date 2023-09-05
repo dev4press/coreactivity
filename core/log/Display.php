@@ -159,14 +159,14 @@ class Display {
 		$render = '';
 
 		if ( empty( $item->object_name ) ) {
-			$render .= __( "Unknown Theme", "coreactivity" );
+			$render .= __( 'Unknown Theme', 'coreactivity' );
 		} else {
 			if ( isset( $item->meta['theme_name'] ) ) {
-				$render .= '<span>' . esc_html__( "Theme", "coreactivity" ) . ': <strong>' . $item->meta['theme_name'] . '</strong></span><br/>';
+				$render .= '<span>' . esc_html__( 'Theme', 'coreactivity' ) . ': <strong>' . $item->meta['theme_name'] . '</strong></span><br/>';
 			}
-			$render .= '<span>' . esc_html__( "Directory", "coreactivity" ) . ': <strong>' . $item->object_name . '</span>';
+			$render .= '<span>' . esc_html__( 'Directory', 'coreactivity' ) . ': <strong>' . $item->object_name . '</span>';
 			if ( isset( $item->meta['theme_version'] ) ) {
-				$render .= '<br/><span>' . esc_html__( "Version", "coreactivity" ) . ': <strong>' . $item->meta['theme_version'] . '</strong></span>';
+				$render .= '<br/><span>' . esc_html__( 'Version', 'coreactivity' ) . ': <strong>' . $item->meta['theme_version'] . '</strong></span>';
 			}
 		}
 
@@ -177,13 +177,13 @@ class Display {
 		$render = '';
 
 		if ( empty( $item->object_name ) ) {
-			$render .= __( "Unknown Plugin", "coreactivity" );
+			$render .= __( 'Unknown Plugin', 'coreactivity' );
 		} else {
 			$plugin = $item->meta['plugin_title'] ?? '';
-			$render .= '<span>' . esc_html__( "Plugin", "coreactivity" ) . ': <strong>' . $plugin . '</strong></span>';
-			$render .= '<br/><span>' . esc_html__( "File", "coreactivity" ) . ': <strong>' . $item->object_name . '</strong></span>';
+			$render .= '<span>' . esc_html__( 'Plugin', 'coreactivity' ) . ': <strong>' . $plugin . '</strong></span>';
+			$render .= '<br/><span>' . esc_html__( 'File', 'coreactivity' ) . ': <strong>' . $item->object_name . '</strong></span>';
 			if ( isset( $item->meta['plugin_version'] ) ) {
-				$render .= '<br/><span>' . esc_html__( "Version", "coreactivity" ) . ': <strong>' . $item->meta['plugin_version'] . '</strong></span>';
+				$render .= '<br/><span>' . esc_html__( 'Version', 'coreactivity' ) . ': <strong>' . $item->meta['plugin_version'] . '</strong></span>';
 			}
 		}
 
@@ -194,15 +194,15 @@ class Display {
 		$render = '';
 
 		if ( empty( $item->object_name ) ) {
-			$render .= __( "Unknown Notification Type", "coreactivity" );
+			$render .= __( 'Unknown Notification Type', 'coreactivity' );
 		} else {
 			$render .= '<strong>' . $item->object_name . '</strong>';
 
 			$data = Detection::instance()->get_data( $item->object_name );
 
 			if ( ! empty( $data ) ) {
-				$render .= '<br/><span>' . esc_html__( "Source", "coreactivity" ) . ': <strong>' . $data['source'] . '</strong></span>';
-				$render .= '<br/><span>' . esc_html__( "Name", "coreactivity" ) . ': <strong>' . $data['label'] . '</strong></span>';
+				$render .= '<br/><span>' . esc_html__( 'Source', 'coreactivity' ) . ': <strong>' . $data['source'] . '</strong></span>';
+				$render .= '<br/><span>' . esc_html__( 'Name', 'coreactivity' ) . ': <strong>' . $data['label'] . '</strong></span>';
 			}
 		}
 
@@ -214,14 +214,14 @@ class Display {
 		$meta   = array();
 
 		if ( $item->object_id == 0 ) {
-			$render = '<span>ID: <strong>0</strong> &middot; ' . esc_html__( "Invalid", "coreactivity" ) . '</span>';
+			$render = '<span>ID: <strong>0</strong> &middot; ' . esc_html__( 'Invalid', 'coreactivity' ) . '</span>';
 		} else {
 			$user = get_user_by( 'id', $item->object_id );
 
 			$render .= '<span>ID: <strong>' . $item->object_id . '</strong> &middot; ';
 
 			if ( ! $user ) {
-				$render .= esc_html__( "Not Found", "coreactivity" );
+				$render .= esc_html__( 'Not Found', 'coreactivity' );
 			} else {
 				$render .= $user->display_name;
 			}
@@ -246,9 +246,9 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( "ID: %s &middot; Post: %s<br/>Post Type: %s", "coreactivity" ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
+			$render .= sprintf( __( 'ID: %s &middot; Post: %s<br/>Post Type: %s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
 		return $render;
@@ -263,12 +263,12 @@ class Display {
 			$post = get_post( $comment->comment_post_ID );
 
 			if ( $post instanceof WP_Post ) {
-				$render .= sprintf( __( "ID: %s &middot; Author: %s<br/>Post: %s", "coreactivity" ), '<strong><a href="' . get_edit_comment_link( $comment->comment_ID ) . '">' . $comment->comment_ID . '</a></strong>', '<strong>' . $comment->comment_author . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
+				$render .= sprintf( __( 'ID: %s &middot; Author: %s<br/>Post: %s', 'coreactivity' ), '<strong><a href="' . get_edit_comment_link( $comment->comment_ID ) . '">' . $comment->comment_ID . '</a></strong>', '<strong>' . $comment->comment_author . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
 			} else {
-				$render .= sprintf( __( "ID: %s &middot; Author: %s<br/>Post: MISSING", "coreactivity" ), '<strong>' . get_edit_comment_link( $comment->comment_ID ) . '</strong>', '<strong>' . $comment->comment_author . '</strong>', );
+				$render .= sprintf( __( 'ID: %s &middot; Author: %s<br/>Post: MISSING', 'coreactivity' ), '<strong>' . get_edit_comment_link( $comment->comment_ID ) . '</strong>', '<strong>' . $comment->comment_author . '</strong>', );
 			}
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
 		return $render;
@@ -280,9 +280,9 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( "ID: %s &middot; MIME/Type: %s<br/>Name: %s", "coreactivity" ), '<strong>' . $post->ID . '</strong>', '<strong>' . $post->post_mime_type . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
+			$render .= sprintf( __( 'ID: %s &middot; MIME/Type: %s<br/>Name: %s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong>' . $post->post_mime_type . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
 		return $render;
@@ -295,12 +295,12 @@ class Display {
 			$group = groups_get_group( $item->object_id );
 
 			if ( $group instanceof BP_Groups_Group ) {
-				$render .= sprintf( __( "ID: %s &middot; Slug: %s<br/>Name: %s", "coreactivity" ), '<strong>' . $group->id . '</strong>', '<strong>' . $group->slug . '</strong>', '<strong><a href="' . bp_get_group_permalink( $group ) . '">' . $group->name . '</a></strong>' );
+				$render .= sprintf( __( 'ID: %s &middot; Slug: %s<br/>Name: %s', 'coreactivity' ), '<strong>' . $group->id . '</strong>', '<strong>' . $group->slug . '</strong>', '<strong><a href="' . bp_get_group_permalink( $group ) . '">' . $group->name . '</a></strong>' );
 			} else {
-				$render .= __( "MISSING", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+				$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 			}
 		} else {
-			$render = __( "ID", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+			$render = __( 'ID', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
 		return $render;
@@ -314,19 +314,19 @@ class Display {
 				$form = GFAPI::get_form( $item->object_id );
 				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form['id'] );
 
-				$render .= sprintf( __( "ID: %s &middot; Slug: %s<br/>Name: %s", "coreactivity" ), '<strong>' . $form['id'] . '</strong>', '<strong>' . $form['form_slug'] . '</strong>', '<strong><a href="' . $url . '">' . $form['title'] . '</a></strong>' );
+				$render .= sprintf( __( 'ID: %s &middot; Slug: %s<br/>Name: %s', 'coreactivity' ), '<strong>' . $form['id'] . '</strong>', '<strong>' . $form['form_slug'] . '</strong>', '<strong><a href="' . $url . '">' . $form['title'] . '</a></strong>' );
 			} else {
-				$render .= __( "MISSING", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+				$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 			}
 		} else {
-			$render = __( "ID", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+			$render = __( 'ID', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
 		return $render;
 	}
 
 	private function _display_gentry( stdClass $item ) : string {
-		return __( "ID", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+		return __( 'ID', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 	}
 
 	private function _display_cf7form( stdClass $item ) : string {
@@ -335,9 +335,9 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( "ID: %s<br/>Post: %s", "coreactivity" ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . admin_url( 'admin.php?page=wpcf7&action=edit&post=' . $post->ID ) . '">' . $post->post_title . '</a></strong>' );
+			$render .= sprintf( __( 'ID: %s<br/>Post: %s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . admin_url( 'admin.php?page=wpcf7&action=edit&post=' . $post->ID ) . '">' . $post->post_title . '</a></strong>' );
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
 		return $render;
@@ -349,9 +349,9 @@ class Display {
 		$term = get_term( $item->object_id );
 
 		if ( $term instanceof \WP_Term ) {
-			$render .= sprintf( __( "ID: %s &middot; Term: %s<br/>Taxonomy: %s", "coreactivity" ), '<strong>' . $term->term_id . '</strong>', '<strong><a href="' . get_edit_term_link( $term ) . '">' . $term->name . '</a></strong>', '<strong>' . $term->taxonomy . '</strong>' );
+			$render .= sprintf( __( 'ID: %s &middot; Term: %s<br/>Taxonomy: %s', 'coreactivity' ), '<strong>' . $term->term_id . '</strong>', '<strong><a href="' . get_edit_term_link( $term ) . '">' . $term->name . '</a></strong>', '<strong>' . $term->taxonomy . '</strong>' );
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': <strong>' . $item->object_id . '</strong>';
+			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
 		return $render;
@@ -361,10 +361,10 @@ class Display {
 		$render = '';
 
 		if ( empty( $item->object_name ) ) {
-			$render .= __( "Unknown Theme", "coreactivity" );
+			$render .= __( 'Unknown Theme', 'coreactivity' );
 		} else {
 			if ( isset( $item->meta['theme_name'] ) ) {
-				$render .= esc_html__( "Theme", "coreactivity" ) . ': ' . $item->meta['theme_name'] . ' (' . $item->meta['theme_version'] . ')';
+				$render .= esc_html__( 'Theme', 'coreactivity' ) . ': ' . $item->meta['theme_name'] . ' (' . $item->meta['theme_version'] . ')';
 			}
 		}
 
@@ -375,9 +375,9 @@ class Display {
 		$render = '';
 
 		if ( empty( $item->object_name ) ) {
-			$render .= __( "Unknown Plugin", "coreactivity" );
+			$render .= __( 'Unknown Plugin', 'coreactivity' );
 		} else {
-			$render .= esc_html__( "Plugin", "coreactivity" ) . ': ' . $item->meta['plugin_title'] . ' (' . $item->meta['plugin_version'] . ')';
+			$render .= esc_html__( 'Plugin', 'coreactivity' ) . ': ' . $item->meta['plugin_title'] . ' (' . $item->meta['plugin_version'] . ')';
 		}
 
 		return $render;
@@ -387,7 +387,7 @@ class Display {
 		$render = '';
 
 		if ( empty( $item->object_name ) ) {
-			$render .= __( "Unknown Notification Type", "coreactivity" );
+			$render .= __( 'Unknown Notification Type', 'coreactivity' );
 		} else {
 			$render .= $item->object_name;
 		}
@@ -399,14 +399,14 @@ class Display {
 		$render = '';
 
 		if ( $item->object_id == 0 ) {
-			$render = 'ID: 0 · ' . esc_html__( "Invalid", "coreactivity" ) . '</>';
+			$render = 'ID: 0 · ' . esc_html__( 'Invalid', 'coreactivity' ) . '</>';
 		} else {
 			$user = get_user_by( 'id', $item->object_id );
 
 			$render .= 'ID: ' . $item->object_id . ' · ';
 
 			if ( ! $user ) {
-				$render .= esc_html__( "Not Found", "coreactivity" );
+				$render .= esc_html__( 'Not Found', 'coreactivity' );
 			} else {
 				$render .= $user->display_name;
 			}
@@ -421,9 +421,9 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( "ID: %s &middot; Post: %s%sPost Type: %s", "coreactivity" ), $post->ID, $post->post_title, ' · ', $post->post_type );
+			$render .= sprintf( __( 'ID: %s &middot; Post: %s%sPost Type: %s', 'coreactivity' ), $post->ID, $post->post_title, ' · ', $post->post_type );
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': ' . $item->object_id;
+			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
 		return $render;
@@ -438,12 +438,12 @@ class Display {
 			$post = get_post( $comment->comment_post_ID );
 
 			if ( $post instanceof WP_Post ) {
-				$render .= sprintf( __( "ID: %s &middot; Author: %s%sPost: %s", "coreactivity" ), $comment->comment_ID, $comment->comment_author, ' · ', $post->post_title );
+				$render .= sprintf( __( 'ID: %s &middot; Author: %s%sPost: %s', 'coreactivity' ), $comment->comment_ID, $comment->comment_author, ' · ', $post->post_title );
 			} else {
-				$render .= sprintf( __( "ID: %s &middot; Author: %s%sPost: MISSING", "coreactivity" ), $comment->comment_ID, $comment->comment_author, ' · ' );
+				$render .= sprintf( __( 'ID: %s &middot; Author: %s%sPost: MISSING', 'coreactivity' ), $comment->comment_ID, $comment->comment_author, ' · ' );
 			}
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': ' . $item->object_id;
+			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
 		return $render;
@@ -455,9 +455,9 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( "ID: %s &middot; MIME/Type: %s%sName: %s", "coreactivity" ), $post->ID, $post->post_mime_type, ' · ', $post->post_title );
+			$render .= sprintf( __( 'ID: %s &middot; MIME/Type: %s%sName: %s', 'coreactivity' ), $post->ID, $post->post_mime_type, ' · ', $post->post_title );
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': ' . $item->object_id;
+			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
 		return $render;
@@ -470,12 +470,12 @@ class Display {
 			$group = groups_get_group( $item->object_id );
 
 			if ( $group instanceof BP_Groups_Group ) {
-				$render .= sprintf( __( "ID: %s &middot; Slug: %s%sName: %s", "coreactivity" ), $group->id, $group->slug, $group->name, ' · ' );
+				$render .= sprintf( __( 'ID: %s &middot; Slug: %s%sName: %s', 'coreactivity' ), $group->id, $group->slug, $group->name, ' · ' );
 			} else {
-				$render .= __( "MISSING", "coreactivity" ) . ': ' . $item->object_id;
+				$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 			}
 		} else {
-			$render = __( "ID", "coreactivity" ) . ': ' . $item->object_id;
+			$render = __( 'ID', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
 		return $render;
@@ -489,19 +489,19 @@ class Display {
 				$form = GFAPI::get_form( $item->object_id );
 				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form['id'] );
 
-				$render .= sprintf( __( "ID: %s · Slug: %s%sName: %s", "coreactivity" ), $form['id'], $form['form_slug'], ' · ', $form['title'] );
+				$render .= sprintf( __( 'ID: %s · Slug: %s%sName: %s', 'coreactivity' ), $form['id'], $form['form_slug'], ' · ', $form['title'] );
 			} else {
-				$render .= __( "MISSING", "coreactivity" ) . ': ' . $item->object_id;
+				$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 			}
 		} else {
-			$render = __( "ID", "coreactivity" ) . ': ' . $item->object_id;
+			$render = __( 'ID', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
 		return $render;
 	}
 
 	private function _brief_gentry( stdClass $item ) : string {
-		return __( "ID", "coreactivity" ) . ': ' . $item->object_id;
+		return __( 'ID', 'coreactivity' ) . ': ' . $item->object_id;
 	}
 
 	private function _brief_cf7form( stdClass $item ) : string {
@@ -510,9 +510,9 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( "ID: %s%sPost: %s", "coreactivity" ), $post->ID, $post->post_title, ' · ' );
+			$render .= sprintf( __( 'ID: %s%sPost: %s', 'coreactivity' ), $post->ID, $post->post_title, ' · ' );
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': ' . $item->object_id;
+			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
 		return $render;
@@ -524,9 +524,9 @@ class Display {
 		$term = get_term( $item->object_id );
 
 		if ( $term instanceof \WP_Term ) {
-			$render .= sprintf( __( "ID: %s &middot; Term: %s%sTaxonomy: %s", "coreactivity" ), $term->term_id, $term->name, ' · ', $term->taxonomy );
+			$render .= sprintf( __( 'ID: %s &middot; Term: %s%sTaxonomy: %s', 'coreactivity' ), $term->term_id, $term->name, ' · ', $term->taxonomy );
 		} else {
-			$render .= __( "MISSING", "coreactivity" ) . ': ' . $item->object_id;
+			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
 		return $render;

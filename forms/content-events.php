@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$_grid->prepare_table();
 	$_grid->prepare_items();
 
-	$_grid->search_box( esc_html__( "Search", "coreactivity" ), 'events-search' );
+	$_grid->search_box( esc_html__( 'Search', 'coreactivity' ), 'events-search' );
 
 	$_grid->display();
 

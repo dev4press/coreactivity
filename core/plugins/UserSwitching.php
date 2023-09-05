@@ -29,22 +29,22 @@ class UserSwitching extends Plugin {
 	}
 
 	public function label() : string {
-		return __( "User Switching", "coreactivity" );
+		return __( 'User Switching', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'switch-to-user'   => array(
-				'label' => __( "Switched to User", "coreactivity" ),
+				'label' => __( 'Switched to User', 'coreactivity' ),
 			),
 			'switch-off-user'  => array(
-				'label' => __( "Switched Off", "coreactivity" ),
+				'label' => __( 'Switched Off', 'coreactivity' ),
 			),
 			'switch-back-user' => array(
-				'label' => __( "Switched Back from User", "coreactivity" ),
+				'label' => __( 'Switched Back from User', 'coreactivity' ),
 			),
 			'switch-back'      => array(
-				'label' => __( "Switched Back", "coreactivity" ),
+				'label' => __( 'Switched Back', 'coreactivity' ),
 			),
 		);
 	}

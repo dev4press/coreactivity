@@ -73,9 +73,9 @@ class Activity {
 
 	public function ready() {
 		$this->categories = array(
-			'internal'  => __( "Internal", "coreactivity" ),
-			'wordpress' => __( "WordPress", "coreactivity" ),
-			'plugin'    => __( "Plugin", "coreactivity" ),
+			'internal'  => __( 'Internal', 'coreactivity' ),
+			'wordpress' => __( 'WordPress', 'coreactivity' ),
+			'plugin'    => __( 'Plugin', 'coreactivity' ),
 		);
 
 		$this->_init_events();
@@ -90,17 +90,17 @@ class Activity {
 		Cache::instance()->set( 'events', 'registered', $this->events );
 
 		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
-			'post'         => __( "Post", "coreactivity" ),
-			'attachment'   => __( "Attachment", "coreactivity" ),
-			'term'         => __( "Term", "coreactivity" ),
-			'comment'      => __( "Comment", "coreactivity" ),
-			'user'         => __( "User", "coreactivity" ),
-			'plugin'       => __( "Plugin", "coreactivity" ),
-			'theme'        => __( "Theme", "coreactivity" ),
-			'cron'         => __( "Cron", "coreactivity" ),
-			'option'       => __( "Option", "coreactivity" ),
-			'transient'    => __( "Transient", "coreactivity" ),
-			'notification' => __( "Notification", "coreactivity" ),
+			'post'         => __( 'Post', 'coreactivity' ),
+			'attachment'   => __( 'Attachment', 'coreactivity' ),
+			'term'         => __( 'Term', 'coreactivity' ),
+			'comment'      => __( 'Comment', 'coreactivity' ),
+			'user'         => __( 'User', 'coreactivity' ),
+			'plugin'       => __( 'Plugin', 'coreactivity' ),
+			'theme'        => __( 'Theme', 'coreactivity' ),
+			'cron'         => __( 'Cron', 'coreactivity' ),
+			'option'       => __( 'Option', 'coreactivity' ),
+			'transient'    => __( 'Transient', 'coreactivity' ),
+			'notification' => __( 'Notification', 'coreactivity' ),
 		) );
 
 		foreach ( $this->components as $component ) {
@@ -307,15 +307,15 @@ class Activity {
 	public function get_select_event_components( bool $simplified = false ) : array {
 		$list = array(
 			'wordpress' => array(
-				'title'  => $simplified ? __( "WordPress", "coreactivity" ) : 'wordpress',
+				'title'  => $simplified ? __( 'WordPress', 'coreactivity' ) : 'wordpress',
 				'values' => array(),
 			),
 			'internal'  => array(
-				'title'  => $simplified ? __( "Internal", "coreactivity" ) : 'internal',
+				'title'  => $simplified ? __( 'Internal', 'coreactivity' ) : 'internal',
 				'values' => array(),
 			),
 			'plugin'    => array(
-				'title'  => $simplified ? __( "Plugins", "coreactivity" ) : 'plugin',
+				'title'  => $simplified ? __( 'Plugins', 'coreactivity' ) : 'plugin',
 				'values' => array(),
 			),
 		);

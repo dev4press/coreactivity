@@ -29,19 +29,19 @@ class SweepPress extends Plugin {
 	}
 
 	public function label() : string {
-		return __( "SweepPress", "coreactivity" );
+		return __( 'SweepPress', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'completed'    => array(
-				'label' => __( "Sweeping Completed", "coreactivity" ),
+				'label' => __( 'Sweeping Completed', 'coreactivity' ),
 			),
 			'cron-run'     => array(
-				'label' => __( "Run CRON job", "coreactivity" ),
+				'label' => __( 'Run CRON job', 'coreactivity' ),
 			),
 			'cron-deleted' => array(
-				'label' => __( "Deleted CRON job", "coreactivity" ),
+				'label' => __( 'Deleted CRON job', 'coreactivity' ),
 			),
 		);
 	}

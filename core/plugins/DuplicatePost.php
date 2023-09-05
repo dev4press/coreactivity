@@ -40,13 +40,13 @@ class DuplicatePost extends Plugin {
 	}
 
 	public function label() : string {
-		return __( "Duplicate Post", "coreactivity" );
+		return __( 'Duplicate Post', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'duplicated' => array(
-				'label' => __( "Post Duplicated", "coreactivity" ),
+				'label' => __( 'Post Duplicated', 'coreactivity' ),
 			),
 		);
 	}

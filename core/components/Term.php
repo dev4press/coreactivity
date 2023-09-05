@@ -48,19 +48,19 @@ class Term extends Component {
 	}
 
 	public function label() : string {
-		return __( "Terms", "coreactivity" );
+		return __( 'Terms', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'created' => array(
-				'label' => __( "Term Created", "coreactivity" ),
+				'label' => __( 'Term Created', 'coreactivity' ),
 			),
 			'deleted' => array(
-				'label' => __( "Term Deleted", "coreactivity" ),
+				'label' => __( 'Term Deleted', 'coreactivity' ),
 			),
 			'edited'  => array(
-				'label' => __( "Term Edited", "coreactivity" ),
+				'label' => __( 'Term Edited', 'coreactivity' ),
 			),
 		);
 	}

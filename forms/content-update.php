@@ -21,15 +21,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             <div class="d4p-install-block">
                 <h4>
-					<?php esc_html_e( "All Done", "coreactivity" ); ?>
+					<?php esc_html_e( 'All Done', 'coreactivity' ); ?>
                 </h4>
                 <div>
-					<?php esc_html_e( "Update completed.", "coreactivity" ); ?>
+					<?php esc_html_e( 'Update completed.', 'coreactivity' ); ?>
                 </div>
             </div>
 
             <div class="d4p-install-confirm">
-                <a class="button-primary" href="<?php echo esc_url( panel()->a()->panel_url( 'about' ) ); ?>&update"><?php esc_html_e( "Click here to continue", "coreactivity" ); ?></a>
+                <a class="button-primary" href="<?php echo esc_url( panel()->a()->panel_url( 'about' ) ); ?>&update"><?php esc_html_e( 'Click here to continue', 'coreactivity' ); ?></a>
             </div>
         </div>
     </div>

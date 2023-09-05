@@ -75,7 +75,7 @@ class Sitemeta extends Component {
 	}
 
 	public function label() : string {
-		return __( "Sitemeta", "coreactivity" );
+		return __( 'Sitemeta', 'coreactivity' );
 	}
 
 	protected function prepare_data_for_log( string $event, array $data = array() ) : array {
@@ -87,26 +87,26 @@ class Sitemeta extends Component {
 	protected function get_events() : array {
 		return array(
 			'core-sitemeta-edited'  => array(
-				'label' => __( "Core Sitemeta Changed", "coreactivity" ),
+				'label' => __( 'Core Sitemeta Changed', 'coreactivity' ),
 			),
 			'core-sitemeta-deleted' => array(
-				'label' => __( "Core Sitemeta Deleted", "coreactivity" ),
+				'label' => __( 'Core Sitemeta Deleted', 'coreactivity' ),
 			),
 			'sitemeta-added'        => array(
-				'label' => __( "Sitemeta Added", "coreactivity" ),
+				'label' => __( 'Sitemeta Added', 'coreactivity' ),
 			),
 			'sitemeta-edited'       => array(
-				'label' => __( "Sitemeta Changed", "coreactivity" ),
+				'label' => __( 'Sitemeta Changed', 'coreactivity' ),
 			),
 			'sitemeta-deleted'      => array(
-				'label' => __( "Sitemeta Deleted", "coreactivity" ),
+				'label' => __( 'Sitemeta Deleted', 'coreactivity' ),
 			),
 			'transient-set'         => array(
-				'label'  => __( "Site Transient Set", "coreactivity" ),
+				'label'  => __( 'Site Transient Set', 'coreactivity' ),
 				'status' => 'inactive',
 			),
 			'transient-deleted'     => array(
-				'label'  => __( "Site Transient Deleted", "coreactivity" ),
+				'label'  => __( 'Site Transient Deleted', 'coreactivity' ),
 				'status' => 'inactive',
 			),
 		);

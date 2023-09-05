@@ -16,7 +16,7 @@ class DebugPress extends Plugin {
 	protected $plugin_file = 'debugpress/debugpress.php';
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types['phperror'] = __( "PHP Error", "coreactivity" );
+		$object_types['phperror'] = __( 'PHP Error', 'coreactivity' );
 
 		return $object_types;
 	}
@@ -52,31 +52,31 @@ class DebugPress extends Plugin {
 	}
 
 	public function label() : string {
-		return __( "DebugPress", "coreactivity" );
+		return __( 'DebugPress', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'php-error'              => array(
-				'label' => __( "PHP Error", "coreactivity" ),
+				'label' => __( 'PHP Error', 'coreactivity' ),
 			),
 			'doing-it-wrong'         => array(
-				'label' => __( "Doing It Wrong", "coreactivity" ),
+				'label' => __( 'Doing It Wrong', 'coreactivity' ),
 			),
 			'deprecated-function'    => array(
-				'label' => __( "Deprecated Function", "coreactivity" ),
+				'label' => __( 'Deprecated Function', 'coreactivity' ),
 			),
 			'deprecated-file'        => array(
-				'label' => __( "Deprecated File", "coreactivity" ),
+				'label' => __( 'Deprecated File', 'coreactivity' ),
 			),
 			'deprecated-argument'    => array(
-				'label' => __( "Deprecated Argument", "coreactivity" ),
+				'label' => __( 'Deprecated Argument', 'coreactivity' ),
 			),
 			'deprecated-constructor' => array(
-				'label' => __( "Deprecated Constructor", "coreactivity" ),
+				'label' => __( 'Deprecated Constructor', 'coreactivity' ),
 			),
 			'deprecated-hook-run'    => array(
-				'label' => __( "Deprecated Hook Run", "coreactivity" ),
+				'label' => __( 'Deprecated Hook Run', 'coreactivity' ),
 			),
 		);
 	}

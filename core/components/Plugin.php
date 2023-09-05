@@ -33,28 +33,28 @@ class Plugin extends Component {
 	}
 
 	public function label() : string {
-		return __( "Plugins", "coreactivity" );
+		return __( 'Plugins', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'deleted'             => array(
-				'label' => __( "Plugin Deleted", "coreactivity" ),
+				'label' => __( 'Plugin Deleted', 'coreactivity' ),
 			),
 			'activated'           => array(
-				'label' => __( "Plugin Activated", "coreactivity" ),
+				'label' => __( 'Plugin Activated', 'coreactivity' ),
 				'scope' => 'blog',
 			),
 			'network-activated'   => array(
-				'label' => __( "Plugin Network Activated", "coreactivity" ),
+				'label' => __( 'Plugin Network Activated', 'coreactivity' ),
 				'scope' => 'network',
 			),
 			'deactivated'         => array(
-				'label' => __( "Plugin Deactivated", "coreactivity" ),
+				'label' => __( 'Plugin Deactivated', 'coreactivity' ),
 				'scope' => 'blog',
 			),
 			'network-deactivated' => array(
-				'label' => __( "Plugin Network Deactivated", "coreactivity" ),
+				'label' => __( 'Plugin Network Deactivated', 'coreactivity' ),
 				'scope' => 'network',
 			),
 		);

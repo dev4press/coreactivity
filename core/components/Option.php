@@ -158,32 +158,32 @@ class Option extends Component {
 	}
 
 	public function label() : string {
-		return __( "Options", "coreactivity" );
+		return __( 'Options', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'core-option-edited'  => array(
-				'label' => __( "Core Option Changed", "coreactivity" ),
+				'label' => __( 'Core Option Changed', 'coreactivity' ),
 			),
 			'core-option-deleted' => array(
-				'label' => __( "Core Option Deleted", "coreactivity" ),
+				'label' => __( 'Core Option Deleted', 'coreactivity' ),
 			),
 			'option-added'        => array(
-				'label' => __( "Option Added", "coreactivity" ),
+				'label' => __( 'Option Added', 'coreactivity' ),
 			),
 			'option-edited'       => array(
-				'label' => __( "Option Changed", "coreactivity" ),
+				'label' => __( 'Option Changed', 'coreactivity' ),
 			),
 			'option-deleted'      => array(
-				'label' => __( "Option Deleted", "coreactivity" ),
+				'label' => __( 'Option Deleted', 'coreactivity' ),
 			),
 			'transient-set'       => array(
-				'label'  => __( "Transient Set", "coreactivity" ),
+				'label'  => __( 'Transient Set', 'coreactivity' ),
 				'status' => 'inactive',
 			),
 			'transient-deleted'   => array(
-				'label'  => __( "Transient Deleted", "coreactivity" ),
+				'label'  => __( 'Transient Deleted', 'coreactivity' ),
 				'status' => 'inactive',
 			),
 		);

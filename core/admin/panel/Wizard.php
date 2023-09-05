@@ -12,16 +12,16 @@ class Wizard extends PanelWizard {
 	protected function init_default_subpanels() {
 		$this->subpanels = array(
 			'intro'         => array(
-				'title' => __( "Intro", "coreactivity" ),
+				'title' => __( 'Intro', 'coreactivity' ),
 			),
 			'log'           => array(
-				'title' => __( "Log", "coreactivity" ),
+				'title' => __( 'Log', 'coreactivity' ),
 			),
 			'notifications' => array(
-				'title' => __( "Notifications", "coreactivity" ),
+				'title' => __( 'Notifications', 'coreactivity' ),
 			),
 			'finish'        => array(
-				'title' => __( "Finish", "coreactivity" ),
+				'title' => __( 'Finish', 'coreactivity' ),
 			),
 		);
 	}

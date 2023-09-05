@@ -18,7 +18,7 @@ class Events extends Panel {
 
 	public function screen_options_show() {
 		add_screen_option( 'per_page', array(
-			'label'   => __( "Rows", "coreactivity" ),
+			'label'   => __( 'Rows', 'coreactivity' ),
 			'default' => 50,
 			'option'  => 'coreactivity_events_rows_per_page',
 		) );

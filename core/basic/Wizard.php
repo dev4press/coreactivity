@@ -117,10 +117,10 @@ class Wizard extends CoreWizard {
 
 	protected function init_panels() {
 		$this->panels = array(
-			'intro'         => array( 'label' => __( "Intro", "coreactivity" ) ),
-			'log'           => array( 'label' => __( "Log", "coreactivity" ) ),
-			'notifications' => array( 'label' => __( "Notifications", "coreactivity" ) ),
-			'finish'        => array( 'label' => __( "Finish", "coreactivity" ) ),
+			'intro'         => array( 'label' => __( 'Intro', 'coreactivity' ) ),
+			'log'           => array( 'label' => __( 'Log', 'coreactivity' ) ),
+			'notifications' => array( 'label' => __( 'Notifications', 'coreactivity' ) ),
+			'finish'        => array( 'label' => __( 'Finish', 'coreactivity' ) ),
 		);
 
 		$this->setup_panel( $this->a()->subpanel );

@@ -29,19 +29,19 @@ class Attachment extends Component {
 	}
 
 	public function label() : string {
-		return __( "Attachments", "coreactivity" );
+		return __( 'Attachments', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'uploaded' => array(
-				'label' => __( "Attachment Uploaded", "coreactivity" ),
+				'label' => __( 'Attachment Uploaded', 'coreactivity' ),
 			),
 			'edited'   => array(
-				'label' => __( "Attachment Edited", "coreactivity" ),
+				'label' => __( 'Attachment Edited', 'coreactivity' ),
 			),
 			'deleted'  => array(
-				'label' => __( "Attachment Deleted", "coreactivity" ),
+				'label' => __( 'Attachment Deleted', 'coreactivity' ),
 			),
 		);
 	}

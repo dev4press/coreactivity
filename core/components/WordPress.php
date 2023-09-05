@@ -41,29 +41,29 @@ class WordPress extends Component {
 	}
 
 	public function label() : string {
-		return __( "WordPress", "coreactivity" );
+		return __( 'WordPress', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'update-core'      => array(
-				'label' => __( "WordPress Update", "coreactivity" ),
+				'label' => __( 'WordPress Update', 'coreactivity' ),
 				'scope' => 'network',
 			),
 			'update-core-auto' => array(
-				'label' => __( "WordPress Auto Update", "coreactivity" ),
+				'label' => __( 'WordPress Auto Update', 'coreactivity' ),
 				'scope' => 'network',
 			),
 			'cron-schedule'    => array(
-				'label' => __( "CRON Event Scheduled", "coreactivity" ),
+				'label' => __( 'CRON Event Scheduled', 'coreactivity' ),
 				'scope' => 'blog',
 			),
 			'content-export'   => array(
-				'label' => __( "Content Export", "coreactivity" ),
+				'label' => __( 'Content Export', 'coreactivity' ),
 				'scope' => 'blog',
 			),
 			'database-delta'   => array(
-				'label' => __( "Database Delta Queries", "coreactivity" ),
+				'label' => __( 'Database Delta Queries', 'coreactivity' ),
 				'scope' => 'both',
 			),
 		);

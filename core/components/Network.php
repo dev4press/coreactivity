@@ -18,7 +18,7 @@ class Network extends Component {
 	}
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types['blog'] = __( "Blog", "coreactivity" );
+		$object_types['blog'] = __( 'Blog', 'coreactivity' );
 
 		return $object_types;
 	}
@@ -82,7 +82,7 @@ class Network extends Component {
 	}
 
 	public function label() : string {
-		return __( "Multisite Network", "coreactivity" );
+		return __( 'Multisite Network', 'coreactivity' );
 	}
 
 	protected function prepare_data_for_log( string $event, array $data = array() ) : array {
@@ -94,49 +94,49 @@ class Network extends Component {
 	protected function get_events() : array {
 		return array(
 			'blog-created'            => array(
-				'label' => __( "Blog Created", "coreactivity" ),
+				'label' => __( 'Blog Created', 'coreactivity' ),
 			),
 			'blog-removed'            => array(
-				'label' => __( "Blog Removed", "coreactivity" ),
+				'label' => __( 'Blog Removed', 'coreactivity' ),
 			),
 			'blog-updated'            => array(
-				'label' => __( "Blog Updated", "coreactivity" ),
+				'label' => __( 'Blog Updated', 'coreactivity' ),
 			),
 			'blog-signup'             => array(
-				'label' => __( "Blog Signup", "coreactivity" ),
+				'label' => __( 'Blog Signup', 'coreactivity' ),
 			),
 			'failed-blog-signup'      => array(
-				'label' => __( "Failed Blog Signup", "coreactivity" ),
+				'label' => __( 'Failed Blog Signup', 'coreactivity' ),
 			),
 			'blog-status-delete'      => array(
-				'label' => __( "Blog Status Deleted", "coreactivity" ),
+				'label' => __( 'Blog Status Deleted', 'coreactivity' ),
 			),
 			'blog-status-not-delete'  => array(
-				'label' => __( "Blog Status Not Deleted", "coreactivity" ),
+				'label' => __( 'Blog Status Not Deleted', 'coreactivity' ),
 			),
 			'blog-status-archive'     => array(
-				'label' => __( "Blog Status Archive", "coreactivity" ),
+				'label' => __( 'Blog Status Archive', 'coreactivity' ),
 			),
 			'blog-status-not-archive' => array(
-				'label' => __( "Blog Status Not Archive", "coreactivity" ),
+				'label' => __( 'Blog Status Not Archive', 'coreactivity' ),
 			),
 			'blog-status-public'      => array(
-				'label' => __( "Blog Status Public", "coreactivity" ),
+				'label' => __( 'Blog Status Public', 'coreactivity' ),
 			),
 			'blog-status-private'     => array(
-				'label' => __( "Blog Status Private", "coreactivity" ),
+				'label' => __( 'Blog Status Private', 'coreactivity' ),
 			),
 			'blog-status-spam'        => array(
-				'label' => __( "Blog Status Spam", "coreactivity" ),
+				'label' => __( 'Blog Status Spam', 'coreactivity' ),
 			),
 			'blog-status-not-spam'    => array(
-				'label' => __( "Blog Status Not Spam", "coreactivity" ),
+				'label' => __( 'Blog Status Not Spam', 'coreactivity' ),
 			),
 			'blog-status-mature'      => array(
-				'label' => __( "Blog Status Mature", "coreactivity" ),
+				'label' => __( 'Blog Status Mature', 'coreactivity' ),
 			),
 			'blog-status-not-mature'  => array(
-				'label' => __( "Blog Status Not Mature", "coreactivity" ),
+				'label' => __( 'Blog Status Not Mature', 'coreactivity' ),
 			),
 		);
 	}

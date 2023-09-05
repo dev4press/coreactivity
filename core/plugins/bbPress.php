@@ -29,7 +29,7 @@ class bbPress extends Content {
 	}
 
 	public function label() : string {
-		return __( "bbPress", "coreactivity" );
+		return __( 'bbPress', 'coreactivity' );
 	}
 
 	public function init_post_types( $post_types ) {

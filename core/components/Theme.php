@@ -30,16 +30,16 @@ class Theme extends Component {
 	}
 
 	public function label() : string {
-		return __( "Themes", "coreactivity" );
+		return __( 'Themes', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'deleted'  => array(
-				'label' => __( "Theme Deleted", "coreactivity" ),
+				'label' => __( 'Theme Deleted', 'coreactivity' ),
 			),
 			'switched' => array(
-				'label' => __( "Theme Switched", "coreactivity" ),
+				'label' => __( 'Theme Switched', 'coreactivity' ),
 			),
 		);
 	}

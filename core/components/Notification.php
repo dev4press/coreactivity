@@ -69,22 +69,22 @@ class Notification extends Component {
 	}
 
 	public function label() : string {
-		return __( "Notifications", "coreactivity" );
+		return __( 'Notifications', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'email-sent'           => array(
-				'label' => __( "Email Sent", "coreactivity" ),
+				'label' => __( 'Email Sent', 'coreactivity' ),
 			),
 			'email-failed'         => array(
-				'label' => __( "Email Failed", "coreactivity" ),
+				'label' => __( 'Email Failed', 'coreactivity' ),
 			),
 			'email-sent-unknown'   => array(
-				'label' => __( "Unknown Email Sent", "coreactivity" ),
+				'label' => __( 'Unknown Email Sent', 'coreactivity' ),
 			),
 			'email-failed-unknown' => array(
-				'label' => __( "Unknown Email Failed", "coreactivity" ),
+				'label' => __( 'Unknown Email Failed', 'coreactivity' ),
 			),
 		);
 	}

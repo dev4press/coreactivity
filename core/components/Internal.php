@@ -33,23 +33,23 @@ class Internal extends Component {
 	}
 
 	public function label() : string {
-		return __( "Internal", "coreactivity" );
+		return __( 'Internal', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'log-cleanup'      => array(
-				'label' => __( "Log Cleanup", "coreactivity" ),
+				'label' => __( 'Log Cleanup', 'coreactivity' ),
 			),
 			'log-cleanup-auto' => array(
-				'label' => __( "Auto Log Cleanup", "coreactivity" ),
+				'label' => __( 'Auto Log Cleanup', 'coreactivity' ),
 			),
 			'digest-daily'     => array(
-				'label'  => __( "Daily Digest", "coreactivity" ),
+				'label'  => __( 'Daily Digest', 'coreactivity' ),
 				'status' => 'inactive',
 			),
 			'digest-weekly'    => array(
-				'label'  => __( "Weekly Digest", "coreactivity" ),
+				'label'  => __( 'Weekly Digest', 'coreactivity' ),
 				'status' => 'inactive',
 			),
 		);

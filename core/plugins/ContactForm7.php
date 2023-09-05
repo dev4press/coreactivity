@@ -31,7 +31,7 @@ class ContactForm7 extends Plugin {
 	}
 
 	public function registered_object_types( array $object_types ) : array {
-		$object_types['wpcf7form'] = __( "Contact Form 7", "coreactivity" );
+		$object_types['wpcf7form'] = __( 'Contact Form 7', 'coreactivity' );
 
 		return $object_types;
 	}
@@ -53,19 +53,19 @@ class ContactForm7 extends Plugin {
 	}
 
 	public function label() : string {
-		return __( "Contact Form 7", "coreactivity" );
+		return __( 'Contact Form 7', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'form-deleted'      => array(
-				'label' => __( "Form Deleted", "coreactivity" ),
+				'label' => __( 'Form Deleted', 'coreactivity' ),
 			),
 			'submission-sent'   => array(
-				'label' => __( "Submission Sent", "coreactivity" ),
+				'label' => __( 'Submission Sent', 'coreactivity' ),
 			),
 			'submission-failed' => array(
-				'label' => __( "Submission Failed", "coreactivity" ),
+				'label' => __( 'Submission Failed', 'coreactivity' ),
 			),
 		);
 	}

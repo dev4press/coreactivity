@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 
 		$_grid->views();
-		$_grid->search_box( esc_html__( "Search", "coreactivity" ), 'logs-search' );
+		$_grid->search_box( esc_html__( 'Search', 'coreactivity' ), 'logs-search' );
 
 		?>
 

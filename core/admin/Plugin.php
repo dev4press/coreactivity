@@ -82,18 +82,18 @@ class Plugin extends BasePlugin {
 	public function admin_menu_items() {
 		$this->setup_items = array(
 			'install' => array(
-				'title' => __( "Install", "coreactivity" ),
+				'title' => __( 'Install', 'coreactivity' ),
 				'icon'  => 'ui-traffic',
 				'type'  => 'setup',
-				'info'  => __( "Before you continue, make sure plugin installation was successful.", "coreactivity" ),
+				'info'  => __( 'Before you continue, make sure plugin installation was successful.', 'coreactivity' ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Install',
 				'scope' => array( 'network' ),
 			),
 			'update'  => array(
-				'title' => __( "Update", "coreactivity" ),
+				'title' => __( 'Update', 'coreactivity' ),
 				'icon'  => 'ui-traffic',
 				'type'  => 'setup',
-				'info'  => __( "Before you continue, make sure plugin was successfully updated.", "coreactivity" ),
+				'info'  => __( 'Before you continue, make sure plugin was successfully updated.', 'coreactivity' ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Update',
 				'scope' => array( 'network' ),
 			),
@@ -101,39 +101,39 @@ class Plugin extends BasePlugin {
 
 		$this->menu_items = array(
 			'dashboard' => array(
-				'title' => __( "Overview", "coreactivity" ),
+				'title' => __( 'Overview', 'coreactivity' ),
 				'icon'  => 'ui-home',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Dashboard',
 				'scope' => array( 'blog', 'network' ),
 			),
 			'about'     => array(
-				'title' => __( "About", "coreactivity" ),
+				'title' => __( 'About', 'coreactivity' ),
 				'icon'  => 'ui-info',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\About',
 				'scope' => array( 'blog', 'network' ),
 			),
 			'logs'      => array(
-				'title' => __( "Logs", "coreactivity" ),
+				'title' => __( 'Logs', 'coreactivity' ),
 				'icon'  => 'ui-calendar-pen',
-				'info'  => __( "Detailed log with all the logged activities for all supported events.", "coreactivity" ),
+				'info'  => __( 'Detailed log with all the logged activities for all supported events.', 'coreactivity' ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Logs',
 				'scope' => array( 'blog', 'network' ),
 			),
 			'events'    => array(
-				'title' => __( "Events", "coreactivity" ),
+				'title' => __( 'Events', 'coreactivity' ),
 				'icon'  => 'ui-radar',
-				'info'  => __( "All the events registered for activity tracking and logging.", "coreactivity" ),
+				'info'  => __( 'All the events registered for activity tracking and logging.', 'coreactivity' ),
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Events',
 				'scope' => array( 'network' ),
 			),
 			'settings'  => array(
-				'title' => __( "Settings", "coreactivity" ),
+				'title' => __( 'Settings', 'coreactivity' ),
 				'icon'  => 'ui-cog',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Settings',
 				'scope' => array( 'network' ),
 			),
 			'tools'     => array(
-				'title' => __( "Tools", "coreactivity" ),
+				'title' => __( 'Tools', 'coreactivity' ),
 				'icon'  => 'ui-wrench',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Tools',
 				'scope' => array( 'network' ),
@@ -142,7 +142,7 @@ class Plugin extends BasePlugin {
 
 		if ( $this->settings()->get( 'show_setup_wizard' ) ) {
 			$this->menu_items['wizard'] = array(
-				'title' => __( "Setup Wizard", "coreactivity" ),
+				'title' => __( 'Setup Wizard', 'coreactivity' ),
 				'icon'  => 'ui-magic',
 				'class' => '\\Dev4Press\\Plugin\\CoreActivity\\Admin\\Panel\\Wizard',
 			);
@@ -171,8 +171,8 @@ class Plugin extends BasePlugin {
 		?>
 
         <div class="notice notice-error">
-            <p><?php esc_html_e( "coreActivity events logging has been disabled. You can enable it again from the plugin Dashboard.", "coreactivity" ); ?>
-                <a href="<?php echo esc_url( $this->panel_url() ); ?>"><?php esc_html_e( "coreActivity Dashboard", "coreactivity" ); ?></a></p>
+            <p><?php esc_html_e( 'coreActivity events logging has been disabled. You can enable it again from the plugin Dashboard.', 'coreactivity' ); ?>
+                <a href="<?php echo esc_url( $this->panel_url() ); ?>"><?php esc_html_e( 'coreActivity Dashboard', 'coreactivity' ); ?></a></p>
         </div>
 
 		<?php
@@ -181,10 +181,10 @@ class Plugin extends BasePlugin {
 	public function message_process( $code, $msg ) {
 		switch ( $code ) {
 			case 'cleanup-completed':
-				$msg['message'] = __( "The cleanup operation has been completed.", "coreactivity" );
+				$msg['message'] = __( 'The cleanup operation has been completed.', 'coreactivity' );
 				break;
 			case 'events-updated':
-				$msg['message'] = __( "Events activity status has been updated.", "coreactivity" );
+				$msg['message'] = __( 'Events activity status has been updated.', 'coreactivity' );
 				break;
 		}
 

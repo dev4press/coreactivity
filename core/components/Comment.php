@@ -43,16 +43,16 @@ class Comment extends Component {
 	}
 
 	public function label() : string {
-		return __( "Comments", "coreactivity" );
+		return __( 'Comments', 'coreactivity' );
 	}
 
 	protected function get_events() : array {
 		return array(
 			'status-change' => array(
-				'label' => __( "Comment Status Change", "coreactivity" ),
+				'label' => __( 'Comment Status Change', 'coreactivity' ),
 			),
 			'deleted'       => array(
-				'label' => __( "Comment Deleted", "coreactivity" ),
+				'label' => __( 'Comment Deleted', 'coreactivity' ),
 			),
 		);
 	}

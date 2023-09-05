@@ -25,6 +25,6 @@ class Post extends Content {
 	}
 
 	public function label() : string {
-		return __( "Posts", "coreactivity" );
+		return __( 'Posts', 'coreactivity' );
 	}
 }

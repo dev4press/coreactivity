@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="d4p-install-block">
     <h4>
-		<?php esc_html_e( "Additional database tables", "coreactivity" ); ?>
+		<?php esc_html_e( 'Additional database tables', 'coreactivity' ); ?>
     </h4>
     <div>
 		<?php
@@ -19,11 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$list_db = $db->install();
 
 		if ( ! empty( $list_db ) ) {
-			echo '<h5>' . esc_html__( "Database Upgrade Notices", "coreactivity" ) . '</h5>';
+			echo '<h5>' . esc_html__( 'Database Upgrade Notices', 'coreactivity' ) . '</h5>';
 			echo join( '<br/>', $list_db ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
-		echo '<h5>' . esc_html__( "Database Tables Check", "coreactivity" ) . '</h5>';
+		echo '<h5>' . esc_html__( 'Database Tables Check', 'coreactivity' ) . '</h5>';
 		$check = $db->check();
 
 		$msg = array();
@@ -31,9 +31,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( $data['status'] == 'error' ) {
 				$_proceed  = false;
 				$_error_db = true;
-				$msg[]     = '<span class="gdpc-error">[' . esc_html__( "ERROR", "coreactivity" ) . '] - <strong>' . esc_html( $table ) . '</strong>: ' . esc_html( $data['msg'] ) . '</span>';
+				$msg[]     = '<span class="gdpc-error">[' . esc_html__( 'ERROR', 'coreactivity' ) . '] - <strong>' . esc_html( $table ) . '</strong>: ' . esc_html( $data['msg'] ) . '</span>';
 			} else {
-				$msg[] = '<span class="gdpc-ok">[' . esc_html__( "OK", "coreactivity" ) . '] - <strong>' . esc_html( $table ) . '</strong></span>';
+				$msg[] = '<span class="gdpc-ok">[' . esc_html__( 'OK', 'coreactivity' ) . '] - <strong>' . esc_html( $table ) . '</strong></span>';
 			}
 		}
 
