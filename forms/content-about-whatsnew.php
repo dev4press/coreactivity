@@ -19,12 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                     CoreActivity is a new free plugin that can monitor your website
                 </p>
                 <p>
-                    Version 1.0 brings support for huge number of different events it can log, it logs a lot of details, it has powerful Logs panel to find and filter events and much more.
+                    Version 1.0 brings support for a huge number of different events it can log, it logs a lot of details, it has a powerful Logs panel to find and filter events and much more.
                 </p>
 
 				<?php if ( isset( $_GET['install'] ) && sanitize_key( $_GET['install'] ) === 'on' ) { ?>
                     <a class="button-primary" href="<?php echo esc_url_raw( panel()->a()->panel_url( 'wizard' ) ); ?>"><?php esc_html_e( 'Run Setup Wizard', 'coreactivity' ); ?></a>
 				<?php } ?>
+
                 <div class="coreactivity-about-counters">
                     <div><i class="d4p-icon d4p-ui-folder d4p-icon-fw"></i> <strong>23</strong> Components</div>
                     <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>117</strong> Events</div>
@@ -39,25 +40,25 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="core-col-sm-12 core-col-md-6">
                 <h3>Fully Modular</h3>
                 <p>
-                    Plugin is based around components, and each component has one or more events it can track and log. Via plugin settings, you can disable events you don't want to use.
+                    The Plugin is based around components, and each component has one or more events it can track and log. Via plugin settings, you can disable events you don't want to use.
                 </p>
                 <p>
                     Plugin can be expanded with more components and events to track more things. Plugin already includes support for many popular plugins, and that number will grow over time.
                 </p>
                 <p>
-                    Plugin has full support for the Multisite Network, and it has to be activated Network wide if your website is running in the network mode.
+                    The Plugin has full support for the Multisite Network, and it has to be activated Network wide if your website is running in the network mode.
                 </p>
             </div>
             <div class="core-col-sm-12 core-col-md-6">
                 <h3>Database Logging</h3>
                 <p>
-                    All the events logged are stored in the database. Plugin adds 3 database tables, one for all the registered events, and two for log with the additional logmeta table.
+                    All the events logged are stored in the database. The Plugin adds 3 database tables, one for all the registered events, and two for log with the additional logmeta table.
                 </p>
                 <p>
-                    Plugin has ability to automatically remove old entries from the log (controllable via settings), and it also has a tool where you can remove by age and selected events.
+                    The Plugin has the ability to automatically remove old entries from the log (controllable via settings), and it also has a tool where you can remove by age and selected events.
                 </p>
                 <p>
-                    Plugin has ability to automatically remove old entries from the log (controllable via settings), and it also has a tool where you can remove by age and selected events.
+                    The Plugin has the ability to automatically remove old entries from the log (controllable via settings), and it also has a tool where you can remove by age and selected events.
                 </p>
             </div>
         </div>
@@ -66,10 +67,10 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="core-col-sm-12 core-col-md-6">
                 <h3>Logs Panel</h3>
                 <p>
-                    Easy to use and very powerful Logs panel will allow you to filter the log entries, search and reorder. You can filter by several log parameters, including the date ranges.
+                    Easy to use a very powerful Logs panel will allow you to filter the log entries, search, and reorder. You can filter by several log parameters, including the date ranges.
                 </p>
                 <p>
-                    Each log entry can have additional metadata logged, and that can have large number of items, so the log panel hides meta data by default, and you can open and display it under each log row.
+                    Each log entry can have additional metadata logged, and that can have a large number of items, so the log panel hides metadata by default, and you can open and display it under each log row.
                 </p>
             </div>
             <div class="core-col-sm-12 core-col-md-6">
@@ -78,7 +79,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     Plugin can run geolocation for each logged IP and display the flag of country (if possible). And, each IP in the log will be marked with the comparison with current server and current visitor IPs.
                 </p>
                 <p>
-                    Logs panel has live update feature, and every 15 seconds will make the AJAX call to get latest events based on the current Log filters, allowing you to monitor events logged in real time.
+                    Logs panel has live update feature, and every 15 seconds will make the AJAX call to get the latest events based on the current Log filters, allowing you to monitor events logged in real time.
                 </p>
             </div>
         </div>
