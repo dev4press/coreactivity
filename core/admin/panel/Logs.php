@@ -24,7 +24,15 @@ class Logs extends Panel {
 			'option'  => 'coreactivity_logs_rows_per_page',
 		) );
 
-		new LogsTable();
+		$this->get_table_object();
+	}
+
+	public function get_table_object() {
+		if ( is_null( $this->table_object ) ) {
+			$this->table_object = new LogsTable();
+		}
+
+		return $this->table_object;
 	}
 
 	public function header_fill() : string {

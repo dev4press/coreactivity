@@ -478,7 +478,7 @@ class Activity {
 
 			$event->event_id      = absint( $event->event_id );
 			$event->label         = Str::slug_to_name( $event->event, '-' );
-			$event->rules         = Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
+			$event->rules         = ! is_null( $event->rules ) && Str::is_json( $event->rules, false ) ? json_decode( $event->rules, true ) : array();
 			$event->notifications = array(
 				'daily'   => false,
 				'weekly'  => false,

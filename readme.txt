@@ -13,16 +13,16 @@ Monitor and log all kinds of activity happening on the WordPress website, with f
 
 == Description ==
 
-CoreActivity is a free plugin for monitoring and logging various activities of the WordPress powered website. The plugin is highly modular, with events registered and controlled by the multiple Components.
+CoreActivity is a free plugin for monitoring and logging various activities of the WordPress powered website. The plugin is highly modular, with events registered and controlled by multiple Components.
 
-Currently, plugin has 23 components with total of 117 events, with direct integration with 9 popular plugins.
+Currently, plugin has 23 components with a total of 117 events, with direct integration with 9 popular plugins.
 
 = WordPress Core Components =
 * Attachments (3 events)
 * Comments (2 events)
 * Errors (6 events)
 * Notifications (4 events)
-* Options (5 events)
+* Options (7 events)
 * Plugins (5 events)
 * Posts (3 events)
 * Terms (3 events)
@@ -32,10 +32,10 @@ Currently, plugin has 23 components with total of 117 events, with direct integr
 
 = WordPress Network Only Components =
 * Multisite Network (15 events)
-* Sitemeta (5 events)
+* Sitemeta (7 events)
 
 = CoreActivity Internal Component =
-* Internal (2 events)
+* Internal (4 events)
 
 = Third-party Plugins Components =
 * bbPress (3 events)
@@ -79,24 +79,24 @@ Currently, plugin has 23 components with total of 117 events, with direct integr
 * Plugin folder in the WordPress plugins should be `coreactivity`.
 * Upload `coreactivity` folder to the `/wp-content/plugins/` directory.
 * Activate the plugin through the 'Plugins' menu in WordPress.
-* Plugin adds new top level menu called 'CoreActivity' inside Tools.
+* Plugin adds a new top level menu called 'CoreActivity' inside Tools.
 * Check all the plugin settings before using the plugin.
 
 == Frequently Asked Questions ==
 = Where can I configure the plugin? =
 Open the newly added top level `CoreActivity` panel, and there you will find the 'Settings' page.
 
-= How the events detection is working? =
-Plugin uses system of filters and actions in WordPress (and supported plugins) to hook and process information and log events based on that. If the changes to the website are done by direct database manipulation via queries or custom functions that don't use established procedures, plugin can't detect such events.
+= How is the events detection working? =
+Plugin uses a system of filters and actions in WordPress (and supported plugins) to hook and process information and log events based on that. If the changes to the website are done by direct database manipulation via queries or custom functions that don't use established procedures, plugin can't detect such events.
 
 = How are the log entries stored? =
-Plugin creates 3 new database tables where all events are registered, and all the events logged.
+Plugin creates three new database tables where all events are registered, and all the events logged.
 
 = How much the logging process slows down the website? =
-If you have all events enabled, plugin will add 150+ hooks into various elements of WordPress and plugins. That is not too much when compared to 3000+ hooks WordPress runs on average, so it will not have a big impact on WordPress performance. And, it is a good idea to disable events you don't need to use.
+If you have all events enabled, the plugin will add 150+ hooks into various elements of WordPress and plugins. That is not too much when compared to 3000+ hooks WordPress runs on average, so it will not have a big impact on WordPress performance. And, it is a good idea to disable events you don't need to use.
 
 == Changelog ==
-= 1.0 (2023.08.14) =
+= 1.0 (2023.09.06) =
 * First official release
 
 == Upgrade Notice ==

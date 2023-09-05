@@ -28,6 +28,7 @@ class Logs extends Table {
 	public $_display_ip_country_flag;
 	public $_display_user_avatar;
 	public $_display_request_column;
+	public $_display_protocol_column;
 	public $_current_view = '';
 	public $_current_ip = '';
 	public $_server_ip = '';
@@ -48,6 +49,7 @@ class Logs extends Table {
 		$this->_display_ip_country_flag    = coreactivity_settings()->get( 'display_ip_country_flag' );
 		$this->_display_user_avatar        = coreactivity_settings()->get( 'display_user_avatar' );
 		$this->_display_request_column     = coreactivity_settings()->get( 'display_request_column' );
+		$this->_display_protocol_column    = coreactivity_settings()->get( 'display_protocol_column' );
 
 		parent::__construct( array(
 			'singular' => 'log',
@@ -114,6 +116,10 @@ class Logs extends Table {
 			unset( $columns['request'] );
 		}
 
+		if ( ! $this->_display_protocol_column ) {
+			unset( $columns['protocol'] );
+		}
+
 		foreach ( array_keys( $this->_filter_lock ) as $column ) {
 			if ( isset( $columns[ $column ] ) ) {
 				unset( $columns[ $column ] );
@@ -152,14 +158,14 @@ class Logs extends Table {
 
 	protected function process_request_args() {
 		$this->_request_args = array(
-			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id', '' ),
-			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id', '' ),
-			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id', '' ),
-			'filter-ip'          => Sanitize::_get_basic( 'filter-ip', '' ),
-			'filter-component'   => Sanitize::_get_basic( 'filter-component', '' ),
-			'filter-context'     => Sanitize::_get_basic( 'filter-context', '' ),
-			'filter-method'      => Sanitize::_get_basic( 'filter-method', '' ),
-			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type', '' ),
+			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id' ),
+			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id' ),
+			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id' ),
+			'filter-ip'          => Sanitize::_get_basic( 'filter-ip' ),
+			'filter-component'   => Sanitize::_get_basic( 'filter-component' ),
+			'filter-context'     => Sanitize::_get_basic( 'filter-context' ),
+			'filter-method'      => Sanitize::_get_basic( 'filter-method' ),
+			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type' ),
 			'view'               => $this->_get_field( 'view' ),
 			'search'             => $this->_get_field( 's' ),
 			'period'             => $this->_get_field( 'period' ),
@@ -577,6 +583,10 @@ class Logs extends Table {
 
 		$left  = array();
 		$right = array();
+
+		if ( ! $this->_display_protocol_column && ! empty( $item->protocol ) ) {
+			$left[] = '<li><strong>' . esc_html__( "protocol", "coreactivity" ) . ':</strong><span>' . esc_html( $item->protocol ) . '</span></li>';
+		}
 
 		if ( ! $this->_display_request_column && ! empty( $item->request ) ) {
 			$left[] = '<li><strong>' . esc_html__( "request", "coreactivity" ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';

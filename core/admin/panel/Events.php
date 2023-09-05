@@ -23,6 +23,14 @@ class Events extends Panel {
 			'option'  => 'coreactivity_events_rows_per_page',
 		) );
 
-		new EventsTable();
+		$this->get_table_object();
+	}
+
+	public function get_table_object() {
+		if ( is_null( $this->table_object ) ) {
+			$this->table_object = new EventsTable();
+		}
+
+		return $this->table_object;
 	}
 }

@@ -161,6 +161,7 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'display_request_column', __( "Request as Column", "coreactivity" ), __( "Request value can be quite long, and it can cause layout issues if displayed as column. If this option is displayed, Request will be displayed as Meta value in the hidden Meta row.", "coreactivity" ), Type::BOOLEAN ),
+								$this->i( 'settings', 'display_protocol_column', __( "Protocol as Column", "coreactivity" ), __( "Protocol value would most likely be the same for each request, especially if your webserver is behind some sort of proxy setup. If this option is displayed, Protocol will be displayed as Meta value in the hidden Meta row.", "coreactivity" ), Type::BOOLEAN ),
 							),
 						),
 					),

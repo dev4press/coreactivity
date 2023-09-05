@@ -35,6 +35,7 @@ class Settings extends BaseSettings {
 			'display_ip_country_flag'                 => false,
 			'display_user_avatar'                     => false,
 			'display_request_column'                  => false,
+			'display_protocol_column'                 => false,
 			'auto_cleanup_active'                     => true,
 			'auto_cleanup_period'                     => 24,
 			'exceptions_option_action_scheduler_lock' => true,
