@@ -14,7 +14,7 @@
             $(document).on("click", ".coreactivity-toggle-notification", function(e) {
                 e.preventDefault();
 
-                var button = $(this),
+                const button = $(this),
                     id = button.data("id"),
                     key = button.data("key"),
                     nonce = button.data("nonce");
@@ -36,7 +36,7 @@
             $(document).on("click", ".coreactivity-toggle-event", function(e) {
                 e.preventDefault();
 
-                var button = $(this),
+                const button = $(this),
                     id = button.data("id"),
                     nonce = button.data("nonce");
 
@@ -55,7 +55,7 @@
         },
         columns: function() {
             $(document).on("change", ".hide-column-tog", function() {
-                var visible = $(".wp-list-table thead tr > *:not(.hidden)").length;
+                const visible = $(".wp-list-table thead tr > *:not(.hidden)").length;
 
                 $(".wp-list-table tbody tr.coreactivity-hidden-row td").attr("colspan", visible);
             });
@@ -63,7 +63,7 @@
             $(document).on("click", "thead th.column-meta, tfoot th.column-meta", function(e) {
                 e.preventDefault();
 
-                var i = $(this).find("i"),
+                const i = $(this).find("i"),
                     both = $("thead th.column-meta i, tfoot th.column-meta i"),
                     table = $(this).closest("table"),
                     rows = table.find("tbody tr.coreactivity-hidden-row"),
@@ -84,7 +84,7 @@
             $(document).on("click", "td.column-meta button", function(e) {
                 e.preventDefault();
 
-                var i = $(this).find("i"),
+                const i = $(this).find("i"),
                     row = $(this).parent().parent().next(),
                     open = i.hasClass("d4p-ui-chevron-square-up");
 
@@ -100,7 +100,7 @@
         helpers: {
             toggle: function(button, json) {
                 if (json.hasOwnProperty('toggle') && json.toggle !== '') {
-                    var t = wp.coreactivity.admin.toggles;
+                    const t = wp.coreactivity.admin.toggles;
 
                     button.find("i").removeClass(t.on).removeClass(t.off).addClass(t[json.toggle]);
                     button.find("span").html(button.data(json.toggle));
@@ -112,7 +112,19 @@
                 setTimeout(wp.coreactivity.admin.live.ajax, 15000);
             },
             ajax: function() {
+                let hidden = [];
+                const columns = $(".coreactivity-grid-logs #the-list tr.coreactivity-hidden-row td").first().attr("colspan"),
+                    ref = $(".coreactivity-grid-logs #the-list tr:not(.coreactivity-old-live-row) > td.hidden");
+
                 $(".coreactivity-live-row").addClass("coreactivity-old-live-row").removeClass("coreactivity-standout").removeClass("coreactivity-live-row");
+
+                ref.each(function() {
+                    const cls = $(this).attr("class").split(" ")[0];
+
+                    if (hidden.indexOf(cls) < 0) {
+                        hidden.push(cls);
+                    }
+                });
 
                 $.ajax({
                     url: ajaxurl + "?action=coreactivity_live_logs",
@@ -123,7 +135,7 @@
                     },
                     success: function(html) {
                         if (html.length > 0) {
-                            var dot = html.indexOf("."),
+                            const dot = html.indexOf("."),
                                 id = html.substring(0, dot),
                                 tr = html.substring(dot + 1);
 
@@ -131,6 +143,24 @@
 
                             $(".coreactivity-grid-logs #the-list").prepend(tr);
                             $(".coreactivity-live-row").addClass("coreactivity-standout");
+
+                            $(".coreactivity-hidden-row.coreactivity-live-row > td").each(function() {
+                                $(this).attr("colspan", columns);
+                            });
+
+                            $(".coreactivity-live-row > td").each(function() {
+                                $(this).removeClass("hidden");
+
+                                let cls = $(this).attr("class");
+
+                                if (cls) {
+                                    cls = cls.split(" ")[0];
+
+                                    if (hidden.indexOf(cls) > -1) {
+                                        $(this).addClass("hidden");
+                                    }
+                                }
+                            });
                         }
 
                         setTimeout(wp.coreactivity.admin.live.ajax, 15000);

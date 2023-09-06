@@ -12,7 +12,7 @@ class Information extends BaseInformation {
 	public $code = 'coreactivity';
 
 	public $version = '1.0';
-	public $build = 100;
+	public $build = 1000;
 	public $edition = 'free';
 	public $status = 'stable';
 	public $updated = '2023.09.06';
