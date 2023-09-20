@@ -246,7 +246,8 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( 'ID: %s &middot; Post: %s<br/>Post Type: %s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
+			/* translators: Display log post information. %1$s: Post ID. %2$s: Post Name and Link. %1$s: Post Type. */
+			$render .= sprintf( __( 'ID: %1$s &middot; Post: %2$s<br/>Post Type: %3$s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
@@ -263,9 +264,11 @@ class Display {
 			$post = get_post( $comment->comment_post_ID );
 
 			if ( $post instanceof WP_Post ) {
-				$render .= sprintf( __( 'ID: %s &middot; Author: %s<br/>Post: %s', 'coreactivity' ), '<strong><a href="' . get_edit_comment_link( $comment->comment_ID ) . '">' . $comment->comment_ID . '</a></strong>', '<strong>' . $comment->comment_author . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
+				/* translators: Display log comment information. %1$s: Comment ID and Link. %2$s: Author. %3$s: Post Name and Link. */
+				$render .= sprintf( __( 'ID: %1$s &middot; Author: %2$s<br/>Post: %3$s', 'coreactivity' ), '<strong><a href="' . get_edit_comment_link( $comment->comment_ID ) . '">' . $comment->comment_ID . '</a></strong>', '<strong>' . $comment->comment_author . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
 			} else {
-				$render .= sprintf( __( 'ID: %s &middot; Author: %s<br/>Post: MISSING', 'coreactivity' ), '<strong>' . get_edit_comment_link( $comment->comment_ID ) . '</strong>', '<strong>' . $comment->comment_author . '</strong>', );
+				/* translators: Display log comment information for missing post. %1$s: Comment ID and Link. %2$s: Author. */
+				$render .= sprintf( __( 'ID: %1$s &middot; Author: %2$s<br/>Post: MISSING', 'coreactivity' ), '<strong>' . get_edit_comment_link( $comment->comment_ID ) . '</strong>', '<strong>' . $comment->comment_author . '</strong>', );
 			}
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
@@ -280,7 +283,8 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( 'ID: %s &middot; MIME/Type: %s<br/>Name: %s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong>' . $post->post_mime_type . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
+			/* translators: Display log attachment information. %1$s: Attachment ID. %2$s: MIME Type. %3$s: File Name and Link. */
+			$render .= sprintf( __( 'ID: %1$s &middot; MIME/Type: %2$s<br/>Name: %3$s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong>' . $post->post_mime_type . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
@@ -295,7 +299,8 @@ class Display {
 			$group = groups_get_group( $item->object_id );
 
 			if ( $group instanceof BP_Groups_Group ) {
-				$render .= sprintf( __( 'ID: %s &middot; Slug: %s<br/>Name: %s', 'coreactivity' ), '<strong>' . $group->id . '</strong>', '<strong>' . $group->slug . '</strong>', '<strong><a href="' . bp_get_group_permalink( $group ) . '">' . $group->name . '</a></strong>' );
+				/* translators: Display log BuddyPress Group information. %1$s: Group ID. %2$s: Group Slug. %3$s: Group Name and Link. */
+				$render .= sprintf( __( 'ID: %1$s &middot; Slug: %2$s<br/>Name: %3$s', 'coreactivity' ), '<strong>' . $group->id . '</strong>', '<strong>' . $group->slug . '</strong>', '<strong><a href="' . bp_get_group_permalink( $group ) . '">' . $group->name . '</a></strong>' );
 			} else {
 				$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 			}
@@ -314,7 +319,8 @@ class Display {
 				$form = GFAPI::get_form( $item->object_id );
 				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form['id'] );
 
-				$render .= sprintf( __( 'ID: %s &middot; Slug: %s<br/>Name: %s', 'coreactivity' ), '<strong>' . $form['id'] . '</strong>', '<strong>' . $form['form_slug'] . '</strong>', '<strong><a href="' . $url . '">' . $form['title'] . '</a></strong>' );
+				/* translators: Display log GravityForm Form information. %1$s: Form ID. %2$s: Form Slug. %3$s: Form Name and Link. */
+				$render .= sprintf( __( 'ID: %1$s &middot; Slug: %2$s<br/>Name: %3$s', 'coreactivity' ), '<strong>' . $form['id'] . '</strong>', '<strong>' . $form['form_slug'] . '</strong>', '<strong><a href="' . $url . '">' . $form['title'] . '</a></strong>' );
 			} else {
 				$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 			}
@@ -335,7 +341,8 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( 'ID: %s<br/>Post: %s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . admin_url( 'admin.php?page=wpcf7&action=edit&post=' . $post->ID ) . '">' . $post->post_title . '</a></strong>' );
+			/* translators: Display log CF7 Form information. %1$s: Form ID. %2$s: Form Post and Link. */
+			$render .= sprintf( __( 'ID: %1$s<br/>Post: %2$s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . admin_url( 'admin.php?page=wpcf7&action=edit&post=' . $post->ID ) . '">' . $post->post_title . '</a></strong>' );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
@@ -349,7 +356,8 @@ class Display {
 		$term = get_term( $item->object_id );
 
 		if ( $term instanceof \WP_Term ) {
-			$render .= sprintf( __( 'ID: %s &middot; Term: %s<br/>Taxonomy: %s', 'coreactivity' ), '<strong>' . $term->term_id . '</strong>', '<strong><a href="' . get_edit_term_link( $term ) . '">' . $term->name . '</a></strong>', '<strong>' . $term->taxonomy . '</strong>' );
+			/* translators: Display log Term information. %1$s: Term ID. %2$s: Term Name and Link. %3$s: Taxonomy Name. */
+			$render .= sprintf( __( 'ID: %1$s &middot; Term: %2$s<br/>Taxonomy: %3$s', 'coreactivity' ), '<strong>' . $term->term_id . '</strong>', '<strong><a href="' . get_edit_term_link( $term ) . '">' . $term->name . '</a></strong>', '<strong>' . $term->taxonomy . '</strong>' );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
@@ -421,7 +429,8 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( 'ID: %s &middot; Post: %s%sPost Type: %s', 'coreactivity' ), $post->ID, $post->post_title, ' · ', $post->post_type );
+			/* translators: Display brief log Post information. %1$s: Post ID. %2$s: Term Name. %3$s: Divider Dot. %4$s: Post Type. */
+			$render .= sprintf( __( 'ID: %1$s &middot; Post: %2$s%3$sPost Type: %4$s', 'coreactivity' ), $post->ID, $post->post_title, ' · ', $post->post_type );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
@@ -438,9 +447,11 @@ class Display {
 			$post = get_post( $comment->comment_post_ID );
 
 			if ( $post instanceof WP_Post ) {
-				$render .= sprintf( __( 'ID: %s &middot; Author: %s%sPost: %s', 'coreactivity' ), $comment->comment_ID, $comment->comment_author, ' · ', $post->post_title );
+				/* translators: Display brief log Comment information. %1$s: Comment ID. %2$s: Comment Author. %3$s: Divider Dot. %4$s: Post Name. */
+				$render .= sprintf( __( 'ID: %1$s &middot; Author: %2$s%3$sPost: %4$s', 'coreactivity' ), $comment->comment_ID, $comment->comment_author, ' · ', $post->post_title );
 			} else {
-				$render .= sprintf( __( 'ID: %s &middot; Author: %s%sPost: MISSING', 'coreactivity' ), $comment->comment_ID, $comment->comment_author, ' · ' );
+				/* translators: Display brief log Comment information for missing post. %1$s: Comment ID. %2$s: Comment Author. %3$s: Divider Dot. */
+				$render .= sprintf( __( 'ID: %1$s &middot; Author: %2$s%3$sPost: MISSING', 'coreactivity' ), $comment->comment_ID, $comment->comment_author, ' · ' );
 			}
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
@@ -455,7 +466,8 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( 'ID: %s &middot; MIME/Type: %s%sName: %s', 'coreactivity' ), $post->ID, $post->post_mime_type, ' · ', $post->post_title );
+			/* translators: Display brief log Attachment information. %1$s: Attachment ID. %2$s: MIME Type. %3$s: Divider Dot. %4$s: File Name. */
+			$render .= sprintf( __( 'ID: %1$s &middot; MIME/Type: %2$s%3$sName: %4$s', 'coreactivity' ), $post->ID, $post->post_mime_type, ' · ', $post->post_title );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
@@ -470,7 +482,8 @@ class Display {
 			$group = groups_get_group( $item->object_id );
 
 			if ( $group instanceof BP_Groups_Group ) {
-				$render .= sprintf( __( 'ID: %s &middot; Slug: %s%sName: %s', 'coreactivity' ), $group->id, $group->slug, $group->name, ' · ' );
+				/* translators: Display brief log BuddyPress Group information. %1$s: Group ID. %2$s: Group Slug. %3$s: Divider Dot. %4$s: Group Name. */
+				$render .= sprintf( __( 'ID: %1$s &middot; Slug: %2$s%3$sName: %4$s', 'coreactivity' ), $group->id, $group->slug, $group->name, ' · ' );
 			} else {
 				$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 			}
@@ -487,9 +500,9 @@ class Display {
 		if ( class_exists( '\GFAPI' ) ) {
 			if ( GFAPI::form_id_exists( $item->object_id ) ) {
 				$form = GFAPI::get_form( $item->object_id );
-				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form['id'] );
 
-				$render .= sprintf( __( 'ID: %s · Slug: %s%sName: %s', 'coreactivity' ), $form['id'], $form['form_slug'], ' · ', $form['title'] );
+				/* translators: Display brief log GravityForms Form information. %1$s: Form ID. %2$s: Form Slug. %3$s: Divider Dot. %4$s: Form Name. */
+				$render .= sprintf( __( 'ID: %1$s · Slug: %2$s%3$sName: %4$s', 'coreactivity' ), $form['id'], $form['form_slug'], ' · ', $form['title'] );
 			} else {
 				$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 			}
@@ -510,7 +523,8 @@ class Display {
 		$post = get_post( $item->object_id );
 
 		if ( $post instanceof WP_Post ) {
-			$render .= sprintf( __( 'ID: %s%sPost: %s', 'coreactivity' ), $post->ID, $post->post_title, ' · ' );
+			/* translators: Display brief log CF7 Form information. %1$s: Form ID. %2$s: Divider Dot. %3$s: Form Post Name. */
+			$render .= sprintf( __( 'ID: %1$s%2$sPost: %3$s', 'coreactivity' ), $post->ID, $post->post_title, ' · ' );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
@@ -524,7 +538,8 @@ class Display {
 		$term = get_term( $item->object_id );
 
 		if ( $term instanceof \WP_Term ) {
-			$render .= sprintf( __( 'ID: %s &middot; Term: %s%sTaxonomy: %s', 'coreactivity' ), $term->term_id, $term->name, ' · ', $term->taxonomy );
+			/* translators: Display brief log Term information. %1$s: Term ID. %2$s: Term Name. %3$s: Divider Dot. %4$s: Term Taxonomy. */
+			$render .= sprintf( __( 'ID: %1$s &middot; Term: %2$s%3$sTaxonomy: %4$s', 'coreactivity' ), $term->term_id, $term->name, ' · ', $term->taxonomy );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}

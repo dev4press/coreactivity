@@ -98,10 +98,10 @@ class Plugin extends Component {
 
 	private function _plugin_meta( $plugin_file ) : array {
 		$meta = array(
-			'plugin_name'        => strip_tags( $this->storage[ $plugin_file ]['Name'] ?? '' ),
-			'plugin_title'       => strip_tags( $this->storage[ $plugin_file ]['Title'] ?? '' ),
-			'plugin_author'      => strip_tags( $this->storage[ $plugin_file ]['Author'] ?? '' ),
-			'plugin_description' => strip_tags( $this->storage[ $plugin_file ]['Description'] ?? '' ),
+			'plugin_name'        => wp_strip_all_tags( $this->storage[ $plugin_file ]['Name'] ?? '' ),
+			'plugin_title'       => wp_strip_all_tags( $this->storage[ $plugin_file ]['Title'] ?? '' ),
+			'plugin_author'      => wp_strip_all_tags( $this->storage[ $plugin_file ]['Author'] ?? '' ),
+			'plugin_description' => wp_strip_all_tags( $this->storage[ $plugin_file ]['Description'] ?? '' ),
 			'plugin_version'     => $this->storage[ $plugin_file ]['Version'] ?? '',
 			'plugin_url'         => $this->storage[ $plugin_file ]['PluginURI'] ?? '',
 		);

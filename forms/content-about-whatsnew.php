@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     Version 1.0 brings support for a huge number of different events it can log, it logs a lot of details, it has a powerful Logs panel to find and filter events and much more.
                 </p>
 
-				<?php if ( isset( $_GET['install'] ) && sanitize_key( $_GET['install'] ) === 'on' ) { ?>
+				<?php if ( isset( $_GET['install'] ) && sanitize_key( $_GET['install'] ) === 'on' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
                     <a class="button-primary" href="<?php echo esc_url_raw( panel()->a()->panel_url( 'wizard' ) ); ?>"><?php esc_html_e( 'Run Setup Wizard', 'coreactivity' ); ?></a>
 				<?php } ?>
 

@@ -73,8 +73,8 @@ class Theme extends Component {
 		$theme = wp_get_theme( $stylesheet );
 
 		$meta = array(
-			$prefix . 'theme_name'        => strip_tags( $theme->get( 'Name' ) ),
-			$prefix . 'theme_author'      => strip_tags( $theme->get( 'Author' ) ),
+			$prefix . 'theme_name'        => wp_strip_all_tags( $theme->get( 'Name' ) ),
+			$prefix . 'theme_author'      => wp_strip_all_tags( $theme->get( 'Author' ) ),
 			$prefix . 'theme_description' => $theme->get( 'Description' ),
 			$prefix . 'theme_version'     => $theme->get( 'Version' ),
 			$prefix . 'theme_url'         => $theme->get( 'ThemeURI' ),

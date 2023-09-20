@@ -229,8 +229,8 @@ class Core {
 		}
 
 		if ( ! isset( $meta['ajax_action'] ) ) {
-			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) {
-				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.Security.NonceVerification.Recommended
 			}
 		}
 

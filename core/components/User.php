@@ -283,7 +283,7 @@ class User extends Component {
 
 				if ( $user_data instanceof WP_User ) {
 					$data = array( 'object_id' => $user_data->ID );
-					$meta = array( 'error' => strip_tags( $errors->get_error_message() ) );
+					$meta = array( 'error' => wp_strip_all_tags( $errors->get_error_message() ) );
 				} else {
 					$meta = array( 'error' => __( 'There is no account with that username or email address.', 'coreactivity' ) );
 				}
