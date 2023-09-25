@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// include( COREACTIVITY_PATH . 'forms/content-about-minor.php' );
+include( COREACTIVITY_PATH . 'forms/content-about-minor.php' );
 
 ?>
 
