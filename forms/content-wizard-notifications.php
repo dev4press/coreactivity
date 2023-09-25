@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php use function Dev4Press\v43\Functions\panel;
 
 		esc_html_e( 'The plugin has Notifications system for instant notifications with additional daily and weekly digests. For each of these notifications types, you need to enable events you want to include, and you can do that from the Events panel where each event has switches for every notification type.', 'coreactivity' ); ?>
-        <a target="_blank" href="<?php echo esc_url_raw( panel()->a()->panel_url( 'events', '', '', true ) ); ?>"><?php esc_html_e( 'Events Panel', 'coreactivity' ); ?></a>
+        <a target="_blank" href="<?php echo esc_url( panel()->a()->panel_url( 'events', '', '', true ) ); ?>"><?php esc_html_e( 'Events Panel', 'coreactivity' ); ?></a>
     </p>
 </div>
 

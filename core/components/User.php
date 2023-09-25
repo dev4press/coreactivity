@@ -185,7 +185,7 @@ class User extends Component {
 	}
 
 	public function prepare_form_lostpassword() {
-		$this->user_login = $_POST['user_login'] ?? ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$this->user_login = $_POST['user_login'] ?? ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput,WordPress.Security.NonceVerification
 		$this->user_login = trim( wp_unslash( $this->user_login ) );
 
 		add_action( 'lostpassword_post', array( $this, 'event_lostpassword_post' ), 10, 2 );

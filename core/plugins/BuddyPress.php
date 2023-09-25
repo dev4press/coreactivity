@@ -49,7 +49,7 @@ class BuddyPress extends Plugin {
 			add_action( 'groups_update_group', array( $this, 'event_update_group' ), 10, 2 );
 			add_action( 'groups_details_updated', array( $this, 'event_details_updated' ), 10, 2 );
 
-			if ( is_admin() && Request::is_post() && isset( $_REQUEST['gid'] ) && isset( $_REQUEST['page'] ) && $_REQUEST['page'] === 'bp-groups' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( is_admin() && Request::is_post() && isset( $_REQUEST['gid'] ) && isset( $_REQUEST['page'] ) && $_REQUEST['page'] === 'bp-groups' ) { // phpcs:ignore WordPress.Security.NonceVerification
 				add_filter( 'groups_get_group', array( $this, 'prepare_get_group' ) );
 				add_action( 'bp_group_admin_edit_after', array( $this, 'event_admin_edit_after' ) );
 			}

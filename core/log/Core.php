@@ -153,7 +153,7 @@ class Core {
 
 	private function get_user_agent() : string {
 		if ( coreactivity_settings()->get( 'log_if_available_user_agent' ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			return Sanitize::basic( trim( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			return Sanitize::basic( trim( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 		}
 
 		return '';
@@ -229,8 +229,8 @@ class Core {
 		}
 
 		if ( ! isset( $meta['ajax_action'] ) ) {
-			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.Security.NonceVerification.Recommended
+			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.Security.NonceVerification
 			}
 		}
 

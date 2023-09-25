@@ -59,7 +59,7 @@ class AJAX {
 
 	public function toggle_notification() {
 		$id  = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
-		$key = isset( $_POST['notification'] ) ? Sanitize::slug( $_POST['notification'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$key = isset( $_POST['notification'] ) ? Sanitize::slug( $_POST['notification'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
 		$toggle = '';
 		if ( $id > 0 && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-toggle-notification-' . $key . '-' . $id ) ) {
@@ -77,7 +77,7 @@ class AJAX {
 		$output = '';
 
 		if ( isset( $_REQUEST['args'] ) ) {
-			$request = json_decode( wp_unslash( $_REQUEST['args'] ), true ); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$request = json_decode( wp_unslash( $_REQUEST['args'] ), true ); // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
 			if ( isset( $request['nonce'] ) && wp_verify_nonce( $request['nonce'], 'coreactivity-live-update' ) ) {
 				$request['atts']['min_id'] = absint( $request['id'] );

@@ -66,10 +66,10 @@ $active     = coreactivity()->is_logging_active();
 
 					if ( $active ) {
 						?>
-                        <a class="button-secondary" href="<?php echo esc_url_raw( panel()->a()->action_url( 'disable-logging', 'coreactivity-disable-logging' ) ); ?>"><?php esc_html_e( 'Disable all Events Logging', 'coreactivity' ); ?></a><?php
+                        <a class="button-secondary" href="<?php echo esc_url( panel()->a()->action_url( 'disable-logging', 'coreactivity-disable-logging' ) ); ?>"><?php esc_html_e( 'Disable all Events Logging', 'coreactivity' ); ?></a><?php
 					} else {
 						?>
-                        <a class="button-primary" href="<?php echo esc_url_raw( panel()->a()->action_url( 'enable-logging', 'coreactivity-enable-logging' ) ); ?>"><?php esc_html_e( 'Enable Events Logging', 'coreactivity' ); ?></a><?php
+                        <a class="button-primary" href="<?php echo esc_url( panel()->a()->action_url( 'enable-logging', 'coreactivity-enable-logging' ) ); ?>"><?php esc_html_e( 'Enable Events Logging', 'coreactivity' ); ?></a><?php
 					}
 
 					?>

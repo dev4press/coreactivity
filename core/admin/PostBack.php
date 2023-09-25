@@ -31,7 +31,7 @@ class PostBack extends BasePostBack {
 	}
 
 	protected function cleanup() {
-		$data = $_POST['coreactivity']['tools-cleanup'] ?? array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$data = $_POST['coreactivity']['tools-cleanup'] ?? array(); // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
 		$when = $data['period'] ?? '';
 		$what = $data['events'] ?? array();
