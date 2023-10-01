@@ -1,6 +1,6 @@
 <?php
 
-use Dev4Press\Plugin\CoreActivity\Table\Logs;
+use function Dev4Press\v43\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php
 
-	$_grid = new Logs();
+	$_grid = panel()->get_table_object();
 
 	if ( is_multisite() && ! is_network_admin() ) {
 		$_grid->set_filter_lock( 'blog_id', get_current_blog_id() );

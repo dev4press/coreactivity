@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d4p-info-block d4p-info-block-changelog">
     <h3><?php esc_html_e( 'Version', 'coreactivity' ); ?> 1</h3>
     <div>
+        <h4>Version: 1.0.4 / October 2 2023</h4>
+        <ul>
+            <li><strong>edit</strong> more changes related to PHPCS and WPCS validation</li>
+            <li><strong>edit</strong> Dev4Press Library 4.3.4</li>
+        </ul>
+
         <h4>Version: 1.0.3 / September 26 2023</h4>
         <ul>
             <li><strong>edit</strong> more changes related to PHPCS and WPCS validation</li>

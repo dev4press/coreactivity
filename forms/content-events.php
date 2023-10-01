@@ -1,6 +1,6 @@
 <?php
 
-use Dev4Press\Plugin\CoreActivity\Table\Events;
+use function Dev4Press\v43\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php
 
-	$_grid = new Events();
+	$_grid = panel()->get_table_object();
 	$_grid->prepare_table();
 	$_grid->prepare_items();
 
