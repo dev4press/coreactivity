@@ -96,7 +96,7 @@ Plugin creates three new database tables where all events are registered, and al
 If you have all events enabled, the plugin will add 150+ hooks into various elements of WordPress and plugins. That is not too much when compared to 3000+ hooks WordPress runs on average, so it will not have a big impact on WordPress performance. And, it is a good idea to disable events you don't need to use.
 
 == Changelog ==
-= 1.0.3 (2023.10.02) =
+= 1.0.4 (2023.10.03) =
 * Edit: more changes related to PHPCS and WPCS validation
 * Edit: Dev4Press Library 4.3.4
 
@@ -119,3 +119,9 @@ If you have all events enabled, the plugin will add 150+ hooks into various elem
 First official release.
 
 == Screenshots ==
+* Plugin Dashboard
+* Events Control Panel
+* Log Panel
+* Log filtered by Component
+* Log Panel Settings
+* List of Events

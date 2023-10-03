@@ -15,7 +15,7 @@ class Information extends BaseInformation {
 	public $build = 1040;
 	public $edition = 'free';
 	public $status = 'stable';
-	public $updated = '2023.10.02';
+	public $updated = '2023.10.03';
 	public $released = '2023.09.06';
 
 	public $github_url = 'https://github.com/dev4press/coreactivity';
