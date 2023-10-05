@@ -53,23 +53,23 @@ class DB extends BaseDB {
 		);
 
 		foreach ( $data as $row ) {
-			$_table_name  = strtolower( $row['Name'] );
+			$_table_name  = strtolower( $row['Name'] ?? 'Unknown' );
 			$_actual_name = str_replace( $prefix, '', $_table_name );
-			$_total       = absint( $row['Data_length'] ) + absint( $row['Index_length'] ) + absint( $row['Data_free'] );
+			$_total       = absint( $row['Data_length'] ?? 0 ) + absint( $row['Index_length'] ?? 0 ) + absint( $row['Data_free'] ?? 0 );
 
 			$results['tables'][ $_actual_name ] = array(
 				'table'            => $_table_name,
-				'engine'           => $row['Engine'],
+				'engine'           => $row['Engine'] ?? 'Unknown',
 				'total'            => $_total,
-				'size'             => absint( $row['Data_length'] ),
-				'free'             => absint( $row['Data_free'] ),
-				'index'            => absint( $row['Index_length'] ),
-				'rows'             => absint( $row['Rows'] ),
-				'average_row_size' => absint( $row['Avg_row_length'] ),
-				'auto_increment'   => $row['Auto_increment'],
-				'created'          => $row['Create_time'],
-				'updated'          => $row['Update_time'],
-				'collation'        => $row['Collation'],
+				'size'             => absint( $row['Data_length'] ?? 0 ),
+				'free'             => absint( $row['Data_free'] ?? 0 ),
+				'index'            => absint( $row['Index_length'] ?? 0 ),
+				'rows'             => absint( $row['Rows'] ?? 0 ),
+				'average_row_size' => absint( $row['Avg_row_length'] ?? 0 ),
+				'auto_increment'   => $row['Auto_increment'] ?? 0,
+				'created'          => $row['Create_time'] ?? '',
+				'updated'          => $row['Update_time'] ?? '',
+				'collation'        => $row['Collation'] ?? '',
 			);
 		}
 
