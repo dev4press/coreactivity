@@ -50,6 +50,7 @@ abstract class Component {
 
 		if ( $this->is_available() ) {
 			add_action( 'coreactivity_registered_object_types', array( $this, 'registered_object_types' ) );
+			add_action( 'coreactivity_logs_meta_column_keys', array( $this, 'logs_meta_column_keys' ) );
 			add_action( 'coreactivity_tracking_ready', array( $this, 'tracking' ) );
 			add_action( 'coreactivity_init', array( $this, 'init' ) );
 		}
@@ -100,6 +101,10 @@ abstract class Component {
 
 	public function registered_object_types( array $object_types ) : array {
 		return $object_types;
+	}
+
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		return $meta_column_keys;
 	}
 
 	public function code() : string {

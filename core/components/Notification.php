@@ -16,6 +16,7 @@ class Notification extends Component {
 	protected $object_type = 'notification';
 	protected $storage = array();
 	protected $do_not_log = array();
+	protected $exceptions = array();
 
 	protected $network = array(
 		'wp-network-signup-blog-confirmation',
@@ -30,6 +31,8 @@ class Notification extends Component {
 	);
 
 	public function init() {
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_notification_list' );
+
 		if ( coreactivity_settings()->get( 'daily_skip_log', 'notifications' ) ) {
 			$this->do_not_log[] = 'coreactivity-daily-digest';
 		}
@@ -89,6 +92,18 @@ class Notification extends Component {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'-' => array(
+				'subject',
+				'email',
+				'error',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function prepare_detection( $data ) {
 		$this->storage = $data;
 	}
@@ -109,10 +124,16 @@ class Notification extends Component {
 		}
 	}
 
-	protected function event_final( $event, $email_data, $error = '' ) {
+	private function event_final( $event, $email_data, $error = '' ) {
 		if ( $this->is_active( $event ) ) {
+			$option = $this->storage['name'] ?? '';
+
+			if ( $this->is_exception( $option ) ) {
+				return;
+			}
+
 			if ( ! in_array( $this->storage['name'], $this->do_not_log ) ) {
-				$data = array( 'object_name' => $this->storage['name'] ?? '' );
+				$data = array( 'object_name' => $option );
 
 				if ( in_array( $this->storage['name'], $this->network ) ) {
 					$data['blog_id'] = 0;
@@ -126,5 +147,9 @@ class Notification extends Component {
 				) );
 			}
 		}
+	}
+
+	private function is_exception( $option ) : bool {
+		return ! empty( $this->exceptions ) && in_array( $option, $this->exceptions );
 	}
 }

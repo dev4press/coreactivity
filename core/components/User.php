@@ -177,6 +177,17 @@ class User extends Component {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'role-changed' => array(
+				'role',
+				'previous_roles',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function init_authenticate( $user, $username, $password ) {
 		$this->storage['username'] = $username;
 		$this->storage['password'] = $password;

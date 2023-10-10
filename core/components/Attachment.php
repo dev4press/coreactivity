@@ -46,6 +46,16 @@ class Attachment extends Component {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'-' => array(
+				'attachment_size',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function event_add_attachment( $attachment_id ) {
 		$this->log( 'uploaded', array( 'object_id' => $attachment_id ), $this->_attachment_meta( $attachment_id ) );
 	}

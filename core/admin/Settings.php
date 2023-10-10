@@ -88,7 +88,7 @@ class Settings extends BaseSettings {
 				),
 			),
 			'exceptions'    => array(
-				'exceptions-option'   => array(
+				'exceptions-option'       => array(
 					'name'     => __( 'Component: Options', 'coreactivity' ),
 					'sections' => array(
 						array(
@@ -109,7 +109,7 @@ class Settings extends BaseSettings {
 						),
 					),
 				),
-				'exceptions-sitemeta' => array(
+				'exceptions-sitemeta'     => array(
 					'name'     => __( 'Component: Sitemeta', 'coreactivity' ),
 					'sections' => array(
 						array(
@@ -122,7 +122,59 @@ class Settings extends BaseSettings {
 						),
 					),
 				),
-				'exceptions-error'    => array(
+				'exceptions-notification' => array(
+					'name'     => __( 'Component: Notification', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => __( 'Specific Options', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_notification_list', __( 'Notifications to Skip', 'coreactivity' ), __( 'Add one or more notifications (exact option name) to skip from logging.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+							),
+						),
+					),
+				),
+				'exceptions-wordpress'    => array(
+					'name'     => __( 'Component: WordPress', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => __( 'Specific Options', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_cron_list', __( 'CRON to Skip', 'coreactivity' ), __( 'Add one or more CRON jobs (exact option name) to skip from logging.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+							),
+						),
+					),
+				),
+				'exceptions-plugin'       => array(
+					'name'     => __( 'Component: Plugin', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => __( 'Specific Options', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_plugin_list', __( 'Plugins to Skip', 'coreactivity' ), __( 'Add one or more plugins (exact option name) to skip from logging.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+							),
+						),
+					),
+				),
+				'exceptions-theme'        => array(
+					'name'     => __( 'Component: Theme', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => __( 'Specific Options', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_theme_list', __( 'Themes to Skip', 'coreactivity' ), __( 'Add one or more themes (exact option name) to skip from logging.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+							),
+						),
+					),
+				),
+				'exceptions-error'        => array(
 					'name'     => __( 'Component: Errors', 'coreactivity' ),
 					'sections' => array(
 						array(
@@ -156,12 +208,20 @@ class Settings extends BaseSettings {
 					'name'     => __( 'Table Layout', 'coreactivity' ),
 					'sections' => array(
 						array(
-							'label'    => '',
+							'label'    => __( "Log Basic Data" ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'display_request_column', __( 'Request as Column', 'coreactivity' ), __( 'Request value can be quite long, and it can cause layout issues if displayed as column. If this option is displayed, Request will be displayed as Meta value in the hidden Meta row.', 'coreactivity' ), Type::BOOLEAN ),
 								$this->i( 'settings', 'display_protocol_column', __( 'Protocol as Column', 'coreactivity' ), __( 'Protocol value would most likely be the same for each request, especially if your webserver is behind some sort of proxy setup. If this option is displayed, Protocol will be displayed as Meta value in the hidden Meta row.', 'coreactivity' ), Type::BOOLEAN ),
+							),
+						),
+						array(
+							'label'    => __( "Log Meta Data" ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'display_meta_column', __( 'Meta Column', 'coreactivity' ), __( 'By default, all meta data is displayed in the hidden Meta row under main row because a lot of metadata can be quite large and will break table layout or will be unreadable. If you enable Meta column, some of the meta data will be displayed in this column, depending on the event.', 'coreactivity' ), Type::BOOLEAN ),
 							),
 						),
 					),

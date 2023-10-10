@@ -50,6 +50,16 @@ class Error extends Component {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'-' => array(
+				'request',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function event_error() {
 		if ( is_404() ) {
 			$url = Core::instance()->get( 'request' );

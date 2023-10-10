@@ -36,10 +36,14 @@ class Settings extends BaseSettings {
 			'display_user_avatar'                     => false,
 			'display_request_column'                  => false,
 			'display_protocol_column'                 => false,
+			'display_meta_column'                     => false,
 			'auto_cleanup_active'                     => true,
 			'auto_cleanup_period'                     => 24,
 			'exceptions_option_action_scheduler_lock' => true,
-			'exceptions_notifications_list'           => array(),
+			'exceptions_plugin_list'                  => array(),
+			'exceptions_theme_list'                   => array(),
+			'exceptions_cron_list'                    => array(),
+			'exceptions_notification_list'            => array(),
 			'exceptions_option_list'                  => array(),
 			'exceptions_sitemeta_list'                => array(),
 			'exceptions_error_file_regex_list'        => array(
@@ -72,5 +76,12 @@ class Settings extends BaseSettings {
 
 	protected function _install_db() {
 		return InstallDB::instance();
+	}
+
+	public function is_in_exception_list( $list, $value ) : bool {
+		$option = 'exceptions_' . $list . '_list';
+		$values = $this->get( $option );
+
+		return in_array( $value, $values );
 	}
 }

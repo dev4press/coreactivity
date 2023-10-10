@@ -23,6 +23,8 @@ class GetBack extends BaseGetBack {
 			} else {
 				if ( $this->a()->panel == 'dashboard' ) {
 					$this->action_dashboard();
+				} else if ( $this->a()->panel == 'logs' ) {
+					$this->action_logs();
 				}
 			}
 		}
@@ -39,6 +41,32 @@ class GetBack extends BaseGetBack {
 			$value = $action == 'enable-logging';
 
 			coreactivity_change_logging_status( $value );
+
+			wp_redirect( $this->a()->current_url() );
+			exit;
+		}
+	}
+
+	private function action_logs() {
+		$action = $this->get_single_action();
+
+		if ( $action == 'do-not-log' ) {
+			$object_type = Sanitize::_get_slug( 'object-type' );
+			$object_name = isset( $_GET['object-name'] ) ? Sanitize::basic( wp_unslash( urldecode( $_GET['object-name'] ) ) ) : '';
+
+			if ( ! empty( $object_name ) && ! empty( $object_type ) ) {
+				check_admin_referer( 'coreactivity-do-not-log-' . $object_name );
+
+				$option = 'exceptions_' . $object_type . '_list';
+
+				$list = coreactivity_settings()->get( $option );
+
+				if ( ! in_array( $object_name, $list ) ) {
+					$list[] = $object_name;
+
+					coreactivity_settings()->set( $option, $list, 'settings', true );
+				}
+			}
 
 			wp_redirect( $this->a()->current_url() );
 			exit;

@@ -19,6 +19,11 @@ class WordPress extends Component {
 	protected $do_not_log = array(
 		'coreactivity_instant_notification',
 	);
+	protected $exceptions = array();
+
+	public function init() {
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_cron_list' );
+	}
 
 	public function tracking() {
 		if ( $this->is_active( 'cron-schedule' ) ) {
@@ -83,6 +88,10 @@ class WordPress extends Component {
 
 	public function event_schedule_event( $event ) {
 		if ( $event ) {
+			if ( $this->is_exception( $event->hook ) ) {
+				return $event;
+			}
+
 			$caller = wp_debug_backtrace_summary( null, 4, false );
 
 			if ( ! in_array( 'wp_reschedule_event', $caller ) && ! in_array( $event->hook, $this->do_not_log ) ) {
@@ -132,7 +141,7 @@ class WordPress extends Component {
 		return $queries;
 	}
 
-	protected function caller( $functions ) : array {
+	private function caller( $functions ) : array {
 		$backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
 		$functions = (array) $functions;
 		$file_path = '';
@@ -156,5 +165,9 @@ class WordPress extends Component {
 		}
 
 		return array();
+	}
+
+	private function is_exception( $option ) : bool {
+		return ! empty( $this->exceptions ) && in_array( $option, $this->exceptions );
 	}
 }

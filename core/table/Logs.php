@@ -24,23 +24,32 @@ class Logs extends Table {
 	public $_rows_per_page_key = 'coreactivity_logs_rows_per_page';
 	public $_rows_per_page_default = 25;
 	public $_views_separator = '';
-	public $_display_columns_simplified;
-	public $_display_ip_country_flag;
-	public $_display_user_avatar;
-	public $_display_request_column;
-	public $_display_protocol_column;
 	public $_current_view = '';
-	public $_current_ip = '';
-	public $_server_ip = '';
-	public $_filter_key = 'coreactivity';
 
+	protected $_current_ip = '';
+	protected $_server_ip = '';
+	protected $_display_columns_simplified;
+	protected $_display_ip_country_flag;
+	protected $_display_user_avatar;
+	protected $_display_request_column;
+	protected $_display_protocol_column;
+	protected $_display_meta_column;
+	protected $_filter_key = 'coreactivity';
+	protected $_logs_instance = 'coreactivity';
 	protected $_limit_lock = array();
 	protected $_filter_lock = array();
 	protected $_filter_remove = array();
 	protected $_items_ips = array();
+	protected $_meta_column = array();
 
 	public function __construct( $args = array() ) {
 		Display::instance();
+
+		foreach ( $args as $key => $value ) {
+			if ( property_exists( $this, $key ) ) {
+				$this->$key = $value;
+			}
+		}
 
 		$this->_current_ip = Core::instance()->get( 'ip' );
 		$this->_server_ip  = Core::instance()->get( 'server_ip' );
@@ -51,6 +60,14 @@ class Logs extends Table {
 		$this->_display_request_column     = coreactivity_settings()->get( 'display_request_column' );
 		$this->_display_protocol_column    = coreactivity_settings()->get( 'display_protocol_column' );
 
+		if ( ! $this->_display_meta_column ) {
+			$this->_display_meta_column = coreactivity_settings()->get( 'display_meta_column' );
+		}
+
+		if ( $this->_display_meta_column ) {
+			$this->_meta_column = apply_filters( 'coreactivity_logs_meta_column_keys', array(), $this );
+		}
+
 		parent::__construct( array(
 			'singular' => 'log',
 			'plural'   => 'logs',
@@ -60,6 +77,10 @@ class Logs extends Table {
 
 	public function i() : Activity {
 		return Activity::instance();
+	}
+
+	public function get_instance_code() : string {
+		return $this->_logs_instance;
 	}
 
 	public function set_limit_lock( $name, $value ) {
@@ -108,6 +129,7 @@ class Logs extends Table {
 			'request'     => __( 'Request', 'coreactivity' ),
 			'object_type' => __( 'Object Type', 'coreactivity' ),
 			'object_name' => __( 'Object', 'coreactivity' ),
+			'meta_data'   => __( 'Meta', 'coreactivity' ),
 			'logged'      => __( 'Logged', 'coreactivity' ),
 			'meta'        => '<i class="vers d4p-icon d4p-ui-chevron-square-down d4p-icon-lg" title="' . esc_attr__( 'Toggle Meta', 'coreactivity' ) . '"></i><span class="screen-reader-text">' . esc_html__( 'Toggle Meta', 'coreactivity' ) . '</span>',
 		);
@@ -118,6 +140,10 @@ class Logs extends Table {
 
 		if ( ! $this->_display_protocol_column ) {
 			unset( $columns['protocol'] );
+		}
+
+		if ( ! $this->_display_meta_column ) {
+			unset( $columns['meta_data'] );
 		}
 
 		foreach ( array_keys( $this->_filter_lock ) as $column ) {
@@ -575,36 +601,51 @@ class Logs extends Table {
 		);
 	}
 
+	protected function get_meta_column_keys( $component, $event ) : array {
+		return $this->_meta_column[ $component ][ $event ] ?? ( $this->_meta_column[ $component ]['-'] ?? array() );
+	}
+
 	protected function single_hidden_row( $item ) {
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
 
 		$total = count( $columns ) - count( $hidden );
 		$metas = array( 'referer', 'user_agent', 'ajax_action' );
+		$skip  = apply_filters( $this->_filter_key . '_meta_row_skip', $this->get_meta_column_keys( $item->component, $item->event ), $item, $this );
 
 		$left  = array();
 		$right = array();
 
 		if ( ! $this->_display_protocol_column && ! empty( $item->protocol ) ) {
-			$left[] = '<li><strong>' . esc_html__( 'protocol', 'coreactivity' ) . ':</strong><span>' . esc_html( $item->protocol ) . '</span></li>';
+			$right[] = '<li><strong>' . esc_html__( 'protocol', 'coreactivity' ) . ':</strong><span>' . esc_html( $item->protocol ) . '</span></li>';
 		}
 
-		if ( ! $this->_display_request_column && ! empty( $item->request ) ) {
-			$left[] = '<li><strong>' . esc_html__( 'request', 'coreactivity' ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
+		if ( ! $this->_display_request_column && ! empty( $item->request ) && ! in_array( 'request', $skip ) ) {
+			$right[] = '<li><strong>' . esc_html__( 'request', 'coreactivity' ) . ':</strong><span>' . esc_html( $item->request ) . '</span></li>';
 		}
 
 		if ( isset( $item->meta ) ) {
 			foreach ( $item->meta as $key => $value ) {
-				$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? $this->print_array( $value ) : json_encode( $value ) );
+				if ( in_array( $key, $skip ) ) {
+					continue;
+				}
+
+				$meta = $this->meta_value( $key, $value );
 
 				if ( in_array( $key, $metas ) ) {
-					$left[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
+					$right[] = $meta;
 				} else {
-					$right[] = '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
+					$left[] = $meta;
 				}
 			}
 		}
 
-		$description = apply_filters( 'coreactivity_logs_log_item_descriptions', '', $item );
+		if ( empty( $left ) ) {
+			$_chunk_size = ceil( count( $right ) / 2 );
+
+			list( $left, $right ) = array_chunk( $right, $_chunk_size );
+		}
+
+		$description = apply_filters( 'coreactivity_logs_log_item_descriptions', '', $item, $this );
 
 		echo '<td colspan="' . esc_attr( $total ) . '">';
 
@@ -614,8 +655,8 @@ class Logs extends Table {
 
 		echo '<div>';
 
-		echo '<ul>' . join( '', $right ) . '</ul>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<ul>' . join( '', $left ) . '</ul>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<ul>' . join( '', $right ) . '</ul>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		echo '</div>';
 		echo '</td>';
@@ -738,14 +779,31 @@ class Logs extends Table {
 		$render  = apply_filters( 'coreactivity_logs_field_render_object_type', $render, $item, $this );
 		$actions = apply_filters( 'coreactivity_logs_field_actions_object_type', $actions, $item, $this );
 
-		return $render . $this->row_actions( $actions );
+		return $this->kses( $render ) . $this->row_actions( $actions );
 	}
 
 	protected function column_object_name( $item ) : string {
-		$render = $item->object_name ?? '';
-		$render = apply_filters( 'coreactivity_logs_field_render_object_name', (string) $render, $item, $this );
+		$render    = $item->object_name ?? '';
+		$exception = false;
 
-		return $this->kses( $render );
+		$actions = array();
+
+		if ( in_array( $item->object_type, array( 'plugin', 'theme', 'option', 'cron', 'sitemeta', 'notification' ) ) ) {
+			if ( ! coreactivity_settings()->is_in_exception_list( $item->object_type, $item->object_name ) ) {
+				$actions['exclude'] = '<a href="' . $this->_self( 'single-action=do-not-log&object-type=' . urlencode( $item->object_type ) . '&object-name=' . urlencode( $item->object_name ), true, wp_create_nonce( 'coreactivity-do-not-log-' . $item->object_name ) ) . '">' . __( 'Do Not Log', 'coreactivity' ) . '</a>';
+			} else {
+				$exception = true;
+			}
+		}
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_object_name', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_object_name', $actions, $item, $this );
+
+		if ( $exception ) {
+			$render = '<i title="' . __( 'on exception list', 'coreactivity' ) . '" class="d4p-icon d4p-ui-cancel"></i>' . $render;
+		}
+
+		return $this->kses( $render ) . $this->row_actions( $actions );
 	}
 
 	protected function column_context( $item ) : string {
@@ -797,6 +855,32 @@ class Logs extends Table {
 		return '<button type="button" aria-label="' . esc_attr__( 'Show Log Meta Data', 'coreactivity' ) . '"><i class="d4p-icon d4p-ui-chevron-square-down d4p-icon-lg"></i></button>';
 	}
 
+	protected function column_meta_data( $item ) : string {
+		$show = apply_filters( $this->_filter_key . '_meta_column_show', $this->get_meta_column_keys( $item->component, $item->event ), $item, $this );
+
+		$actions = array();
+		$items   = array();
+
+		if ( in_array( 'request', $show ) && ! $this->_display_request_column ) {
+			$items[] = $this->meta_value( '', $item->request );
+		}
+
+		if ( isset( $item->meta ) ) {
+			foreach ( $item->meta as $key => $value ) {
+				if ( in_array( $key, $show ) ) {
+					$items[] = $this->meta_value( $key, $value );
+				}
+			}
+		}
+
+		$render = empty( $items ) ? '/' : '<ul>' . join( '', $items ) . '</ul>';
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_meta', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_meta', $actions, $item, $this );
+
+		return $render . $this->row_actions( $actions );
+	}
+
 	private function print_array( $input ) : string {
 		$render = array();
 
@@ -810,10 +894,21 @@ class Logs extends Table {
 	private function kses( $render ) : string {
 		$allowed_tags = array(
 			'a'      => array( 'href' => true ),
+			'i'      => array( 'title' => true, 'class' => true ),
 			'br'     => array(),
 			'strong' => array(),
 		);
 
 		return wp_kses( $render, $allowed_tags );
+	}
+
+	private function meta_value( $key, $value ) : string {
+		$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? $this->print_array( $value ) : json_encode( $value ) );
+
+		if ( empty( $key ) ) {
+			return '<li><span>' . $value . '</span></li>';
+		}
+
+		return '<li><strong>' . esc_html( $key ) . ':</strong><span>' . $value . '</span></li>';
 	}
 }

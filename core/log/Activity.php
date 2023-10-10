@@ -99,6 +99,7 @@ class Activity {
 			'theme'        => __( 'Theme', 'coreactivity' ),
 			'cron'         => __( 'Cron', 'coreactivity' ),
 			'option'       => __( 'Option', 'coreactivity' ),
+			'sitemeta'     => __( 'Site Meta', 'coreactivity' ),
 			'transient'    => __( 'Transient', 'coreactivity' ),
 			'notification' => __( 'Notification', 'coreactivity' ),
 		) );

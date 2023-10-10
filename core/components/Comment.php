@@ -57,6 +57,23 @@ class Comment extends Component {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'status-change' => array(
+				'old_status',
+				'new_status',
+			),
+			'deleted'       => array(
+				'comment_status',
+				'post_id',
+				'comment_author_email',
+				'comment_author_url',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function event_transition_comment_status( $new_status, $old_status, $comment ) {
 		if ( $comment instanceof WP_Comment ) {
 			$post = get_post( $comment->comment_post_ID );

@@ -8,6 +8,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d4p-info-block d4p-info-block-changelog">
     <h3><?php esc_html_e( 'Version', 'coreactivity' ); ?> 1</h3>
     <div>
+        <h4>Version: 1.1 / October 12 2023</h4>
+        <ul>
+            <li><strong>new</strong> log action to stop logging some of the object type by value</li>
+            <li><strong>new</strong> log metadata column as alternative to the metadata row</li>
+            <li><strong>new</strong> more settings related to object types exclusions</li>
+            <li><strong>edit</strong> sitemeta component: default object type is now `sitemeta`</li>
+            <li><strong>edit</strong> many improvements to the `Logs` class for expandability</li>
+            <li><strong>edit</strong> few improvements to the Logs table and rendering</li>
+            <li><strong>fix</strong> some events not always obeying exclusion conditions</li>
+        </ul>
+
         <h4>Version: 1.0.5 / October 5 2023</h4>
         <ul>
             <li><strong>edit</strong> Dev4Press Library 4.3.5</li>

@@ -16,6 +16,11 @@ class Plugin extends Component {
 	protected $scope = 'both';
 
 	protected $storage = array();
+	protected $exceptions = array();
+
+	public function init() {
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_plugin_list' );
+	}
 
 	public function tracking() {
 		if ( $this->is_active( 'deleted' ) ) {
@@ -60,11 +65,26 @@ class Plugin extends Component {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'-' => array(
+				'plugin_version',
+				'plugin_author',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function init_delete( $plugin_file ) {
 		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
 	}
 
 	public function event_deleted( $plugin_file, $deleted ) {
+		if ( $this->is_exception( $plugin_file ) ) {
+			return;
+		}
+
 		if ( $deleted ) {
 			if ( isset( $this->storage[ $plugin_file ] ) ) {
 				$this->log( 'deleted', array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
@@ -73,6 +93,10 @@ class Plugin extends Component {
 	}
 
 	public function event_activated( $plugin_file, $network_wide = false ) {
+		if ( $this->is_exception( $plugin_file ) ) {
+			return;
+		}
+
 		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
 
 		$event = $network_wide ? 'network-activated' : 'activated';
@@ -83,6 +107,10 @@ class Plugin extends Component {
 	}
 
 	public function event_deactivated( $plugin_file, $network_wide = false ) {
+		if ( $this->is_exception( $plugin_file ) ) {
+			return;
+		}
+
 		$this->storage[ $plugin_file ] = $this->_get_plugin( $plugin_file );
 
 		$event = $network_wide ? 'network-deactivated' : 'deactivated';
@@ -115,5 +143,9 @@ class Plugin extends Component {
 		}
 
 		return $meta;
+	}
+
+	private function is_exception( $option ) : bool {
+		return ! empty( $this->exceptions ) && in_array( $option, $this->exceptions );
 	}
 }

@@ -207,7 +207,7 @@ class Option extends Component {
 	}
 
 	public function event_deleted_option( $option ) {
-		if ( $this->is_transient( $option ) ) {
+		if ( $this->is_transient( $option ) || $this->is_skippable( $option ) || $this->is_exception( $option ) ) {
 			return;
 		}
 
@@ -221,7 +221,7 @@ class Option extends Component {
 	}
 
 	public function event_added_option( $option, $value ) {
-		if ( $this->is_transient( $option ) ) {
+		if ( $this->is_transient( $option ) || $this->is_skippable( $option ) || $this->is_exception( $option ) ) {
 			return;
 		}
 

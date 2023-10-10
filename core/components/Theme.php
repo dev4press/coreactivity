@@ -17,6 +17,11 @@ class Theme extends Component {
 	protected $scope = 'both';
 
 	protected $storage = array();
+	protected $exceptions = array();
+
+	public function init() {
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_theme_list' );
+	}
 
 	public function tracking() {
 		if ( $this->is_active( 'switched' ) ) {
@@ -44,11 +49,30 @@ class Theme extends Component {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'deleted'  => array(
+				'theme_name',
+				'theme_version',
+			),
+			'switched' => array(
+				'theme_name',
+				'old_theme_name',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function prepare_stylesheet( $stylesheet ) {
 		$this->storage[ $stylesheet ] = $this->_get_theme( $stylesheet );
 	}
 
 	public function event_deleted( $stylesheet, $deleted ) {
+		if ( $this->is_exception( $stylesheet ) ) {
+			return;
+		}
+
 		if ( $deleted ) {
 			if ( isset( $this->storage[ $stylesheet ] ) ) {
 				$this->log( 'deleted', array( 'object_name' => $stylesheet ), $this->_theme_meta( $stylesheet ) );
@@ -57,6 +81,10 @@ class Theme extends Component {
 	}
 
 	public function event_switched( $new_name, $new_theme, $old_theme ) {
+		if ( $this->is_exception( $new_theme->get_stylesheet() ) ) {
+			return;
+		}
+
 		$this->prepare_stylesheet( $new_theme->get_stylesheet() );
 		$this->prepare_stylesheet( $old_theme->get_stylesheet() );
 
@@ -89,5 +117,9 @@ class Theme extends Component {
 
 	private function _theme_meta( $stylesheet ) : array {
 		return $this->storage[ $stylesheet ];
+	}
+
+	private function is_exception( $option ) : bool {
+		return ! empty( $this->exceptions ) && in_array( $option, $this->exceptions );
 	}
 }

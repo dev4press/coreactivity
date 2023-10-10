@@ -12,7 +12,7 @@ class Sitemeta extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'sitemeta';
 	protected $icon = 'ui-sliders-base';
-	protected $object_type = 'option';
+	protected $object_type = 'sitemeta';
 	protected $scope = 'network';
 
 	protected $exceptions = array();
@@ -49,6 +49,7 @@ class Sitemeta extends Component {
 	}
 
 	public function init() {
+		$this->exceptions      = coreactivity_settings()->get( 'exceptions_sitemeta_list' );
 		$this->transient_value = coreactivity_settings()->get( 'log_transient_value' );
 	}
 
@@ -130,7 +131,7 @@ class Sitemeta extends Component {
 	}
 
 	public function event_deleted_option( $option ) {
-		if ( $this->is_transient( $option ) ) {
+		if ( $this->is_transient( $option ) || $this->is_skippable( $option ) || $this->is_exception( $option ) ) {
 			return;
 		}
 
@@ -144,7 +145,7 @@ class Sitemeta extends Component {
 	}
 
 	public function event_added_option( $option, $value ) {
-		if ( $this->is_transient( $option ) ) {
+		if ( $this->is_transient( $option ) || $this->is_skippable( $option ) || $this->is_exception( $option ) ) {
 			return;
 		}
 
