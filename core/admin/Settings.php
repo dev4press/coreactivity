@@ -208,7 +208,7 @@ class Settings extends BaseSettings {
 					'name'     => __( 'Table Layout', 'coreactivity' ),
 					'sections' => array(
 						array(
-							'label'    => __( "Log Basic Data" ),
+							'label'    => __( 'Log Basic Data', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
@@ -217,7 +217,7 @@ class Settings extends BaseSettings {
 							),
 						),
 						array(
-							'label'    => __( "Log Meta Data" ),
+							'label'    => __( 'Log Meta Data', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(

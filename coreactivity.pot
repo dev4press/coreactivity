@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 09/05/2023 07:40:44 PM\n"
+"POT-Creation-Date: 10/11/2023 11:40:45 AM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,11 +26,13 @@ msgstr ""
 #: core/admin/Plugin.php:116
 #: core/basic/AdminBar.php:50
 #: core/table/Events.php:90
-#: core/table/Logs.php:638
-#: core/table/Logs.php:650
-#: core/table/Logs.php:718
-#: core/table/Logs.php:731
-#: core/table/Logs.php:677
+#: core/table/Logs.php:711
+#: core/table/Logs.php:723
+#: core/table/Logs.php:791
+#: core/table/Logs.php:804
+#: core/table/Logs.php:845
+#: core/table/Logs.php:858
+#: core/table/Logs.php:750
 msgid "Logs"
 msgstr ""
 
@@ -66,7 +68,7 @@ msgstr ""
 #: core/admin/panel/Settings.php:34
 #: core/admin/panel/Wizard.php:21
 #: core/basic/Wizard.php:122
-#: core/components/Notification.php:72
+#: core/components/Notification.php:75
 #: core/table/Events.php:93
 msgid "Notifications"
 msgstr ""
@@ -84,9 +86,9 @@ msgid "Settings related to maintenance and cleanup of the log database tables."
 msgstr ""
 
 #: core/admin/panel/Settings.php:44
-#: core/admin/Settings.php:205
-#: core/admin/Settings.php:239
-#: core/admin/Settings.php:274
+#: core/admin/Settings.php:265
+#: core/admin/Settings.php:299
+#: core/admin/Settings.php:334
 msgid "Advanced"
 msgstr ""
 
@@ -112,9 +114,9 @@ msgid "Intro"
 msgstr ""
 
 #: core/admin/panel/Wizard.php:18
-#: core/admin/Settings.php:197
-#: core/admin/Settings.php:231
-#: core/admin/Settings.php:266
+#: core/admin/Settings.php:257
+#: core/admin/Settings.php:291
+#: core/admin/Settings.php:326
 #: core/basic/Wizard.php:121
 msgid "Log"
 msgstr ""
@@ -174,7 +176,7 @@ msgid "Tools"
 msgstr ""
 
 #: core/admin/Plugin.php:145
-#: core/admin/Settings.php:337
+#: core/admin/Settings.php:397
 msgid "Setup Wizard"
 msgstr ""
 
@@ -260,6 +262,10 @@ msgstr ""
 
 #: core/admin/Settings.php:103
 #: core/admin/Settings.php:116
+#: core/admin/Settings.php:129
+#: core/admin/Settings.php:142
+#: core/admin/Settings.php:155
+#: core/admin/Settings.php:168
 msgid "Specific Options"
 msgstr ""
 
@@ -278,269 +284,333 @@ msgid "Component: Sitemeta"
 msgstr ""
 
 #: core/admin/Settings.php:126
+msgid "Component: Notification"
+msgstr ""
+
+#: core/admin/Settings.php:133
+msgid "Notifications to Skip"
+msgstr ""
+
+#: core/admin/Settings.php:133
+msgid "Add one or more notifications (exact option name) to skip from logging."
+msgstr ""
+
+#: core/admin/Settings.php:139
+msgid "Component: WordPress"
+msgstr ""
+
+#: core/admin/Settings.php:146
+msgid "CRON to Skip"
+msgstr ""
+
+#: core/admin/Settings.php:146
+msgid "Add one or more CRON jobs (exact option name) to skip from logging."
+msgstr ""
+
+#: core/admin/Settings.php:152
+msgid "Component: Plugin"
+msgstr ""
+
+#: core/admin/Settings.php:159
+msgid "Plugins to Skip"
+msgstr ""
+
+#: core/admin/Settings.php:159
+msgid "Add one or more plugins (exact option name) to skip from logging."
+msgstr ""
+
+#: core/admin/Settings.php:165
+msgid "Component: Theme"
+msgstr ""
+
+#: core/admin/Settings.php:172
+msgid "Themes to Skip"
+msgstr ""
+
+#: core/admin/Settings.php:172
+msgid "Add one or more themes (exact option name) to skip from logging."
+msgstr ""
+
+#: core/admin/Settings.php:178
 msgid "Component: Errors"
 msgstr ""
 
-#: core/admin/Settings.php:129
+#: core/admin/Settings.php:181
 msgid "File Names"
 msgstr ""
 
-#: core/admin/Settings.php:133
+#: core/admin/Settings.php:185
 msgid "Regular Expressions"
 msgstr ""
 
-#: core/admin/Settings.php:133
+#: core/admin/Settings.php:185
 msgid "If the request is for a file, it will be checked with provided regular expressions. If the file matches any of these, it will not be logged."
 msgstr ""
 
-#: core/admin/Settings.php:141
+#: core/admin/Settings.php:193
 msgid "Content Display"
 msgstr ""
 
-#: core/admin/Settings.php:148
+#: core/admin/Settings.php:200
 msgid "Simplified values"
 msgstr ""
 
-#: core/admin/Settings.php:148
+#: core/admin/Settings.php:200
 msgid "Values for columns Component and Event will be displayed using labels."
 msgstr ""
 
-#: core/admin/Settings.php:149
+#: core/admin/Settings.php:201
 msgid "IP GEO location flag"
 msgstr ""
 
-#: core/admin/Settings.php:149
+#: core/admin/Settings.php:201
 msgid "Show country for the logged IP."
 msgstr ""
 
-#: core/admin/Settings.php:150
+#: core/admin/Settings.php:202
 msgid "User avatar"
 msgstr ""
 
-#: core/admin/Settings.php:150
+#: core/admin/Settings.php:202
 msgid "Show user avatar for logs that are related to the user."
 msgstr ""
 
-#: core/admin/Settings.php:156
+#: core/admin/Settings.php:208
 msgid "Table Layout"
 msgstr ""
 
-#: core/admin/Settings.php:163
+#: core/admin/Settings.php:211
+msgid "Log Basic Data"
+msgstr ""
+
+#: core/admin/Settings.php:215
 msgid "Request as Column"
 msgstr ""
 
-#: core/admin/Settings.php:163
+#: core/admin/Settings.php:215
 msgid "Request value can be quite long, and it can cause layout issues if displayed as column. If this option is displayed, Request will be displayed as Meta value in the hidden Meta row."
 msgstr ""
 
-#: core/admin/Settings.php:164
+#: core/admin/Settings.php:216
 msgid "Protocol as Column"
 msgstr ""
 
-#: core/admin/Settings.php:164
+#: core/admin/Settings.php:216
 msgid "Protocol value would most likely be the same for each request, especially if your webserver is behind some sort of proxy setup. If this option is displayed, Protocol will be displayed as Meta value in the hidden Meta row."
 msgstr ""
 
-#: core/admin/Settings.php:170
+#: core/admin/Settings.php:220
+msgid "Log Meta Data"
+msgstr ""
+
+#: core/admin/Settings.php:224
+msgid "Meta Column"
+msgstr ""
+
+#: core/admin/Settings.php:224
+msgid "By default, all meta data is displayed in the hidden Meta row under main row because a lot of metadata can be quite large and will break table layout or will be unreadable. If you enable Meta column, some of the meta data will be displayed in this column, depending on the event."
+msgstr ""
+
+#: core/admin/Settings.php:230
 msgid "Log Panel Updates"
 msgstr ""
 
-#: core/admin/Settings.php:177
+#: core/admin/Settings.php:237
 msgid "Live Updates"
 msgstr ""
 
-#: core/admin/Settings.php:177
+#: core/admin/Settings.php:237
 msgid "Live AJAX requests every 15 seconds to get the latest logged events. The live functionality with take into account the Log panel current filters and view settings."
 msgstr ""
 
-#: core/admin/Settings.php:185
+#: core/admin/Settings.php:245
 msgid "Instant Notifications"
 msgstr ""
 
-#: core/admin/Settings.php:192
-#: core/admin/Settings.php:226
-#: core/admin/Settings.php:261
+#: core/admin/Settings.php:252
+#: core/admin/Settings.php:286
+#: core/admin/Settings.php:321
 #: core/table/Events.php:86
 msgid "Status"
 msgstr ""
 
-#: core/admin/Settings.php:192
+#: core/admin/Settings.php:252
 msgid "If enabled, plugin will send instant notifications when eligible events are logged. The notifications will not be completely instant, because that can lead to the huge number of emails sent if some events occur often. Instead, after instant notification is sent, plugin will not send a new one during the predefined delay, and next one will include all eligible events from that period."
 msgstr ""
 
-#: core/admin/Settings.php:193
-#: core/admin/Settings.php:227
-#: core/admin/Settings.php:262
+#: core/admin/Settings.php:253
+#: core/admin/Settings.php:287
+#: core/admin/Settings.php:322
 msgid "Emails"
 msgstr ""
 
-#: core/admin/Settings.php:193
-#: core/admin/Settings.php:227
-#: core/admin/Settings.php:262
+#: core/admin/Settings.php:253
+#: core/admin/Settings.php:287
+#: core/admin/Settings.php:322
 msgid "One or more emails to send the notifications. If empty, it will use the website admin email."
 msgstr ""
 
-#: core/admin/Settings.php:201
-#: core/admin/Settings.php:235
-#: core/admin/Settings.php:270
+#: core/admin/Settings.php:261
+#: core/admin/Settings.php:295
+#: core/admin/Settings.php:330
 msgid "Skip Logging"
 msgstr ""
 
-#: core/admin/Settings.php:201
-#: core/admin/Settings.php:235
-#: core/admin/Settings.php:270
+#: core/admin/Settings.php:261
+#: core/admin/Settings.php:295
+#: core/admin/Settings.php:330
 msgid "If enabled, this email notification will not be logged by the plugin."
 msgstr ""
 
-#: core/admin/Settings.php:209
+#: core/admin/Settings.php:269
 msgid "Delay"
 msgstr ""
 
-#: core/admin/Settings.php:209
+#: core/admin/Settings.php:269
 msgid "This is the shortest delay between two instant notifications emails."
 msgstr ""
 
-#: core/admin/Settings.php:210
+#: core/admin/Settings.php:270
 msgid "Minutes"
 msgstr ""
 
-#: core/admin/Settings.php:219
+#: core/admin/Settings.php:279
 msgid "Daily Digest Notifications"
 msgstr ""
 
-#: core/admin/Settings.php:226
+#: core/admin/Settings.php:286
 msgid "If enabled, plugin will send daily digest email with all eligible events from the previous day."
 msgstr ""
 
-#: core/admin/Settings.php:243
-#: core/admin/Settings.php:244
-#: core/admin/Settings.php:279
-#: core/admin/Settings.php:280
+#: core/admin/Settings.php:303
+#: core/admin/Settings.php:304
+#: core/admin/Settings.php:339
+#: core/admin/Settings.php:340
 msgid "Hour"
 msgstr ""
 
-#: core/admin/Settings.php:243
-#: core/admin/Settings.php:279
+#: core/admin/Settings.php:303
+#: core/admin/Settings.php:339
 msgid "This is the hour of the day when the daily digest is created."
 msgstr ""
 
-#: core/admin/Settings.php:254
+#: core/admin/Settings.php:314
 msgid "Weekly Digest Notifications"
 msgstr ""
 
-#: core/admin/Settings.php:261
+#: core/admin/Settings.php:321
 msgid "If enabled, plugin will send weekly digest email with all eligible events from the previous 7 days."
 msgstr ""
 
-#: core/admin/Settings.php:278
+#: core/admin/Settings.php:338
 msgid "Day"
 msgstr ""
 
-#: core/admin/Settings.php:278
+#: core/admin/Settings.php:338
 msgid "This is day of the week when the daily digest is created."
 msgstr ""
 
-#: core/admin/Settings.php:292
+#: core/admin/Settings.php:352
 msgid "Auto Cleanup"
 msgstr ""
 
-#: core/admin/Settings.php:299
+#: core/admin/Settings.php:359
 msgid "Remove old entries"
 msgstr ""
 
-#: core/admin/Settings.php:299
+#: core/admin/Settings.php:359
 msgid "If enabled, maintenance will be run once a day, and all old entries will be removed."
 msgstr ""
 
-#: core/admin/Settings.php:300
+#: core/admin/Settings.php:360
 msgid "Log entries to keep"
 msgstr ""
 
-#: core/admin/Settings.php:300
+#: core/admin/Settings.php:360
 msgid "All entries older than the number of months specified here, will be removed during the maintenance."
 msgstr ""
 
-#: core/admin/Settings.php:302
+#: core/admin/Settings.php:362
 msgid "months"
 msgstr ""
 
-#: core/admin/Settings.php:311
+#: core/admin/Settings.php:371
 msgid "Notices"
 msgstr ""
 
-#: core/admin/Settings.php:318
+#: core/admin/Settings.php:378
 msgid "Logging is Disabled"
 msgstr ""
 
-#: core/admin/Settings.php:318
+#: core/admin/Settings.php:378
 msgid "If the logging is disabled, on every admin page, plugin will display a notice about it, with link to the plugin dashboard."
 msgstr ""
 
-#: core/admin/Settings.php:324
+#: core/admin/Settings.php:384
 msgid "Admin Bar Integration"
 msgstr ""
 
-#: core/admin/Settings.php:331
+#: core/admin/Settings.php:391
 msgid "Add Menu"
 msgstr ""
 
-#: core/admin/Settings.php:331
+#: core/admin/Settings.php:391
 msgid "Simple menu will be added to the WordPress admin bar, on both admin side and front end, only available to website administrators with quick links to the plugin panels."
 msgstr ""
 
-#: core/admin/Settings.php:344
+#: core/admin/Settings.php:404
 msgid "Show Setup Wizard"
 msgstr ""
 
-#: core/admin/Settings.php:344
+#: core/admin/Settings.php:404
 msgid "If enabled, the Setup Wizard item will be included in the plugin admin side navigation."
 msgstr ""
 
-#: core/admin/Settings.php:355
+#: core/admin/Settings.php:415
 msgid "Select the data age"
 msgstr ""
 
-#: core/admin/Settings.php:356
+#: core/admin/Settings.php:416
 msgid "All logged data"
 msgstr ""
 
-#: core/admin/Settings.php:357
+#: core/admin/Settings.php:417
 msgid "Logged data older than 1 day"
 msgstr ""
 
-#: core/admin/Settings.php:358
+#: core/admin/Settings.php:418
 msgid "Logged data older than 3 days"
 msgstr ""
 
-#: core/admin/Settings.php:359
+#: core/admin/Settings.php:419
 msgid "Logged data older than 7 days"
 msgstr ""
 
-#: core/admin/Settings.php:360
+#: core/admin/Settings.php:420
 msgid "Logged data older than 14 days"
 msgstr ""
 
-#: core/admin/Settings.php:361
+#: core/admin/Settings.php:421
 msgid "Logged data older than 30 days"
 msgstr ""
 
-#: core/admin/Settings.php:362
+#: core/admin/Settings.php:422
 msgid "Logged data older than 60 days"
 msgstr ""
 
-#: core/admin/Settings.php:363
+#: core/admin/Settings.php:423
 msgid "Logged data older than 90 days"
 msgstr ""
 
-#: core/admin/Settings.php:364
+#: core/admin/Settings.php:424
 msgid "Logged data older than 180 days"
 msgstr ""
 
-#: core/admin/Settings.php:365
+#: core/admin/Settings.php:425
 msgid "Logged data older than 1 year"
 msgstr ""
 
-#: core/admin/Settings.php:366
+#: core/admin/Settings.php:426
 msgid "Logged data older than 2 years"
 msgstr ""
 
@@ -560,14 +630,19 @@ msgstr ""
 msgid "CoreActivity"
 msgstr ""
 
-#: core/basic/Render.php:20
-#: core/table/Logs.php:659
+#: core/basic/Render.php:28
+#: core/table/Logs.php:736
+msgid "Current Request IP"
+msgstr ""
+
+#: core/basic/Render.php:23
+#: core/table/Logs.php:732
 msgid "Server IP"
 msgstr ""
 
-#: core/basic/Render.php:25
-#: core/table/Logs.php:663
-msgid "Current Request IP"
+#: core/basic/Render.php:24
+#: core/basic/Render.php:29
+msgid "Unknown"
 msgstr ""
 
 #: core/components/Attachment.php:32
@@ -628,7 +703,7 @@ msgstr ""
 
 #: core/components/Internal.php:36
 #: core/log/Activity.php:76
-#: core/log/Activity.php:314
+#: core/log/Activity.php:315
 msgid "Internal"
 msgstr ""
 
@@ -649,7 +724,7 @@ msgid "Weekly Digest"
 msgstr ""
 
 #: core/components/Network.php:21
-#: core/table/Logs.php:100
+#: core/table/Logs.php:121
 msgid "Blog"
 msgstr ""
 
@@ -717,19 +792,19 @@ msgstr ""
 msgid "Blog Status Not Mature"
 msgstr ""
 
-#: core/components/Notification.php:78
+#: core/components/Notification.php:81
 msgid "Email Sent"
 msgstr ""
 
-#: core/components/Notification.php:81
+#: core/components/Notification.php:84
 msgid "Email Failed"
 msgstr ""
 
-#: core/components/Notification.php:84
+#: core/components/Notification.php:87
 msgid "Unknown Email Sent"
 msgstr ""
 
-#: core/components/Notification.php:87
+#: core/components/Notification.php:90
 msgid "Unknown Email Failed"
 msgstr ""
 
@@ -765,28 +840,28 @@ msgstr ""
 msgid "Transient Deleted"
 msgstr ""
 
-#: core/components/Plugin.php:36
-#: core/log/Activity.php:318
+#: core/components/Plugin.php:41
+#: core/log/Activity.php:319
 msgid "Plugins"
 msgstr ""
 
-#: core/components/Plugin.php:42
+#: core/components/Plugin.php:47
 msgid "Plugin Deleted"
 msgstr ""
 
-#: core/components/Plugin.php:45
+#: core/components/Plugin.php:50
 msgid "Plugin Activated"
 msgstr ""
 
-#: core/components/Plugin.php:49
+#: core/components/Plugin.php:54
 msgid "Plugin Network Activated"
 msgstr ""
 
-#: core/components/Plugin.php:53
+#: core/components/Plugin.php:58
 msgid "Plugin Deactivated"
 msgstr ""
 
-#: core/components/Plugin.php:57
+#: core/components/Plugin.php:62
 msgid "Plugin Network Deactivated"
 msgstr ""
 
@@ -794,35 +869,35 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: core/components/Sitemeta.php:78
+#: core/components/Sitemeta.php:79
 msgid "Sitemeta"
 msgstr ""
 
-#: core/components/Sitemeta.php:90
+#: core/components/Sitemeta.php:91
 msgid "Core Sitemeta Changed"
 msgstr ""
 
-#: core/components/Sitemeta.php:93
+#: core/components/Sitemeta.php:94
 msgid "Core Sitemeta Deleted"
 msgstr ""
 
-#: core/components/Sitemeta.php:96
+#: core/components/Sitemeta.php:97
 msgid "Sitemeta Added"
 msgstr ""
 
-#: core/components/Sitemeta.php:99
+#: core/components/Sitemeta.php:100
 msgid "Sitemeta Changed"
 msgstr ""
 
-#: core/components/Sitemeta.php:102
+#: core/components/Sitemeta.php:103
 msgid "Sitemeta Deleted"
 msgstr ""
 
-#: core/components/Sitemeta.php:105
+#: core/components/Sitemeta.php:106
 msgid "Site Transient Set"
 msgstr ""
 
-#: core/components/Sitemeta.php:109
+#: core/components/Sitemeta.php:110
 msgid "Site Transient Deleted"
 msgstr ""
 
@@ -842,15 +917,15 @@ msgstr ""
 msgid "Term Edited"
 msgstr ""
 
-#: core/components/Theme.php:33
+#: core/components/Theme.php:38
 msgid "Themes"
 msgstr ""
 
-#: core/components/Theme.php:39
+#: core/components/Theme.php:44
 msgid "Theme Deleted"
 msgstr ""
 
-#: core/components/Theme.php:42
+#: core/components/Theme.php:47
 msgid "Theme Switched"
 msgstr ""
 
@@ -930,40 +1005,40 @@ msgstr ""
 msgid "Activate User"
 msgstr ""
 
-#: core/components/User.php:288
+#: core/components/User.php:308
 msgid "There is no account with that username or email address."
 msgstr ""
 
-#: core/components/WordPress.php:44
+#: core/components/WordPress.php:49
 #: core/log/Activity.php:77
-#: core/log/Activity.php:310
+#: core/log/Activity.php:311
 msgid "WordPress"
 msgstr ""
 
-#: core/components/WordPress.php:50
+#: core/components/WordPress.php:55
 msgid "WordPress Update"
 msgstr ""
 
-#: core/components/WordPress.php:54
+#: core/components/WordPress.php:59
 msgid "WordPress Auto Update"
 msgstr ""
 
-#: core/components/WordPress.php:58
+#: core/components/WordPress.php:63
 msgid "CRON Event Scheduled"
 msgstr ""
 
-#: core/components/WordPress.php:62
+#: core/components/WordPress.php:67
 msgid "Content Export"
 msgstr ""
 
-#: core/components/WordPress.php:66
+#: core/components/WordPress.php:71
 msgid "Database Delta Queries"
 msgstr ""
 
 #: core/log/Activity.php:78
 #: core/log/Activity.php:98
 #: core/log/Display.php:183
-#: core/log/Display.php:380
+#: core/log/Display.php:388
 msgid "Plugin"
 msgstr ""
 
@@ -984,14 +1059,14 @@ msgid "Comment"
 msgstr ""
 
 #: core/log/Activity.php:97
-#: core/table/Logs.php:101
-#: core/table/Logs.php:545
+#: core/table/Logs.php:122
+#: core/table/Logs.php:603
 msgid "User"
 msgstr ""
 
 #: core/log/Activity.php:99
 #: core/log/Display.php:165
-#: core/log/Display.php:367
+#: core/log/Display.php:375
 msgid "Theme"
 msgstr ""
 
@@ -1004,115 +1079,119 @@ msgid "Option"
 msgstr ""
 
 #: core/log/Activity.php:102
-msgid "Transient"
+msgid "Site Meta"
 msgstr ""
 
 #: core/log/Activity.php:103
+msgid "Transient"
+msgstr ""
+
+#: core/log/Activity.php:104
 msgid "Notification"
 msgstr ""
 
 #: core/log/Display.php:162
-#: core/log/Display.php:364
+#: core/log/Display.php:372
 msgid "Unknown Theme"
 msgstr ""
 
 #: core/log/Display.php:180
-#: core/log/Display.php:378
+#: core/log/Display.php:386
 msgid "Unknown Plugin"
 msgstr ""
 
 #: core/log/Display.php:197
-#: core/log/Display.php:390
+#: core/log/Display.php:398
 msgid "Unknown Notification Type"
 msgstr ""
 
-#: core/log/Display.php:249
-msgid "ID: %s &middot; Post: %s<br/>Post Type: %s"
+#: core/log/Display.php:250
+msgid "ID: %1$s &middot; Post: %2$s<br/>Post Type: %3$s"
 msgstr ""
 
-#: core/log/Display.php:251
-#: core/log/Display.php:271
-#: core/log/Display.php:285
-#: core/log/Display.php:300
-#: core/log/Display.php:319
-#: core/log/Display.php:340
-#: core/log/Display.php:354
-#: core/log/Display.php:426
-#: core/log/Display.php:446
-#: core/log/Display.php:460
-#: core/log/Display.php:475
-#: core/log/Display.php:494
-#: core/log/Display.php:515
+#: core/log/Display.php:252
+#: core/log/Display.php:274
+#: core/log/Display.php:289
+#: core/log/Display.php:305
+#: core/log/Display.php:325
+#: core/log/Display.php:347
+#: core/log/Display.php:362
+#: core/log/Display.php:435
+#: core/log/Display.php:457
+#: core/log/Display.php:472
+#: core/log/Display.php:488
+#: core/log/Display.php:507
 #: core/log/Display.php:529
+#: core/log/Display.php:544
 msgid "MISSING"
 msgstr ""
 
-#: core/log/Display.php:266
-msgid "ID: %s &middot; Author: %s<br/>Post: %s"
-msgstr ""
-
 #: core/log/Display.php:268
-msgid "ID: %s &middot; Author: %s<br/>Post: MISSING"
+msgid "ID: %1$s &middot; Author: %2$s<br/>Post: %3$s"
 msgstr ""
 
-#: core/log/Display.php:283
-msgid "ID: %s &middot; MIME/Type: %s<br/>Name: %s"
+#: core/log/Display.php:271
+msgid "ID: %1$s &middot; Author: %2$s<br/>Post: MISSING"
 msgstr ""
 
-#: core/log/Display.php:298
-#: core/log/Display.php:317
-msgid "ID: %s &middot; Slug: %s<br/>Name: %s"
+#: core/log/Display.php:287
+msgid "ID: %1$s &middot; MIME/Type: %2$s<br/>Name: %3$s"
 msgstr ""
 
 #: core/log/Display.php:303
-#: core/log/Display.php:322
-#: core/log/Display.php:329
-#: core/log/Display.php:478
-#: core/log/Display.php:497
-#: core/log/Display.php:504
+#: core/log/Display.php:323
+msgid "ID: %1$s &middot; Slug: %2$s<br/>Name: %3$s"
+msgstr ""
+
+#: core/log/Display.php:308
+#: core/log/Display.php:328
+#: core/log/Display.php:335
+#: core/log/Display.php:491
+#: core/log/Display.php:510
+#: core/log/Display.php:517
 #: core/table/Events.php:85
-#: core/table/Logs.php:99
+#: core/table/Logs.php:120
 msgid "ID"
 msgstr ""
 
-#: core/log/Display.php:338
-msgid "ID: %s<br/>Post: %s"
+#: core/log/Display.php:345
+msgid "ID: %1$s<br/>Post: %2$s"
 msgstr ""
 
-#: core/log/Display.php:352
-msgid "ID: %s &middot; Term: %s<br/>Taxonomy: %s"
+#: core/log/Display.php:360
+msgid "ID: %1$s &middot; Term: %2$s<br/>Taxonomy: %3$s"
 msgstr ""
 
-#: core/log/Display.php:424
-msgid "ID: %s &middot; Post: %s%sPost Type: %s"
+#: core/log/Display.php:433
+msgid "ID: %1$s &middot; Post: %2$s%3$sPost Type: %4$s"
 msgstr ""
 
-#: core/log/Display.php:441
-msgid "ID: %s &middot; Author: %s%sPost: %s"
+#: core/log/Display.php:451
+msgid "ID: %1$s &middot; Author: %2$s%3$sPost: %4$s"
 msgstr ""
 
-#: core/log/Display.php:443
-msgid "ID: %s &middot; Author: %s%sPost: MISSING"
+#: core/log/Display.php:454
+msgid "ID: %1$s &middot; Author: %2$s%3$sPost: MISSING"
 msgstr ""
 
-#: core/log/Display.php:458
-msgid "ID: %s &middot; MIME/Type: %s%sName: %s"
+#: core/log/Display.php:470
+msgid "ID: %1$s &middot; MIME/Type: %2$s%3$sName: %4$s"
 msgstr ""
 
-#: core/log/Display.php:473
-msgid "ID: %s &middot; Slug: %s%sName: %s"
+#: core/log/Display.php:486
+msgid "ID: %1$s &middot; Slug: %2$s%3$sName: %4$s"
 msgstr ""
 
-#: core/log/Display.php:492
-msgid "ID: %s · Slug: %s%sName: %s"
-msgstr ""
-
-#: core/log/Display.php:513
-msgid "ID: %s%sPost: %s"
+#: core/log/Display.php:505
+msgid "ID: %1$s · Slug: %2$s%3$sName: %4$s"
 msgstr ""
 
 #: core/log/Display.php:527
-msgid "ID: %s &middot; Term: %s%sTaxonomy: %s"
+msgid "ID: %1$s%2$sPost: %3$s"
+msgstr ""
+
+#: core/log/Display.php:542
+msgid "ID: %1$s &middot; Term: %2$s%3$sTaxonomy: %4$s"
 msgstr ""
 
 #: core/log/Display.php:167
@@ -1122,7 +1201,8 @@ msgstr ""
 #: core/log/Display.php:169
 #: core/log/Display.php:186
 #: forms/content-about-changelog.php:9
-#: forms/content-about-minor.php:13
+#: forms/content-about-minor.php:14
+#: forms/content-about-minor.php:18
 msgid "Version"
 msgstr ""
 
@@ -1139,14 +1219,14 @@ msgid "Name"
 msgstr ""
 
 #: core/log/Display.php:217
-#: core/log/Display.php:402
+#: core/log/Display.php:410
 msgid "Invalid"
 msgstr ""
 
 #: core/log/Display.php:224
-#: core/log/Display.php:409
-#: core/table/Logs.php:543
-#: core/table/Logs.php:696
+#: core/log/Display.php:417
+#: core/table/Logs.php:601
+#: core/table/Logs.php:769
 msgid "Not Found"
 msgstr ""
 
@@ -1330,14 +1410,14 @@ msgid "Category"
 msgstr ""
 
 #: core/table/Events.php:88
-#: core/table/Logs.php:102
-#: core/table/Logs.php:510
+#: core/table/Logs.php:123
+#: core/table/Logs.php:568
 msgid "Component"
 msgstr ""
 
 #: core/table/Events.php:89
-#: core/table/Logs.php:103
-#: core/table/Logs.php:521
+#: core/table/Logs.php:124
+#: core/table/Logs.php:579
 msgid "Event"
 msgstr ""
 
@@ -1356,14 +1436,14 @@ msgid "All Categories"
 msgstr ""
 
 #: core/table/Events.php:126
-#: core/table/Logs.php:415
+#: core/table/Logs.php:455
 msgid "All Components"
 msgstr ""
 
 #: core/table/Events.php:130
 #: core/table/Events.php:182
 #: core/table/Events.php:195
-#: core/table/Logs.php:477
+#: core/table/Logs.php:517
 msgid "Filter"
 msgstr ""
 
@@ -1438,98 +1518,116 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: core/table/Logs.php:104
+#: core/table/Logs.php:125
+#: core/table/Logs.php:551
 msgid "Context"
 msgstr ""
 
-#: core/table/Logs.php:105
+#: core/table/Logs.php:126
 msgid "Method"
 msgstr ""
 
-#: core/table/Logs.php:106
+#: core/table/Logs.php:127
 msgid "Protocol"
 msgstr ""
 
-#: core/table/Logs.php:107
-#: core/table/Logs.php:529
+#: core/table/Logs.php:128
+#: core/table/Logs.php:587
 msgid "IP"
 msgstr ""
 
-#: core/table/Logs.php:108
+#: core/table/Logs.php:129
 msgid "Request"
 msgstr ""
 
-#: core/table/Logs.php:109
-#: core/table/Logs.php:500
+#: core/table/Logs.php:130
+#: core/table/Logs.php:540
 msgid "Object Type"
 msgstr ""
 
-#: core/table/Logs.php:110
+#: core/table/Logs.php:131
 msgid "Object"
 msgstr ""
 
-#: core/table/Logs.php:111
+#: core/table/Logs.php:132
+msgid "Meta"
+msgstr ""
+
+#: core/table/Logs.php:133
 msgid "Logged"
 msgstr ""
 
-#: core/table/Logs.php:423
+#: core/table/Logs.php:463
 msgid "All Events"
 msgstr ""
 
-#: core/table/Logs.php:431
+#: core/table/Logs.php:471
 msgid "All Contexts"
 msgstr ""
 
-#: core/table/Logs.php:432
+#: core/table/Logs.php:472
+#: core/table/Logs.php:548
 msgid "Normal"
 msgstr ""
 
-#: core/table/Logs.php:447
+#: core/table/Logs.php:487
 msgid "All Methods"
 msgstr ""
 
-#: core/table/Logs.php:463
+#: core/table/Logs.php:503
 msgid "All Object Types"
 msgstr ""
 
-#: core/table/Logs.php:495
+#: core/table/Logs.php:535
 msgid "All Logs"
 msgstr ""
 
-#: core/table/Logs.php:574
+#: core/table/Logs.php:632
 msgid "Delete"
 msgstr ""
 
-#: core/table/Logs.php:112
-#: core/table/Logs.php:112
+#: core/table/Logs.php:825
+msgid "Do Not Log"
+msgstr ""
+
+#: core/table/Logs.php:835
+msgid "on exception list"
+msgstr ""
+
+#: core/table/Logs.php:134
+#: core/table/Logs.php:134
 msgid "Toggle Meta"
 msgstr ""
 
-#: core/table/Logs.php:797
+#: core/table/Logs.php:891
 msgid "Show Log Meta Data"
 msgstr ""
 
-#: core/table/Logs.php:588
+#: core/table/Logs.php:559
+msgid "Request Method"
+msgstr ""
+
+#: core/table/Logs.php:651
 msgid "protocol"
 msgstr ""
 
-#: core/table/Logs.php:592
+#: core/table/Logs.php:655
 msgid "request"
 msgstr ""
 
-#: core/table/Logs.php:685
+#: core/table/Logs.php:758
 msgid "Not a User"
 msgstr ""
 
-#: core/table/Logs.php:700
+#: core/table/Logs.php:773
 msgid "Edit"
 msgstr ""
 
-#: forms/content-about-minor.php:11
+#: forms/content-about-minor.php:12
 msgid "Maintenance and Security Releases"
 msgstr ""
 
-#: forms/content-about-minor.php:16
+#: forms/content-about-minor.php:25
 msgid "For more information, see <a href='%s'>the changelog</a>."
 msgstr ""
 

@@ -179,6 +179,15 @@ class User extends Component {
 
 	public function logs_meta_column_keys( array $meta_column_keys ) : array {
 		$meta_column_keys[ $this->code() ] = array(
+			'-' => array(
+				'old_email',
+				'new_email',
+				'old_url',
+				'new_url',
+				'old_display_name',
+				'new_display_name',
+				'user_roles',
+			),
 			'role-changed' => array(
 				'role',
 				'previous_roles',

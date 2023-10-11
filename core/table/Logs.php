@@ -379,7 +379,7 @@ class Logs extends Table {
 	}
 
 	protected function prepare_the_view() {
-		if ( in_array( $this->_request_args['view'], array( 'user_id', 'blog_id', 'event_id', 'ip', 'object_type', 'component' ) ) ) {
+		if ( in_array( $this->_request_args['view'], array( 'user_id', 'blog_id', 'event_id', 'ip', 'object_type', 'component', 'context', 'method' ) ) ) {
 			$this->_current_view = $this->_request_args['view'];
 
 			switch ( $this->_current_view ) {
@@ -393,6 +393,20 @@ class Logs extends Table {
 				case 'component':
 					if ( ! isset( $this->_filter_lock['component'] ) && ! empty( $this->_request_args['filter-component'] ) ) {
 						$this->_filter_lock['component'] = $this->_request_args['filter-component'];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'context':
+					if ( ! isset( $this->_filter_lock['context'] ) && ! empty( $this->_request_args['filter-context'] ) ) {
+						$this->_filter_lock['context'] = $this->_request_args['filter-context'];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'method':
+					if ( ! isset( $this->_filter_lock['method'] ) && ! empty( $this->_request_args['filter-method'] ) ) {
+						$this->_filter_lock['method'] = $this->_request_args['filter-method'];
 					} else {
 						$this->_current_view = '';
 					}
@@ -529,6 +543,24 @@ class Logs extends Table {
 					$current_view .= '</span>';
 
 					$current_key .= 'object_type';
+					break;
+				case 'context':
+					$display = $this->_filter_lock['context'] == '-' ? esc_html__( 'Normal', 'coreactivity' ) : $this->_filter_lock['context'];
+
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-traffic"></i> ';
+					$current_view .= '<span>' . esc_html__( 'Context', 'coreactivity' ) . '</span>';
+					$current_view .= $display;
+					$current_view .= '</span>';
+
+					$current_key .= 'context';
+					break;
+				case 'method':
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-browser"></i> ';
+					$current_view .= '<span>' . esc_html__( 'Request Method', 'coreactivity' ) . '</span>';
+					$current_view .= $this->_filter_lock['method'];
+					$current_view .= '</span>';
+
+					$current_key .= 'method';
 					break;
 				case 'component':
 					$current_view = '<span class="coreactivity-view-button">';
@@ -809,7 +841,9 @@ class Logs extends Table {
 	protected function column_context( $item ) : string {
 		$render = ! empty( $item->context ) ? strtoupper( $item->context ) : '/';
 
-		$actions = array();
+		$actions = array(
+			'view' => '<a href="' . $this->_view( 'context', 'filter-context=' . $item->context ) . '">' . __( 'Logs', 'coreactivity' ) . '</a>',
+		);
 
 		$render  = apply_filters( 'coreactivity_logs_field_render_context', $render, $item, $this );
 		$actions = apply_filters( 'coreactivity_logs_field_actions_context', $actions, $item, $this );
@@ -820,7 +854,9 @@ class Logs extends Table {
 	protected function column_method( $item ) : string {
 		$render = $item->method;
 
-		$actions = array();
+		$actions = array(
+			'view' => '<a href="' . $this->_view( 'method', 'filter-method=' . $item->method ) . '">' . __( 'Logs', 'coreactivity' ) . '</a>',
+		);
 
 		$render  = apply_filters( 'coreactivity_logs_field_render_method', $render, $item, $this );
 		$actions = apply_filters( 'coreactivity_logs_field_actions_method', $actions, $item, $this );

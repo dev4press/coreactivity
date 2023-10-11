@@ -65,6 +65,18 @@ class Term extends Component {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'-' => array(
+				'term',
+				'slug',
+				'taxonomy',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function prepare_edit( $term_id ) {
 		$this->storage[ $term_id ] = get_term( $term_id );
 	}
