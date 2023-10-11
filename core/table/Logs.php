@@ -6,11 +6,11 @@ use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v43\Core\Plugins\DBLite;
-use Dev4Press\v43\Core\Quick\Sanitize;
-use Dev4Press\v43\Core\UI\Elements;
-use Dev4Press\v43\Service\GEOIP\GEOJSIO;
-use Dev4Press\v43\WordPress\Admin\Table;
+use Dev4Press\v44\Core\Plugins\DBLite;
+use Dev4Press\v44\Core\Quick\Sanitize;
+use Dev4Press\v44\Core\UI\Elements;
+use Dev4Press\v44\Service\GEOIP\GEOJSIO;
+use Dev4Press\v44\WordPress\Admin\Table;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -444,6 +444,8 @@ class Logs extends Table {
 	}
 
 	protected function filter_block_top() {
+        debugpress_store_object($this);
+
 		echo '<div class="alignleft actions">';
 		Elements::instance()->select( $this->get_period_dropdown( 'logged', coreactivity_db()->logs ), array(
 			'selected' => $this->get_request_arg( 'period' ),

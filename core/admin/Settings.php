@@ -3,8 +3,8 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v43\Core\Options\Settings as BaseSettings;
-use Dev4Press\v43\Core\Options\Type;
+use Dev4Press\v44\Core\Options\Settings as BaseSettings;
+use Dev4Press\v44\Core\Options\Type;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

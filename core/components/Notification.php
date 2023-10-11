@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
-use Dev4Press\v43\Core\Mailer\Detection;
+use Dev4Press\v44\Core\Mailer\Detection;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -48,7 +48,7 @@ class Notification extends Component {
 		/**
 		 * Filter the list of notification types not to log. Notifications belonging to notification types on this list will not be tracked or logged.
 		 * All supported notification types are keys of the array returned by the following call:
-		 * `\Dev4Press\v43\Core\Mailer\Detection::instance()->get_supported_types()`
+		 * `\Dev4Press\v44\Core\Mailer\Detection::instance()->get_supported_types()`
 		 *
 		 * @param array $notifications name of the post types not to log, by default is empty array.
 		 *

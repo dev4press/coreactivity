@@ -76,7 +76,7 @@
 .coreactivity-grid-logs tr th.column-method, .coreactivity-grid-logs tr th.column-context, .coreactivity-grid-logs tr th.column-protocol {
   width: 100px;
 }
-.coreactivity-grid-logs tr th.column-user_id, .coreactivity-grid-logs tr th.column-component, .coreactivity-grid-logs tr th.column-event, .coreactivity-grid-logs tr th.column-ip {
+.coreactivity-grid-logs tr th.column-user_id, .coreactivity-grid-logs tr th.column-component, .coreactivity-grid-logs tr th.column-event_id, .coreactivity-grid-logs tr th.column-ip {
   width: 240px;
 }
 .coreactivity-grid-logs tr th.column-object_type, .coreactivity-grid-logs tr th.column-logged {

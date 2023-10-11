@@ -81,6 +81,16 @@ class DebugPress extends Plugin {
 		);
 	}
 
+	public function logs_meta_column_keys( array $meta_column_keys ) : array {
+		$meta_column_keys[ $this->code() ] = array(
+			'-' => array(
+				'errstr',
+			),
+		);
+
+		return $meta_column_keys;
+	}
+
 	public function event_php_error( $error ) {
 		if ( isset( $error['errno'] ) && ! empty( $error['caller'] ) ) {
 			$this->log( 'php-error', array( 'object_id' => $error['errno'] ), $error );

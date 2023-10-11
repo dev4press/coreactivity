@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use BP_Groups_Group;
-use Dev4Press\v43\Core\Mailer\Detection;
+use Dev4Press\v44\Core\Mailer\Detection;
 use GFAPI;
 use stdClass;
 use WP_Comment;

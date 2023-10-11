@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d4p-info-block d4p-info-block-changelog">
     <h3><?php esc_html_e( 'Version', 'coreactivity' ); ?> 1</h3>
     <div>
-        <h4>Version: 1.1 / October 11 2023</h4>
+        <h4>Version: 1.1 / October 16 2023</h4>
         <ul>
             <li><strong>new</strong> logs panel action to stop logging some of the object type by value</li>
             <li><strong>new</strong> logs panel metadata column as alternative to the metadata row</li>
@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <li><strong>edit</strong> many improvements to the `Logs` class for expandability</li>
             <li><strong>edit</strong> few improvements to the base `Component` class</li>
             <li><strong>edit</strong> few improvements to the Logs table and rendering</li>
+            <li><strong>edit</strong> Dev4Press Library 4.4</li>
             <li><strong>fix</strong> some events not always obeying exclusion conditions</li>
         </ul>
 
