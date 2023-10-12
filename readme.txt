@@ -1,4 +1,4 @@
-=== coreActivity ===
+=== coreActivity: Activity Logging plugin for WordPress ===
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, events, audit log, event log
@@ -96,11 +96,19 @@ Plugin creates three new database tables where all events are registered, and al
 If you have all events enabled, the plugin will add 150+ hooks into various elements of WordPress and plugins. That is not too much when compared to 3000+ hooks WordPress runs on average, so it will not have a big impact on WordPress performance. And, it is a good idea to disable events you don't need to use.
 
 == Changelog ==
-= 1.1 (2023.10.10) =
-* New: log action to stop logging some of the object type by value
+= 1.1 (2023.10.16) =
+* New: logs panel action to stop logging some of the object type by value
+* New: logs panel metadata column as alternative to the metadata row
+* New: logs panel with added views for context and method
+* New: tool for bulk control of events notifications status
 * New: more settings related to object types exclusions
 * Edit: sitemeta component: default object type is now `sitemeta`
+* Edit: many improvements to the `Logs` class for expandability
+* Edit: few improvements to the base `Component` class
 * Edit: few improvements to the Logs table and rendering
+* Edit: Dev4Press Library 4.4
+* Fix: logs filtering in some cases not working properly
+* Fix: some events not always obeying exclusion conditions
 
 = 1.0.5 (2023.10.05) =
 * Edit: Dev4Press Library 4.3.5
