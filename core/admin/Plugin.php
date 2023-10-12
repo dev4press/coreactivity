@@ -186,6 +186,9 @@ class Plugin extends BasePlugin {
 			case 'events-updated':
 				$msg['message'] = __( 'Events activity status has been updated.', 'coreactivity' );
 				break;
+			case 'notifications-updated':
+				$msg['message'] = __( 'Events notifications status has been updated.', 'coreactivity' );
+				break;
 		}
 
 		return $msg;

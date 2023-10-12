@@ -99,9 +99,11 @@
 .coreactivity-grid-logs tr td.column-meta_data > ul li {
   word-break: break-all;
   display: flex;
+  gap: 8px;
 }
 .coreactivity-grid-logs tr td.column-meta_data > ul li strong {
-  min-width: 150px;
+  flex-shrink: 0;
+  flex-grow: 1;
 }
 .coreactivity-grid-logs tr td.column-meta {
   text-align: center;

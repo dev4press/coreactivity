@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 10/11/2023 11:40:45 AM\n"
+"POT-Creation-Date: 10/12/2023 03:33:45 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,13 +26,13 @@ msgstr ""
 #: core/admin/Plugin.php:116
 #: core/basic/AdminBar.php:50
 #: core/table/Events.php:90
-#: core/table/Logs.php:711
-#: core/table/Logs.php:723
-#: core/table/Logs.php:791
-#: core/table/Logs.php:804
-#: core/table/Logs.php:845
-#: core/table/Logs.php:858
-#: core/table/Logs.php:750
+#: core/table/Logs.php:717
+#: core/table/Logs.php:729
+#: core/table/Logs.php:797
+#: core/table/Logs.php:810
+#: core/table/Logs.php:851
+#: core/table/Logs.php:864
+#: core/table/Logs.php:756
 msgid "Logs"
 msgstr ""
 
@@ -66,6 +66,7 @@ msgid "Settings related to some aspects for the Logs panel display."
 msgstr ""
 
 #: core/admin/panel/Settings.php:34
+#: core/admin/panel/Tools.php:30
 #: core/admin/panel/Wizard.php:21
 #: core/basic/Wizard.php:122
 #: core/components/Notification.php:75
@@ -108,6 +109,19 @@ msgstr ""
 msgid "Using this tool, you can cleanup log entries."
 msgstr ""
 
+#: core/admin/panel/Tools.php:33
+msgid "Configuration"
+msgstr ""
+
+#: core/admin/panel/Tools.php:35
+#: core/admin/Plugin.php:93
+msgid "Update"
+msgstr ""
+
+#: core/admin/panel/Tools.php:36
+msgid "Using this tool, bulk enable or disable events for notifications."
+msgstr ""
+
 #: core/admin/panel/Wizard.php:15
 #: core/basic/Wizard.php:120
 msgid "Intro"
@@ -140,10 +154,6 @@ msgstr ""
 
 #: core/admin/Plugin.php:88
 msgid "Before you continue, make sure plugin installation was successful."
-msgstr ""
-
-#: core/admin/Plugin.php:93
-msgid "Update"
 msgstr ""
 
 #: core/admin/Plugin.php:96
@@ -186,6 +196,10 @@ msgstr ""
 
 #: core/admin/Plugin.php:187
 msgid "Events activity status has been updated."
+msgstr ""
+
+#: core/admin/Plugin.php:190
+msgid "Events notifications status has been updated."
 msgstr ""
 
 #: core/admin/Settings.php:30
@@ -424,6 +438,7 @@ msgid "Live AJAX requests every 15 seconds to get the latest logged events. The 
 msgstr ""
 
 #: core/admin/Settings.php:245
+#: forms/content-tools-notifications.php:20
 msgid "Instant Notifications"
 msgstr ""
 
@@ -631,12 +646,12 @@ msgid "CoreActivity"
 msgstr ""
 
 #: core/basic/Render.php:28
-#: core/table/Logs.php:736
+#: core/table/Logs.php:742
 msgid "Current Request IP"
 msgstr ""
 
 #: core/basic/Render.php:23
-#: core/table/Logs.php:732
+#: core/table/Logs.php:738
 msgid "Server IP"
 msgstr ""
 
@@ -716,10 +731,12 @@ msgid "Auto Log Cleanup"
 msgstr ""
 
 #: core/components/Internal.php:48
+#: forms/content-tools-notifications.php:35
 msgid "Daily Digest"
 msgstr ""
 
 #: core/components/Internal.php:52
+#: forms/content-tools-notifications.php:50
 msgid "Weekly Digest"
 msgstr ""
 
@@ -1060,7 +1077,7 @@ msgstr ""
 
 #: core/log/Activity.php:97
 #: core/table/Logs.php:122
-#: core/table/Logs.php:603
+#: core/table/Logs.php:609
 msgid "User"
 msgstr ""
 
@@ -1225,8 +1242,8 @@ msgstr ""
 
 #: core/log/Display.php:224
 #: core/log/Display.php:417
-#: core/table/Logs.php:601
-#: core/table/Logs.php:769
+#: core/table/Logs.php:607
+#: core/table/Logs.php:775
 msgid "Not Found"
 msgstr ""
 
@@ -1411,13 +1428,13 @@ msgstr ""
 
 #: core/table/Events.php:88
 #: core/table/Logs.php:123
-#: core/table/Logs.php:568
+#: core/table/Logs.php:574
 msgid "Component"
 msgstr ""
 
 #: core/table/Events.php:89
 #: core/table/Logs.php:124
-#: core/table/Logs.php:579
+#: core/table/Logs.php:585
 msgid "Event"
 msgstr ""
 
@@ -1436,14 +1453,14 @@ msgid "All Categories"
 msgstr ""
 
 #: core/table/Events.php:126
-#: core/table/Logs.php:455
+#: core/table/Logs.php:461
 msgid "All Components"
 msgstr ""
 
 #: core/table/Events.php:130
 #: core/table/Events.php:182
 #: core/table/Events.php:195
-#: core/table/Logs.php:517
+#: core/table/Logs.php:523
 msgid "Filter"
 msgstr ""
 
@@ -1519,7 +1536,7 @@ msgid "View"
 msgstr ""
 
 #: core/table/Logs.php:125
-#: core/table/Logs.php:551
+#: core/table/Logs.php:557
 msgid "Context"
 msgstr ""
 
@@ -1532,7 +1549,7 @@ msgid "Protocol"
 msgstr ""
 
 #: core/table/Logs.php:128
-#: core/table/Logs.php:587
+#: core/table/Logs.php:593
 msgid "IP"
 msgstr ""
 
@@ -1541,7 +1558,7 @@ msgid "Request"
 msgstr ""
 
 #: core/table/Logs.php:130
-#: core/table/Logs.php:540
+#: core/table/Logs.php:546
 msgid "Object Type"
 msgstr ""
 
@@ -1557,40 +1574,40 @@ msgstr ""
 msgid "Logged"
 msgstr ""
 
-#: core/table/Logs.php:463
+#: core/table/Logs.php:469
 msgid "All Events"
 msgstr ""
 
-#: core/table/Logs.php:471
+#: core/table/Logs.php:477
 msgid "All Contexts"
 msgstr ""
 
-#: core/table/Logs.php:472
-#: core/table/Logs.php:548
+#: core/table/Logs.php:478
+#: core/table/Logs.php:554
 msgid "Normal"
 msgstr ""
 
-#: core/table/Logs.php:487
+#: core/table/Logs.php:493
 msgid "All Methods"
 msgstr ""
 
-#: core/table/Logs.php:503
+#: core/table/Logs.php:509
 msgid "All Object Types"
 msgstr ""
 
-#: core/table/Logs.php:535
+#: core/table/Logs.php:541
 msgid "All Logs"
 msgstr ""
 
-#: core/table/Logs.php:632
+#: core/table/Logs.php:638
 msgid "Delete"
 msgstr ""
 
-#: core/table/Logs.php:825
+#: core/table/Logs.php:831
 msgid "Do Not Log"
 msgstr ""
 
-#: core/table/Logs.php:835
+#: core/table/Logs.php:841
 msgid "on exception list"
 msgstr ""
 
@@ -1599,27 +1616,27 @@ msgstr ""
 msgid "Toggle Meta"
 msgstr ""
 
-#: core/table/Logs.php:891
+#: core/table/Logs.php:897
 msgid "Show Log Meta Data"
 msgstr ""
 
-#: core/table/Logs.php:559
+#: core/table/Logs.php:565
 msgid "Request Method"
 msgstr ""
 
-#: core/table/Logs.php:651
+#: core/table/Logs.php:657
 msgid "protocol"
 msgstr ""
 
-#: core/table/Logs.php:655
+#: core/table/Logs.php:661
 msgid "request"
 msgstr ""
 
-#: core/table/Logs.php:758
+#: core/table/Logs.php:764
 msgid "Not a User"
 msgstr ""
 
-#: core/table/Logs.php:773
+#: core/table/Logs.php:779
 msgid "Edit"
 msgstr ""
 
@@ -1753,6 +1770,7 @@ msgid "These tools will remove logged data from the database. Create database ba
 msgstr ""
 
 #: forms/content-tools-export.php:13
+#: forms/content-tools-notifications.php:13
 #: forms/content-tools-remove.php:13
 msgid "Important Information"
 msgstr ""
@@ -1763,6 +1781,40 @@ msgstr ""
 
 #: forms/content-tools-export.php:16
 msgid "This tool doesn't export the data from the dedicated database tables."
+msgstr ""
+
+#: forms/content-tools-notifications.php:15
+msgid "With this tool, you can easily enable or disable all events notifications status. If you want to enable all events for daily or weekly digest, or for instant notification, you can do it easily from here."
+msgstr ""
+
+#: forms/content-tools-notifications.php:23
+#: forms/content-tools-notifications.php:38
+#: forms/content-tools-notifications.php:53
+msgid "Do Not Change"
+msgstr ""
+
+#: forms/content-tools-notifications.php:26
+msgid "Enable Instant Notifications for all Events"
+msgstr ""
+
+#: forms/content-tools-notifications.php:29
+msgid "Disable Instant Notifications for all Events"
+msgstr ""
+
+#: forms/content-tools-notifications.php:41
+msgid "Enable Daily Digest for all Events"
+msgstr ""
+
+#: forms/content-tools-notifications.php:44
+msgid "Disable Daily Digest for all Events"
+msgstr ""
+
+#: forms/content-tools-notifications.php:56
+msgid "Enable Weekly Digest for all Events"
+msgstr ""
+
+#: forms/content-tools-notifications.php:59
+msgid "Disable Weekly Digest for all Events"
 msgstr ""
 
 #: forms/content-tools-remove.php:15

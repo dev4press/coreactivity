@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\v44\Core\Admin\PostBack as BasePostBack;
 use Dev4Press\v44\Core\Quick\Sanitize;
@@ -23,11 +24,28 @@ class PostBack extends BasePostBack {
 	}
 
 	protected function tools() {
-		if ( $this->a()->subpanel == 'cleanup' ) {
+		if ( $this->a()->subpanel == 'notifications' ) {
+			$this->notifications();
+		} else if ( $this->a()->subpanel == 'cleanup' ) {
 			$this->cleanup();
 		} else {
 			parent::tools();
 		}
+	}
+
+	protected function notifications() {
+		$data = $_POST['coreactivity']['tools-notifications'] ?? array(); // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
+
+		$msg = 'notifications-updated';
+
+		$instant = $data['instant'] ?? 'skip';
+		$daily   = $data['daily'] ?? 'skip';
+		$weekly  = $data['weekly'] ?? 'skip';
+
+		Activity::instance()->events_notification_bulk_control( $instant, $daily, $weekly );
+
+		wp_redirect( $this->a()->current_url() . '&message=' . $msg );
+		exit;
 	}
 
 	protected function cleanup() {
@@ -38,7 +56,6 @@ class PostBack extends BasePostBack {
 		$msg  = 'nothing';
 
 		if ( ! empty( $when ) && ! empty( $what ) && strlen( $when ) == 4 ) {
-
 			$what = Sanitize::ids_list( $what );
 
 			Cleanup::instance()->cleanup_log( $when, $what );

@@ -267,7 +267,9 @@ class Logs extends Table {
 			}
 		} else {
 			if ( ! empty( $this->_limit_lock['components'] ) ) {
-				$sel['component'] = array_keys( $this->_limit_lock['components'] );
+				$_locked = array_keys( $this->_limit_lock['components'] );
+
+				$sel['component'] = in_array( $sel['component'], $_locked ) ? $sel['component'] : $_locked;
 			}
 		}
 
@@ -276,6 +278,8 @@ class Logs extends Table {
 
 	protected function prepare_query_arguments() : array {
 		$sel = $this->prepare_query_settings();
+
+		debugpress_r( $sel );
 
 		$sql = array(
 			'select' => array(
@@ -444,7 +448,7 @@ class Logs extends Table {
 	}
 
 	protected function filter_block_top() {
-        debugpress_store_object($this);
+		debugpress_store_object( $this );
 
 		echo '<div class="alignleft actions">';
 		Elements::instance()->select( $this->get_period_dropdown( 'logged', coreactivity_db()->logs ), array(

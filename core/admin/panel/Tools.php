@@ -23,5 +23,19 @@ class Tools extends PanelTools {
 			                   ),
 		                   ) +
 		                   array_slice( $this->subpanels, 2 );
+
+		$this->subpanels = array_slice( $this->subpanels, 0, 1 ) +
+		                   array(
+			                   'notifications' => array(
+				                   'title'        => __( 'Notifications', 'coreactivity' ),
+				                   'icon'         => 'ui-envelopes',
+				                   'method'       => 'post',
+				                   'break'        => __( 'Configuration', 'coreactivity' ),
+				                   'break-icon'   => 'ui-cogs',
+				                   'button_label' => __( 'Update', 'coreactivity' ),
+				                   'info'         => __( 'Using this tool, bulk enable or disable events for notifications.', 'coreactivity' ),
+			                   ),
+		                   ) +
+		                   array_slice( $this->subpanels, 1 );
 	}
 }

@@ -378,7 +378,7 @@ class Activity {
 			$event = $this->events[ $event['component'] ][ $event['name'] ];
 
 			if ( isset( $event->notifications[ $notification ] ) ) {
-				$status = empty( $status ) ? ! $event->notifications[ $notification ] : ( $status == 'on' );
+				$status = empty( $status ) ? ! $event->notifications[ $notification ] : ( $status === 'on' );
 
 				$event->notifications[ $notification ] = $status;
 
@@ -392,6 +392,29 @@ class Activity {
 		}
 
 		return null;
+	}
+
+	public function events_notification_bulk_control( $instant = 'skip', $daily = 'skip', $weekly = 'skip' ) {
+		foreach ( $this->list as $event_id => $ev ) {
+			$event = $this->events[ $ev['component'] ][ $ev['name'] ];
+
+			if ( $instant !== 'skip' ) {
+				$event->notifications['instant'] = $instant === 'on';
+			}
+
+			if ( $daily !== 'skip' ) {
+				$event->notifications['daily'] = $daily === 'on';
+			}
+
+			if ( $weekly !== 'skip' ) {
+				$event->notifications['weekly'] = $weekly === 'on';
+			}
+
+			$rules                  = $event->rules;
+			$rules['notifications'] = $event->notifications;
+
+			DB::instance()->change_event_rules( $event_id, $rules );
+		}
 	}
 
 	public function register_component( string $category, string $component, array $args = array() ) {
