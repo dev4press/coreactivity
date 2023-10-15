@@ -83,6 +83,10 @@ class Logs extends Table {
 		return $this->_logs_instance;
 	}
 
+	public function get_columns_simplified() : bool {
+		return $this->_display_columns_simplified;
+	}
+
 	public function set_limit_lock( $name, $value ) {
 		$this->_limit_lock[ $name ] = $value;
 	}
@@ -279,8 +283,6 @@ class Logs extends Table {
 	protected function prepare_query_arguments() : array {
 		$sel = $this->prepare_query_settings();
 
-		debugpress_r( $sel );
-
 		$sql = array(
 			'select' => array(
 				'l.*',
@@ -355,7 +357,15 @@ class Logs extends Table {
 		$component = $this->_filter_lock['component'] ?? '';
 
 		if ( empty( $component ) && ! empty( $this->_limit_lock['components'] ) ) {
-			$component = array_keys( $this->_limit_lock['components'] );
+			if ( isset( $this->_limit_lock['components'][0]['values'] ) ) {
+				$component = array();
+
+				foreach ( $this->_limit_lock['components'] as $group ) {
+					$component = array_merge( $component, array_keys( $group['values'] ) );
+				}
+			} else {
+				$component = array_keys( $this->_limit_lock['components'] );
+			}
 		}
 
 		$events = $this->i()->get_select_events( $this->_display_columns_simplified, empty( $component ) ? array() : (array) $component );
@@ -448,8 +458,6 @@ class Logs extends Table {
 	}
 
 	protected function filter_block_top() {
-		debugpress_store_object( $this );
-
 		echo '<div class="alignleft actions">';
 		Elements::instance()->select( $this->get_period_dropdown( 'logged', coreactivity_db()->logs ), array(
 			'selected' => $this->get_request_arg( 'period' ),

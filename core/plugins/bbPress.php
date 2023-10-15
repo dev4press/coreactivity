@@ -14,7 +14,6 @@ class bbPress extends Content {
 	protected $name = 'bbpress';
 	protected $icon = 'logo-bbpress';
 	protected $plugin_file = 'bbpress/bbpress.php';
-	protected $post_types = array();
 
 	public function __construct() {
 		parent::__construct();
@@ -32,7 +31,7 @@ class bbPress extends Content {
 		return __( 'bbPress', 'coreactivity' );
 	}
 
-	public function init_post_types( $post_types ) {
+	public function init_post_types( $post_types ) : array {
 		return array_merge( $post_types, $this->_post_types() );
 	}
 
