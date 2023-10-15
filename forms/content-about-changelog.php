@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div>
         <h4>Version: 1.1 / October 16 2023</h4>
         <ul>
+            <li><strong>new</strong> component: WooCommerce plugin, with 3 events</li>
+            <li><strong>new</strong> notifications component: support for WooCommerce `WC_Email` logging</li>
             <li><strong>new</strong> logs panel action to stop logging some of the object type by value</li>
             <li><strong>new</strong> logs panel metadata column as alternative to the metadata row</li>
             <li><strong>new</strong> logs panel with added views for context and method</li>
@@ -22,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <li><strong>edit</strong> Dev4Press Library 4.4</li>
             <li><strong>fix</strong> logs filtering in some cases not working properly</li>
             <li><strong>fix</strong> some events not always obeying exclusion conditions</li>
+            <li><strong>fix</strong> few issues with the content terms relationship change event</li>
         </ul>
 
         <h4>Version: 1.0.5 / October 5 2023</h4>

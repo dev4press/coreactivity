@@ -10,6 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Helper {
 	public static function get_term_ids_from_taxonomy_term_ids( array $tt_ids ) : array {
+		if ( empty( $tt_ids ) ) {
+			return array();
+		}
+
 		$query = new WP_Term_Query( array(
 			'term_taxonomy_id' => $tt_ids,
 			'hide_empty'       => false,

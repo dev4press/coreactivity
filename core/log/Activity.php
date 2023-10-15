@@ -27,6 +27,7 @@ use Dev4Press\Plugin\CoreActivity\Plugins\GravityForms;
 use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
+use Dev4Press\Plugin\CoreActivity\Plugins\WooCommerce;
 use Dev4Press\v44\Core\Quick\Sanitize;
 use Dev4Press\v44\Core\Quick\Str;
 use stdClass;
@@ -558,5 +559,6 @@ class Activity {
 		Jetpack::instance();
 		SweepPress::instance();
 		UserSwitching::instance();
+		WooCommerce::instance();
 	}
 }

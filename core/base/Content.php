@@ -77,13 +77,17 @@ abstract class Content extends Component {
 			$old_terms = Helper::get_term_ids_from_taxonomy_term_ids( $old_tt_ids );
 			$new_terms = Helper::get_term_ids_from_taxonomy_term_ids( $tt_ids );
 
-			$this->log( 'term-relationship-change', array(
-				'object_id' => $object_id,
-			), array(
-				'taxonomy'      => $taxonomy,
-				'old_terms_ids' => $old_terms,
-				'new_terms_ids' => $new_terms,
-			) );
+			if ( ! empty( $old_terms ) || ! empty( $new_terms ) ) {
+				if ( $old_terms != $new_terms ) {
+					$this->log( 'term-relationship-change', array(
+						'object_id' => $object_id,
+					), array(
+						'taxonomy'      => $taxonomy,
+						'old_terms_ids' => $old_terms,
+						'new_terms_ids' => $new_terms,
+					) );
+				}
+			}
 		}
 	}
 
