@@ -47,6 +47,7 @@ Currently, plugin has 23 components with a total of 117 events, with direct inte
 * Jetpack (2 events)
 * SweepPress (3 event)
 * User Switching (4 events)
+* WooCommerce (3 events)
 
 = More Features =
 * Instant Notifications
@@ -97,6 +98,8 @@ If you have all events enabled, the plugin will add 150+ hooks into various elem
 
 == Changelog ==
 = 1.1 (2023.10.16) =
+* New: component: WooCommerce plugin, with 3 events
+* New: notifications component: support for WooCommerce `WC_Email` logging
 * New: logs panel action to stop logging some of the object type by value
 * New: logs panel metadata column as alternative to the metadata row
 * New: logs panel with added views for context and method
@@ -109,6 +112,7 @@ If you have all events enabled, the plugin will add 150+ hooks into various elem
 * Edit: Dev4Press Library 4.4
 * Fix: logs filtering in some cases not working properly
 * Fix: some events not always obeying exclusion conditions
+* Fix: few issues with the content terms relationship change event
 
 = 1.0.5 (2023.10.05) =
 * Edit: Dev4Press Library 4.3.5
@@ -133,6 +137,9 @@ If you have all events enabled, the plugin will add 150+ hooks into various elem
 * First official release
 
 == Upgrade Notice ==
+= 1.1 =
+New component. Various Logs panel improvements. Tweaks and bug fixes.
+
 = 1.0 =
 First official release.
 
