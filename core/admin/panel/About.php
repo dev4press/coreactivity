@@ -9,7 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class About extends PanelAbout {
-
 	protected function init_default_subpanels() {
 		parent::init_default_subpanels();
 

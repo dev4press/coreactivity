@@ -21,6 +21,7 @@ class Plugin extends Core {
 
 	public function __construct() {
 		$this->url = COREACTIVITY_URL;
+		$this->path = COREACTIVITY_PATH;
 
 		parent::__construct();
 	}
