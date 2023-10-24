@@ -270,9 +270,9 @@ class Logs extends Table {
 				$sel['event_id'] = $this->i()->get_event_id( $sel['component'], $this->_filter_lock['event_id'] );
 			}
 		} else {
-			if ( ! empty( $this->_limit_lock['components'] ) ) {
-				$_locked = array_keys( $this->_limit_lock['components'] );
+			$_locked = $this->locked_components();
 
+			if ( ! empty( $_locked ) ) {
 				$sel['component'] = in_array( $sel['component'], $_locked ) ? $sel['component'] : $_locked;
 			}
 		}
@@ -356,16 +356,8 @@ class Logs extends Table {
 	protected function get_select_events() : array {
 		$component = $this->_filter_lock['component'] ?? '';
 
-		if ( empty( $component ) && ! empty( $this->_limit_lock['components'] ) ) {
-			if ( isset( $this->_limit_lock['components'][0]['values'] ) ) {
-				$component = array();
-
-				foreach ( $this->_limit_lock['components'] as $group ) {
-					$component = array_merge( $component, array_keys( $group['values'] ) );
-				}
-			} else {
-				$component = array_keys( $this->_limit_lock['components'] );
-			}
+		if ( empty( $component ) ) {
+			$component = $this->locked_components();
 		}
 
 		$events = $this->i()->get_select_events( $this->_display_columns_simplified, empty( $component ) ? array() : (array) $component );
@@ -929,6 +921,22 @@ class Logs extends Table {
 		$actions = apply_filters( 'coreactivity_logs_field_actions_meta', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
+	}
+
+	private function locked_components() : array {
+		$component = array();
+
+		if ( ! empty( $this->_limit_lock['components'] ) ) {
+			if ( isset( $this->_limit_lock['components'][0]['values'] ) ) {
+				foreach ( $this->_limit_lock['components'] as $group ) {
+					$component = array_merge( $component, array_keys( $group['values'] ) );
+				}
+			} else {
+				$component = array_keys( $this->_limit_lock['components'] );
+			}
+		}
+
+		return $component;
 	}
 
 	private function print_array( $input ) : string {

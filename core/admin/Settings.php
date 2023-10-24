@@ -58,7 +58,40 @@ class Settings extends BaseSettings {
 	protected function init() {
 		$this->settings = array(
 			'optional'      => array(
-				'optional-meta'  => array(
+				'optional-location' => array(
+					'name'     => __( 'IP Location Data', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'log_country_code', __( 'Country Code', 'coreactivity' ), __( 'Each log entry IP will be geo-located, and if possible, the country code will be stored in the main log database table.', 'coreactivity' ), Type::BOOLEAN )->more(
+									array(
+										__( 'Each time logging is requested, plugin will try to determine the country for the IP and save it in the main database.', 'coreactivity' ),
+										__( 'Country for IP can change over time (especially for the IP4), and this will add permanent mark of the country into the log at the time it is logged.', 'coreactivity' ),
+									)
+								)->buttons(
+									array(
+										array(
+											'type'  => 'a',
+											'link'  => coreactivity_admin()->panel_url( 'settings', 'geo' ),
+											'class' => 'button-secondary',
+											'title' => __( 'GEOLocation Settings', 'coreactivity' ),
+										),
+									)
+								),
+								$this->i( 'settings', 'log_if_available_expanded_location', __( 'Expanded Meta Information', 'coreactivity' ), __( 'Any additional geolocation data will be logged as a meta data.', 'coreactivity' ), Type::BOOLEAN )->more(
+									array(
+										__( 'This data, along the country code for the IP will be later used to display IP location in the log.', 'coreactivity' ),
+										__( 'Information provided by the geolocation can contain only country, or it can have expanded information.', 'coreactivity' ),
+									)
+								),
+							),
+						),
+					),
+				),
+				'optional-meta'     => array(
 					'name'     => __( 'Standard Meta Data', 'coreactivity' ),
 					'sections' => array(
 						array(
@@ -72,7 +105,7 @@ class Settings extends BaseSettings {
 						),
 					),
 				),
-				'optional-event' => array(
+				'optional-event'    => array(
 					'name'     => __( 'Event Specific Meta Data', 'coreactivity' ),
 					'sections' => array(
 						array(
@@ -183,6 +216,68 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'exceptions_error_file_regex_list', __( 'Regular Expressions', 'coreactivity' ), __( 'If the request is for a file, it will be checked with provided regular expressions. If the file matches any of these, it will not be logged.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+							),
+						),
+					),
+				),
+			),
+			'geo'           => array(
+				'exceptions-geo' => array(
+					'name'     => __( 'Geo Location', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'geolocation_method', __( 'Method', 'coreactivity' ), __( 'Online geolocation is usually slower, it does make a call to the online service for geo-locating the IP.', 'coreactivity' ), Type::SELECT )->data( 'array', $this->get_geo_location_methods() )->more(
+									array(
+										__( 'Online geolocation can be slower, since it depends on the external services to work. It can also happen for the request to timeout or fail.', 'coreactivity' ),
+										__( 'Database approach is the best solution since the database is on your server, and it is much faster to get the location, without having any issues that online services can have.', 'coreactivity' ),
+									)
+								)->switch( array(
+									'role' => 'control',
+									'type' => 'section',
+									'name' => 'coreactivity-switch-method-geo',
+								) ),
+
+							),
+						),
+						array(
+							'label'    => __( 'IP2Location Database', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'switch'   => array(
+								'role'  => 'value',
+								'name'  => 'coreactivity-switch-method-geo',
+								'value' => 'ip2location',
+								'ref'   => $this->value( 'geolocation_method', 'settings', 'online' ),
+							),
+							'settings' => array(
+								$this->i( 'settings', 'geolocation_ip2location_token', __( 'Token', 'coreactivity' ), __( 'Token is required to download and updated database file.', 'coreactivity' ), Type::TEXT )->more(
+									array(
+										__( 'IP2Location has free and premium services and databases. For this plugin purposes, Lite database is quite sufficient.', 'coreactivity' ),
+										__( 'To get the download token, register on the IP2Location Lite website, and once you are logged in there, get the download token and past it in this field.', 'coreactivity' ),
+										__( 'Plugin will attempt to download database file once a week during regular weekly maintenance.', 'coreactivity' ),
+									)
+								)->buttons(
+									array(
+										array(
+											'type'   => 'a',
+											'rel'    => 'noopener',
+											'target' => '_blank',
+											'link'   => 'https://lite.ip2location.com/',
+											'class'  => 'button-secondary',
+											'title'  => __( 'Register and Get token on IP2Location Lite', 'coreactivity' ),
+										),
+									)
+								),
+								$this->i( 'settings', 'geolocation_ip2location_db', __( 'Database', 'coreactivity' ), __( 'Depending on the database you choose, you will get additional information for each IP.', 'coreactivity' ), Type::SELECT )->data( 'array', $this->get_ip2location_db() )->more(
+									array(
+										__( 'Country database is about 9MB in size, other databases can be up to 200MB in size.', 'coreactivity' ),
+										__( 'If you choose Country only database, you will be able to log in only IP country code.', 'coreactivity' ),
+									)
+								),
 							),
 						),
 					),
@@ -437,5 +532,22 @@ class Settings extends BaseSettings {
 		}
 
 		return $list;
+	}
+
+	protected function get_geo_location_methods() : array {
+		return array(
+			'online'      => __( 'Online', 'coreactivity' ),
+			'ip2location' => __( 'IP2Location Database', 'coreactivity' ),
+		);
+	}
+
+	protected function get_ip2location_db() : array {
+		return array(
+			'DB1LITEBINIPV6'  => __( 'Lite: Country', 'coreactivity' ),
+			'DB3LITEBINIPV6'  => __( 'Lite: Country, Region, City', 'coreactivity' ),
+			'DB5LITEBINIPV6'  => __( 'Lite: Country, Region, City, Location', 'coreactivity' ),
+			'DB9LITEBINIPV6'  => __( 'Lite: Country, Region, City, Location, ZIP', 'coreactivity' ),
+			'DB11LITEBINIPV6' => __( 'Lite: Country, Region, City, Location, ZIP, Timezone', 'coreactivity' ),
+		);
 	}
 }

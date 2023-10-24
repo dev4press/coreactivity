@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class InstallDB extends BaseInstallDB {
-	protected $version = 20230616;
+	protected $version = 20231024;
 	protected $prefix = 'coreactivity';
 	protected $plugin = 'coreactivity';
 	protected $tables = array(
@@ -32,7 +32,7 @@ class InstallDB extends BaseInstallDB {
 		),
 		'logs'    => array(
 			'name'    => 'logs',
-			'columns' => 13,
+			'columns' => 14,
 			'scope'   => 'network',
 			'data'    => "log_id bigint(20) unsigned NOT NULL AUTO_INCREMENT, \n" .
 			             "blog_id bigint(20) unsigned NOT NULL DEFAULT '0', \n" .
@@ -47,6 +47,7 @@ class InstallDB extends BaseInstallDB {
 			             "object_type varchar(64) NULL DEFAULT NULL, \n" .
 			             "object_id bigint(20) unsigned NULL DEFAULT NULL, \n" .
 			             "object_name varchar(255) NULL DEFAULT NULL, \n" .
+			             "country_code char(2) NULL DEFAULT NULL, \n" .
 			             "PRIMARY KEY  (log_id), \n" .
 			             "KEY blog_id (blog_id), \n" .
 			             "KEY event_id (event_id), \n" .
@@ -57,7 +58,8 @@ class InstallDB extends BaseInstallDB {
 			             "KEY method (method), \n" .
 			             "KEY object_type (object_type), \n" .
 			             "KEY object_id (object_id), \n" .
-			             "KEY object_name (object_name)",
+			             "KEY object_name (object_name), \n" .
+			             "KEY country_code (country_code)",
 		),
 		'logmeta' => array(
 			'name'    => 'logmeta',

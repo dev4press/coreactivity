@@ -25,6 +25,11 @@ class Settings extends PanelSettings {
 					'icon'  => 'ui-ban',
 					'info'  => __( 'Some of the components can use these exceptions to limit the logging and skip some events.', 'coreactivity' ),
 				),
+				'geo'    => array(
+					'title' => __( 'Geo Location', 'coreactivity' ),
+					'icon'  => 'ui-globe',
+					'info'  => __( 'Plugin can use online geolocation services, or the local database for geolocation.', 'coreactivity' ),
+				),
 				'logs'          => array(
 					'title' => __( 'Logs Panel', 'coreactivity' ),
 					'icon'  => 'ui-calendar-pen',

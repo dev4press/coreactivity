@@ -6,6 +6,7 @@ use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
+use Dev4Press\Plugin\CoreActivity\Log\Location as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\v44\Core\Plugins\Core;
 use Dev4Press\v44\Core\Quick\WPR;
@@ -38,6 +39,7 @@ class Plugin extends Core {
 		do_action( 'coreactivity_load_settings' );
 
 		LogActivity::instance();
+		LogLocation::instance();
 		LogCore::instance();
 
 		do_action( 'coreactivity_plugin_core_ready' );
