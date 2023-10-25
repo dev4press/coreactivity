@@ -65,7 +65,7 @@ class Notifications {
 			if ( ! wp_next_scheduled( 'coreactivity_weekly_digest' ) ) {
 				$cron_time = strtotime( 'Next ' . $this->week_day_number_to_name( $this->s( 'weekly_day' ) ) ) + HOUR_IN_SECONDS * $this->s( 'weekly_hour' );
 
-				wp_schedule_event( $cron_time, 'daily', 'coreactivity_weekly_digest' );
+				wp_schedule_event( $cron_time, 'weekly', 'coreactivity_weekly_digest' );
 			}
 		} else {
 			if ( wp_next_scheduled( 'coreactivity_weekly_digest' ) ) {

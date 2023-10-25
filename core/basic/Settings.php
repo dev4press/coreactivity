@@ -15,11 +15,13 @@ class Settings extends BaseSettings {
 
 	public $settings = array(
 		'core'          => array(
-			'installed'         => '',
-			'updated'           => '',
-			'db_version'        => 0,
-			'instant_timestamp' => 0,
-			'instant_datetime'  => '',
+			'installed'             => '',
+			'updated'               => '',
+			'db_version'            => 0,
+			'instant_timestamp'     => 0,
+			'instant_datetime'      => '',
+			'ip2location_timestamp' => 0,
+			'ip2location_db'        => '',
 		),
 		'settings'      => array(
 			'show_setup_wizard'                       => true,
@@ -34,7 +36,7 @@ class Settings extends BaseSettings {
 			'log_country_code'                        => false,
 			'geolocation_method'                      => 'online',
 			'geolocation_ip2location_token'           => '',
-			'geolocation_ip2location_db'              => 'DB1LITEBINIPV6',
+			'geolocation_ip2location_db'              => 'DB3LITEBINIPV6',
 			'logs_live_updates'                       => true,
 			'display_columns_simplified'              => false,
 			'display_ip_country_flag'                 => false,

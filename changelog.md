@@ -1,13 +1,19 @@
 # coreActivity
+
 ## Changelog
 
 ### Version: 1.2 / October 31 2023
 
 * **new** database: logs table has new `country_code` column
 * **new** logging: options for logging country code and other location information
-* **new** geolocation settings: choose between online and IP2Location database
+* **new** geolocation settings: choose between online and `IP2Location` database
+* **new** geolocation with the use of `IP2Location` database
+* **new** `IP2Location` support for weekly downloading of Lite database
+* **new** registered weekly maintenance background job
 * **edit** Dev4Press Library 4.4 Beta
 * **fix** logs override filtering not working properly always
+* **fix** all CRON handlers registered as filters and not actions
+* **fix** weekly digest scheduled to run each day
 
 ### Version: 1.1 / October 16 2023
 

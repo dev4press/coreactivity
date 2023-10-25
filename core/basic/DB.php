@@ -20,18 +20,19 @@ class DB extends BaseDB {
 	public $_network_tables = array( 'events', 'logs', 'logmeta' );
 	public $_metas = array( 'log' => 'log_id' );
 	public $_log_columns = array(
-		'blog_id'     => '%d',
-		'event_id'    => '%d',
-		'user_id'     => '%d',
-		'logged'      => '%s',
-		'ip'          => '%s',
-		'context'     => '%s',
-		'method'      => '%s',
-		'protocol'    => '%s',
-		'request'     => '%s',
-		'object_type' => '%s',
-		'object_id'   => '%d',
-		'object_name' => '%s',
+		'blog_id'      => '%d',
+		'event_id'     => '%d',
+		'user_id'      => '%d',
+		'logged'       => '%s',
+		'ip'           => '%s',
+		'context'      => '%s',
+		'method'       => '%s',
+		'protocol'     => '%s',
+		'request'      => '%s',
+		'object_type'  => '%s',
+		'object_id'    => '%d',
+		'object_name'  => '%s',
+		'country_code' => '%s',
 	);
 
 	public function get_all_registered_events() {

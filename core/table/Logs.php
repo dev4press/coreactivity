@@ -6,10 +6,10 @@ use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
+use Dev4Press\Plugin\CoreActivity\Log\GEO;
 use Dev4Press\v44\Core\Plugins\DBLite;
 use Dev4Press\v44\Core\Quick\Sanitize;
 use Dev4Press\v44\Core\UI\Elements;
-use Dev4Press\v44\Service\GEOIP\GEOJSIO;
 use Dev4Press\v44\WordPress\Admin\Table;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -113,7 +113,7 @@ class Logs extends Table {
 			}
 
 			if ( ! empty( $this->_items_ips ) ) {
-				GEOJSIO::instance()->bulk( $this->_items_ips );
+				GEO::instance()->bulk( $this->_items_ips );
 			}
 		}
 	}
@@ -593,8 +593,7 @@ class Logs extends Table {
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud d4p-icon-fw"></i> <span>' . esc_html__( 'IP', 'coreactivity' ) . '</span>';
 
 					if ( $this->_display_ip_country_flag ) {
-						$ip           = GEOJSIO::instance()->locate( $this->_filter_lock['ip'] );
-						$current_view .= '<span>' . esc_html( $this->_filter_lock['ip'] ) . '</span> ' . $ip->flag();
+						$current_view .= '<span>' . esc_html( $this->_filter_lock['ip'] ) . '</span> ' . GEO::instance()->flag( $this->_filter_lock['ip'] );
 					} else {
 						$current_view .= $this->_filter_lock['ip'];
 					}
@@ -646,9 +645,10 @@ class Logs extends Table {
 	protected function single_hidden_row( $item ) {
 		list( $columns, $hidden, $sortable, $primary ) = $this->get_column_info();
 
-		$total = count( $columns ) - count( $hidden );
-		$metas = array( 'referer', 'user_agent', 'ajax_action' );
-		$skip  = apply_filters( $this->_filter_key . '_meta_row_skip', $this->get_meta_column_keys( $item->component, $item->event ), $item, $this );
+		$total  = count( $columns ) - count( $hidden );
+		$metas  = array( 'referer', 'user_agent', 'ajax_action' );
+		$skip   = apply_filters( $this->_filter_key . '_meta_row_skip', $this->get_meta_column_keys( $item->component, $item->event ), $item, $this );
+		$skip[] = 'geo_location';
 
 		$left  = array();
 		$right = array();
@@ -730,8 +730,7 @@ class Logs extends Table {
 		);
 
 		if ( $this->_display_ip_country_flag ) {
-			$ip     = GEOJSIO::instance()->locate( $item->ip );
-			$render = $ip->flag() . ' ' . $render;
+			$render = GEO::instance()->flag( $item->ip ) . ' ' . $render;
 		}
 
 		if ( $item->ip == $this->_server_ip ) {

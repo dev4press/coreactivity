@@ -8,6 +8,7 @@ use Dev4Press\v44\Core\Helpers\IP;
 use Dev4Press\v44\Core\Quick\Sanitize;
 use Dev4Press\v44\Core\Quick\URL;
 use Dev4Press\v44\Core\Scope;
+use Dev4Press\v44\Service\GEOIP\Location;
 use Dev4Press\v44\WordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Core {
 	private $cached_data;
 	private $page_events = array();
+	private $geo_code = false;
+	private $geo_meta = false;
 
 	private $request_contexts = array(
 		'AJAX',
@@ -40,7 +43,7 @@ class Core {
 
 	public function __construct() {
 		$this->cached_data = array(
-			'ip'        => IP::visitor(),
+			'ip'        => '8.8.8.8',//IP::visitor(),
 			'server_ip' => isset( $_SERVER['SERVER_ADDR'] ) ? IP::server() : '',
 			'ua'        => $this->get_user_agent(),
 			'referer'   => $this->get_referer(),
@@ -51,6 +54,14 @@ class Core {
 		);
 
 		$this->cached_data['anon'] = in_array( $this->cached_data['context'], array( 'CLI', 'CRON' ) );
+
+		if ( coreactivity_settings()->get( 'log_country_code' ) ) {
+			$this->geo_code = true;
+		}
+
+		if ( coreactivity_settings()->get( 'log_if_available_expanded_location' ) ) {
+			$this->geo_meta = true;
+		}
 
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );
 	}
@@ -101,6 +112,24 @@ class Core {
 
 		$data = $this->prepare_data( $data );
 		$meta = $this->prepare_meta( $meta );
+
+		if ( $this->geo_code || $this->geo_meta ) {
+			$geo = GEO::instance()->locate( $data['ip'] );
+
+			if ( $geo instanceof Location ) {
+				if ( ! isset( $data['country_code'] ) && ! empty( $geo->country_code ) ) {
+					$data['country_code'] = $geo->country_code;
+				}
+
+				if ( $this->geo_meta ) {
+					$geo_meta = $geo->meta();
+
+					if ( ! empty( $geo_meta ) ) {
+						$meta['geo_location'] = $geo_meta;
+					}
+				}
+			}
+		}
 
 		$data['event_id'] = $event_id;
 

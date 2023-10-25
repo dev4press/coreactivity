@@ -6,7 +6,8 @@ use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
-use Dev4Press\Plugin\CoreActivity\Log\Location as LogLocation;
+use Dev4Press\Plugin\CoreActivity\Log\GEO;
+use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\v44\Core\Plugins\Core;
 use Dev4Press\v44\Core\Quick\WPR;
@@ -21,7 +22,7 @@ class Plugin extends Core {
 	public $plugin = 'coreactivity';
 
 	public function __construct() {
-		$this->url = COREACTIVITY_URL;
+		$this->url  = COREACTIVITY_URL;
 		$this->path = COREACTIVITY_PATH;
 
 		parent::__construct();
@@ -57,10 +58,11 @@ class Plugin extends Core {
 	public function after_setup_theme() {
 		do_action( 'coreactivity_prepare' );
 
-		add_filter( 'coreactivity_log_purge', array( $this, 'log_purge' ) );
-		add_filter( 'coreactivity_instant_notification', array( $this, 'instant_notification' ) );
-		add_filter( 'coreactivity_daily_digest', array( $this, 'daily_digest' ) );
-		add_filter( 'coreactivity_weekly_digest', array( $this, 'weekly_digest' ) );
+		add_action( 'coreactivity_log_purge', array( $this, 'log_purge' ) );
+		add_action( 'coreactivity_instant_notification', array( $this, 'instant_notification' ) );
+		add_action( 'coreactivity_daily_digest', array( $this, 'daily_digest' ) );
+		add_action( 'coreactivity_weekly_digest', array( $this, 'weekly_digest' ) );
+		add_action( 'coreactivity_weekly_maintenance', array( $this, 'weekly_maintenance' ) );
 
 		if ( ! wp_next_scheduled( 'coreactivity_log_purge' ) ) {
 			if ( $this->s()->get( 'auto_cleanup_active' ) ) {
@@ -72,6 +74,12 @@ class Plugin extends Core {
 			if ( ! $this->s()->get( 'auto_cleanup_active' ) ) {
 				WPR::remove_cron( 'coreactivity_log_purge' );
 			}
+		}
+
+		if ( ! wp_next_scheduled( 'coreactivity_weekly_maintenance' ) ) {
+			$cron_time = mktime( 4, 5, 0, gmdate( 'm' ), gmdate( 'd' ), gmdate( 'Y' ) );
+
+			wp_schedule_event( $cron_time, 'weekly', 'coreactivity_weekly_maintenance' );
 		}
 
 		Notifications::instance()->schedule_digests();
@@ -116,5 +124,27 @@ class Plugin extends Core {
 
 	public function weekly_digest() {
 		Notifications::instance()->scheduled_weekly();
+	}
+
+	public function weekly_maintenance() {
+		GEO::instance()->ip2download_db_update();
+	}
+
+	public function uploads_path() {
+		$dir = wp_upload_dir();
+
+		if ( $dir['error'] !== false ) {
+			return false;
+		}
+
+		$path = trailingslashit( $dir['basedir'] ) . 'coreactivity/';
+
+		if ( wp_mkdir_p( $path ) ) {
+			if ( wp_is_writable( $path ) ) {
+				return $path;
+			}
+		}
+
+		return false;
 	}
 }
