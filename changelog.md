@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### Version: 1.2 / October 31 2023
+### Version: 1.2 / October 30 2023
 
 * **new** database: logs table has new `country_code` column
 * **new** logging: options for logging country code and other location information

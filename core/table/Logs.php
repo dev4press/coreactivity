@@ -730,7 +730,11 @@ class Logs extends Table {
 		);
 
 		if ( $this->_display_ip_country_flag ) {
-			$render = GEO::instance()->flag( $item->ip ) . ' ' . $render;
+			if ( ! empty( $item->country_code ) ) {
+				$render = GEO::instance()->flag_from_country( $item->country_code ) . ' ' . $render;
+			} else {
+				$render = GEO::instance()->flag( $item->ip ) . ' ' . $render;
+			}
 		}
 
 		if ( $item->ip == $this->_server_ip ) {

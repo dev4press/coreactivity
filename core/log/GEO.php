@@ -5,6 +5,7 @@ namespace Dev4Press\Plugin\CoreActivity\Log;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Location\IP2Location;
 use Dev4Press\v44\Core\Helpers\Data;
+use Dev4Press\v44\Core\Quick\Misc;
 use Dev4Press\v44\Service\GEOIP\GEOJSIO;
 use Dev4Press\v44\Service\GEOIP\Location;
 use IP2Location\Database;
@@ -307,6 +308,13 @@ class GEO {
 		}
 
 		return '';
+	}
+
+	public function flag_from_country( string $code ) : string {
+		$continent = $this->continent( $code );
+		$location  = $this->country( $code ) . ( empty( $continent ) ? '' : ' (' . $continent . ')' );
+
+		return Misc::flag_from_country_code( $code, $location, strtolower( $code ) !== 'xx' ? 'active' : 'private' );
 	}
 
 	public function country( string $code ) : string {

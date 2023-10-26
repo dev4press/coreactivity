@@ -155,6 +155,32 @@ class Display {
 		return $render;
 	}
 
+	public function components_list_to_markdown() : string {
+		$render = '';
+
+		$components = Activity::instance()->get_all_components();
+		$events     = Activity::instance()->get_all_events();
+
+		foreach ( Activity::instance()->get_all_categories() as $category => $label ) {
+			$render .= PHP_EOL . '## ' . $label . PHP_EOL;
+
+			foreach ( $components as $component ) {
+				if ( $component->category != $category || ! isset( $component->plugin ) || $component->plugin != 'coreactivity' ) {
+					continue;
+				}
+
+				$render .= PHP_EOL . '### ' . $component->label . ' `' . $component->component . '`' . PHP_EOL . PHP_EOL;
+
+				foreach ( $events[ $component->component ] as $event ) {
+					$version = isset( $event->version ) && $event->version != '1.0' ? ' (v' . $event->version . ')' : '';
+					$render  .= '* ' . $event->label . ' `' . $event->event . '`' . $version . PHP_EOL;
+				}
+			}
+		}
+
+		return $render;
+	}
+
 	private function _display_theme( stdClass $item ) : string {
 		$render = '';
 
