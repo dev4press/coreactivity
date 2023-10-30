@@ -56,8 +56,8 @@ class Data {
 
 	public static function get_geoip2_db() : array {
 		return array(
-			'GeoLite2-Country' => __( 'Lite: Country', 'coreactivity' ),
-			'GeoLite2-City'    => __( 'Lite: Country, City', 'coreactivity' ),
+			'GeoLite2-Country' => __( 'GeoLite2: Country', 'coreactivity' ),
+			'GeoLite2-City'    => __( 'GeoLite2: Country, City, Location, ZIP, Timezone', 'coreactivity' ),
 		);
 	}
 }

@@ -12,10 +12,7 @@ use Dev4Press\v44\Service\GEOIP\GEOJSIO;
 use Dev4Press\v44\Service\GEOIP\Location;
 use GeoIp2\Database\Reader;
 use IP2Location\Database;
-use PharData;
-use WP_Error;
 use WP_Filesystem_Direct;
-use WpOrg\Requests\Exception;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -348,6 +345,8 @@ class GEO {
 			$path = wp_normalize_path( $path );
 
 			if ( wp_mkdir_p( $path ) ) {
+				require_once ABSPATH . '/wp-admin/includes/file.php';
+
 				WP_Filesystem();
 
 				$_license = coreactivity_settings()->get( 'geolocation_geoip2_license' );
@@ -423,6 +422,8 @@ class GEO {
 			$path = wp_normalize_path( $path );
 
 			if ( wp_mkdir_p( $path ) ) {
+				require_once ABSPATH . '/wp-admin/includes/file.php';
+
 				WP_Filesystem();
 
 				$_token = coreactivity_settings()->get( 'geolocation_ip2location_token' );

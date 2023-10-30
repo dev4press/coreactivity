@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name:       coreActivity: Activity Logging plugin for WordPress
  * Plugin URI:        https://plugins.dev4press.com/coreactivity/

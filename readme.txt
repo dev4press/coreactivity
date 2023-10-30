@@ -52,7 +52,7 @@ Currently, plugin has 23 components with a total of 117 events, with direct inte
 = Geo Location of IPs =
 The plugin can locate where the IP making the request is coming from. There are currently two methods available, with more coming in the future:
 
-* Online via GEOJS.io website
+* Online via GeoJS.io website
 * IP2Location Local Database
 * MaxMind GeoLite2 Local Database
 

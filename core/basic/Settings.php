@@ -87,6 +87,7 @@ class Settings extends BaseSettings {
 		$this->info = new Information();
 
 		add_action( 'coreactivity_load_settings', array( $this, 'init' ), 2 );
+		add_action( 'coreactivity_settings_value_changed', array( $this, 'settings_has_changed' ), 10, 4 );
 	}
 
 	protected function _install_db() {
@@ -98,5 +99,13 @@ class Settings extends BaseSettings {
 		$values = $this->get( $option );
 
 		return in_array( $value, $values );
+	}
+
+	public function settings_has_changed( $name, $group, $old, $value ) {
+		if ( $group == 'settings' ) {
+			if ( ( $name == 'geolocation_method' && $value != 'online' ) || $name == 'geolocation_ip2location_db' || $name == 'geolocation_geoip2_db' ) {
+				wp_schedule_single_event( time() + 5, 'coreactivity_task_geo_db' );
+			}
+		}
 	}
 }
