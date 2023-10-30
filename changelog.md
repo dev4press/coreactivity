@@ -6,6 +6,7 @@
 
 * **new** geolocation with the use of `MaxMind GEOIP2` database
 * **new** `MaxMind GEOIP2` support for weekly downloading of Lite database
+* **new** plugin dashboard widget for the GEO Location
 
 ### Version: 1.2 / October 30 2023
 

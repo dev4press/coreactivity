@@ -34,7 +34,7 @@ class Settings extends BaseSettings {
 						'name'     => '',
 						'class'    => '',
 						'settings' => array(
-							$this->i( 'tools-cleanup', 'period', __( 'Log entries age', 'coreactivity' ), '', Type::SELECT )->data( 'array', $this->get_period_list() ),
+							$this->i( 'tools-cleanup', 'period', __( 'Log entries age', 'coreactivity' ), '', Type::SELECT )->data( 'array', Data::get_period_list() ),
 						),
 					),
 				),
@@ -230,7 +230,7 @@ class Settings extends BaseSettings {
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
-								$this->i( 'settings', 'geolocation_method', __( 'Method', 'coreactivity' ), __( 'Online geolocation is usually slower, it does make a call to the online service for geo-locating the IP.', 'coreactivity' ), Type::SELECT )->data( 'array', $this->get_geo_location_methods() )->more(
+								$this->i( 'settings', 'geolocation_method', __( 'Method', 'coreactivity' ), __( 'Online geolocation is usually slower, it does make a call to the online service for geo-locating the IP.', 'coreactivity' ), Type::SELECT )->data( 'array', Data::get_geo_location_methods() )->more(
 									array(
 										__( 'Online geolocation can be slower, since it depends on the external services to work. It can also happen for the request to timeout or fail.', 'coreactivity' ),
 										__( 'Database approach is the best solution since the database is on your server, and it is much faster to get the location, without having any issues that online services can have.', 'coreactivity' ),
@@ -272,7 +272,7 @@ class Settings extends BaseSettings {
 										),
 									)
 								),
-								$this->i( 'settings', 'geolocation_ip2location_db', __( 'Database', 'coreactivity' ), __( 'Depending on the database you choose, you will get additional information for each IP.', 'coreactivity' ), Type::SELECT )->data( 'array', $this->get_ip2location_db() )->more(
+								$this->i( 'settings', 'geolocation_ip2location_db', __( 'Database', 'coreactivity' ), __( 'Depending on the database you choose, you will get additional information for each IP.', 'coreactivity' ), Type::SELECT )->data( 'array', Data::get_ip2location_db() )->more(
 									array(
 										__( 'Country database is about 9MB in size, other databases can be up to 200MB in size.', 'coreactivity' ),
 										__( 'If you choose Country only database, you will be able to log in only IP country code.', 'coreactivity' ),
@@ -309,7 +309,7 @@ class Settings extends BaseSettings {
 										),
 									)
 								),
-								$this->i( 'settings', 'geolocation_geoip2_db', __( 'Database', 'coreactivity' ), __( 'Depending on the database you choose, you will get additional information for each IP.', 'coreactivity' ), Type::SELECT )->data( 'array', $this->get_geoip2_db() )->more(
+								$this->i( 'settings', 'geolocation_geoip2_db', __( 'Database', 'coreactivity' ), __( 'Depending on the database you choose, you will get additional information for each IP.', 'coreactivity' ), Type::SELECT )->data( 'array', Data::get_geoip2_db() )->more(
 									array(
 										__( 'If you choose Country only database, you will be able to log in only IP country code.', 'coreactivity' ),
 									)
@@ -466,7 +466,7 @@ class Settings extends BaseSettings {
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
-								$this->i( 'notifications', 'weekly_day', __( 'Day', 'coreactivity' ), __( 'This is day of the week when the daily digest is created.', 'coreactivity' ), Type::SELECT )->data( 'array', $this->get_week_days() ),
+								$this->i( 'notifications', 'weekly_day', __( 'Day', 'coreactivity' ), __( 'This is day of the week when the daily digest is created.', 'coreactivity' ), Type::SELECT )->data( 'array', Data::get_week_days() ),
 								$this->i( 'notifications', 'weekly_hour', __( 'Hour', 'coreactivity' ), __( 'This is the hour of the day when the daily digest is created.', 'coreactivity' ), Type::ABSINT )->args( array(
 									'label_unit' => __( 'Hour', 'coreactivity' ),
 									'min'        => 0,
@@ -538,60 +538,6 @@ class Settings extends BaseSettings {
 					),
 				),
 			),
-		);
-	}
-
-	protected function get_period_list() : array {
-		return array(
-			''     => __( 'Select the data age', 'coreactivity' ),
-			'd000' => __( 'All logged data', 'coreactivity' ),
-			'd001' => __( 'Logged data older than 1 day', 'coreactivity' ),
-			'd003' => __( 'Logged data older than 3 days', 'coreactivity' ),
-			'd007' => __( 'Logged data older than 7 days', 'coreactivity' ),
-			'd014' => __( 'Logged data older than 14 days', 'coreactivity' ),
-			'd030' => __( 'Logged data older than 30 days', 'coreactivity' ),
-			'd060' => __( 'Logged data older than 60 days', 'coreactivity' ),
-			'd090' => __( 'Logged data older than 90 days', 'coreactivity' ),
-			'd180' => __( 'Logged data older than 180 days', 'coreactivity' ),
-			'm012' => __( 'Logged data older than 1 year', 'coreactivity' ),
-			'm024' => __( 'Logged data older than 2 years', 'coreactivity' ),
-		);
-	}
-
-	protected function get_week_days() : array {
-		global $wp_locale;
-
-		$list = array();
-
-		for ( $day_index = 0; $day_index <= 6; $day_index ++ ) {
-			$list[ 'D' . $day_index ] = $wp_locale->get_weekday( $day_index );
-		}
-
-		return $list;
-	}
-
-	protected function get_geo_location_methods() : array {
-		return array(
-			'online'      => __( 'Online', 'coreactivity' ),
-			'ip2location' => __( 'IP2Location Database', 'coreactivity' ),
-			'geoip2'      => __( 'GeoIP2 Database', 'coreactivity' ),
-		);
-	}
-
-	protected function get_ip2location_db() : array {
-		return array(
-			'DB1LITEBINIPV6'  => __( 'Lite: Country', 'coreactivity' ),
-			'DB3LITEBINIPV6'  => __( 'Lite: Country, Region, City', 'coreactivity' ),
-			'DB5LITEBINIPV6'  => __( 'Lite: Country, Region, City, Location', 'coreactivity' ),
-			'DB9LITEBINIPV6'  => __( 'Lite: Country, Region, City, Location, ZIP', 'coreactivity' ),
-			'DB11LITEBINIPV6' => __( 'Lite: Country, Region, City, Location, ZIP, Timezone', 'coreactivity' ),
-		);
-	}
-
-	protected function get_geoip2_db() : array {
-		return array(
-			'GeoLite2-Country' => __( 'Lite: Country', 'coreactivity' ),
-			'GeoLite2-City'    => __( 'Lite: Country, City', 'coreactivity' ),
 		);
 	}
 }

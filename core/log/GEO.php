@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
-use Dev4Press\Plugin\CoreActivity\Location\GEOIP2;
+use Dev4Press\Plugin\CoreActivity\Location\GeoIP2;
 use Dev4Press\Plugin\CoreActivity\Location\IP2Location;
 use Dev4Press\v44\Core\Helpers\Data;
 use Dev4Press\v44\Core\Quick\File;
@@ -13,7 +13,9 @@ use Dev4Press\v44\Service\GEOIP\Location;
 use GeoIp2\Database\Reader;
 use IP2Location\Database;
 use PharData;
+use WP_Error;
 use WP_Filesystem_Direct;
+use WpOrg\Requests\Exception;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -294,7 +296,7 @@ class GEO {
 		if ( $this->method == 'ip2download' ) {
 			IP2Location::instance()->bulk( $ips );
 		} else if ( $this->method == 'geoip2' ) {
-			GEOIP2::instance()->bulk( $ips );
+			GeoIP2::instance()->bulk( $ips );
 		} else {
 			GEOJSIO::instance()->bulk( $ips );
 		}
@@ -304,7 +306,7 @@ class GEO {
 		if ( $this->method == 'ip2download' ) {
 			return IP2Location::instance()->locate( $ip );
 		} else if ( $this->method == 'geoip2' ) {
-			return GEOIP2::instance()->locate( $ip );
+			return GeoIP2::instance()->locate( $ip );
 		} else {
 			return GEOJSIO::instance()->locate( $ip );
 		}
@@ -351,35 +353,50 @@ class GEO {
 				$_license = coreactivity_settings()->get( 'geolocation_geoip2_license' );
 				$_db      = coreactivity_settings()->get( 'geolocation_geoip2_db' );
 
+				coreactivity_settings()->set( 'geoip2_attempt', time(), 'core' );
+
 				if ( ! empty( $_license ) ) {
 					$_url = sprintf( 'https://download.maxmind.com/app/geoip_download?edition_id=%s&license_key=%s&suffix=tar.gz', $_db, $_license );
 
 					$temp = download_url( $_url );
-					$done = $this->unpack_tar_gz( $temp, $path );
 
-					if ( $done ) {
-						$vars = File::scan_dir( $path, 'folders', array(), '/' . $_db . '/' );
+					if ( ! is_wp_error( $temp ) ) {
+						$done = File::unpack_tar_gz( $temp, $path );
 
-						rsort( $vars );
+						if ( ! is_wp_error( $done ) ) {
+							$vars = File::scan_dir( $path, 'folders', array(), '/' . $_db . '/' );
 
-						if ( count( $vars ) > 1 ) {
-							$dir   = new WP_Filesystem_Direct( 0 );
-							$limit = count( $vars );
+							rsort( $vars );
 
-							for ( $i = 1; $i < $limit; $i ++ ) {
-								$dir->rmdir( $path . $vars[ $i ], true );
+							if ( count( $vars ) > 1 ) {
+								$dir   = new WP_Filesystem_Direct( 0 );
+								$limit = count( $vars );
+
+								for ( $i = 1; $i < $limit; $i ++ ) {
+									$dir->rmdir( $path . $vars[ $i ], true );
+								}
 							}
-						}
 
-						$file_path = $path . $vars[0] . '/' . $_db . '.mmdb';
+							$file_path = $path . $vars[0] . '/' . $_db . '.mmdb';
 
-						if ( file_exists( $file_path ) ) {
-							coreactivity_settings()->set( 'geoip2_timestamp', time(), 'core' );
-							coreactivity_settings()->set( 'geoip2_db', $file_path, 'core' );
-							coreactivity_settings()->save( 'core' );
+							if ( file_exists( $file_path ) ) {
+								coreactivity_settings()->set( 'geoip2_timestamp', time(), 'core' );
+								coreactivity_settings()->set( 'geoip2_db', $file_path, 'core' );
+								coreactivity_settings()->set( 'geoip2_error', '', 'core' );
+							} else {
+								coreactivity_settings()->set( 'geoip2_error', __( 'File is Missing' ), 'core' );
+							}
+						} else {
+							coreactivity_settings()->set( 'geoip2_error', $done->get_error_message(), 'core' );
 						}
+					} else {
+						coreactivity_settings()->set( 'geoip2_error', $temp->get_error_message(), 'core' );
 					}
+				} else {
+					coreactivity_settings()->set( 'geoip2_error', __( 'Token Missing' ), 'core' );
 				}
+
+				coreactivity_settings()->save( 'core' );
 			}
 		}
 	}
@@ -411,23 +428,36 @@ class GEO {
 				$_token = coreactivity_settings()->get( 'geolocation_ip2location_token' );
 				$_db    = coreactivity_settings()->get( 'geolocation_ip2location_db' );
 
+				coreactivity_settings()->set( 'ip2location_attempt', time(), 'core' );
+
 				if ( ! empty( $_token ) ) {
 					$_url = sprintf( 'https://www.ip2location.com/download/?token=%s&file=%s', $_token, $_db );
 
 					$temp = download_url( $_url );
-					$done = unzip_file( $temp, $path );
 
-					if ( ! is_wp_error( $done ) ) {
-						$file_name = $this->ip2location_file_name( $_db );
-						$file_path = wp_normalize_path( $path . $file_name );
+					if ( ! is_wp_error( $temp ) ) {
+						$done = unzip_file( $temp, $path );
 
-						if ( file_exists( $file_path ) ) {
-							coreactivity_settings()->set( 'ip2location_timestamp', time(), 'core' );
-							coreactivity_settings()->set( 'ip2location_db', $file_path, 'core' );
-							coreactivity_settings()->save( 'core' );
+						if ( ! is_wp_error( $done ) ) {
+							$file_name = $this->ip2location_file_name( $_db );
+							$file_path = wp_normalize_path( $path . $file_name );
+
+							if ( file_exists( $file_path ) ) {
+								coreactivity_settings()->set( 'ip2location_timestamp', time(), 'core' );
+								coreactivity_settings()->set( 'ip2location_db', $file_path, 'core' );
+								coreactivity_settings()->set( 'ip2location_error', '', 'core' );
+							}
+						} else {
+							coreactivity_settings()->set( 'ip2location_error', $done->get_error_message(), 'core' );
 						}
+					} else {
+						coreactivity_settings()->set( 'ip2location_error', $temp->get_error_message(), 'core' );
 					}
+				} else {
+					coreactivity_settings()->set( 'ip2location_error', __( 'Token Missing' ), 'core' );
 				}
+
+				coreactivity_settings()->save( 'core' );
 			}
 		}
 	}
@@ -456,11 +486,5 @@ class GEO {
 		);
 
 		return $list[ $db ] ?? '';
-	}
-
-	private function unpack_tar_gz( $file, $path ) : bool {
-		$tar = new PharData( $file );
-
-		return $tar->extractTo( $path, null, true ) === true;
 	}
 }

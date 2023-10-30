@@ -9,7 +9,7 @@ use Dev4Press\v44\Service\GEOIP\Locator;
 use GeoIp2\Database\Reader;
 use Exception;
 
-class GEOIP2 extends Locator {
+class GeoIP2 extends Locator {
 	public function locate( string $ip ) : ?Location {
 		if ( IP::is_private( $ip ) ) {
 			return new Location(

@@ -22,9 +22,11 @@ class Settings extends BaseSettings {
 			'instant_datetime'      => '',
 			'ip2location_timestamp' => 0,
 			'ip2location_db'        => '',
+			'ip2location_attempt'   => 0,
 			'ip2location_error'     => '',
 			'geoip2_timestamp'      => 0,
 			'geoip2_db'             => '',
+			'geoip2_attempt'        => 0,
 			'geoip2_error'          => '',
 		),
 		'settings'      => array(

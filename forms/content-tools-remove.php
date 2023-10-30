@@ -29,6 +29,15 @@ if ( ! defined( 'ABSPATH' ) ) {
     </div>
 
     <div class="d4p-group d4p-group-tools">
+        <h3><?php esc_html_e( 'Remove additional files', 'coreactivity' ); ?></h3>
+        <div class="d4p-group-inner">
+            <label>
+                <input type="checkbox" class="widefat" name="coreactivity-tools[remove][geo-db]" value="on"/> <?php esc_html_e( 'Remove GEO Location Databases storage and files', 'coreactivity' ); ?>
+            </label>
+        </div>
+    </div>
+
+    <div class="d4p-group d4p-group-tools">
         <h3><?php esc_html_e( 'Remove database data and tables', 'coreactivity' ); ?></h3>
         <div class="d4p-group-inner">
             <p style="font-weight: bold"><?php esc_html_e( 'This will remove all shares and likes data!', 'coreactivity' ); ?></p>

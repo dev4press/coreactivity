@@ -2,7 +2,7 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, events, audit log, event log
-Stable tag: 1.2
+Stable tag: 1.3
 Requires at least: 5.5
 Tested up to: 6.3
 Requires PHP: 7.3
@@ -54,8 +54,9 @@ The plugin can locate where the IP making the request is coming from. There are 
 
 * Online via GEOJS.io website
 * IP2Location Local Database
+* MaxMind GeoLite2 Local Database
 
-To use IP2Location, you need to have account on IP2Location, to get the download token, and getting the Lite versions of the database is free. Plugin supports use of all Lite databases, and using the provided token it can keep the database updated on a weekly basis.
+To use IP2Location, you need to have account on IP2Location, to get the download token, and getting the Lite versions of the database is free. To use MaxMind GeoLite2, you need to have MaxMind account, and the license for downloading the files, it is free for the GeoLite2 database files. Plugin supports use of all Lite databases for both providers, and using the provided token it can keep the database updated on a weekly basis.
 
 = More Features =
 * Instant Notifications
@@ -162,6 +163,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 1.3 =
+MaxMind GeoLite2 support. Many improvements and fixes.
+
 = 1.2 =
 IP2Location support. Many improvements and fixes.
 

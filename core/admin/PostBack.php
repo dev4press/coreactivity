@@ -3,10 +3,12 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
+use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\v44\Core\Admin\PostBack as BasePostBack;
 use Dev4Press\v44\Core\Quick\Sanitize;
+use WP_Filesystem_Direct;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -74,6 +76,17 @@ class PostBack extends BasePostBack {
 		if ( ! empty( $remove ) ) {
 			if ( in_array( 'settings', $remove ) ) {
 				$this->a()->settings()->remove_plugin_settings_by_group( 'settings' );
+			}
+
+			if ( in_array( 'geo-db', $remove ) ) {
+				$path = Plugin::instance()->uploads_path();
+
+				if ( $path !== false ) {
+					WP_Filesystem();
+
+					$dir = new WP_Filesystem_Direct( 0 );
+					$dir->rmdir( $path, true );
+				}
 			}
 
 			if ( in_array( 'drop', $remove ) ) {
