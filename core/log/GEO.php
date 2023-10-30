@@ -3,12 +3,17 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
+use Dev4Press\Plugin\CoreActivity\Location\GEOIP2;
 use Dev4Press\Plugin\CoreActivity\Location\IP2Location;
 use Dev4Press\v44\Core\Helpers\Data;
+use Dev4Press\v44\Core\Quick\File;
 use Dev4Press\v44\Core\Quick\Misc;
 use Dev4Press\v44\Service\GEOIP\GEOJSIO;
 use Dev4Press\v44\Service\GEOIP\Location;
+use GeoIp2\Database\Reader;
 use IP2Location\Database;
+use PharData;
+use WP_Filesystem_Direct;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -17,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class GEO {
 	private $method;
 	private $ip2download = null;
+	private $geoip2 = null;
 	private $codes = array(
 		'ad' => array( 'name' => 'Andorra', 'continent' => 'EU' ),
 		'ae' => array( 'name' => 'United Arab Emirates', 'continent' => 'AS' ),
@@ -287,6 +293,8 @@ class GEO {
 	public function bulk( array $ips ) {
 		if ( $this->method == 'ip2download' ) {
 			IP2Location::instance()->bulk( $ips );
+		} else if ( $this->method == 'geoip2' ) {
+			GEOIP2::instance()->bulk( $ips );
 		} else {
 			GEOJSIO::instance()->bulk( $ips );
 		}
@@ -295,6 +303,8 @@ class GEO {
 	public function locate( string $ip ) : ?Location {
 		if ( $this->method == 'ip2download' ) {
 			return IP2Location::instance()->locate( $ip );
+		} else if ( $this->method == 'geoip2' ) {
+			return GEOIP2::instance()->locate( $ip );
 		} else {
 			return GEOJSIO::instance()->locate( $ip );
 		}
@@ -328,11 +338,72 @@ class GEO {
 		return $list[ $code ] ?? '';
 	}
 
-	public function ip2download_db_update() {
+	public function geoip2_db_update() {
+		$path = Plugin::instance()->uploads_path();
+
+		if ( $path !== false ) {
+			$path = trailingslashit( $path ) . 'geoip2/';
+			$path = wp_normalize_path( $path );
+
+			if ( wp_mkdir_p( $path ) ) {
+				WP_Filesystem();
+
+				$_license = coreactivity_settings()->get( 'geolocation_geoip2_license' );
+				$_db      = coreactivity_settings()->get( 'geolocation_geoip2_db' );
+
+				if ( ! empty( $_license ) ) {
+					$_url = sprintf( 'https://download.maxmind.com/app/geoip_download?edition_id=%s&license_key=%s&suffix=tar.gz', $_db, $_license );
+
+					$temp = download_url( $_url );
+					$done = $this->unpack_tar_gz( $temp, $path );
+
+					if ( $done ) {
+						$vars = File::scan_dir( $path, 'folders', array(), '/' . $_db . '/' );
+
+						rsort( $vars );
+
+						if ( count( $vars ) > 1 ) {
+							$dir   = new WP_Filesystem_Direct( 0 );
+							$limit = count( $vars );
+
+							for ( $i = 1; $i < $limit; $i ++ ) {
+								$dir->rmdir( $path . $vars[ $i ], true );
+							}
+						}
+
+						$file_path = $path . $vars[0] . '/' . $_db . '.mmdb';
+
+						if ( file_exists( $file_path ) ) {
+							coreactivity_settings()->set( 'geoip2_timestamp', time(), 'core' );
+							coreactivity_settings()->set( 'geoip2_db', $file_path, 'core' );
+							coreactivity_settings()->save( 'core' );
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public function geoip2() : ?Reader {
+		if ( ! ( $this->geoip2 instanceof Reader ) ) {
+			require_once COREACTIVITY_PATH . 'vendor/geoip2/autoload.php';
+
+			$path = coreactivity_settings()->get( 'geoip2_db', 'core' );
+
+			if ( file_exists( $path ) ) {
+				$this->geoip2 = new Reader( $path );
+			}
+		}
+
+		return $this->geoip2;
+	}
+
+	public function ip2location_db_update() {
 		$path = Plugin::instance()->uploads_path();
 
 		if ( $path !== false ) {
 			$path = trailingslashit( $path ) . 'ip2location/';
+			$path = wp_normalize_path( $path );
 
 			if ( wp_mkdir_p( $path ) ) {
 				WP_Filesystem();
@@ -347,11 +418,11 @@ class GEO {
 					$done = unzip_file( $temp, $path );
 
 					if ( ! is_wp_error( $done ) ) {
-						$file_name = $this->ip2download_file_name( $_db );
+						$file_name = $this->ip2location_file_name( $_db );
 						$file_path = wp_normalize_path( $path . $file_name );
 
 						if ( file_exists( $file_path ) ) {
-							coreactivity_settings()->set( 'ip2location_timestamp', $file_path, 'core' );
+							coreactivity_settings()->set( 'ip2location_timestamp', time(), 'core' );
 							coreactivity_settings()->set( 'ip2location_db', $file_path, 'core' );
 							coreactivity_settings()->save( 'core' );
 						}
@@ -361,7 +432,7 @@ class GEO {
 		}
 	}
 
-	public function ip2download() : ?Database {
+	public function ip2location() : ?Database {
 		if ( ! ( $this->ip2download instanceof Database ) ) {
 			require_once COREACTIVITY_PATH . 'vendor/ip2location/autoload.php';
 
@@ -375,7 +446,7 @@ class GEO {
 		return $this->ip2download;
 	}
 
-	private function ip2download_file_name( string $db ) : string {
+	private function ip2location_file_name( string $db ) : string {
 		$list = array(
 			'DB1LITEBINIPV6'  => 'IP2LOCATION-LITE-DB1.IPV6.BIN',
 			'DB3LITEBINIPV6'  => 'IP2LOCATION-LITE-DB3.IPV6.BIN',
@@ -385,5 +456,11 @@ class GEO {
 		);
 
 		return $list[ $db ] ?? '';
+	}
+
+	private function unpack_tar_gz( $file, $path ) : bool {
+		$tar = new PharData( $file );
+
+		return $tar->extractTo( $path, null, true ) === true;
 	}
 }

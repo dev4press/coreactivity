@@ -280,6 +280,42 @@ class Settings extends BaseSettings {
 								),
 							),
 						),
+						array(
+							'label'    => __( 'GEOIP2 Database', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'switch'   => array(
+								'role'  => 'value',
+								'name'  => 'coreactivity-switch-method-geo',
+								'value' => 'geoip2',
+								'ref'   => $this->value( 'geolocation_method', 'settings', 'online' ),
+							),
+							'settings' => array(
+								$this->i( 'settings', 'geolocation_geoip2_license', __( 'License', 'coreactivity' ), __( 'License is required to download and updated database file.', 'coreactivity' ), Type::TEXT )->more(
+									array(
+										__( 'GEOIP2 has free and premium services and databases. For this plugin purposes, Lite database is quite sufficient.', 'coreactivity' ),
+										__( 'To get the download license, register on the GEOIP2 website, and once you are logged in there, generate new license.', 'coreactivity' ),
+										__( 'Plugin will attempt to download database file once a week during regular weekly maintenance.', 'coreactivity' ),
+									)
+								)->buttons(
+									array(
+										array(
+											'type'   => 'a',
+											'rel'    => 'noopener',
+											'target' => '_blank',
+											'link'   => 'https://www.maxmind.com/en/account/login',
+											'class'  => 'button-secondary',
+											'title'  => __( 'Register and Get token on GeoIP2', 'coreactivity' ),
+										),
+									)
+								),
+								$this->i( 'settings', 'geolocation_geoip2_db', __( 'Database', 'coreactivity' ), __( 'Depending on the database you choose, you will get additional information for each IP.', 'coreactivity' ), Type::SELECT )->data( 'array', $this->get_geoip2_db() )->more(
+									array(
+										__( 'If you choose Country only database, you will be able to log in only IP country code.', 'coreactivity' ),
+									)
+								),
+							),
+						),
 					),
 				),
 			),
@@ -538,6 +574,7 @@ class Settings extends BaseSettings {
 		return array(
 			'online'      => __( 'Online', 'coreactivity' ),
 			'ip2location' => __( 'IP2Location Database', 'coreactivity' ),
+			'geoip2'      => __( 'GeoIP2 Database', 'coreactivity' ),
 		);
 	}
 
@@ -548,6 +585,13 @@ class Settings extends BaseSettings {
 			'DB5LITEBINIPV6'  => __( 'Lite: Country, Region, City, Location', 'coreactivity' ),
 			'DB9LITEBINIPV6'  => __( 'Lite: Country, Region, City, Location, ZIP', 'coreactivity' ),
 			'DB11LITEBINIPV6' => __( 'Lite: Country, Region, City, Location, ZIP, Timezone', 'coreactivity' ),
+		);
+	}
+
+	protected function get_geoip2_db() : array {
+		return array(
+			'GeoLite2-Country' => __( 'Lite: Country', 'coreactivity' ),
+			'GeoLite2-City'    => __( 'Lite: Country, City', 'coreactivity' ),
 		);
 	}
 }

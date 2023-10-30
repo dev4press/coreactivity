@@ -179,7 +179,7 @@ class User extends Component {
 
 	public function logs_meta_column_keys( array $meta_column_keys ) : array {
 		$meta_column_keys[ $this->code() ] = array(
-			'-' => array(
+			'-'            => array(
 				'old_email',
 				'new_email',
 				'old_url',

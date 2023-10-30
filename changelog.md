@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 1.3 / November 6 2023
+
+* **new** geolocation with the use of `MaxMind GEOIP2` database
+* **new** `MaxMind GEOIP2` support for weekly downloading of Lite database
+
 ### Version: 1.2 / October 30 2023
 
 * **new** database: logs table has new `country_code` column

@@ -6,7 +6,6 @@ use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
-use Dev4Press\Plugin\CoreActivity\Log\GEO;
 use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\v44\Core\Plugins\Core;
@@ -63,6 +62,7 @@ class Plugin extends Core {
 		add_action( 'coreactivity_daily_digest', array( $this, 'daily_digest' ) );
 		add_action( 'coreactivity_weekly_digest', array( $this, 'weekly_digest' ) );
 		add_action( 'coreactivity_weekly_maintenance', array( $this, 'weekly_maintenance' ) );
+		add_action( 'coreactivity_task_geo_db', array( $this, 'weekly_task_geo_dab_update' ) );
 
 		if ( ! wp_next_scheduled( 'coreactivity_log_purge' ) ) {
 			if ( $this->s()->get( 'auto_cleanup_active' ) ) {
@@ -127,7 +127,17 @@ class Plugin extends Core {
 	}
 
 	public function weekly_maintenance() {
-		GEO::instance()->ip2download_db_update();
+		$this->weekly_task_geo_dab_update();
+	}
+
+	public function weekly_task_geo_dab_update() {
+		if ( $this->s()->get( 'geolocation_method' ) == 'ip2location' ) {
+			LogLocation::instance()->ip2location_db_update();
+		}
+
+		if ( $this->s()->get( 'geolocation_method' ) == 'geoip2' ) {
+			LogLocation::instance()->geoip2_db_update();
+		}
 	}
 
 	public function uploads_path() {

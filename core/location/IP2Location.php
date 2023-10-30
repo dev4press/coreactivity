@@ -32,7 +32,7 @@ class IP2Location extends Locator {
 			);
 		}
 
-		$db = GEO::instance()->ip2download();
+		$db = GEO::instance()->ip2location();
 
 		if ( $db instanceof Database ) {
 			$records = $db->lookup( $ip, Database::ALL );
