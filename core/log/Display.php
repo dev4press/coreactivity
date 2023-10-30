@@ -169,7 +169,7 @@ class Display {
 					continue;
 				}
 
-				$render .= PHP_EOL . '### ' . $component->label . ' `' . $component->component . '`' . PHP_EOL . PHP_EOL;
+				$render .= PHP_EOL . '### ' . $component->label . ' (`' . $component->component . '`)' . PHP_EOL . PHP_EOL;
 
 				foreach ( $events[ $component->component ] as $event ) {
 					$version = isset( $event->version ) && $event->version != '1.0' ? ' (v' . $event->version . ')' : '';
@@ -178,7 +178,7 @@ class Display {
 			}
 		}
 
-		return $render;
+		return $render . PHP_EOL;
 	}
 
 	private function _display_theme( stdClass $item ) : string {

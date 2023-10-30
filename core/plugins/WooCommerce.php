@@ -14,6 +14,7 @@ class WooCommerce extends Content {
 	protected $name = 'woocommerce';
 	protected $icon = 'logo-woo';
 	protected $plugin_file = 'woocommerce/woocommerce.php';
+	protected $version = '1.1';
 
 	public function __construct() {
 		parent::__construct();

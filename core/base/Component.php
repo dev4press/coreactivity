@@ -32,6 +32,7 @@ abstract class Component {
 	protected $icon = 'ui-folder';
 	protected $scope = '';
 	protected $category = 'wordpress';
+	protected $version = '1.0';
 	/**
 	 * @var array
 	 */
@@ -90,6 +91,7 @@ abstract class Component {
 				'object_type'  => $data['object_type'] ?? $this->object_type,
 				'is_security'  => $data['is_security'] ?? $this->is_security,
 				'is_malicious' => $data['is_malicious'] ?? $this->is_malicious,
+				'version'      => $data['version'] ?? $this->version,
 				'level'        => $data['level'] ?? 0,
 			), $data['rules'] ?? array() );
 

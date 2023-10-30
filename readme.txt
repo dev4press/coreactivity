@@ -47,7 +47,15 @@ Currently, plugin has 23 components with a total of 117 events, with direct inte
 * Jetpack (2 events)
 * SweepPress (3 event)
 * User Switching (4 events)
-* WooCommerce (3 events)
+* WooCommerce (3 events) / v1.1
+
+= Geo Location of IPs =
+The plugin can locate where the IP making the request is coming from. There are currently two methods available, with more coming in the future:
+
+* Online via GEOJS.io website
+* IP2Location Local Database
+
+To use IP2Location, you need to have account on IP2Location, to get the download token, and getting the Lite versions of the database is free. Plugin supports use of all Lite databases, and using the provided token it can keep the database updated on a weekly basis.
 
 = More Features =
 * Instant Notifications
@@ -55,7 +63,6 @@ Currently, plugin has 23 components with a total of 117 events, with direct inte
 * Weekly Digest Notifications
 * Log Cleanup Tools
 * Auto Log Cleanup
-* GEO location of IPs
 * Log Live Updates
 * Define Exceptions
 
@@ -96,7 +103,25 @@ Plugin creates three new database tables where all events are registered, and al
 = How much the logging process slows down the website? =
 If you have all events enabled, the plugin will add 150+ hooks into various elements of WordPress and plugins. That is not too much when compared to 3000+ hooks WordPress runs on average, so it will not have a big impact on WordPress performance. And, it is a good idea to disable events you don't need to use.
 
+= Will coreActivity work if the cache plugin is used? =
+Yes. But, since cache plugins are bypassing WordPress to serve cached response, some events will be affected when the cached response is returned. To learn more, check out this article: [CoreActivity and Cache Plugins](https://support.dev4press.com/kb/article/coreactivity-cache-plugins/).
+
+= How precise GEO Location is? =
+If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
+
 == Changelog ==
+= 1.2 (2023.10.30) =
+* New: database: logs table has new `country_code` column
+* New: logging: options for logging country code and other location information
+* New: geolocation settings: choose between online and `IP2Location` database
+* New: geolocation with the use of `IP2Location` database
+* New: `IP2Location` support for weekly downloading of Lite database
+* New: registered weekly maintenance background job
+* Edit: Dev4Press Library 4.4 Beta
+* Fix: logs override filtering not working properly always
+* Fix: all CRON handlers registered as filters and not actions
+* Fix: weekly digest scheduled to run each day
+
 = 1.1 (2023.10.16) =
 * New: component: WooCommerce plugin, with 3 events
 * New: notifications component: support for WooCommerce `WC_Email` logging
@@ -137,11 +162,11 @@ If you have all events enabled, the plugin will add 150+ hooks into various elem
 * First official release
 
 == Upgrade Notice ==
+= 1.2 =
+IP2Location support. Many improvements and fixes.
+
 = 1.1 =
 New component. Various Logs panel improvements. Tweaks and bug fixes.
-
-= 1.0 =
-First official release.
 
 == Screenshots ==
 * Plugin Dashboard
