@@ -188,21 +188,22 @@ class Logs extends Table {
 
 	protected function process_request_args() {
 		$this->_request_args = array(
-			'filter-blog_id'     => Sanitize::_get_absint( 'filter-blog_id' ),
-			'filter-user_id'     => Sanitize::_get_absint( 'filter-user_id' ),
-			'filter-event_id'    => Sanitize::_get_absint( 'filter-event_id' ),
-			'filter-ip'          => Sanitize::_get_basic( 'filter-ip' ),
-			'filter-component'   => Sanitize::_get_basic( 'filter-component' ),
-			'filter-context'     => Sanitize::_get_basic( 'filter-context' ),
-			'filter-method'      => Sanitize::_get_basic( 'filter-method' ),
-			'filter-object_type' => Sanitize::_get_basic( 'filter-object_type' ),
-			'view'               => $this->_get_field( 'view' ),
-			'search'             => $this->_get_field( 's' ),
-			'period'             => $this->_get_field( 'period' ),
-			'orderby'            => $this->_get_field( 'orderby', 'l.log_id' ),
-			'order'              => $this->_get_field( 'order', 'DESC' ),
-			'paged'              => $this->_get_field( 'paged' ),
-			'min_id'             => 0,
+			'filter-blog_id'      => Sanitize::_get_absint( 'filter-blog_id' ),
+			'filter-user_id'      => Sanitize::_get_absint( 'filter-user_id' ),
+			'filter-event_id'     => Sanitize::_get_absint( 'filter-event_id' ),
+			'filter-ip'           => Sanitize::_get_basic( 'filter-ip' ),
+			'filter-component'    => Sanitize::_get_basic( 'filter-component' ),
+			'filter-country_code' => Sanitize::_get_basic( 'filter-country_code' ),
+			'filter-context'      => Sanitize::_get_basic( 'filter-context' ),
+			'filter-method'       => Sanitize::_get_basic( 'filter-method' ),
+			'filter-object_type'  => Sanitize::_get_basic( 'filter-object_type' ),
+			'view'                => $this->_get_field( 'view' ),
+			'search'              => $this->_get_field( 's' ),
+			'period'              => $this->_get_field( 'period' ),
+			'orderby'             => $this->_get_field( 'orderby', 'l.log_id' ),
+			'order'               => $this->_get_field( 'order', 'DESC' ),
+			'paged'               => $this->_get_field( 'paged' ),
+			'min_id'              => 0,
 		);
 
 		if ( ! empty( $this->_request_args['filter-component'] ) && ! $this->i()->is_component_valid( $this->_request_args['filter-component'] ) ) {
@@ -234,17 +235,18 @@ class Logs extends Table {
 
 	protected function prepare_query_settings() : array {
 		$sel = array(
-			'search'      => $this->get_request_arg( 'search' ),
-			'period'      => $this->get_request_arg( 'period' ),
-			'blog_id'     => $this->get_request_arg( 'filter-blog_id' ),
-			'user_id'     => $this->get_request_arg( 'filter-user_id' ),
-			'event_id'    => $this->get_request_arg( 'filter-event_id' ),
-			'ip'          => $this->get_request_arg( 'filter-ip' ),
-			'component'   => $this->get_request_arg( 'filter-component' ),
-			'context'     => $this->get_request_arg( 'filter-context' ),
-			'method'      => $this->get_request_arg( 'filter-method' ),
-			'object_type' => $this->get_request_arg( 'filter-object_type' ),
-			'min_id'      => $this->get_request_arg( 'min_id' ),
+			'search'       => $this->get_request_arg( 'search' ),
+			'period'       => $this->get_request_arg( 'period' ),
+			'blog_id'      => $this->get_request_arg( 'filter-blog_id' ),
+			'user_id'      => $this->get_request_arg( 'filter-user_id' ),
+			'event_id'     => $this->get_request_arg( 'filter-event_id' ),
+			'country_code' => $this->get_request_arg( 'filter-country_code' ),
+			'ip'           => $this->get_request_arg( 'filter-ip' ),
+			'component'    => $this->get_request_arg( 'filter-component' ),
+			'context'      => $this->get_request_arg( 'filter-context' ),
+			'method'       => $this->get_request_arg( 'filter-method' ),
+			'object_type'  => $this->get_request_arg( 'filter-object_type' ),
+			'min_id'       => $this->get_request_arg( 'min_id' ),
 		);
 
 		if ( isset( $this->_filter_lock['blog_id'] ) ) {
@@ -257,6 +259,10 @@ class Logs extends Table {
 
 		if ( isset( $this->_filter_lock['ip'] ) ) {
 			$sel['ip'] = $this->_filter_lock['ip'];
+		}
+
+		if ( isset( $this->_filter_lock['country_code'] ) ) {
+			$sel['country_code'] = $this->_filter_lock['country_code'];
 		}
 
 		if ( isset( $this->_filter_lock['object_type'] ) ) {
@@ -328,6 +334,10 @@ class Logs extends Table {
 			$sql['where'][] = $this->db()->prepare( 'l.`ip` = %s', $sel['ip'] );
 		}
 
+		if ( ! empty( $sel['country_code'] ) ) {
+			$sql['where'][] = $this->db()->prepare( 'l.`country_code` = %s', $sel['country_code'] );
+		}
+
 		if ( ! empty( $sel['object_type'] ) ) {
 			$sql['where'][] = $this->db()->prepare( 'l.`object_type` = %s', $sel['object_type'] );
 		}
@@ -385,7 +395,7 @@ class Logs extends Table {
 	}
 
 	protected function prepare_the_view() {
-		if ( in_array( $this->_request_args['view'], array( 'user_id', 'blog_id', 'event_id', 'ip', 'object_type', 'component', 'context', 'method' ) ) ) {
+		if ( in_array( $this->_request_args['view'], array( 'user_id', 'blog_id', 'event_id', 'ip', 'object_type', 'country_code', 'component', 'context', 'method' ) ) ) {
 			$this->_current_view = $this->_request_args['view'];
 
 			switch ( $this->_current_view ) {
@@ -434,6 +444,13 @@ class Logs extends Table {
 				case 'blog_id':
 					if ( ! isset( $this->_filter_lock['blog_id'] ) && ! empty( $this->_request_args['filter-blog_id'] ) ) {
 						$this->_filter_lock['blog_id'] = $this->_request_args['filter-blog_id'];
+					} else {
+						$this->_current_view = '';
+					}
+					break;
+				case 'country_code':
+					if ( ! isset( $this->_filter_lock['country_code'] ) && ! empty( $this->_request_args['filter-country_code'] ) ) {
+						$this->_filter_lock['country_code'] = $this->_request_args['filter-country_code'];
 					} else {
 						$this->_current_view = '';
 					}
@@ -488,6 +505,12 @@ class Logs extends Table {
 			) );
 		}
 
+		Elements::instance()->select_grouped( $this->get_country_codes(), array(
+			'empty'    => __( 'All Countries', 'coreactivity' ),
+			'selected' => $this->get_request_arg( 'filter-country_code' ),
+			'name'     => 'filter-country_code',
+		) );
+
 		if ( ! isset( $this->_filter_lock['method'] ) ) {
 			$_methods = array(
 				'' => __( 'All Methods', 'coreactivity' ),
@@ -522,6 +545,36 @@ class Logs extends Table {
 
 		submit_button( __( 'Filter', 'coreactivity' ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
 		echo '</div>';
+	}
+
+	protected function get_country_codes() : array {
+		$sql = "SELECT DISTINCT `country_code` FROM " . $this->db()->logs . " WHERE `country_code` IS NOT NULL ORDER BY `country_code`";
+		$raw = $this->db()->get_results( $sql );
+
+		$list = array(
+			'XX' => __( 'Localhost or Private', 'coreactivity' ),
+		);
+
+		$has_localhost = false;
+		foreach ( $raw as $row ) {
+			$code = $row->country_code;
+
+			if ( empty( $code ) ) {
+				continue;
+			}
+
+			if ( $code == 'XX' ) {
+				$has_localhost = true;
+			} else {
+				$list[ $code ] = trim( '[' . $code . '] ' . GEO::instance()->country( $code ) );
+			}
+		}
+
+		if ( ! $has_localhost ) {
+			unset( $list['XX'] );
+		}
+
+		return $list;
 	}
 
 	protected function get_views() : array {
@@ -598,6 +651,12 @@ class Logs extends Table {
 						$current_view .= $this->_filter_lock['ip'];
 					}
 
+					$current_view .= '</span>';
+					$current_key  .= 'ip';
+					break;
+				case 'country_code':
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-globe d4p-icon-fw"></i> <span>' . esc_html__( 'Country', 'coreactivity' ) . '</span>';
+					$current_view .= '<span>[' . $this->_filter_lock['country_code'] . '] ' . GEO::instance()->country( $this->_filter_lock['country_code'] ) . '</span>' . GEO::instance()->flag_from_country( $this->_filter_lock['country_code'] );
 					$current_view .= '</span>';
 					$current_key  .= 'ip';
 					break;
@@ -726,8 +785,12 @@ class Logs extends Table {
 	protected function column_ip( $item ) : string {
 		$render  = '<span>' . $item->ip . '</span>';
 		$actions = array(
-			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( 'Logs', 'coreactivity' ) . '</a>',
+			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( 'IP Logs', 'coreactivity' ) . '</a>',
 		);
+
+		if ( ! empty( $item->country_code ) ) {
+			$actions['view-country'] = '<a href="' . $this->_view( 'country_code', 'filter-country_code=' . $item->country_code ) . '">' . __( 'Country Logs', 'coreactivity' ) . '</a>';
+		}
 
 		if ( $this->_display_ip_country_flag ) {
 			if ( ! empty( $item->country_code ) ) {
@@ -954,8 +1017,13 @@ class Logs extends Table {
 
 	private function kses( $render ) : string {
 		$allowed_tags = array(
-			'a'      => array( 'href' => true ),
-			'i'      => array( 'title' => true, 'class' => true ),
+			'a'      => array(
+				'href' => true,
+			),
+			'i'      => array(
+				'title' => true,
+				'class' => true,
+			),
 			'br'     => array(),
 			'strong' => array(),
 		);

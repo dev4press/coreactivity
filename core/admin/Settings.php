@@ -234,13 +234,13 @@ class Settings extends BaseSettings {
 									array(
 										__( 'Online geolocation can be slower, since it depends on the external services to work. It can also happen for the request to timeout or fail.', 'coreactivity' ),
 										__( 'Database approach is the best solution since the database is on your server, and it is much faster to get the location, without having any issues that online services can have.', 'coreactivity' ),
+										__( 'If the selected database method is not working (database file is missing), plugin will fallback to use Online method.', 'coreactivity' ),
 									)
 								)->switch( array(
 									'role' => 'control',
 									'type' => 'section',
 									'name' => 'coreactivity-switch-method-geo',
 								) ),
-
 							),
 						),
 						array(

@@ -14,6 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			include( COREACTIVITY_PATH . 'forms/setup-database.php' );
 
+			coreactivity()->schedule_geo_db_update();
+
 			coreactivity_settings()->set( 'install', false, 'info' );
 			coreactivity_settings()->set( 'update', false, 'info', true );
 

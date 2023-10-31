@@ -52,7 +52,7 @@ class GetBack extends BaseGetBack {
 
 		if ( $action == 'do-not-log' ) {
 			$object_type = Sanitize::_get_slug( 'object-type' );
-			$object_name = isset( $_GET['object-name'] ) ? Sanitize::basic( wp_unslash( urldecode( $_GET['object-name'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
+			$object_name = isset( $_GET['object-name'] ) ? Sanitize::basic( wp_unslash( urldecode( $_GET['object-name'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
 			if ( ! empty( $object_name ) && ! empty( $object_type ) ) {
 				check_admin_referer( 'coreactivity-do-not-log-' . $object_name );

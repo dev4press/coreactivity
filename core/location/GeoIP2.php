@@ -39,7 +39,7 @@ class GeoIP2 extends Locator {
 				$data['longitude']      = $city->location->longitude;
 				$data['time_zone']      = $city->location->timeZone;
 				$data['zip_code']       = $city->postal->code;
-			} catch ( Exception $e ) {
+			} catch ( Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement,Squiz.Commenting.EmptyCatchComment
 			}
 
 			if ( ! isset( $data['country_code'] ) ) {
@@ -49,7 +49,7 @@ class GeoIP2 extends Locator {
 					$data['continent_code'] = $country->continent->code;
 					$data['country_code']   = $country->country->isoCode;
 					$data['country_name']   = $country->country->name;
-				} catch ( Exception $e ) {
+				} catch ( Exception $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement,Squiz.Commenting.EmptyCatchComment
 				}
 			}
 

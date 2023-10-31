@@ -104,7 +104,7 @@ class Settings extends BaseSettings {
 	public function settings_has_changed( $name, $group, $old, $value ) {
 		if ( $group == 'settings' ) {
 			if ( ( $name == 'geolocation_method' && $value != 'online' ) || $name == 'geolocation_ip2location_db' || $name == 'geolocation_geoip2_db' ) {
-				wp_schedule_single_event( time() + 5, 'coreactivity_task_geo_db' );
+				coreactivity()->schedule_geo_db_update();
 			}
 		}
 	}
