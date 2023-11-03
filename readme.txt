@@ -114,7 +114,13 @@ If the database for GEO location is regularly updated, locating the IP to the co
 = 1.3 (2023.11.06) =
 * New: geolocation with the use of `MaxMind GeoLite2` database
 * New: `MaxMind GeoLite2` support for weekly downloading of Lite database
+* New: option to hide the `Object` column from the Logs
 * New: plugin dashboard widget for the GEO Location information
+* New: logs panel option to filter by country based on geolocation
+* New: logs panel popup dialog with overview of all event data split in tabs
+* Edit: changes in the order for some columns on the log panel
+* Edit: expanded `SweepPress` sweeping job logged data
+* Edit: various improvements to the Logs panel styling
 * Edit: improved method for running the GEO Location database update
 * Edit: Dev4Press Library 4.4 Beta
 * Fix: initial GEO Location database update is not triggered properly

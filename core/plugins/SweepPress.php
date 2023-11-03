@@ -49,6 +49,9 @@ class SweepPress extends Plugin {
 	public function event_completed( $results ) {
 		$this->log( 'completed', array(), array(
 			'source'   => $results['stats']['source'],
+			'time'     => $results['stats']['time'],
+			'records'  => $results['stats']['records'],
+			'size'     => $results['stats']['size'],
 			'sweepers' => array_keys( $results['sweepers'] ),
 		) );
 	}

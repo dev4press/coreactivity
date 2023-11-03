@@ -9,8 +9,9 @@
 * **new** option to hide the `Object` column from the Logs
 * **new** plugin dashboard widget for the GEO Location information
 * **new** logs panel option to filter by country based on geolocation
-* **new** logs panel dialog with overview of all event data split in tabs
+* **new** logs panel popup dialog with overview of all event data split in tabs
 * **edit** changes in the order for some columns on the log panel
+* **edit** expanded `SweepPress` sweeping job logged data
 * **edit** various improvements to the Logs panel styling
 * **edit** improved method for running the GEO Location database update
 * **edit** Dev4Press Library 4.4 Beta
