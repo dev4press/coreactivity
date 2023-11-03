@@ -46,7 +46,7 @@ class Plugin extends BasePlugin {
 				'min'  => true,
 				'ver'  => coreactivity_settings()->file_version(),
 				'src'  => 'plugin',
-				'int'  => array( 'flags' ),
+				'int'  => array( 'flags', 'ctrl' ),
 			) )->register( 'js', 'coreactivity-admin',
 			array(
 				'path' => 'js/',
@@ -55,6 +55,7 @@ class Plugin extends BasePlugin {
 				'min'  => true,
 				'ver'  => coreactivity_settings()->file_version(),
 				'src'  => 'plugin',
+				'int'  => array( 'ctrl' ),
 			) );
 	}
 

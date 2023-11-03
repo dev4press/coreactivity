@@ -50,7 +50,7 @@ Currently, plugin has 23 components with a total of 117 events, with direct inte
 * WooCommerce (3 events) / v1.1
 
 = Geo Location of IPs =
-The plugin can locate where the IP making the request is coming from. There are currently two methods available, with more coming in the future:
+The plugin can locate where the IP making the request is coming from. There are currently three methods available, with more coming in the future:
 
 * Online via GeoJS.io website
 * IP2Location Local Database
@@ -111,6 +111,14 @@ Yes. But, since cache plugins are bypassing WordPress to serve cached response, 
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 1.3 (2023.11.06) =
+* New: geolocation with the use of `MaxMind GeoLite2` database
+* New: `MaxMind GeoLite2` support for weekly downloading of Lite database
+* New: plugin dashboard widget for the GEO Location information
+* Edit: improved method for running the GEO Location database update
+* Edit: Dev4Press Library 4.4 Beta
+* Fix: initial GEO Location database update is not triggered properly
+
 = 1.2 (2023.10.30) =
 * New: database: logs table has new `country_code` column
 * New: logging: options for logging country code and other location information

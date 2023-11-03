@@ -11,6 +11,19 @@
             off: "d4p-ui-toggle-off"
         },
         init: function() {
+            const dialog_view = $.extend({}, wp.dev4press.dialogs.default_dialog(), {
+                width: 720,
+                buttons: [
+                    $.extend({}, wp.dev4press.dialogs.default_button('ok', true), {
+                        click: function() {
+                            $("#coreactivity-log-dialog").wpdialog("close");
+                        }
+                    })
+                ]
+            });
+
+            $("#coreactivity-log-dialog").wpdialog(dialog_view);
+
             $(document).on("click", ".coreactivity-toggle-notification", function(e) {
                 e.preventDefault();
 
@@ -51,6 +64,18 @@
                         wp.coreactivity.admin.helpers.toggle(button, json);
                     }
                 });
+            });
+
+            $(document).on("click", ".coreactivity-show-view-popup", function(e) {
+                e.preventDefault();
+
+                const id = $(this).data("log");
+
+                $("#coreactivity-popup-tabs-info").html($("#coreactivity-popup-data-info-" + id).clone());
+                $("#coreactivity-popup-tabs-meta").html($("#coreactivity-popup-data-meta-" + id).clone());
+                $("#coreactivity-popup-tabs-location").html($("#coreactivity-popup-data-location-" + id).clone());
+
+                $("#coreactivity-log-dialog").wpdialog("open");
             });
         },
         columns: function() {

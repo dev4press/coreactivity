@@ -25,14 +25,15 @@ class Logs extends Table {
 	public $_rows_per_page_default = 25;
 	public $_views_separator = '';
 	public $_current_view = '';
+	public $_current_ip = '';
+	public $_server_ip = '';
 
-	protected $_current_ip = '';
-	protected $_server_ip = '';
 	protected $_display_columns_simplified;
 	protected $_display_ip_country_flag;
 	protected $_display_user_avatar;
 	protected $_display_request_column;
 	protected $_display_protocol_column;
+	protected $_display_object_type_column;
 	protected $_display_meta_column;
 	protected $_filter_key = 'coreactivity';
 	protected $_logs_instance = 'coreactivity';
@@ -59,6 +60,7 @@ class Logs extends Table {
 		$this->_display_user_avatar        = coreactivity_settings()->get( 'display_user_avatar' );
 		$this->_display_request_column     = coreactivity_settings()->get( 'display_request_column' );
 		$this->_display_protocol_column    = coreactivity_settings()->get( 'display_protocol_column' );
+		$this->_display_object_type_column = coreactivity_settings()->get( 'display_object_type_column' );
 
 		if ( ! $this->_display_meta_column ) {
 			$this->_display_meta_column = coreactivity_settings()->get( 'display_meta_column' );
@@ -129,11 +131,11 @@ class Logs extends Table {
 			'context'     => __( 'Context', 'coreactivity' ),
 			'method'      => __( 'Method', 'coreactivity' ),
 			'protocol'    => __( 'Protocol', 'coreactivity' ),
-			'ip'          => __( 'IP', 'coreactivity' ),
 			'request'     => __( 'Request', 'coreactivity' ),
 			'object_type' => __( 'Object Type', 'coreactivity' ),
 			'object_name' => __( 'Object', 'coreactivity' ),
 			'meta_data'   => __( 'Meta', 'coreactivity' ),
+			'ip'          => __( 'IP', 'coreactivity' ),
 			'logged'      => __( 'Logged', 'coreactivity' ),
 			'meta'        => '<i class="vers d4p-icon d4p-ui-chevron-square-down d4p-icon-lg" title="' . esc_attr__( 'Toggle Meta', 'coreactivity' ) . '"></i><span class="screen-reader-text">' . esc_html__( 'Toggle Meta', 'coreactivity' ) . '</span>',
 		);
@@ -148,6 +150,10 @@ class Logs extends Table {
 
 		if ( ! $this->_display_meta_column ) {
 			unset( $columns['meta_data'] );
+		}
+
+		if ( ! $this->_display_object_type_column ) {
+			unset( $columns['object_type'] );
 		}
 
 		foreach ( array_keys( $this->_filter_lock ) as $column ) {
@@ -193,10 +199,11 @@ class Logs extends Table {
 			'filter-event_id'     => Sanitize::_get_absint( 'filter-event_id' ),
 			'filter-ip'           => Sanitize::_get_basic( 'filter-ip' ),
 			'filter-component'    => Sanitize::_get_basic( 'filter-component' ),
-			'filter-country_code' => Sanitize::_get_basic( 'filter-country_code' ),
-			'filter-context'      => Sanitize::_get_basic( 'filter-context' ),
-			'filter-method'       => Sanitize::_get_basic( 'filter-method' ),
-			'filter-object_type'  => Sanitize::_get_basic( 'filter-object_type' ),
+			'filter-country_code' => strtoupper( Sanitize::_get_slug( 'filter-country_code' ) ),
+			'filter-context'      => strtoupper( Sanitize::_get_slug( 'filter-context' ) ),
+			'filter-method'       => strtoupper( Sanitize::_get_slug( 'filter-method' ) ),
+			'filter-object_type'  => Sanitize::_get_slug( 'filter-object_type' ),
+			'filter-object'       => Sanitize::_get_basic( 'filter-object' ),
 			'view'                => $this->_get_field( 'view' ),
 			'search'              => $this->_get_field( 's' ),
 			'period'              => $this->_get_field( 'period' ),
@@ -246,6 +253,7 @@ class Logs extends Table {
 			'context'      => $this->get_request_arg( 'filter-context' ),
 			'method'       => $this->get_request_arg( 'filter-method' ),
 			'object_type'  => $this->get_request_arg( 'filter-object_type' ),
+			'object_name'  => $this->get_request_arg( 'filter-object_name' ),
 			'min_id'       => $this->get_request_arg( 'min_id' ),
 		);
 
@@ -769,6 +777,19 @@ class Logs extends Table {
 		return $render . $this->row_actions( $actions );
 	}
 
+	protected function column_log_id( $item ) : string {
+		$render = $item->log_id;
+
+		$actions = array(
+			'popup' => '<a href="#" class="coreactivity-show-view-popup" data-log="' . $item->log_id . '">' . __( "View" ) . '</a>',
+		);
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_id', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_id', $actions, $item, $this );
+
+		return $render . $this->row_actions( $actions );
+	}
+
 	protected function column_component( $item ) : string {
 		$render = $this->_display_columns_simplified ? $this->i()->get_component_label( $item->component ) : $item->component;
 
@@ -808,12 +829,10 @@ class Logs extends Table {
 			$render .= '<i class="d4p-icon d4p-ui-user-square" title="' . esc_attr__( 'Current Request IP', 'coreactivity' ) . '"></i>';
 		}
 
-		$render = '<div class="coreactivity-field-wrapper">' . $render . '</div>';
-
 		$render  = apply_filters( 'coreactivity_logs_field_render_ip', $render, $item, $this );
 		$actions = apply_filters( 'coreactivity_logs_field_actions_ip', $actions, $item, $this );
 
-		return $render . $this->row_actions( $actions );
+		return '<div class="coreactivity-field-wrapper">' . $render . '</div>' . $this->row_actions( $actions );
 	}
 
 	protected function column_user_id( $item ) : string {
@@ -892,6 +911,12 @@ class Logs extends Table {
 
 		$actions = array();
 
+		if ( ! $this->_display_object_type_column && ! empty( $item->object_type ) ) {
+			$actions['view-type'] = '<a href="' . $this->_view( 'object_type', 'filter-object_type=' . $item->object_type ) . '">' . __( 'Type Logs', 'coreactivity' ) . '</a>';
+		}
+
+		$actions['view'] = '<a href="#">' . __( 'Object Logs', 'coreactivity' ) . '</a>';
+
 		if ( in_array( $item->object_type, array( 'plugin', 'theme', 'option', 'cron', 'sitemeta', 'notification' ) ) ) {
 			if ( ! coreactivity_settings()->is_in_exception_list( $item->object_type, $item->object_name ) ) {
 				$actions['exclude'] = '<a href="' . $this->_self( 'single-action=do-not-log&object-type=' . urlencode( $item->object_type ) . '&object-name=' . urlencode( $item->object_name ), true, wp_create_nonce( 'coreactivity-do-not-log-' . $item->object_name ) ) . '">' . __( 'Do Not Log', 'coreactivity' ) . '</a>';
@@ -905,6 +930,14 @@ class Logs extends Table {
 
 		if ( $exception ) {
 			$render = '<i title="' . __( 'on exception list', 'coreactivity' ) . '" class="d4p-icon d4p-ui-cancel"></i>' . $render;
+		}
+
+		if ( ! $this->_display_object_type_column && ! empty( $item->object_type ) ) {
+			$render = '<div class="coreactivity-object-type">' . $this->i()->get_object_type_label( $item->object_type ) . '</div>' . $render;
+		}
+
+		if ( $render == '/' ) {
+			unset( $actions['view'] );
 		}
 
 		return $this->kses( $render ) . $this->row_actions( $actions );
@@ -1005,7 +1038,7 @@ class Logs extends Table {
 		return $component;
 	}
 
-	private function print_array( $input ) : string {
+	public function print_array( $input ) : string {
 		$render = array();
 
 		foreach ( $input as $key => $value ) {
@@ -1026,6 +1059,9 @@ class Logs extends Table {
 			),
 			'br'     => array(),
 			'strong' => array(),
+			'div'    => array(
+				'class' => true,
+			),
 		);
 
 		return wp_kses( $render, $allowed_tags );

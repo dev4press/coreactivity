@@ -32,11 +32,8 @@
                 width: 100px;
             }
 
-            &.column-user_id,
-            &.column-component,
-            &.column-event_id,
             &.column-ip {
-                width: 240px;
+                width: 260px;
             }
 
             &.column-object_type,
@@ -97,6 +94,11 @@
             &.column-object_name {
                 i.d4p-ui-cancel {
                     float: right;
+                }
+
+                .coreactivity-object-type {
+                    font-weight: bold;
+                    text-transform: uppercase;
                 }
             }
         }

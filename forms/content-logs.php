@@ -40,3 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	?>
 </div>
+<?php
+
+include 'dialog-logs.php';
+include 'dialog-data.php';

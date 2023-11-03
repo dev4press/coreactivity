@@ -76,8 +76,8 @@
 .coreactivity-grid-logs tr th.column-method, .coreactivity-grid-logs tr th.column-context, .coreactivity-grid-logs tr th.column-protocol {
   width: 100px;
 }
-.coreactivity-grid-logs tr th.column-user_id, .coreactivity-grid-logs tr th.column-component, .coreactivity-grid-logs tr th.column-event_id, .coreactivity-grid-logs tr th.column-ip {
-  width: 240px;
+.coreactivity-grid-logs tr th.column-ip {
+  width: 260px;
 }
 .coreactivity-grid-logs tr th.column-object_type, .coreactivity-grid-logs tr th.column-logged {
   width: 120px;
@@ -118,6 +118,10 @@
 }
 .coreactivity-grid-logs tr td.column-object_name i.d4p-ui-cancel {
   float: right;
+}
+.coreactivity-grid-logs tr td.column-object_name .coreactivity-object-type {
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .coreactivity-grid-logs tr.coreactivity-hidden-row.__hidden {
   display: none;

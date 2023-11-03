@@ -51,6 +51,7 @@ class Settings extends BaseSettings {
 			'display_user_avatar'                     => false,
 			'display_request_column'                  => false,
 			'display_protocol_column'                 => false,
+			'display_object_type_column'              => false,
 			'display_meta_column'                     => false,
 			'auto_cleanup_active'                     => true,
 			'auto_cleanup_period'                     => 24,

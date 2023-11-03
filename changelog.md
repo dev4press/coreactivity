@@ -6,8 +6,14 @@
 
 * **new** geolocation with the use of `MaxMind GeoLite2` database
 * **new** `MaxMind GeoLite2` support for weekly downloading of Lite database
+* **new** option to hide the `Object` column from the Logs
 * **new** plugin dashboard widget for the GEO Location information
+* **new** logs panel option to filter by country based on geolocation
+* **new** logs panel dialog with overview of all event data split in tabs
+* **edit** changes in the order for some columns on the log panel
+* **edit** various improvements to the Logs panel styling
 * **edit** improved method for running the GEO Location database update
+* **edit** Dev4Press Library 4.4 Beta
 * **fix** initial GEO Location database update is not triggered properly
 
 ### Version: 1.2 / October 30 2023
