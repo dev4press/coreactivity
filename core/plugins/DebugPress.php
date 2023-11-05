@@ -49,6 +49,14 @@ class DebugPress extends Plugin {
 		if ( $this->is_active( 'deprecated-hook-run' ) ) {
 			add_action( 'debugpress-tracker-deprecated-hook-run-logged', array( $this, 'event_deprecated_hook_run' ) );
 		}
+
+		if ( $this->is_active( 'admin-ajax-call' ) ) {
+			add_action( 'debugpress-tracker-admin-ajax-logged', array( $this, 'event_admin_ajax_call' ) );
+		}
+
+		if ( $this->is_active( 'http-api-call' ) ) {
+			add_action( 'debugpress-tracker-http-request-call-logged', array( $this, 'event_http_api_call' ) );
+		}
 	}
 
 	public function label() : string {
@@ -78,6 +86,14 @@ class DebugPress extends Plugin {
 			'deprecated-hook-run'    => array(
 				'label' => __( 'Deprecated Hook Run', 'coreactivity' ),
 			),
+			'admin-ajax-call'        => array(
+				'label'  => __( 'Admin AJAX Call', 'coreactivity' ),
+				'status' => 'inactive',
+			),
+			'http-api-call'          => array(
+				'label'  => __( 'HTTP API Call', 'coreactivity' ),
+				'status' => 'inactive',
+			),
 		);
 	}
 
@@ -93,7 +109,9 @@ class DebugPress extends Plugin {
 
 	public function event_php_error( $error ) {
 		if ( isset( $error['errno'] ) && ! empty( $error['caller'] ) ) {
-			$this->log( 'php-error', array( 'object_id' => $error['errno'] ), $error );
+			$this->log( 'php-error', array(
+				'object_id' => $error['errno'],
+			), $error );
 		}
 	}
 
@@ -119,5 +137,22 @@ class DebugPress extends Plugin {
 
 	public function event_deprecated_hook_run( $error ) {
 		$this->log( 'deprecated-hook-run', array(), $error );
+	}
+
+	public function event_admin_ajax_call( $call ) {
+		$ajax_call  = $call['ajax-action-call'];
+
+		if ( apply_filters( 'coreactivity_debugpress_ajax_call_log_active', $ajax_call !== 'coreactivity_live_logs', $ajax_call, $call ) ) {
+			$this->log( 'admin-ajax-call', array(), $call );
+		}
+	}
+
+	public function event_http_api_call( $call ) {
+		$this->log( 'http-api-call', array(), array(
+			'call_url'       => $call['info']['url'] ?? '',
+			'call_method'    => $call['args']['method'] ?? '',
+			'call_transport' => $call['transport'] ?? '',
+			'call_trace'     => $call['trace'],
+		) );
 	}
 }

@@ -15,7 +15,7 @@ Monitor and log all kinds of activity happening on the WordPress website, with f
 
 CoreActivity is a free plugin for monitoring and logging various activities of the WordPress powered website. The plugin is highly modular, with events registered and controlled by multiple Components.
 
-Currently, plugin has 23 components with a total of 117 events, with direct integration with 9 popular plugins.
+Currently, plugin has 24 components with a total of 122 events, with direct integration with 9 popular plugins.
 
 = WordPress Core Components =
 * Attachments (3 events)
@@ -41,7 +41,7 @@ Currently, plugin has 23 components with a total of 117 events, with direct inte
 * bbPress (3 events)
 * BuddyPress (4 events)
 * Contact Form 7 (3 events)
-* DebugPress (7 event)
+* DebugPress (9 event)
 * Duplicate Post (1 event)
 * Gravity Forms (6 events)
 * Jetpack (2 events)
@@ -116,6 +116,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * New: `MaxMind GeoLite2` support for weekly downloading of Lite database
 * New: option to hide the `Object` column from the Logs
 * New: plugin dashboard widget for the GEO Location information
+* New: component `DebugPress` expanded with two new events
 * New: logs panel option to filter by country based on geolocation
 * New: logs panel popup dialog with overview of all event data split in tabs
 * Edit: changes in the order for some columns on the log panel

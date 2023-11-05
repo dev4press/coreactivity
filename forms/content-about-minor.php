@@ -12,7 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.2</span></strong> &minus;
-        IP2Download goe location support. Expanded DB table. Many tweaks, improvements and fixes.
+        MaxMind GeoLite2 geolocation support. New DebugPress events. Many tweaks, improvements and fixes.
+    </p>
+    <p>
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.2</span></strong> &minus;
+        IP2Download geolocation support. Expanded DB table. Many tweaks, improvements and fixes.
     </p>
     <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.1</span></strong> &minus;

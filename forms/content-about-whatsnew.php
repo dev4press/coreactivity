@@ -28,7 +28,7 @@ include( COREACTIVITY_PATH . 'forms/content-about-minor.php' );
 
                 <div class="coreactivity-about-counters">
                     <div><i class="d4p-icon d4p-ui-folder d4p-icon-fw"></i> <strong>24</strong> Components</div>
-                    <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>120</strong> Events</div>
+                    <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>122</strong> Events</div>
                     <div><i class="d4p-icon d4p-ui-plug d4p-icon-fw"></i> <strong>10</strong> Plugins</div>
                 </div>
             </div>
