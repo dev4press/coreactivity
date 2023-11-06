@@ -8,7 +8,7 @@
  * Text Domain:       coreactivity
  * Version:           1.3
  * Requires at least: 5.5
- * Tested up to:      6.3
+ * Tested up to:      6.4
  * Requires PHP:      7.3
  * Network:           true
  * License:           GPLv3 or later
