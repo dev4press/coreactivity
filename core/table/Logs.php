@@ -1058,16 +1058,6 @@ class Logs extends Table {
 		return $component;
 	}
 
-	public function print_array( $input ) : string {
-		$render = array();
-
-		foreach ( $input as $key => $value ) {
-			$render[] = $key . ': ' . esc_html( is_scalar( $value ) ? $value : json_encode( $value ) );
-		}
-
-		return join( '<br/>', $render );
-	}
-
 	private function kses( $render ) : string {
 		$allowed_tags = array(
 			'a'      => array(
@@ -1088,7 +1078,7 @@ class Logs extends Table {
 	}
 
 	private function meta_value( $key, $value ) : string {
-		$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? $this->print_array( $value ) : json_encode( $value ) );
+		$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? coreactivity_print_array( $value ) : json_encode( $value ) );
 
 		if ( empty( $key ) ) {
 			return '<li><span>' . $value . '</span></li>';

@@ -9,7 +9,7 @@
  * Version:           1.4
  * Requires at least: 5.5
  * Tested up to:      6.4
- * Requires PHP:      7.3
+ * Requires PHP:      7.4
  * Network:           true
  * License:           GPLv3 or later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -35,11 +35,11 @@
 
 use Dev4Press\v44\WordPress;
 
-$coreactivity_dirname_basic = dirname( __FILE__ ) . '/';
-$coreactivity_urlname_basic = plugins_url( '/', __FILE__ );
-
 const COREACTIVITY_VERSION = '1.4';
 const COREACTIVITY_FILE    = __FILE__;
+
+$coreactivity_dirname_basic = dirname( COREACTIVITY_FILE ) . '/';
+$coreactivity_urlname_basic = plugins_url( '/', COREACTIVITY_FILE );
 
 define( 'COREACTIVITY_PATH', $coreactivity_dirname_basic );
 define( 'COREACTIVITY_URL', $coreactivity_urlname_basic );

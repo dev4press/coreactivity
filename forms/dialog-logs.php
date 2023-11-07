@@ -1,31 +1,57 @@
+<?php
+
+use Dev4Press\v44\Core\UI\Icons;
+use function Dev4Press\v44\Functions\panel;
+
+$_tabs = panel()->dialog_tabs();
+
+?>
 <div style="display: none">
     <div id="coreactivity-log-dialog" title="<?php _e( 'Log Data', 'coreactivity' ); ?>">
         <div class="d4p-ctrl-tabs d4p-tabs-have-icons d4p-tabs-in-dialog">
             <div role="tablist" aria-label="<?php _e( "Log Dialog Popup" ); ?>">
-                <button type="button" id="coreactivity-popup-tabs-info-tab" aria-controls="coreactivity-popup-tabs-info" aria-selected="true" role="tab" data-tabname="info" class="d4p-ctrl-tab d4p-ctrl-tab-coreactivity-popup-tabs-info d4p-ctrl-tab-is-active">
-                    <i class="d4p-icon d4p-ui-calendar-pen d4p-icon-fw"></i><span><?php esc_html_e( "Data" ); ?></span>
-                </button>
-                <button type="button" id="coreactivity-popup-tabs-meta-tab" aria-controls="coreactivity-popup-tabs-meta" aria-selected="false" role="tab" data-tabname="meta" class="d4p-ctrl-tab d4p-ctrl-tab-coreactivity-popup-tabs-meta">
-                    <i class="d4p-icon d4p-ui-newspaper d4p-icon-fw"></i><span><?php esc_html_e( "Meta" ); ?></span>
-                </button>
-                <button type="button" id="coreactivity-popup-tabs-location-tab" aria-controls="coreactivity-popup-tabs-location" aria-selected="false" role="tab" data-tabname="location" class="d4p-ctrl-tab d4p-ctrl-tab-coreactivity-popup-tabs-location">
-                    <i class="d4p-icon d4p-ui-globe d4p-icon-fw"></i><span><?php esc_html_e( "Location" ); ?></span>
-                </button>
+				<?php
+
+				$_selected = true;
+				foreach ( $_tabs as $_tab => $args ) {
+					$tab   = 'coreactivity-popup-tabs-' . $_tab;
+					$ctrl  = 'coreactivity-popup-tabs-' . $_tab;
+					$class = 'd4p-ctrl-tab d4p-ctrl-tab-coreactivity-popup-tabs-' . $_tab . ( $_selected ? ' d4p-ctrl-tab-is-active' : '' );
+
+					?>
+                    <button type="button" id="<?php echo esc_attr( $tab ); ?>-tab" aria-controls="<?php echo esc_attr( $ctrl ); ?>" aria-selected="<?php echo $_selected ? 'true' : 'false'; ?>" role="tab" data-tabname="<?php echo esc_attr( $_tab ); ?>" class="<?php echo esc_attr( $class ); ?>">
+						<?php echo Icons::instance()->icon( $args['icon'], 'i', array( 'full' => true ) ); ?>
+                        <span><?php echo esc_html( $args['label'] ); ?></span>
+                    </button>
+					<?php
+
+					$_selected = false;
+				}
+
+				?>
             </div>
-            <div id="coreactivity-popup-tabs-info" aria-hidden="false" role="tabpanel" aria-labelledby="coreactivity-popup-tabs-info-tab" class="d4p-ctrl-tabs-content d4p-ctrl-tab-coreactivity-popup-tabs-info d4p-ctrl-tabs-content-active">
-                <div></div>
-            </div>
-            <div id="coreactivity-popup-tabs-meta" aria-hidden="true" role="tabpanel" aria-labelledby="coreactivity-popup-tabs-meta-tab" class="d4p-ctrl-tabs-content d4p-ctrl-tab-coreactivity-popup-tabs-meta" hidden>
-                <div></div>
-            </div>
-            <div id="coreactivity-popup-tabs-location" aria-hidden="true" role="tabpanel" aria-labelledby="coreactivity-popup-tabs-location-tab" class="d4p-ctrl-tabs-content d4p-ctrl-tab-coreactivity-popup-tabs-location" hidden>
-                <div></div>
-            </div>
+			<?php
+
+			$_selected = true;
+			foreach ( $_tabs as $_tab => $args ) {
+				$tab   = 'coreactivity-popup-tabs-' . $_tab;
+				$class = 'd4p-ctrl-tabs-content d4p-ctrl-tab-coreactivity-popup-tabs-' . $_tab . ( $_selected ? ' d4p-ctrl-tabs-content-active' : '' );
+
+				?>
+                <div id="<?php echo esc_attr( $tab ); ?>" aria-hidden="<?php echo $_selected ? 'false' : 'true'; ?>" role="tabpanel" aria-labelledby="<?php echo esc_attr( $tab ); ?>-tab" class="<?php echo esc_attr( $class ); ?>" <?php echo $_selected ? '' : 'hidden'; ?>>
+                    <div></div>
+                </div>
+				<?php
+
+				$_selected = false;
+			}
+
+			?>
         </div>
     </div>
 	<?php
 
-	do_action( 'coreactivity-dialog-logs' );
+	do_action( 'coreactivity_dialog_logs' );
 
 	?>
 </div>

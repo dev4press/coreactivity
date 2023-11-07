@@ -38,4 +38,21 @@ class Logs extends Panel {
 	public function header_fill() : string {
 		return Render::panel_header_ip_block();
 	}
+
+	public function dialog_tabs() : array {
+		return apply_filters( 'coreactivity_log_dialog_tabs', array(
+			'info'     => array(
+				'label' => __( 'Data' ),
+				'icon'  => 'ui-calendar-pen',
+			),
+			'meta'     => array(
+				'label' => __( 'Meta' ),
+				'icon'  => 'ui-newspaper',
+			),
+			'location' => array(
+				'label' => __( 'Location' ),
+				'icon'  => 'ui-location-map',
+			),
+		) );
+	}
 }
