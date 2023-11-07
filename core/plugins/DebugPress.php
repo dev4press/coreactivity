@@ -15,6 +15,10 @@ class DebugPress extends Plugin {
 	protected $object_type = 'phperror';
 	protected $plugin_file = 'debugpress/debugpress.php';
 
+	public function init() {
+		add_filter( 'coreactivity_debugpress_ajax_call_log_active', array( $this, 'skip_heartbeat' ), 10, 3 );
+	}
+
 	public function registered_object_types( array $object_types ) : array {
 		$object_types['phperror'] = __( 'PHP Error', 'coreactivity' );
 
@@ -140,7 +144,7 @@ class DebugPress extends Plugin {
 	}
 
 	public function event_admin_ajax_call( $call ) {
-		$ajax_call  = $call['ajax-action-call'];
+		$ajax_call = $call['ajax-action-call'];
 
 		if ( apply_filters( 'coreactivity_debugpress_ajax_call_log_active', $ajax_call !== 'coreactivity_live_logs', $ajax_call, $call ) ) {
 			$this->log( 'admin-ajax-call', array(), $call );
@@ -154,5 +158,13 @@ class DebugPress extends Plugin {
 			'call_transport' => $call['transport'] ?? '',
 			'call_trace'     => $call['trace'],
 		) );
+	}
+
+	public function skip_heartbeat( $log, $ajax_call, $call ) {
+		if ( $ajax_call == 'heartbeat' ) {
+			$log = false;
+		}
+
+		return $log;
 	}
 }
