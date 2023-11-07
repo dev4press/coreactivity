@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### Version: 1.4 / November 14 2023
+
+* **new** logs panel view support for the object by ID or name
+* **edit** optimized logs panel views processing and matching
+* **fix** object filtering for logs panel was unfinished
+
 ### Version: 1.3 / November 6 2023
 
 * **new** geolocation with the use of `MaxMind GeoLite2` database

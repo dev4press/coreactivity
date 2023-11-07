@@ -42,6 +42,21 @@ class Logs extends Table {
 	protected $_filter_remove = array();
 	protected $_items_ips = array();
 	protected $_meta_column = array();
+	protected $_view_pairs = array(
+		'object' => array( 'object_type', 'object_id', 'object_name' ),
+	);
+	protected $_valid_views = array(
+		'user_id',
+		'blog_id',
+		'event_id',
+		'ip',
+		'object_type',
+		'object',
+		'country_code',
+		'component',
+		'context',
+		'method',
+	);
 
 	public function __construct( $args = array() ) {
 		Display::instance();
@@ -203,7 +218,8 @@ class Logs extends Table {
 			'filter-context'      => strtoupper( Sanitize::_get_slug( 'filter-context' ) ),
 			'filter-method'       => strtoupper( Sanitize::_get_slug( 'filter-method' ) ),
 			'filter-object_type'  => Sanitize::_get_slug( 'filter-object_type' ),
-			'filter-object'       => Sanitize::_get_basic( 'filter-object' ),
+			'filter-object_id'    => Sanitize::_get_absint( 'filter-object_id' ),
+			'filter-object_name'  => Sanitize::_get_basic( 'filter-object_name' ),
 			'view'                => $this->_get_field( 'view' ),
 			'search'              => $this->_get_field( 's' ),
 			'period'              => $this->_get_field( 'period' ),
@@ -253,6 +269,7 @@ class Logs extends Table {
 			'context'      => $this->get_request_arg( 'filter-context' ),
 			'method'       => $this->get_request_arg( 'filter-method' ),
 			'object_type'  => $this->get_request_arg( 'filter-object_type' ),
+			'object_id'    => $this->get_request_arg( 'filter-object_id' ),
 			'object_name'  => $this->get_request_arg( 'filter-object_name' ),
 			'min_id'       => $this->get_request_arg( 'min_id' ),
 		);
@@ -350,6 +367,14 @@ class Logs extends Table {
 			$sql['where'][] = $this->db()->prepare( 'l.`object_type` = %s', $sel['object_type'] );
 		}
 
+		if ( ! empty( $sel['object_id'] ) ) {
+			$sql['where'][] = $this->db()->prepare( 'l.`object_id` = %d', $sel['object_id'] );
+		}
+
+		if ( ! empty( $sel['object_name'] ) ) {
+			$sql['where'][] = $this->db()->prepare( 'l.`object_name` = %s', $sel['object_name'] );
+		}
+
 		if ( ! empty( $sel['period'] ) ) {
 			$sql['where'][] = $this->_get_period_where( $sel['period'], 'l.`logged`' );
 		}
@@ -403,69 +428,28 @@ class Logs extends Table {
 	}
 
 	protected function prepare_the_view() {
-		if ( in_array( $this->_request_args['view'], array( 'user_id', 'blog_id', 'event_id', 'ip', 'object_type', 'country_code', 'component', 'context', 'method' ) ) ) {
+		if ( in_array( $this->_request_args['view'], $this->_valid_views ) ) {
 			$this->_current_view = $this->_request_args['view'];
 
 			switch ( $this->_current_view ) {
-				case 'object_type':
+				case 'object':
 					if ( ! isset( $this->_filter_lock['object_type'] ) && ! empty( $this->_request_args['filter-object_type'] ) ) {
 						$this->_filter_lock['object_type'] = $this->_request_args['filter-object_type'];
+
+						if ( ! isset( $this->_filter_lock['object_name'] ) && ! empty( $this->_request_args['filter-object_name'] ) ) {
+							$this->_filter_lock['object_name'] = $this->_request_args['filter-object_name'];
+						}
+
+						if ( ! isset( $this->_filter_lock['object_id'] ) && $this->_request_args['filter-object_id'] != 0 ) {
+							$this->_filter_lock['object_id'] = $this->_request_args['filter-object_id'];
+						}
 					} else {
 						$this->_current_view = '';
 					}
 					break;
-				case 'component':
-					if ( ! isset( $this->_filter_lock['component'] ) && ! empty( $this->_request_args['filter-component'] ) ) {
-						$this->_filter_lock['component'] = $this->_request_args['filter-component'];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'context':
-					if ( ! isset( $this->_filter_lock['context'] ) && ! empty( $this->_request_args['filter-context'] ) ) {
-						$this->_filter_lock['context'] = $this->_request_args['filter-context'];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'method':
-					if ( ! isset( $this->_filter_lock['method'] ) && ! empty( $this->_request_args['filter-method'] ) ) {
-						$this->_filter_lock['method'] = $this->_request_args['filter-method'];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'event_id':
-					if ( ! isset( $this->_filter_lock['event_id'] ) && ! empty( $this->_request_args['filter-event_id'] ) ) {
-						$this->_filter_lock['event_id'] = $this->_request_args['filter-event_id'];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'user_id':
-					if ( ! isset( $this->_filter_lock['user_id'] ) && ! empty( $this->_request_args['filter-user_id'] ) ) {
-						$this->_filter_lock['user_id'] = $this->_request_args['filter-user_id'];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'blog_id':
-					if ( ! isset( $this->_filter_lock['blog_id'] ) && ! empty( $this->_request_args['filter-blog_id'] ) ) {
-						$this->_filter_lock['blog_id'] = $this->_request_args['filter-blog_id'];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'country_code':
-					if ( ! isset( $this->_filter_lock['country_code'] ) && ! empty( $this->_request_args['filter-country_code'] ) ) {
-						$this->_filter_lock['country_code'] = $this->_request_args['filter-country_code'];
-					} else {
-						$this->_current_view = '';
-					}
-					break;
-				case 'ip':
-					if ( ! isset( $this->_filter_lock['ip'] ) && ! empty( $this->_request_args['filter-ip'] ) ) {
-						$this->_filter_lock['ip'] = $this->_request_args['filter-ip'];
+				default:
+					if ( ! isset( $this->_filter_lock[ $this->_current_view ] ) && ! empty( $this->_request_args[ 'filter-' . $this->_current_view ] ) ) {
+						$this->_filter_lock[ $this->_current_view ] = $this->_request_args[ 'filter-' . $this->_current_view ];
 					} else {
 						$this->_current_view = '';
 					}
@@ -590,11 +574,23 @@ class Logs extends Table {
 
 		if ( ! empty( $this->_current_view ) ) {
 			?>
-
             <input type="hidden" name="view" value="<?php echo esc_attr( $this->_current_view ); ?>"/>
-            <input type="hidden" name="filter-<?php echo esc_attr( $this->_current_view ); ?>" value="<?php echo esc_attr( $this->_filter_lock[ $this->_current_view ] ); ?>"/>
-
 			<?php
+
+			if ( isset( $this->_view_pairs[ $this->_current_view ] ) ) {
+				foreach ( $this->_view_pairs[ $this->_current_view ] as $element ) {
+					if ( ! isset( $this->_filter_lock[ $element ] ) ) {
+						continue;
+					}
+					?>
+                    <input type="hidden" name="filter-<?php echo esc_attr( $element ); ?>" value="<?php echo esc_attr( $this->_filter_lock[ $element ] ); ?>"/>
+					<?php
+				}
+			} else {
+				?>
+                <input type="hidden" name="filter-<?php echo esc_attr( $this->_current_view ); ?>" value="<?php echo esc_attr( $this->_filter_lock[ $this->_current_view ] ); ?>"/>
+				<?php
+			}
 
 			$current_view = '';
 			$current_key  = 'view ';
@@ -602,6 +598,20 @@ class Logs extends Table {
 			$views['all'] = '<a class="coreactivity-view-button" href="' . $this->_url() . '"><i class="d4p-icon d4p-ui-angles-left"></i> ' . __( 'All Logs', 'coreactivity' ) . '</a>';
 
 			switch ( $this->_current_view ) {
+				case 'object':
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-archive"></i> ';
+					$current_view .= '<span>' . $this->i()->get_object_type_label( $this->_filter_lock['object_type'] ) . '</span>';
+
+					if ( ! empty( $this->_filter_lock['object_name'] ) ) {
+						$current_view .= '<span>' . esc_html( $this->_filter_lock['object_name'] ) . '</span>';
+					} else {
+						$current_view .= '<span>ID: ' . esc_html( $this->_filter_lock['object_id'] ) . '</span>';
+					}
+
+					$current_view .= '</span>';
+
+					$current_key .= 'object_type';
+					break;
 				case 'object_type':
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-archive"></i> ';
 					$current_view .= '<span>' . esc_html__( 'Object Type', 'coreactivity' ) . '</span>';
@@ -915,7 +925,17 @@ class Logs extends Table {
 			$actions['view-type'] = '<a href="' . $this->_view( 'object_type', 'filter-object_type=' . $item->object_type ) . '">' . __( 'Type Logs', 'coreactivity' ) . '</a>';
 		}
 
-		$actions['view'] = '<a href="#">' . __( 'Object Logs', 'coreactivity' ) . '</a>';
+		if ( ! empty( $item->object_name ) || $item->object_id != 0 ) {
+			$_args = 'filter-object_type=' . $item->object_type;
+
+			if ( ! empty( $item->object_name ) ) {
+				$_args .= '&filter-object_name=' . $item->object_name;
+			} else {
+				$_args .= '&filter-object_id=' . $item->object_id;
+			}
+
+			$actions['view'] = '<a href="' . $this->_view( 'object', $_args ) . '">' . __( 'Object Logs', 'coreactivity' ) . '</a>';
+		}
 
 		if ( in_array( $item->object_type, array( 'plugin', 'theme', 'option', 'cron', 'sitemeta', 'notification' ) ) ) {
 			if ( ! coreactivity_settings()->is_in_exception_list( $item->object_type, $item->object_name ) ) {
