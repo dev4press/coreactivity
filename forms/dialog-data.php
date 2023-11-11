@@ -3,7 +3,7 @@
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
 use function Dev4Press\v44\Functions\panel;
 
-$_tabs  = panel()->dialog_tabs();
+$_tabs  = coreactivity_view_dialog_tabs();
 $_items = $_grid->items ?? array();
 
 function _coreactivity_dialog_tab_info( $item ) {
@@ -46,12 +46,14 @@ function _coreactivity_dialog_tab_meta( $item ) {
 	echo '<div id="coreactivity-popup-data-meta-' . $item->log_id . '">';
 	echo '<dl class="d4p-ctrl-list">';
 
-	foreach ( $item->meta as $key => $value ) {
-		if ( $key != 'geo_location' ) {
-			$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? coreactivity_print_array( $value ) : json_encode( $value ) );
+	if ( isset( $item->meta ) ) {
+		foreach ( $item->meta as $key => $value ) {
+			if ( $key != 'geo_location' ) {
+				$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? coreactivity_print_array( $value ) : json_encode( $value ) );
 
-			echo '<dt>' . $key . '</dt>';
-			echo '<dd>' . $value . '</dd>';
+				echo '<dt>' . $key . '</dt>';
+				echo '<dd>' . $value . '</dd>';
+			}
 		}
 	}
 

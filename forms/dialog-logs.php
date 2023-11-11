@@ -3,7 +3,7 @@
 use Dev4Press\v44\Core\UI\Icons;
 use function Dev4Press\v44\Functions\panel;
 
-$_tabs = panel()->dialog_tabs();
+$_tabs = coreactivity_view_dialog_tabs();
 
 ?>
 <div style="display: none">

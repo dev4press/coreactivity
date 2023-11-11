@@ -349,6 +349,21 @@ class Activity {
 		return false;
 	}
 
+	public function is_event_object_linked( int $event_id = 0, string $component = '', string $event = '' ) : bool {
+		if ($event_id > 0) {
+			$e = $this->list[ $event_id ] ?? array();
+
+			$component = $e['component'] ?? '';
+			$event = $e['event'] ?? '';
+		}
+
+		if ( isset( $this->events[ $component ][ $event ] ) ) {
+			return ! empty( $this->events[ $component ][ $event ]->object_type );
+		}
+
+		return false;
+	}
+
 	public function is_component_valid( string $component ) : bool {
 		return isset( $this->events[ $component ] );
 	}

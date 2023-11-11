@@ -52,3 +52,20 @@ function coreactivity_print_array( $input ) : string {
 
 	return join( '<br/>', $render );
 }
+
+function coreactivity_view_dialog_tabs() : array {
+	return apply_filters( 'coreactivity_log_dialog_tabs', array(
+		'info'     => array(
+			'label' => __( 'Data' ),
+			'icon'  => 'ui-calendar-pen',
+		),
+		'meta'     => array(
+			'label' => __( 'Meta' ),
+			'icon'  => 'ui-newspaper',
+		),
+		'location' => array(
+			'label' => __( 'Location' ),
+			'icon'  => 'ui-location-map',
+		),
+	) );
+}

@@ -2,11 +2,12 @@
 
 ## Changelog
 
-### Version: 1.4 / November 14 2023
+### Version: 1.4 / November 15 2023
 
 * **new** logs panel view support for the object by ID or name
 * **edit** optimized logs panel views processing and matching
 * **edit** log item dialog view updated rendering for expandability
+* **edit** improved `Event` view display for the Logs panel 
 * **edit** Dev4Press Library 4.4 Beta
 * **fix** object filtering for logs panel was unfinished
 
