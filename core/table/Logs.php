@@ -34,7 +34,7 @@ class Logs extends Table {
 	protected $_display_request_column;
 	protected $_display_protocol_column;
 	protected $_display_object_type_column;
-	protected $_display_meta_column;
+	protected $_display_meta_column = null;
 	protected $_filter_key = 'coreactivity';
 	protected $_logs_instance = 'coreactivity';
 	protected $_limit_lock = array();
@@ -57,6 +57,14 @@ class Logs extends Table {
 		'context',
 		'method',
 	);
+	protected $_allowed_override_settings = array(
+		'_display_meta_column',
+		'_logs_instance',
+		'_filter_key',
+		'_meta_column',
+		'_rows_per_page_key',
+		'_current_view',
+	);
 
 	public function __construct( $args = array() ) {
 		Display::instance();
@@ -77,7 +85,7 @@ class Logs extends Table {
 		$this->_display_protocol_column    = coreactivity_settings()->get( 'display_protocol_column' );
 		$this->_display_object_type_column = coreactivity_settings()->get( 'display_object_type_column' );
 
-		if ( ! $this->_display_meta_column ) {
+		if ( is_null( $this->_display_meta_column ) ) {
 			$this->_display_meta_column = coreactivity_settings()->get( 'display_meta_column' );
 		}
 
@@ -206,13 +214,18 @@ class Logs extends Table {
 
 	public function live_attributes() {
 		$data = array(
-			'lock'   => $this->_filter_lock,
-			'atts'   => $this->_request_args,
-			'limit'  => $this->_limit_lock,
-			'filter' => $this->_filter_key,
-			'id'     => DB::instance()->get_last_log_id(),
-			'nonce'  => wp_create_nonce( 'coreactivity-live-update' ),
+			'lock'     => $this->_filter_lock,
+			'atts'     => $this->_request_args,
+			'limit'    => $this->_limit_lock,
+			'filter'   => $this->_filter_key,
+			'settings' => array(),
+			'id'       => DB::instance()->get_last_log_id(),
+			'nonce'    => wp_create_nonce( 'coreactivity-live-update' ),
 		);
+
+		foreach ( $this->_allowed_override_settings as $key ) {
+			$data['settings'][ $key ] = $this->$key;
+		}
 
 		wp_localize_script( 'd4plib3-coreactivity-admin', 'coreactivity_live', $data );
 	}
@@ -1052,7 +1065,7 @@ class Logs extends Table {
 		return $render . $this->row_actions( $actions );
 	}
 
-	private function locked_components() : array {
+	protected function locked_components() : array {
 		$component = array();
 
 		if ( ! empty( $this->_limit_lock['components'] ) ) {
@@ -1068,7 +1081,7 @@ class Logs extends Table {
 		return $component;
 	}
 
-	private function kses( $render ) : string {
+	protected function kses( $render ) : string {
 		$allowed_tags = array(
 			'a'      => array(
 				'href' => true,
@@ -1087,7 +1100,7 @@ class Logs extends Table {
 		return wp_kses( $render, $allowed_tags );
 	}
 
-	private function meta_value( $key, $value ) : string {
+	protected function meta_value( $key, $value ) : string {
 		$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? coreactivity_print_array( $value ) : json_encode( $value ) );
 
 		if ( empty( $key ) ) {

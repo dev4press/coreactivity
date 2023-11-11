@@ -9,6 +9,7 @@
 * **edit** log item dialog view updated rendering for expandability
 * **edit** improved `Event` view display for the Logs panel 
 * **edit** Dev4Press Library 4.4 Beta
+* **fix** several small issues with the `Live` Logs updates
 * **fix** object filtering for logs panel was unfinished
 
 ### Version: 1.3 / November 6 2023

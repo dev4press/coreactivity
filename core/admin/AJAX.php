@@ -82,8 +82,13 @@ class AJAX {
 			if ( isset( $request['nonce'] ) && wp_verify_nonce( $request['nonce'], 'coreactivity-live-update' ) ) {
 				$request['atts']['min_id'] = absint( $request['id'] );
 
-				$_grid = new Live();
-				$_grid->update( $request['atts'], $request['lock'], $request['limit'], $request['filter'] );
+				$request['settings']['_request_args'] = $request['atts'];
+				$request['settings']['_filter_lock']  = $request['lock'];
+				$request['settings']['_limit_lock']   = $request['limit'];
+				$request['settings']['_filter_key']   = $request['filter'];
+
+				$_grid = new Live( $request['settings'] );
+				$_grid->update();
 				$_grid->prepare_items();
 
 				ob_start();
