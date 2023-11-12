@@ -11,7 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.2</span></strong> &minus;
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.4</span></strong> &minus;
+        New component. Many tweaks, improvements and fixes.
+    </p>
+    <p>
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.3</span></strong> &minus;
         MaxMind GeoLite2 geolocation support. New DebugPress events. Many tweaks, improvements and fixes.
     </p>
     <p>

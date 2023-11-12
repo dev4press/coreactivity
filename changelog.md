@@ -4,6 +4,7 @@
 
 ### Version: 1.4 / November 15 2023
 
+* **new** component: `Forminator` plugin, with 1 event
 * **new** logs panel view support for the object by ID or name
 * **edit** optimized logs panel views processing and matching
 * **edit** log item dialog view updated rendering for expandability

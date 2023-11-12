@@ -23,6 +23,7 @@ use Dev4Press\Plugin\CoreActivity\Plugins\BuddyPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\ContactForm7;
 use Dev4Press\Plugin\CoreActivity\Plugins\DebugPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\DuplicatePost;
+use Dev4Press\Plugin\CoreActivity\Plugins\Forminator;
 use Dev4Press\Plugin\CoreActivity\Plugins\GravityForms;
 use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
@@ -570,6 +571,7 @@ class Activity {
 		ContactForm7::instance();
 		DebugPress::instance();
 		DuplicatePost::instance();
+		Forminator::instance();
 		GravityForms::instance();
 		Jetpack::instance();
 		SweepPress::instance();

@@ -196,7 +196,7 @@ class Option extends Component {
 
 		$event = in_array( $option, $this->monitor ) ? 'core-option-edited' : 'option-edited';
 
-		if ( $this->is_active( $event ) ) {
+		if ( $this->is_active( $event ) && $old_value !== $value ) {
 			$this->log( $event, array(
 				'object_name' => $option,
 			), array(

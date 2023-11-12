@@ -85,6 +85,9 @@ class Display {
 			case 'wpcf7form':
 				$render = $this->_display_cf7form( $item );
 				break;
+			case 'forminator':
+				$render = $this->_display_forminator( $item );
+				break;
 			case 'phperror':
 				$render = $this->php_errors[ $item->object_id ] ?? '/';
 				break;
@@ -95,7 +98,7 @@ class Display {
 				$render = $this->_display_gentry( $item );
 				break;
 			default:
-				$render = $item->object_name;
+				$render = $item->object_name ?? $item->object_id;
 				break;
 		}
 
@@ -138,6 +141,9 @@ class Display {
 			case 'wpcf7form':
 				$render = $this->_brief_cf7form( $item );
 				break;
+			case 'forminator':
+				$render = $this->_brief_forminator( $item );
+				break;
 			case 'phperror':
 				$render = $this->php_errors[ $item->object_id ] ?? '/';
 				break;
@@ -148,7 +154,7 @@ class Display {
 				$render = $this->_brief_gentry( $item );
 				break;
 			default:
-				$render = $item->object_name;
+				$render = $item->object_name ?? $item->object_id;
 				break;
 		}
 
@@ -361,6 +367,21 @@ class Display {
 		return __( 'ID', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 	}
 
+	private function _display_forminator( stdClass $item ) : string {
+		$render = '';
+
+		$post = get_post( $item->object_id );
+
+		if ( $post instanceof WP_Post ) {
+			/* translators: Display log Forminator Form information. %1$s: Form ID. %2$s: Form Post and Link. */
+			$render .= sprintf( __( 'ID: %1$s<br/>Post: %2$s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . admin_url( 'admin.php?page=forminator-cform-wizard&id=' . $post->ID ) . '">' . $post->post_title . '</a></strong>' );
+		} else {
+			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
+		}
+
+		return $render;
+	}
+
 	private function _display_cf7form( stdClass $item ) : string {
 		$render = '';
 
@@ -541,6 +562,21 @@ class Display {
 
 	private function _brief_gentry( stdClass $item ) : string {
 		return __( 'ID', 'coreactivity' ) . ': ' . $item->object_id;
+	}
+
+	private function _brief_forminator( stdClass $item ) : string {
+		$render = '';
+
+		$post = get_post( $item->object_id );
+
+		if ( $post instanceof WP_Post ) {
+			/* translators: Display brief log Forminator Form information. %1$s: Form ID. %2$s: Divider Dot. %3$s: Form Post Name. */
+			$render .= sprintf( __( 'ID: %1$s%2$sPost: %3$s', 'coreactivity' ), $post->ID, $post->post_title, ' · ' );
+		} else {
+			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
+		}
+
+		return $render;
 	}
 
 	private function _brief_cf7form( stdClass $item ) : string {
