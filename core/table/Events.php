@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\v44\Core\Quick\Sanitize;
+use Dev4Press\v44\Core\Quick\Str;
 use Dev4Press\v44\Core\UI\Elements;
 use Dev4Press\v44\WordPress\Admin\Table;
 use Dev4Press\v44\Core\Plugins\DBLite;
@@ -33,6 +34,7 @@ class Events extends Table {
 		$this->prepare_column_headers();
 
 		$per_page      = $this->rows_per_page();
+		$sel_source    = $this->get_request_arg( 'filter-source' );
 		$sel_group     = $this->get_request_arg( 'filter-group' );
 		$sel_component = $this->get_request_arg( 'filter-component' );
 		$sel_search    = $this->get_request_arg( 'search' );
@@ -58,6 +60,10 @@ class Events extends Table {
 			$sql['where'][] = coreactivity_db()->prepare( '`category` = %s', $sel_group );
 		}
 
+		if ( ! empty( $sel_source ) ) {
+			$sql['where'][] = coreactivity_db()->prepare( '`component` LIKE %s', $sel_source . '%' );
+		}
+
 		if ( ! empty( $sel_component ) ) {
 			$sql['where'][] = coreactivity_db()->prepare( '`component` = %s', $sel_component );
 		}
@@ -69,7 +75,12 @@ class Events extends Table {
 		$this->query_items( $sql, $per_page );
 
 		foreach ( $this->items as &$item ) {
+			$parts = explode('/', $item->component);
+			$component = Activity::instance()->get_component( $item->component );
+
 			$item->event_id = absint( $item->event_id );
+			$item->plugin   = $component->plugin ?? $parts[0];
+			$item->source   = $component->source ?? Activity::instance()->get_plugin_label($parts[0]);
 
 			if ( ! isset( $this->_logged_counts[ $item->component ] ) ) {
 				$this->_logged_counts[ $item->component ] = 0;
@@ -85,6 +96,7 @@ class Events extends Table {
 			'event_id'      => __( 'ID', 'coreactivity' ),
 			'status'        => __( 'Status', 'coreactivity' ),
 			'category'      => __( 'Category', 'coreactivity' ),
+			'source'        => __( 'Source', 'coreactivity' ),
 			'component'     => __( 'Component', 'coreactivity' ),
 			'event'         => __( 'Event', 'coreactivity' ),
 			'logs'          => __( 'Logs', 'coreactivity' ),
@@ -106,6 +118,7 @@ class Events extends Table {
 
 	protected function process_request_args() {
 		$this->_request_args = array(
+			'filter-source'    => Sanitize::_get_basic( 'filter-source', '' ),
 			'filter-group'     => Sanitize::_get_basic( 'filter-group', '' ),
 			'filter-component' => Sanitize::_get_basic( 'filter-component', '' ),
 			'search'           => $this->_get_field( 's' ),
@@ -117,6 +130,11 @@ class Events extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
+		Elements::instance()->select( array_merge( array( '' => __( 'All Sources', 'coreactivity' ) ), Activity::instance()->get_all_sources() ), array(
+			'selected' => $this->get_request_arg( 'filter-source' ),
+			'name'     => 'filter-source',
+		) );
+
 		Elements::instance()->select( array_merge( array( '' => __( 'All Categories', 'coreactivity' ) ), Activity::instance()->get_all_categories() ), array(
 			'selected' => $this->get_request_arg( 'filter-group' ),
 			'name'     => 'filter-group',
@@ -181,10 +199,15 @@ class Events extends Table {
 		if ( $this->_logged_counts[ $item->component ] > 0 ) {
 			$render .= '<a href="admin.php?page=coreactivity-logs&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Filter', 'coreactivity' ) . '</span></a>';
 			$render .= '<a href="admin.php?page=coreactivity-logs&view=component&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'View', 'coreactivity' ) . '</span></a>';
-			$render .= '</div>';
 		}
 
+		$render .= '</div>';
+
 		return $render;
+	}
+
+	protected function column_source( $item ) : string {
+		return '<span>' . $item->source . '</span>';
 	}
 
 	protected function column_event( $item ) : string {

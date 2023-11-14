@@ -91,12 +91,14 @@ class DebugPress extends Plugin {
 				'label' => __( 'Deprecated Hook Run', 'coreactivity' ),
 			),
 			'admin-ajax-call'        => array(
-				'label'  => __( 'Admin AJAX Call', 'coreactivity' ),
-				'status' => 'inactive',
+				'label'   => __( 'Admin AJAX Call', 'coreactivity' ),
+				'status'  => 'inactive',
+				'version' => '1.3',
 			),
 			'http-api-call'          => array(
-				'label'  => __( 'HTTP API Call', 'coreactivity' ),
-				'status' => 'inactive',
+				'label'   => __( 'HTTP API Call', 'coreactivity' ),
+				'status'  => 'inactive',
+				'version' => '1.3',
 			),
 		);
 	}

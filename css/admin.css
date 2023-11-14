@@ -23,7 +23,7 @@
   width: 80px;
 }
 .coreactivity-grid-events tr th.column-category {
-  width: 120px;
+  width: 100px;
 }
 .coreactivity-grid-events tr th.column-logs {
   width: 100px;
@@ -32,10 +32,7 @@
   width: 70px;
 }
 .coreactivity-grid-events tr th.column-component, .coreactivity-grid-events tr th.column-event {
-  width: 17%;
-}
-.coreactivity-grid-events tr th.column-loaded {
-  width: 160px;
+  width: 18%;
 }
 .coreactivity-grid-events tr th.column-available {
   width: 100px;
@@ -46,7 +43,7 @@
 }
 .coreactivity-grid-events tr .coreactivity-event-notifications {
   display: flex;
-  column-gap: 2em;
+  column-gap: 1em;
   row-gap: 0.5em;
   flex-wrap: wrap;
   justify-content: space-between;

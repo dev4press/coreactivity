@@ -51,6 +51,7 @@ class Activity {
 		),
 	);
 
+	private $sources = array();
 	private $components = array();
 	private $events = array();
 	private $categories = array();
@@ -163,6 +164,10 @@ class Activity {
 		return $ids;
 	}
 
+	public function get_component( string $component ) {
+		return $this->components[ $component ] ?? null;
+	}
+
 	public function get_event( string $component, string $event ) {
 		return $this->events[ $component ][ $event ] ?? null;
 	}
@@ -181,6 +186,10 @@ class Activity {
 
 	public function get_all_components() : array {
 		return $this->components;
+	}
+
+	public function get_all_sources() : array {
+		return $this->sources;
 	}
 
 	public function get_all_categories() : array {
@@ -238,6 +247,10 @@ class Activity {
 
 	public function get_event_label( int $event_id, string $event ) {
 		return $this->list[ $event_id ]['label'] ?? $event;
+	}
+
+	public function get_plugin_label(string $plugin) {
+		return $this->sources[$plugin] ?? $plugin;
 	}
 
 	public function get_events_for_component( string $component ) : array {
@@ -351,11 +364,11 @@ class Activity {
 	}
 
 	public function is_event_object_linked( int $event_id = 0, string $component = '', string $event = '' ) : bool {
-		if ($event_id > 0) {
+		if ( $event_id > 0 ) {
 			$e = $this->list[ $event_id ] ?? array();
 
 			$component = $e['component'] ?? '';
-			$event = $e['event'] ?? '';
+			$event     = $e['event'] ?? '';
 		}
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
@@ -438,11 +451,16 @@ class Activity {
 		$this->components[ $component ] = (object) array(
 			'category'     => $category,
 			'component'    => $component,
+			'source'       => $args['source'],
 			'label'        => $args['label'] ?? $this->_generate_component_label( $component ),
 			'plugin'       => $args['plugin'] ?? '',
 			'icon'         => $args['icon'] ?? 'ui-folder',
 			'is_available' => $args['is_available'] ?? false,
 		);
+
+		if ( ! isset( $this->sources[ $args['plugin'] ] ) ) {
+			$this->sources[ $args['plugin'] ] = $args['source'];
+		}
 	}
 
 	public function register_event( string $component, string $event, array $args = array(), array $rules = array() ) : bool {

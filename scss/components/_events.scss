@@ -32,7 +32,7 @@
             }
 
             &.column-category {
-                width: 120px;
+                width: 100px;
             }
 
             &.column-logs {
@@ -45,11 +45,7 @@
 
             &.column-component,
             &.column-event {
-                width: 17%;
-            }
-
-            &.column-loaded {
-                width: 160px;
+                width: 18%;
             }
 
             &.column-available {
@@ -70,7 +66,7 @@
 
         .coreactivity-event-notifications {
             display: flex;
-            column-gap: 2em;
+            column-gap: 1em;
             row-gap: .5em;
             flex-wrap: wrap;
             justify-content: space-between;

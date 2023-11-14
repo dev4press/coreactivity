@@ -31,6 +31,7 @@ abstract class Component {
 	protected $object_type = '';
 	protected $icon = 'ui-folder';
 	protected $scope = '';
+	protected $source = 'coreActivity';
 	protected $category = 'wordpress';
 	protected $version = '1.0';
 	/**
@@ -77,6 +78,7 @@ abstract class Component {
 			'plugin'       => $this->plugin,
 			'label'        => $this->label(),
 			'icon'         => $this->icon,
+			'source'       => $this->source,
 			'is_available' => $this->is_available(),
 		) );
 	}
