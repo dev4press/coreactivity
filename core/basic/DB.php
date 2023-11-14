@@ -275,4 +275,43 @@ class DB extends BaseDB {
 			'end'     => $raw->end,
 		);
 	}
+
+	public function get_events_statistics( $range = 'archive' ) : array {
+		switch ( $range ) {
+			default:
+			case 'archive':
+				$where = 'DATE(l.`logged`) < CURDATE()';
+				break;
+			case 'one':
+				$where = 'DATE(l.`logged`) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)';
+				break;
+			case 'two':
+				$where = 'DATE(l.`logged`) = DATE_SUB(CURDATE(), INTERVAL 2 DAY)';
+				break;
+		}
+
+		$sql = "SELECT e.`component`, e.`event`, DATE(l.`logged`) AS `log_date`, COUNT(l.`log_id`) as `log_count`
+				FROM " . $this->logs . " l INNER JOIN " . $this->events . " e ON l.`event_id` = e.`event_id` WHERE " . $where . "
+				GROUP BY e.`component`, e.`event`, `log_date` ORDER BY e.`component`, e.`event`, `log_date`;";
+		$raw = $this->get_results( $sql );
+
+		$statistics = array();
+
+		foreach ( $raw as $row ) {
+			$c = $row->component;
+			$e = $row->event;
+
+			if ( ! isset( $statistics[ $c ] ) ) {
+				$statistics[ $c ] = array();
+			}
+
+			if ( ! isset( $statistics[ $c ][ $e ] ) ) {
+				$statistics[ $c ][ $e ] = array();
+			}
+
+			$statistics[ $c ][ $e ][ $row->log_date ] = absint( $row->log_count );
+		}
+
+		return $statistics;
+	}
 }

@@ -8,6 +8,7 @@ use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
+use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 use Dev4Press\v44\Core\Plugins\Core;
 use Dev4Press\v44\Core\Quick\WPR;
 
@@ -60,6 +61,7 @@ class Plugin extends Core {
 		add_action( 'coreactivity_log_purge', array( $this, 'log_purge' ) );
 		add_action( 'coreactivity_instant_notification', array( $this, 'instant_notification' ) );
 		add_action( 'coreactivity_daily_digest', array( $this, 'daily_digest' ) );
+		add_action( 'coreactivity_daily_statistics', array( $this, 'daily_statistics' ) );
 		add_action( 'coreactivity_weekly_digest', array( $this, 'weekly_digest' ) );
 		add_action( 'coreactivity_weekly_maintenance', array( $this, 'weekly_maintenance' ) );
 		add_action( 'coreactivity_task_geo_db', array( $this, 'weekly_task_geo_dab_update' ) );
@@ -74,6 +76,12 @@ class Plugin extends Core {
 			if ( ! $this->s()->get( 'auto_cleanup_active' ) ) {
 				WPR::remove_cron( 'coreactivity_log_purge' );
 			}
+		}
+
+		if ( ! wp_next_scheduled( 'coreactivity_daily_statistics' ) ) {
+			$cron_time = strtotime( 'tomorrow' ) + 5 * HOUR_IN_SECONDS;
+
+			wp_schedule_event( $cron_time, 'daily', 'coreactivity_daily_statistics' );
 		}
 
 		if ( ! wp_next_scheduled( 'coreactivity_weekly_maintenance' ) ) {
@@ -126,6 +134,10 @@ class Plugin extends Core {
 
 	public function daily_digest() {
 		Notifications::instance()->scheduled_daily();
+	}
+
+	public function daily_statistics() {
+		Statistics::instance()->daily_update();
 	}
 
 	public function weekly_digest() {

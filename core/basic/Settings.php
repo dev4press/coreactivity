@@ -29,6 +29,10 @@ class Settings extends BaseSettings {
 			'geoip2_attempt'        => 0,
 			'geoip2_error'          => '',
 		),
+		'storage'       => array(
+			'statistics'        => '',
+			'statistics_latest' => '',
+		),
 		'settings'      => array(
 			'show_setup_wizard'                       => true,
 			'admin_bar_integration'                   => true,

@@ -6,6 +6,7 @@
 
 * **new** component: `Forminator` plugin, with 1 event
 * **new** logs panel view support for the object by ID or name
+* **new** store statistics for each event on the daily base
 * **edit** optimized logs panel views processing and matching
 * **edit** log item dialog view updated rendering for expandability
 * **edit** improved `Event` view display for the Logs panel 

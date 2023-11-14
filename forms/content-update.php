@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php
 
 			include( COREACTIVITY_PATH . 'forms/setup-database.php' );
+			include( COREACTIVITY_PATH . 'forms/setup-statistics.php' );
 
 			coreactivity()->schedule_geo_db_update();
 
