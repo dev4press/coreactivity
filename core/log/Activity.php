@@ -24,6 +24,7 @@ use Dev4Press\Plugin\CoreActivity\Plugins\ContactForm7;
 use Dev4Press\Plugin\CoreActivity\Plugins\DebugPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\DuplicatePost;
 use Dev4Press\Plugin\CoreActivity\Plugins\Forminator;
+use Dev4Press\Plugin\CoreActivity\Plugins\GDForumManager;
 use Dev4Press\Plugin\CoreActivity\Plugins\GravityForms;
 use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
@@ -216,7 +217,7 @@ class Activity {
 
 	public function get_event_notifications( string $component, string $event ) : array {
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
-			return $this->events[ $component ][ $event ]->notifications;
+			return $this->events[ $component ][ $event ]->notifications ?? array();
 		}
 
 		return array();
@@ -590,6 +591,7 @@ class Activity {
 		DebugPress::instance();
 		DuplicatePost::instance();
 		Forminator::instance();
+		GDForumManager::instance();
 		GravityForms::instance();
 		Jetpack::instance();
 		SweepPress::instance();

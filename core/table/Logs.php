@@ -814,7 +814,7 @@ class Logs extends Table {
 		$render = $item->log_id;
 
 		$actions = array(
-			'popup' => '<a href="#" class="coreactivity-show-view-popup" data-log="' . $item->log_id . '">' . __( "View" ) . '</a>',
+			'popup' => '<a href="#" class="coreactivity-show-view-popup" data-log="' . $item->log_id . '">' . __( 'View', 'coreactivity' ) . '</a>',
 		);
 
 		$render  = apply_filters( 'coreactivity_logs_field_render_id', $render, $item, $this );

@@ -9,7 +9,7 @@ $_tabs = coreactivity_view_dialog_tabs();
 <div style="display: none">
     <div id="coreactivity-log-dialog" title="<?php _e( 'Log Data', 'coreactivity' ); ?>">
         <div class="d4p-ctrl-tabs d4p-tabs-have-icons d4p-tabs-in-dialog">
-            <div role="tablist" aria-label="<?php _e( "Log Dialog Popup" ); ?>">
+            <div role="tablist" aria-label="<?php _e( 'Log Dialog Popup', 'coreactivity' ); ?>">
 				<?php
 
 				$_selected = true;

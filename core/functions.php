@@ -56,15 +56,15 @@ function coreactivity_print_array( $input ) : string {
 function coreactivity_view_dialog_tabs() : array {
 	return apply_filters( 'coreactivity_log_dialog_tabs', array(
 		'info'     => array(
-			'label' => __( 'Data' ),
+			'label' => __( 'Data', 'coreactivity' ),
 			'icon'  => 'ui-calendar-pen',
 		),
 		'meta'     => array(
-			'label' => __( 'Meta' ),
+			'label' => __( 'Meta', 'coreactivity' ),
 			'icon'  => 'ui-newspaper',
 		),
 		'location' => array(
-			'label' => __( 'Location' ),
+			'label' => __( 'Location', 'coreactivity' ),
 			'icon'  => 'ui-location-map',
 		),
 	) );

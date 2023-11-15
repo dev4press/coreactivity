@@ -4,6 +4,7 @@
 
 ### Version: 1.4 / November 15 2023
 
+* **new** component: `GD Forum Manager` plugin, with 4 events
 * **new** component: `Forminator` plugin, with 1 event
 * **new** logs panel view support for the object by ID or name
 * **new** store statistics for each event on the daily base
@@ -14,6 +15,7 @@
 * **edit** Dev4Press Library 4.4 Beta
 * **fix** several small issues with the `Live` Logs updates
 * **fix** object filtering for logs panel was unfinished
+* **fix** notifications property not found for new events
 
 ### Version: 1.3 / November 6 2023
 

@@ -8,19 +8,19 @@ $_items = $_grid->items ?? array();
 
 function _coreactivity_dialog_tab_info( $item ) {
 	$log = array(
-		'log_id'      => __( "Log ID" ),
-		'blog_id'     => __( "Blog ID" ),
-		'ip'          => __( "IP" ),
-		'component'   => __( "Component" ),
-		'event'       => __( "Event" ),
-		'context'     => __( "Context" ),
-		'method'      => __( "Method" ),
-		'protocol'    => __( "Protocol" ),
-		'logged'      => __( "Date/Time" ),
-		'object_type' => __( "Object" ),
-		'object_id'   => __( "Object ID" ),
-		'object_name' => __( "Object Name" ),
-		'request'     => __( "Request" ),
+		'log_id'      => __( 'Log ID', 'coreactivity' ),
+		'blog_id'     => __( 'Blog ID', 'coreactivity' ),
+		'ip'          => __( 'IP', 'coreactivity' ),
+		'component'   => __( 'Component', 'coreactivity' ),
+		'event'       => __( 'Event', 'coreactivity' ),
+		'context'     => __( 'Context', 'coreactivity' ),
+		'method'      => __( 'Method', 'coreactivity' ),
+		'protocol'    => __( 'Protocol', 'coreactivity' ),
+		'logged'      => __( 'Date/Time', 'coreactivity' ),
+		'object_type' => __( 'Object', 'coreactivity' ),
+		'object_id'   => __( 'Object ID', 'coreactivity' ),
+		'object_name' => __( 'Object Name', 'coreactivity' ),
+		'request'     => __( 'Request', 'coreactivity' ),
 	);
 
 	echo '<div id="coreactivity-popup-data-info-' . $item->log_id . '">';
@@ -70,11 +70,11 @@ function _coreactivity_dialog_tab_location( $item ) {
 	echo '<div id="coreactivity-popup-data-location-' . $item->log_id . '">';
 	if ( ! empty( $item->country_code ) ) {
 		echo '<dl class="d4p-ctrl-list">';
-		echo '<dt>' . __( "Country Code" ) . '</dt>';
+		echo '<dt>' . __( 'Country Code', 'coreactivity' ) . '</dt>';
 		echo '<dd>' . $item->country_code . '</dd>';
-		echo '<dt>' . __( "Country" ) . '</dt>';
+		echo '<dt>' . __( 'Country', 'coreactivity' ) . '</dt>';
 		echo '<dd>' . GEO::instance()->country( $item->country_code ) . '</dd>';
-		echo '<dt>' . __( "Continent" ) . '</dt>';
+		echo '<dt>' . __( 'Continent', 'coreactivity' ) . '</dt>';
 		echo '<dd>' . GEO::instance()->continent( $item->country_code ) . '</dd>';
 		echo '</dl>';
 	}
