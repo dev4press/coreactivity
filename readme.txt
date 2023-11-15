@@ -43,13 +43,13 @@ Currently, plugin has 26 components with a total of 127 events, with direct inte
 * Contact Form 7 (3 events)
 * DebugPress (9 event)
 * Duplicate Post (1 event)
+* Forminator (1 event) / v1.4
 * GD Forum Manager (4 event) / v1.4
 * Gravity Forms (6 events)
 * Jetpack (2 events)
 * SweepPress (3 event)
 * User Switching (4 events)
 * WooCommerce (3 events) / v1.1
-* Forminator (1 event) / v1.4
 
 = Geo Location of IPs =
 The plugin can locate where the IP making the request is coming from. There are currently three methods available, with more coming in the future:
@@ -113,6 +113,20 @@ Yes. But, since cache plugins are bypassing WordPress to serve cached response, 
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 1.4 (2023.11.15) =
+* New: component: `GD Forum Manager` plugin, with 4 events
+* New: component: `Forminator` plugin, with 1 event
+* New: logs panel view support for the object by ID or name
+* New: store statistics for each event on the daily base
+* New: filter events by the plugin it originated from
+* Edit: optimized logs panel views processing and matching
+* Edit: log item dialog view updated rendering for expandability
+* Edit: improved `Event` view display for the Logs panel 
+* Edit: Dev4Press Library 4.4 Beta
+* Fix: several small issues with the `Live` Logs updates
+* Fix: object filtering for logs panel was unfinished
+* Fix: notifications property not found for new events
+
 = 1.3 (2023.11.06) =
 * New: geolocation with the use of `MaxMind GeoLite2` database
 * New: `MaxMind GeoLite2` support for weekly downloading of Lite database
