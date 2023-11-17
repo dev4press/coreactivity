@@ -194,6 +194,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 1.4 =
+New components. Many tweaks, improvements and fixes.
+
 = 1.3 =
 MaxMind GeoLite2 support. Many improvements and fixes.
 
