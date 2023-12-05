@@ -446,6 +446,7 @@
   background-color: #DDD;
   border-bottom: 3px solid var(--d4p-color-layout-accent);
   padding: 0 10px;
+  -webkit-column-break-after: avoid;
 }
 .coreactivity-about-components h3:first-child {
   margin-top: 0;
@@ -454,6 +455,7 @@
   font-size: 1.2em;
   padding: 0 0 5px;
   border-bottom: 1px solid var(--d4p-color-layout-accent);
+  -webkit-column-break-after: avoid;
 }
 .coreactivity-about-components ul {
   list-style: disc outside;

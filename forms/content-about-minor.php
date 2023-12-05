@@ -13,7 +13,7 @@ debugpress_r(coreactivity_settings()->get( 'statistics', 'storage' ));
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.4</span></strong> &minus;
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.5</span></strong> &minus;
         Library Updated. Minor updates and improvements.
     </p>
     <p>

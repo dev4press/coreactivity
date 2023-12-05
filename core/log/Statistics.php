@@ -2,6 +2,8 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
+use DateInterval;
+use DatePeriod;
 use DateTime;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 
@@ -111,6 +113,99 @@ class Statistics {
 		}
 	}
 
+	public function component_statistics( string $component, array $events = array() ) : array {
+		$days_week  = $this->list_last_days_dates( 'P7D' );
+		$days_month = $this->list_last_days_dates( 'P30D' );
+
+		$raw       = coreactivity_settings()->get( 'statistics', 'storage' );
+		$input     = json_decode( $raw, true );
+		$result    = array(
+			'first'     => '',
+			'days'      => 0,
+			'total'     => 0,
+			'yesterday' => 0,
+			'week'      => 0,
+			'month'     => 0,
+			'last'      => array(
+				'week'  => $days_week,
+				'month' => $days_month,
+			),
+			'events'    => array(),
+		);
+		$yesterday = date( 'Y-m-d', strtotime( '-1 days' ) );
+
+		foreach ( $input[ $component ] as $event => $days ) {
+			if ( ! empty( $events ) && ! in_array( $event, $events ) ) {
+				continue;
+			}
+
+			if ( ! isset( $result['events'][ $event ] ) ) {
+				$result['events'][ $event ] = array(
+					'first'     => '',
+					'days'      => 0,
+					'total'     => 0,
+					'yesterday' => 0,
+					'week'      => 0,
+					'month'     => 0,
+					'last'      => array(
+						'week'  => $days_week,
+						'month' => $days_month,
+					),
+				);
+			}
+
+			foreach ( $days as $day => $count ) {
+				if ( empty( $result['events'][ $event ]['first'] ) ) {
+					$result['events'][ $event ]['first'] = $day;
+				}
+
+				$result['events'][ $event ]['days'] ++;
+				$result['events'][ $event ]['total'] += $count;
+
+				if ( $day == $yesterday ) {
+					$result['events'][ $event ]['yesterday'] += $count;
+				}
+
+				if ( isset( $days_week[ $day ] ) ) {
+					$result['events'][ $event ]['week'] += $count;
+
+					$result['events'][ $event ]['last']['week'][ $day ] = $count;
+				}
+
+				if ( isset( $days_month[ $day ] ) ) {
+					$result['events'][ $event ]['month'] += $count;
+
+					$result['events'][ $event ]['last']['month'][ $day ] = $count;
+				}
+
+				if ( empty( $result['first'] ) ) {
+					$result['first'] = $day;
+				}
+
+				$result['days'] ++;
+				$result['total'] += $count;
+
+				if ( $day == $yesterday ) {
+					$result['yesterday'] += $count;
+				}
+
+				if ( isset( $days_week[ $day ] ) ) {
+					$result['week'] += $count;
+
+					$result['last']['week'][ $day ] += $count;
+				}
+
+				if ( isset( $days_month[ $day ] ) ) {
+					$result['month'] += $count;
+
+					$result['last']['month'][ $day ] += $count;
+				}
+			}
+		}
+
+		return $result;
+	}
+
 	private function update_statistics_array( $statistics, $input ) : array {
 		if ( ! empty( $input ) ) {
 			foreach ( $input as $c => $events ) {
@@ -144,5 +239,22 @@ class Statistics {
 		coreactivity_settings()->set( 'statistics_latest', gmdate( 'Y-m-d' ), 'storage' );
 
 		coreactivity_settings()->save( 'storage' );
+	}
+
+	private function list_last_days_dates( string $period ) : array {
+		$begin = new DateTime();
+		$begin->sub( new DateInterval( $period ) );
+		$end = new DateTime();
+
+		$interval  = new DateInterval( 'P1D' );
+		$dateRange = new DatePeriod( $begin, $interval, $end );
+
+		$range = [];
+		foreach ( $dateRange as $date ) {
+			$day           = $date->format( 'Y-m-d' );
+			$range[ $day ] = 0;
+		}
+
+		return $range;
 	}
 }

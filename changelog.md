@@ -4,6 +4,7 @@
 
 ### Version: 1.5 / December 7 2023
 
+* **edit** various small updates and tweaks to admin interface
 * **edit** Dev4Press Library 4.5
 
 ### Version: 1.4 / November 15 2023
