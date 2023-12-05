@@ -1,15 +1,21 @@
 <?php
 
-use Dev4Press\v44\Core\Quick\KSES;
-use function Dev4Press\v44\Functions\panel;
+use Dev4Press\v45\Core\Quick\KSES;
+use function Dev4Press\v45\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+debugpress_r(coreactivity_settings()->get( 'statistics', 'storage' ));
+
 ?>
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
+    <p>
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.4</span></strong> &minus;
+        Library Updated. Minor updates and improvements.
+    </p>
     <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.4</span></strong> &minus;
         New components. Many tweaks, improvements and fixes.

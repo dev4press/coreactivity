@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 1.5 / December 7 2023
+
+* **edit** Dev4Press Library 4.5
+
 ### Version: 1.4 / November 15 2023
 
 * **new** component: `GD Forum Manager` plugin, with 4 events

@@ -3,11 +3,11 @@
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v44\Core\Quick\Sanitize;
-use Dev4Press\v44\Core\Quick\Str;
-use Dev4Press\v44\Core\UI\Elements;
-use Dev4Press\v44\WordPress\Admin\Table;
-use Dev4Press\v44\Core\Plugins\DBLite;
+use Dev4Press\v45\Core\Quick\Sanitize;
+use Dev4Press\v45\Core\Quick\Str;
+use Dev4Press\v45\Core\UI\Elements;
+use Dev4Press\v45\WordPress\Admin\Table;
+use Dev4Press\v45\Core\Plugins\DBLite;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -75,12 +75,12 @@ class Events extends Table {
 		$this->query_items( $sql, $per_page );
 
 		foreach ( $this->items as &$item ) {
-			$parts = explode('/', $item->component);
+			$parts     = explode( '/', $item->component );
 			$component = Activity::instance()->get_component( $item->component );
 
 			$item->event_id = absint( $item->event_id );
 			$item->plugin   = $component->plugin ?? $parts[0];
-			$item->source   = $component->source ?? Activity::instance()->get_plugin_label($parts[0]);
+			$item->source   = $component->source ?? Activity::instance()->get_plugin_label( $parts[0] );
 
 			if ( ! isset( $this->_logged_counts[ $item->component ] ) ) {
 				$this->_logged_counts[ $item->component ] = 0;

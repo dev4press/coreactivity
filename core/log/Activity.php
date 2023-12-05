@@ -30,8 +30,8 @@ use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
 use Dev4Press\Plugin\CoreActivity\Plugins\WooCommerce;
-use Dev4Press\v44\Core\Quick\Sanitize;
-use Dev4Press\v44\Core\Quick\Str;
+use Dev4Press\v45\Core\Quick\Sanitize;
+use Dev4Press\v45\Core\Quick\Str;
 use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -250,8 +250,8 @@ class Activity {
 		return $this->list[ $event_id ]['label'] ?? $event;
 	}
 
-	public function get_plugin_label(string $plugin) {
-		return $this->sources[$plugin] ?? $plugin;
+	public function get_plugin_label( string $plugin ) {
+		return $this->sources[ $plugin ] ?? $plugin;
 	}
 
 	public function get_events_for_component( string $component ) : array {

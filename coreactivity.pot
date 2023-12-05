@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 11/15/2023 12:25:12 PM\n"
+"POT-Creation-Date: 12/05/2023 01:20:42 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1410,11 +1410,12 @@ msgstr ""
 
 #: core/log/Display.php:201
 #: core/log/Display.php:218
-#: forms/content-about-minor.php:14
-#: forms/content-about-minor.php:18
-#: forms/content-about-minor.php:22
-#: forms/content-about-minor.php:26
-#: forms/content-about-minor.php:30
+#: forms/content-about-minor.php:16
+#: forms/content-about-minor.php:20
+#: forms/content-about-minor.php:24
+#: forms/content-about-minor.php:28
+#: forms/content-about-minor.php:32
+#: forms/content-about-minor.php:36
 msgid "Version"
 msgstr ""
 
@@ -1929,11 +1930,11 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: forms/content-about-minor.php:12
+#: forms/content-about-minor.php:14
 msgid "Maintenance and Security Releases"
 msgstr ""
 
-#: forms/content-about-minor.php:37
+#: forms/content-about-minor.php:43
 msgid "For more information, see <a href='%s'>the changelog</a>."
 msgstr ""
 

@@ -9,8 +9,8 @@ use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use Dev4Press\v44\Core\Plugins\Core;
-use Dev4Press\v44\Core\Quick\WPR;
+use Dev4Press\v45\Core\Plugins\Core;
+use Dev4Press\v45\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -33,6 +33,14 @@ class Plugin extends Core {
 	}
 
 	public function f() {
+		return null;
+	}
+
+	public function b() {
+		return null;
+	}
+
+	public function l() {
 		return null;
 	}
 
@@ -112,10 +120,6 @@ class Plugin extends Core {
 
 	public function log_purge() {
 		Cleanup::instance()->auto_cleanup_log();
-	}
-
-	public function b() {
-		return null;
 	}
 
 	public function is_logging_active() : bool {

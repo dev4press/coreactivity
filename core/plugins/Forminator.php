@@ -48,7 +48,7 @@ class Forminator extends Plugin {
 
 	protected function get_events() : array {
 		return array(
-			'form-deleted'      => array(
+			'form-deleted' => array(
 				'label' => __( 'Form Deleted', 'coreactivity' ),
 			),
 		);

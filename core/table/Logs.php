@@ -7,10 +7,10 @@ use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use Dev4Press\v44\Core\Plugins\DBLite;
-use Dev4Press\v44\Core\Quick\Sanitize;
-use Dev4Press\v44\Core\UI\Elements;
-use Dev4Press\v44\WordPress\Admin\Table;
+use Dev4Press\v45\Core\Plugins\DBLite;
+use Dev4Press\v45\Core\Quick\Sanitize;
+use Dev4Press\v45\Core\UI\Elements;
+use Dev4Press\v45\WordPress\Admin\Table;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
