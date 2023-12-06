@@ -113,6 +113,12 @@ Yes. But, since cache plugins are bypassing WordPress to serve cached response, 
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 1.5 (2023.12.07) =
+* NewL method in `Statistics` class to get component statistics
+* Edit: various small updates and tweaks to admin interface
+* Edit: Dev4Press Library 4.5
+* Fix: multiple jobs scheduling when running in multisite
+
 = 1.4 (2023.11.15) =
 * New: component: `GD Forum Manager` plugin, with 4 events
 * New: component: `Forminator` plugin, with 1 event
@@ -194,6 +200,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 1.5 =
+Library Updated. Minor updates and improvements.
+
 = 1.4 =
 New components. Many tweaks, improvements and fixes.
 
@@ -202,9 +211,6 @@ MaxMind GeoLite2 support. Many improvements and fixes.
 
 = 1.2 =
 IP2Location support. Many improvements and fixes.
-
-= 1.1 =
-New component. Various Logs panel improvements. Tweaks and bug fixes.
 
 == Screenshots ==
 * Plugin Dashboard

@@ -4,8 +4,12 @@
 
 ### Version: 1.5 / December 7 2023
 
+* **new** method in `Statistics` class to get component statistics
 * **edit** various small updates and tweaks to admin interface
+* **edit** GeoIP2 Library 1.11.1
+* **edit** IP2Location Library 9.7.2
 * **edit** Dev4Press Library 4.5
+* **fix** multiple jobs scheduling when running in multisite
 
 ### Version: 1.4 / November 15 2023
 

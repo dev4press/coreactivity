@@ -74,6 +74,32 @@ class Plugin extends Core {
 		add_action( 'coreactivity_weekly_maintenance', array( $this, 'weekly_maintenance' ) );
 		add_action( 'coreactivity_task_geo_db', array( $this, 'weekly_task_geo_dab_update' ) );
 
+		if ( is_multisite() ) {
+			if ( is_main_site() ) {
+				$this->jobs_scheduler_init();
+			} else {
+				if ( is_admin() ) {
+					$jobs = array(
+						'coreactivity_log_purge',
+						'coreactivity_daily_statistics',
+						'coreactivity_weekly_maintenance',
+						'coreactivity_daily_digest',
+						'coreactivity_weekly_digest',
+					);
+
+					foreach ( $jobs as $job ) {
+						if ( wp_next_scheduled( $job ) ) {
+							WPR::remove_cron( $job );
+						}
+					}
+				}
+			}
+		} else {
+			$this->jobs_scheduler_init();
+		}
+	}
+
+	public function jobs_scheduler_init() {
 		if ( ! wp_next_scheduled( 'coreactivity_log_purge' ) ) {
 			if ( $this->s()->get( 'auto_cleanup_active' ) ) {
 				$cron_time = mktime( 3, 5, 0, gmdate( 'm' ), gmdate( 'd' ), gmdate( 'Y' ) );

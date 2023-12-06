@@ -49,6 +49,10 @@ class Notifications {
 	}
 
 	public function schedule_digests() {
+		if ( is_multisite() && ! is_main_site() ) {
+			return;
+		}
+
 		if ( $this->s( 'daily' ) ) {
 			if ( ! wp_next_scheduled( 'coreactivity_daily_digest' ) ) {
 				$cron_time = strtotime( 'tomorrow' ) + HOUR_IN_SECONDS * $this->s( 'daily_hour' );

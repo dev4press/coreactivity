@@ -1,5 +1,6 @@
 <?php
 
+use Dev4Press\v45\Core\Quick\WPR;
 use function Dev4Press\v45\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,6 +20,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			coreactivity_settings()->set( 'install', false, 'info' );
 			coreactivity_settings()->set( 'update', false, 'info', true );
+
+			if ( wp_next_scheduled( 'coreactivity_weekly_digest' ) ) {
+				WPR::remove_cron( 'coreactivity_weekly_digest' );
+			}
 
 			?>
 
