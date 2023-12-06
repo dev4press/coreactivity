@@ -10,6 +10,7 @@
 * **edit** IP2Location Library 9.7.2
 * **edit** Dev4Press Library 4.5
 * **fix** multiple jobs scheduling when running in multisite
+* **fix** few notices with display of meta-data in the logs 
 
 ### Version: 1.4 / November 15 2023
 

@@ -49,10 +49,14 @@ function _coreactivity_dialog_tab_meta( $item ) {
 	if ( isset( $item->meta ) ) {
 		foreach ( $item->meta as $key => $value ) {
 			if ( $key != 'geo_location' ) {
-				$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? coreactivity_print_array( $value ) : json_encode( $value ) );
+				if ( is_scalar( $value ) ) {
+					$display = esc_html( $value );
+				} else {
+					$display = is_array( $value ) && count( $value ) < 9 ? coreactivity_print_array( $value ) : json_encode( $value );
+				}
 
 				echo '<dt>' . $key . '</dt>';
-				echo '<dd>' . $value . '</dd>';
+				echo '<dd>' . $display . '</dd>';
 			}
 		}
 	}

@@ -779,8 +779,10 @@ class Logs extends Table {
 
 		if ( empty( $left ) ) {
 			$_chunk_size = ceil( count( $right ) / 2 );
+			$_chunks     = array_chunk( $right, $_chunk_size );
 
-			list( $left, $right ) = array_chunk( $right, $_chunk_size );
+			$left  = $_chunks[0];
+			$right = $_chunks[1] ?? array();
 		}
 
 		$description = apply_filters( 'coreactivity_logs_log_item_descriptions', '', $item, $this );

@@ -116,6 +116,8 @@ If the database for GEO location is regularly updated, locating the IP to the co
 = 1.5 (2023.12.07) =
 * NewL method in `Statistics` class to get component statistics
 * Edit: various small updates and tweaks to admin interface
+* Edit: GeoIP2 Library 1.11.1
+* Edit: IP2Location Library 9.7.2
 * Edit: Dev4Press Library 4.5
 * Fix: multiple jobs scheduling when running in multisite
 
