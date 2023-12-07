@@ -215,7 +215,7 @@ class Plugin extends BasePlugin {
 			'live_updates' => $this->settings()->get( 'logs_live_updates' ) ? 'Y' : 'N',
 		);
 
-		wp_localize_script( 'd4plib3-coreactivity-admin', 'coreactivity_data', $values );
+		wp_localize_script( $this->e()->prefix() . 'coreactivity-admin', 'coreactivity_data', $values );
 	}
 
 	protected function extra_enqueue_scripts_plugin() {
