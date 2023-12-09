@@ -5,6 +5,7 @@
 ### Version: 1.5 / December 7 2023
 
 * **new** method in `Statistics` class to get component statistics
+* **new** expanded setup `Wizard` with geo location panel
 * **edit** various small updates and tweaks to admin interface
 * **edit** GeoIP2 Library 1.11.1
 * **edit** IP2Location Library 9.7.2

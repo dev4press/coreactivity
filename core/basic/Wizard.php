@@ -43,6 +43,28 @@ class Wizard extends CoreWizard {
 				),
 			),
 		),
+		'geo' => array(
+			'country'   => array(
+				array(
+					'settings',
+					'log_country_code',
+					array(
+						'yes' => true,
+						'no'  => false,
+					),
+				),
+			),
+			'expanded' => array(
+				array(
+					'settings',
+					'log_if_available_expanded_location',
+					array(
+						'yes' => true,
+						'no'  => false,
+					),
+				),
+			),
+		),
 		'log'           => array(
 			'flag'   => array(
 				array(
@@ -118,6 +140,7 @@ class Wizard extends CoreWizard {
 	protected function init_panels() {
 		$this->panels = array(
 			'intro'         => array( 'label' => __( 'Intro', 'coreactivity' ) ),
+			'geo'           => array( 'label' => __( 'Geo Location', 'coreactivity' ) ),
 			'log'           => array( 'label' => __( 'Log', 'coreactivity' ) ),
 			'notifications' => array( 'label' => __( 'Notifications', 'coreactivity' ) ),
 			'finish'        => array( 'label' => __( 'Finish', 'coreactivity' ) ),

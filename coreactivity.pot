@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
-"Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 12/05/2023 01:20:42 PM\n"
+"Project-Id-Version: coreActivity\n"
+"POT-Creation-Date: 12/09/2023 09:02:26 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,12 +26,12 @@ msgstr ""
 #: core/admin/Plugin.php:117
 #: core/basic/AdminBar.php:50
 #: core/table/Events.php:102
-#: core/table/Logs.php:830
-#: core/table/Logs.php:915
-#: core/table/Logs.php:928
-#: core/table/Logs.php:993
-#: core/table/Logs.php:1006
-#: core/table/Logs.php:874
+#: core/table/Logs.php:832
+#: core/table/Logs.php:917
+#: core/table/Logs.php:930
+#: core/table/Logs.php:995
+#: core/table/Logs.php:1008
+#: core/table/Logs.php:876
 msgid "Logs"
 msgstr ""
 
@@ -58,6 +58,7 @@ msgstr ""
 
 #: core/admin/panel/Settings.php:29
 #: core/admin/Settings.php:226
+#: core/basic/Wizard.php:143
 msgid "Geo Location"
 msgstr ""
 
@@ -75,8 +76,7 @@ msgstr ""
 
 #: core/admin/panel/Settings.php:39
 #: core/admin/panel/Tools.php:30
-#: core/admin/panel/Wizard.php:21
-#: core/basic/Wizard.php:122
+#: core/basic/Wizard.php:145
 #: core/components/Notification.php:75
 #: core/table/Events.php:105
 msgid "Notifications"
@@ -128,24 +128,6 @@ msgstr ""
 
 #: core/admin/panel/Tools.php:36
 msgid "Using this tool, bulk enable or disable events for notifications."
-msgstr ""
-
-#: core/admin/panel/Wizard.php:15
-#: core/basic/Wizard.php:120
-msgid "Intro"
-msgstr ""
-
-#: core/admin/panel/Wizard.php:18
-#: core/admin/Settings.php:389
-#: core/admin/Settings.php:423
-#: core/admin/Settings.php:458
-#: core/basic/Wizard.php:121
-msgid "Log"
-msgstr ""
-
-#: core/admin/panel/Wizard.php:24
-#: core/basic/Wizard.php:123
-msgid "Finish"
 msgstr ""
 
 #: core/admin/Data.php:12
@@ -320,7 +302,7 @@ msgid "IP Location Data"
 msgstr ""
 
 #: core/admin/Settings.php:69
-#: forms/dialog-data.php:73
+#: forms/dialog-data.php:77
 msgid "Country Code"
 msgstr ""
 
@@ -701,6 +683,13 @@ msgstr ""
 msgid "One or more emails to send the notifications. If empty, it will use the website admin email."
 msgstr ""
 
+#: core/admin/Settings.php:389
+#: core/admin/Settings.php:423
+#: core/admin/Settings.php:458
+#: core/basic/Wizard.php:144
+msgid "Log"
+msgstr ""
+
 #: core/admin/Settings.php:393
 #: core/admin/Settings.php:427
 #: core/admin/Settings.php:462
@@ -834,12 +823,12 @@ msgid "CoreActivity"
 msgstr ""
 
 #: core/basic/Render.php:28
-#: core/table/Logs.php:862
+#: core/table/Logs.php:864
 msgid "Current Request IP"
 msgstr ""
 
 #: core/basic/Render.php:23
-#: core/table/Logs.php:858
+#: core/table/Logs.php:860
 msgid "Server IP"
 msgstr ""
 
@@ -847,6 +836,14 @@ msgstr ""
 #: core/basic/Render.php:29
 #: forms/content-dashboard-location.php:8
 msgid "Unknown"
+msgstr ""
+
+#: core/basic/Wizard.php:142
+msgid "Intro"
+msgstr ""
+
+#: core/basic/Wizard.php:146
+msgid "Finish"
 msgstr ""
 
 #: core/components/Attachment.php:32
@@ -1410,12 +1407,12 @@ msgstr ""
 
 #: core/log/Display.php:201
 #: core/log/Display.php:218
-#: forms/content-about-minor.php:16
-#: forms/content-about-minor.php:20
-#: forms/content-about-minor.php:24
-#: forms/content-about-minor.php:28
-#: forms/content-about-minor.php:32
-#: forms/content-about-minor.php:36
+#: forms/content-about-minor.php:14
+#: forms/content-about-minor.php:18
+#: forms/content-about-minor.php:22
+#: forms/content-about-minor.php:26
+#: forms/content-about-minor.php:30
+#: forms/content-about-minor.php:34
 msgid "Version"
 msgstr ""
 
@@ -1440,7 +1437,7 @@ msgstr ""
 #: core/log/Display.php:256
 #: core/log/Display.php:464
 #: core/table/Logs.php:706
-#: core/table/Logs.php:893
+#: core/table/Logs.php:895
 msgid "Not Found"
 msgstr ""
 
@@ -1782,7 +1779,7 @@ msgstr ""
 
 #: core/table/Events.php:201
 #: core/table/Events.php:219
-#: core/table/Logs.php:817
+#: core/table/Logs.php:819
 msgid "View"
 msgstr ""
 
@@ -1864,27 +1861,27 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: core/table/Logs.php:842
+#: core/table/Logs.php:844
 msgid "IP Logs"
 msgstr ""
 
-#: core/table/Logs.php:846
+#: core/table/Logs.php:848
 msgid "Country Logs"
 msgstr ""
 
-#: core/table/Logs.php:948
+#: core/table/Logs.php:950
 msgid "Type Logs"
 msgstr ""
 
-#: core/table/Logs.php:960
+#: core/table/Logs.php:962
 msgid "Object Logs"
 msgstr ""
 
-#: core/table/Logs.php:965
+#: core/table/Logs.php:967
 msgid "Do Not Log"
 msgstr ""
 
-#: core/table/Logs.php:975
+#: core/table/Logs.php:977
 msgid "on exception list"
 msgstr ""
 
@@ -1893,7 +1890,7 @@ msgstr ""
 msgid "Toggle Meta"
 msgstr ""
 
-#: core/table/Logs.php:1039
+#: core/table/Logs.php:1041
 msgid "Show Log Meta Data"
 msgstr ""
 
@@ -1902,7 +1899,7 @@ msgid "Request Method"
 msgstr ""
 
 #: core/table/Logs.php:699
-#: forms/dialog-data.php:75
+#: forms/dialog-data.php:79
 msgid "Country"
 msgstr ""
 
@@ -1914,11 +1911,11 @@ msgstr ""
 msgid "request"
 msgstr ""
 
-#: core/table/Logs.php:882
+#: core/table/Logs.php:884
 msgid "Not a User"
 msgstr ""
 
-#: core/table/Logs.php:897
+#: core/table/Logs.php:899
 msgid "Edit"
 msgstr ""
 
@@ -1930,11 +1927,11 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: forms/content-about-minor.php:14
+#: forms/content-about-minor.php:12
 msgid "Maintenance and Security Releases"
 msgstr ""
 
-#: forms/content-about-minor.php:43
+#: forms/content-about-minor.php:41
 msgid "For more information, see <a href='%s'>the changelog</a>."
 msgstr ""
 
@@ -2074,7 +2071,7 @@ msgid "Search"
 msgstr ""
 
 #: forms/content-install.php:24
-#: forms/content-update.php:27
+#: forms/content-update.php:32
 msgid "All Done"
 msgstr ""
 
@@ -2083,7 +2080,7 @@ msgid "Installation completed."
 msgstr ""
 
 #: forms/content-install.php:32
-#: forms/content-update.php:35
+#: forms/content-update.php:40
 msgid "Click here to continue"
 msgstr ""
 
@@ -2203,8 +2200,41 @@ msgstr ""
 msgid "Update status"
 msgstr ""
 
-#: forms/content-update.php:30
+#: forms/content-update.php:35
 msgid "Update completed."
+msgstr ""
+
+#: forms/content-wizard-geo.php:8
+#: forms/content-wizard-log.php:3
+msgid "Main Logs panel has a lot of moving parts and elements, and some of things may be useful to have depending on what your preferences are."
+msgstr ""
+
+#: forms/content-wizard-geo.php:14
+msgid "Do you want to store country code for each activity logged?"
+msgstr ""
+
+#: forms/content-wizard-geo.php:16
+msgid "This will improve speed for geo location later on, and will add additional information layer for requests activity analysis, and can be beneficial to other plugins related to the coreActivity."
+msgstr ""
+
+#: forms/content-wizard-geo.php:21
+msgid "Do you want to store extended geo location data?"
+msgstr ""
+
+#: forms/content-wizard-geo.php:23
+msgid "All retrieved geo-location data can be stored in the log as a meta data. Right now, it is not used much, but it can be useful to view the IP information at the time it was logged."
+msgstr ""
+
+#: forms/content-wizard-geo.php:28
+msgid "Setting up the geo location feature"
+msgstr ""
+
+#: forms/content-wizard-geo.php:30
+msgid "Plugin can geo-locate IPs using Online service, and it has support for using geo-location databases. Both supported databases require registration to get token or key used to download the database, and both services are free. Check out the dedicated settings panel to configure this further."
+msgstr ""
+
+#: forms/content-wizard-geo.php:31
+msgid "GEO-Location Settings"
 msgstr ""
 
 #: forms/content-wizard-intro.php:10
@@ -2241,10 +2271,6 @@ msgstr ""
 
 #: forms/content-wizard-intro.php:38
 msgid "Menu in the WordPress Admin bar will show quick links to the plugin panels for direct access from anywhere on the website where the admin bar is visible. It is only available to website administrators."
-msgstr ""
-
-#: forms/content-wizard-log.php:3
-msgid "Main Logs panel has a lot of moving parts and elements, and some of things may be useful to have depending on what your preferences are."
 msgstr ""
 
 #: forms/content-wizard-log.php:9
@@ -2319,7 +2345,7 @@ msgstr ""
 msgid "Object Name"
 msgstr ""
 
-#: forms/dialog-data.php:77
+#: forms/dialog-data.php:81
 msgid "Continent"
 msgstr ""
 
