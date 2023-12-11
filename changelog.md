@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 1.5.2 / December 12 2023
+
+* **fix** screen options not visible on the multisite network panels
+* **fix** live logs update not working due to the script name change
+
 ### Version: 1.5.1 / December 11 2023
 
 * **fix** fatal error due to the enqueue code regression

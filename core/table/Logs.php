@@ -227,7 +227,7 @@ class Logs extends Table {
 			$data['settings'][ $key ] = $this->$key;
 		}
 
-		wp_localize_script( coreactivity_admin()->e()->prefix() . '-coreactivity-admin', 'coreactivity_live', $data );
+		wp_localize_script( coreactivity_admin()->e()->prefix() . 'coreactivity-admin', 'coreactivity_live', $data );
 	}
 
 	protected function process_request_args() {

@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Information extends BaseInformation {
 	public $code = 'coreactivity';
 
-	public $version = '1.5.1';
-	public $build = 1510;
+	public $version = '1.5.2';
+	public $build = 1520;
 	public $edition = 'free';
 	public $status = 'stable';
-	public $updated = '2023.12.11';
+	public $updated = '2023.12.12';
 	public $released = '2023.09.06';
 
 	public $github_url = 'https://github.com/dev4press/coreactivity';
