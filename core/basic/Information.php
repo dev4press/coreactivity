@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Information extends BaseInformation {
 	public $code = 'coreactivity';
 
-	public $version = '1.5';
-	public $build = 1500;
+	public $version = '1.5.1';
+	public $build = 1510;
 	public $edition = 'free';
 	public $status = 'stable';
 	public $updated = '2023.12.11';

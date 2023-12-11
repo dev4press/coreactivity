@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 1.5.1 / December 11 2023
+
+* **fix** fatal error due to the enqueue code regression
+
 ### Version: 1.5 / December 11 2023
 
 * **new** method in `Statistics` class to get component statistics
