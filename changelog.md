@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### Version: 1.5 / December 7 2023
+### Version: 1.5 / December 11 2023
 
 * **new** method in `Statistics` class to get component statistics
 * **new** expanded setup `Wizard` with a geolocation panel
