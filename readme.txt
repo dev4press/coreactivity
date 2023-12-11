@@ -3,7 +3,7 @@ Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, events, audit log, event log
 Stable tag: 1.5
-Requires at least: 5.5
+Requires at least: 5.7
 Tested up to: 6.4
 Requires PHP: 7.4
 License: GPLv3 or later
@@ -75,16 +75,16 @@ To use IP2Location, you need to have account on IP2Location, to get the download
 
 == Installation ==
 = General Requirements =
-* PHP: 7.3 or newer
+* PHP: 7.4 or newer
 
 = PHP Notice =
-* Plugin doesn't work with PHP 7.2 or older versions.
+* Plugin doesn't work with PHP 7.3 or older versions.
 
 = WordPress Requirements =
-* WordPress: 5.5 or newer
+* WordPress: 5.7 or newer
 
 = WordPress Notice =
-* Plugin doesn't work with WordPress 5.4 or older versions.
+* Plugin will work with WordPress 5.6 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
 
 = Basic Installation =
 * Plugin folder in the WordPress plugins should be `coreactivity`.
@@ -107,19 +107,21 @@ Plugin creates three new database tables where all events are registered, and al
 If you have all events enabled, the plugin will add 150+ hooks into various elements of WordPress and plugins. That is not too much when compared to 3000+ hooks WordPress runs on average, so it will not have a big impact on WordPress performance. And, it is a good idea to disable events you don't need to use.
 
 = Will coreActivity work if the cache plugin is used? =
-Yes. But, since cache plugins are bypassing WordPress to serve cached response, some events will be affected when the cached response is returned. To learn more, check out this article: [CoreActivity and Cache Plugins](https://support.dev4press.com/kb/article/coreactivity-cache-plugins/).
+Yes. But since cache plugins are bypassing WordPress to serve cached response, some events will be affected when the cached response is returned. To learn more, check out this article: [CoreActivity and Cache Plugins](https://support.dev4press.com/kb/article/coreactivity-cache-plugins/).
 
-= How precise GEO Location is? =
+= How precise is GEO Location? =
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
 = 1.5 (2023.12.07) =
-* NewL method in `Statistics` class to get component statistics
+* New: method in `Statistics` class to get component statistics
+* New: expanded setup `Wizard` with a geolocation panel
 * Edit: various small updates and tweaks to admin interface
 * Edit: GeoIP2 Library 1.11.1
 * Edit: IP2Location Library 9.7.2
 * Edit: Dev4Press Library 4.5
 * Fix: multiple jobs scheduling when running in multisite
+* Fix: few notices with display of meta-data in the logs
 
 = 1.4 (2023.11.15) =
 * New: component: `GD Forum Manager` plugin, with 4 events
@@ -206,7 +208,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 Library Updated. Minor updates and improvements.
 
 = 1.4 =
-New components. Many tweaks, improvements and fixes.
+New components. Many tweaks, improvements, and fixes.
 
 = 1.3 =
 MaxMind GeoLite2 support. Many improvements and fixes.
