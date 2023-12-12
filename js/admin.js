@@ -12,7 +12,12 @@
         },
         init: function() {
             const dialog_view = $.extend({}, wp.dev4press.dialogs.default_dialog(), {
-                width: 720,
+                width: 600,
+                maxWidth: 720,
+                maxHeight: 640,
+                minWidth: 360,
+                minHeight: 240,
+                resizable: true,
                 buttons: [
                     $.extend({}, wp.dev4press.dialogs.default_button('ok', true), {
                         click: function() {

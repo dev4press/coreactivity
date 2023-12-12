@@ -47,7 +47,7 @@ function coreactivity_print_array( $input ) : string {
 	$render = array();
 
 	foreach ( $input as $key => $value ) {
-		$render[] = $key . ': ' . esc_html( is_scalar( $value ) ? $value : json_encode( $value ) );
+		$render[] = $key . ': ' . esc_html( is_scalar( $value ) ? $value : esc_html( json_encode( $value ) ) );
 	}
 
 	return join( '<br/>', $render );

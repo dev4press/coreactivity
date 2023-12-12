@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 1.5.3 / December 12 2023
+
+* **edit** changed the size of the View popup dialog
+* **fix** missing escaping of the large meta-data block on display
+
 ### Version: 1.5.2 / December 12 2023
 
 * **fix** screen options not visible on the multisite network panels

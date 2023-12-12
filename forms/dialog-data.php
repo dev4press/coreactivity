@@ -52,7 +52,7 @@ function _coreactivity_dialog_tab_meta( $item ) {
 				if ( is_scalar( $value ) ) {
 					$display = esc_html( $value );
 				} else {
-					$display = is_array( $value ) && count( $value ) < 9 ? coreactivity_print_array( $value ) : json_encode( $value );
+					$display = is_array( $value ) && count( $value ) < 9 ? coreactivity_print_array( $value ) : esc_html( json_encode( $value ) );
 				}
 
 				echo '<dt>' . $key . '</dt>';
