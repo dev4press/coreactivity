@@ -116,6 +116,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 = 1.5.2 (2023.12.12) =
 * Fix: screen options not visible on the multisite network panels
 * Fix: live logs update not working due to the script name change
+* Fix: styling related to the IP buttons in the admin side header
 
 = 1.5.1 (2023.12.11) =
 * Fix: fatal error due to the enqueue code regression

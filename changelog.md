@@ -6,6 +6,7 @@
 
 * **fix** screen options not visible on the multisite network panels
 * **fix** live logs update not working due to the script name change
+* **fix** styling related to the IP buttons in the admin side header
 
 ### Version: 1.5.1 / December 11 2023
 

@@ -218,11 +218,11 @@ class Plugin extends BasePlugin {
 		wp_localize_script( $this->e()->prefix() . 'coreactivity-admin', 'coreactivity_data', $values );
 	}
 
-	protected function extra_enqueue_scripts_plugin() {
-		$this->enqueue();
-	}
-
 	public function wizard() {
 		return Wizard::instance();
+	}
+
+	protected function extra_enqueue_scripts_plugin() {
+		$this->enqueue();
 	}
 }
