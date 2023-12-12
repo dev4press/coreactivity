@@ -11,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.5.1 / 1.5.2 / 1.5.3</span></strong> &minus;
+        Minor improvements and fixes..
+    </p>
+    <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.5</span></strong> &minus;
         Library Updated. Minor updates and improvements.
     </p>
