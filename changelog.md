@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 1.5.4 / December 12 2023
+
+* **fix** few issues with the Network component events logging
+
 ### Version: 1.5.3 / December 12 2023
 
 * **edit** changed the size of the View popup dialog

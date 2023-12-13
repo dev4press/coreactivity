@@ -33,7 +33,7 @@ class Network extends Component {
 		}
 
 		if ( $this->is_active( 'blog-updated' ) ) {
-			add_action( 'wp_update_site', array( $this, 'event_update_site' ) );
+			add_action( 'wp_update_site', array( $this, 'event_update_site' ), 10, 2 );
 		}
 
 		if ( $this->is_active( 'blog-status-delete' ) ) {
@@ -69,7 +69,7 @@ class Network extends Component {
 		}
 
 		if ( $this->are_active( array( 'blog-status-public', 'blog-status-private' ) ) ) {
-			add_action( 'update_blog_public', array( $this, 'event_blog_public' ) );
+			add_action( 'update_blog_public', array( $this, 'event_blog_public' ), 10, 2 );
 		}
 
 		if ( $this->is_active( 'blog-signup' ) ) {
