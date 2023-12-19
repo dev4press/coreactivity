@@ -2,7 +2,7 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, events, audit log, event log
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 Requires at least: 5.7
 Tested up to: 6.4
 Requires PHP: 7.4
@@ -113,6 +113,11 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 1.5.4 (2023.12.19) =
+* Edit: Dev4Press Library 4.5.2
+* Fix: potential vulnerability issue with IP not being properly validated
+* Fix: few issues with the Network component events logging
+
 = 1.5.3 (2023.12.12) =
 * Edit: changed the size of the View popup dialog
 * Fix: missing escaping of the large meta-data block on display

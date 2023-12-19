@@ -2,8 +2,10 @@
 
 ## Changelog
 
-### Version: 1.5.4 / December 12 2023
+### Version: 1.5.4 / December 19 2023
 
+* **edit** Dev4Press Library 4.5.2
+* **fix** potential vulnerability issue with IP not being properly validated
 * **fix** few issues with the Network component events logging
 
 ### Version: 1.5.3 / December 12 2023
@@ -41,7 +43,7 @@
 * **new** filter events by the plugin it originated from
 * **edit** optimized logs panel views processing and matching
 * **edit** log item dialog view updated rendering for expandability
-* **edit** improved `Event` view display for the Logs panel 
+* **edit** improved `Event` view display for the Logs panel
 * **edit** Dev4Press Library 4.4 Beta
 * **fix** several small issues with the `Live` Logs updates
 * **fix** object filtering for logs panel was unfinished
