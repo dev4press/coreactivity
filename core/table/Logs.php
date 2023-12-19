@@ -1103,7 +1103,7 @@ class Logs extends Table {
 	}
 
 	protected function meta_value( $key, $value ) : string {
-		$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? coreactivity_print_array( $value ) : esc_html( json_encode( $value ) ) );
+		$value = is_scalar( $value ) ? esc_html( $value ) : ( is_array( $value ) && count( $value ) < 20 ? coreactivity_print_array( $value ) : esc_html( wp_json_encode( $value ) ) );
 
 		if ( empty( $key ) ) {
 			return '<li><span>' . $value . '</span></li>';

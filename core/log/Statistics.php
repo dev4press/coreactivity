@@ -132,7 +132,7 @@ class Statistics {
 			),
 			'events'    => array(),
 		);
-		$yesterday = date( 'Y-m-d', strtotime( '-1 days' ) );
+		$yesterday = gmdate( 'Y-m-d', strtotime( '-1 days' ) );
 
 		if ( isset( $input[ $component ] ) ) {
 			foreach ( $input[ $component ] as $event => $days ) {
@@ -237,7 +237,7 @@ class Statistics {
 	}
 
 	private function save_statistics( $statistics ) {
-		coreactivity_settings()->set( 'statistics', json_encode( $statistics ), 'storage' );
+		coreactivity_settings()->set( 'statistics', wp_json_encode( $statistics ), 'storage' );
 		coreactivity_settings()->set( 'statistics_latest', gmdate( 'Y-m-d' ), 'storage' );
 
 		coreactivity_settings()->save( 'storage' );

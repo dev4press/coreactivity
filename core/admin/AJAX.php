@@ -36,7 +36,7 @@ class AJAX {
 			header( 'Content-Type: application/json' );
 		}
 
-		die( json_encode( $response ) );
+		die( wp_json_encode( $response ) );
 	}
 
 	public function toggle_event() {

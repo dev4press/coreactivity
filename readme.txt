@@ -114,6 +114,8 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Changelog ==
 = 1.5.4 (2023.12.19) =
+* Edit: function `json_encode` replaced with `wp_json_encode`
+* Edit: various plugin core updates and tweaks
 * Edit: Dev4Press Library 4.5.2
 * Fix: potential vulnerability issue with IP not being properly validated
 * Fix: few issues with the Network component events logging

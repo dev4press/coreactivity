@@ -120,7 +120,7 @@ class DB extends BaseDB {
 		);
 
 		if ( ! empty( $rules ) ) {
-			$data['rules'] = json_encode( $rules );
+			$data['rules'] = wp_json_encode( $rules );
 		}
 
 		$result = $this->insert( $this->events, $data );
@@ -129,7 +129,7 @@ class DB extends BaseDB {
 	}
 
 	public function change_event_rules( int $event_id, array $rules ) {
-		$rules = json_encode( $rules );
+		$rules = wp_json_encode( $rules );
 
 		$this->update( $this->events, array( 'rules' => $rules ), array( 'event_id' => $event_id ), array( '%s' ), array( '%d' ) );
 	}

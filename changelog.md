@@ -4,6 +4,8 @@
 
 ### Version: 1.5.4 / December 19 2023
 
+* **edit** function `json_encode` replaced with `wp_json_encode`
+* **edit** various plugin core updates and tweaks
 * **edit** Dev4Press Library 4.5.2
 * **fix** potential vulnerability issue with IP not being properly validated
 * **fix** few issues with the Network component events logging
