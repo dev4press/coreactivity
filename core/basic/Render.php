@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
 use Dev4Press\Plugin\CoreActivity\Log\Core;
-use Dev4Press\v45\Service\GEOIP\GEOJSIO;
+use Dev4Press\v46\Service\GEOIP\GEOJSIO;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

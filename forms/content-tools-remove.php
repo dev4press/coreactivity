@@ -1,6 +1,6 @@
 <?php
 
-use function Dev4Press\v45\Functions\panel;
+use function Dev4Press\v46\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

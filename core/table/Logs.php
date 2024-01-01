@@ -4,13 +4,14 @@ namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
+use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use Dev4Press\v45\Core\Plugins\DBLite;
-use Dev4Press\v45\Core\Quick\Sanitize;
-use Dev4Press\v45\Core\UI\Elements;
-use Dev4Press\v45\WordPress\Admin\Table;
+use Dev4Press\v46\Core\Plugins\DBLite;
+use Dev4Press\v46\Core\Quick\Sanitize;
+use Dev4Press\v46\Core\UI\Elements;
+use Dev4Press\v46\WordPress\Admin\Table;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -128,18 +129,24 @@ class Logs extends Table {
 		$this->query_items( $sql, $this->rows_per_page(), true, true, 'log_id' );
 		$this->query_metas( coreactivity_db()->logmeta, 'log_id' );
 
-		if ( $this->_display_ip_country_flag ) {
-			foreach ( $this->items as $item ) {
+		foreach ( $this->items as &$item ) {
+			$ua = $item->meta['user-agent'] ?? '';
+
+			if ( ! empty( $ua ) ) {
+				$item->device = Device::instance()->detect( $ua );
+			}
+
+			if ( $this->_display_ip_country_flag ) {
 				$ip = $item->ip;
 
 				if ( ! in_array( $ip, $this->_items_ips ) ) {
 					$this->_items_ips[] = $ip;
 				}
 			}
+		}
 
-			if ( ! empty( $this->_items_ips ) ) {
-				GEO::instance()->bulk( $this->_items_ips );
-			}
+		if ( ! empty( $this->_items_ips ) ) {
+			GEO::instance()->bulk( $this->_items_ips );
 		}
 	}
 

@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### Version: 1.6 / January 3 2024
+
+* **new** matomo device detector library to parse user agent information
+* **edit** switch blogs to get object information in network mode
+* **edit** Dev4Press Library 4.6
+
 ### Version: 1.5.4 / December 19 2023
 
 * **edit** function `json_encode` replaced with `wp_json_encode`

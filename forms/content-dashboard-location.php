@@ -1,7 +1,7 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Admin\Data;
-use function Dev4Press\v45\Functions\panel;
+use function Dev4Press\v46\Functions\panel;
 
 $methods = Data::get_geo_location_methods();
 $method  = coreactivity_settings()->get( 'geolocation_method' );

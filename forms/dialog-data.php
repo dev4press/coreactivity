@@ -1,7 +1,7 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use function Dev4Press\v45\Functions\panel;
+use function Dev4Press\v46\Functions\panel;
 
 $_tabs  = coreactivity_view_dialog_tabs();
 $_items = $_grid->items ?? array();

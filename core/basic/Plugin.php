@@ -9,8 +9,8 @@ use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use Dev4Press\v45\Core\Plugins\Core;
-use Dev4Press\v45\Core\Quick\WPR;
+use Dev4Press\v46\Core\Plugins\Core;
+use Dev4Press\v46\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
