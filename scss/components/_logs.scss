@@ -60,6 +60,17 @@
                 }
             }
 
+            &.column-detection {
+                > ul {
+                    margin: 0;
+                    list-style: none;
+
+                    li {
+                        word-break: break-all;
+                    }
+                }
+            }
+
             &.column-meta_data {
                 > ul {
                     margin: 0;

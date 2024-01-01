@@ -89,6 +89,13 @@
 .coreactivity-grid-logs tr td.column-user_id i {
   color: #AAA;
 }
+.coreactivity-grid-logs tr td.column-detection > ul {
+  margin: 0;
+  list-style: none;
+}
+.coreactivity-grid-logs tr td.column-detection > ul li {
+  word-break: break-all;
+}
 .coreactivity-grid-logs tr td.column-meta_data > ul {
   margin: 0;
   list-style: none;

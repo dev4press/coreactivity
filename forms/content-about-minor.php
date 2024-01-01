@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.6</span></strong> &minus;
-        Library Updated.
+        Library Updated. Device Detection for each request.
     </p>
     <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.5.1 / 1.5.2 / 1.5.3 / 1.5.4</span></strong> &minus;

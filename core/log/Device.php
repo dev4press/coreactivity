@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
+use DeviceDetector\ClientHints;
 use DeviceDetector\DeviceDetector;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,10 +28,31 @@ class Device {
 		return $instance;
 	}
 
-	public function detect( $ua ) : array {
+	public function detect( $ua, $hints = false ) : array {
 		$this->obj->setUserAgent( $ua );
+
+		if ( $hints ) {
+			$ch = ClientHints::factory( $_SERVER );
+
+			$this->obj->setClientHints( $ch );
+		}
+
 		$this->obj->parse();
 
-		return (array)$this->obj;
+		if ( $this->obj->isBot() ) {
+			$data = array(
+				'bot' => $this->obj->getBot()
+			);
+		} else {
+			$data = array(
+				'client' => $this->obj->getClient(),
+				'os'     => $this->obj->getOs(),
+				'device' => $this->obj->getDeviceName(),
+				'brand'  => $this->obj->getBrandName(),
+				'model'  => $this->obj->getModel()
+			);
+		}
+
+		return $data;
 	}
 }

@@ -4,7 +4,11 @@
 
 ### Version: 1.6 / January 3 2024
 
+* **new** save device detection information and filter on saving log
+* **new** optional device detection column for the Log
+* **new** device detection tab in the Log popup view for each entry
 * **new** matomo device detector library to parse user agent information
+* **edit** expanded information for some of the plugin settings
 * **edit** switch blogs to get object information in network mode
 * **edit** Dev4Press Library 4.6
 

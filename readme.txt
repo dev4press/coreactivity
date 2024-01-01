@@ -3,7 +3,7 @@ Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, events, audit log, event log
 Stable tag: 1.6
-Requires at least: 5.7
+Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
 License: GPLv3 or later
@@ -113,6 +113,15 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 1.6 (2024.01.03) =
+* New: save device detection information and filter on saving log
+* New: optional device detection column for the Log
+* New: device detection tab in the Log popup view for each entry
+* New: matomo device detector library to parse user agent information
+* Edit: expanded information for some of the plugin settings
+* Edit: switch blogs to get object information in network mode
+* Edit: Dev4Press Library 4.6
+
 = 1.5.4 (2023.12.19) =
 * Edit: function `json_encode` replaced with `wp_json_encode`
 * Edit: various plugin core updates and tweaks
@@ -223,6 +232,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 1.6 =
+Library Updated. Device Detection support.
+
 = 1.5 =
 Library Updated. Minor updates and improvements.
 
@@ -231,9 +243,6 @@ New components. Many tweaks, improvements, and fixes.
 
 = 1.3 =
 MaxMind GeoLite2 support. Many improvements and fixes.
-
-= 1.2 =
-IP2Location support. Many improvements and fixes.
 
 == Screenshots ==
 * Plugin Dashboard

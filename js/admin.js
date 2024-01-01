@@ -79,6 +79,7 @@
                 $("#coreactivity-popup-tabs-info").html($("#coreactivity-popup-data-info-" + id).clone());
                 $("#coreactivity-popup-tabs-meta").html($("#coreactivity-popup-data-meta-" + id).clone());
                 $("#coreactivity-popup-tabs-location").html($("#coreactivity-popup-data-location-" + id).clone());
+                $("#coreactivity-popup-tabs-device").html($("#coreactivity-popup-data-device-" + id).clone());
 
                 $("#coreactivity-log-dialog").wpdialog("open");
             });

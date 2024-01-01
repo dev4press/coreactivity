@@ -1,7 +1,6 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use function Dev4Press\v46\Functions\panel;
 
 $_tabs  = coreactivity_view_dialog_tabs();
 $_items = $_grid->items ?? array();
@@ -99,6 +98,50 @@ function _coreactivity_dialog_tab_location( $item ) {
 
 		echo '</div>';
 	}
+	echo '</div>';
+}
+
+function _coreactivity_dialog_tab_device( $item ) {
+	echo '<div id="coreactivity-popup-data-device-' . $item->log_id . '">';
+
+	if ( isset( $item->device ) ) {
+		echo '<dl class="d4p-ctrl-list">';
+		echo '<dt>' . __( 'Bot', 'coreactivity' ) . '</dt>';
+		echo '<dd>' . ( isset( $item->device['bot'] ) ? __( 'Yes' ) : __( 'No' ) ) . '</dd>';
+
+		if ( isset( $item->device['bot'] ) ) {
+			echo '<dt>' . __( 'Category', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . $item->device['bot']['category'] . '</dd>';
+			echo '<dt>' . __( 'Name', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . $item->device['bot']['name'] . '</dd>';
+		} else {
+			echo '<dt>' . __( 'OS', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . $item->device['os']['name'] . ' ' . $item->device['os']['version'] . '</dd>';
+			echo '<dt>' . __( 'Client', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . $item->device['client']['name'] . ' ' . $item->device['client']['version'] . '</dd>';
+			echo '<dt>' . __( 'Device', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . ucwords( $item->device['device'] ) . '</dd>';
+
+			if ( ! empty( $item->device['brand'] ) ) {
+				echo '<dt>' . __( 'Brand', 'coreactivity' ) . '</dt>';
+				echo '<dd>' . $item->device['brand'] . '</dd>';
+			}
+
+			if ( ! empty( $item->device['model'] ) ) {
+				echo '<dt>' . __( 'Model', 'coreactivity' ) . '</dt>';
+				echo '<dd>' . $item->device['model'] . '</dd>';
+			}
+		}
+
+		echo '</dl>';
+	}
+
+	echo '<div>';
+
+	do_action( 'coreactivity_logs_dialog_device', $item );
+
+	echo '</div>';
+
 	echo '</div>';
 }
 

@@ -91,25 +91,39 @@ class Settings extends BaseSettings {
 						),
 					),
 				),
-				'optional-meta'     => array(
-					'name'     => __( 'Standard Meta Data', 'coreactivity' ),
+				'optional-metadata' => array(
+					'name'     => __( 'Meta Data', 'coreactivity' ),
 					'sections' => array(
 						array(
-							'label'    => '',
+							'label'    => __( 'Standard', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
-								$this->i( 'settings', 'log_if_available_user_agent', __( 'User Agent', 'coreactivity' ), __( 'If the request has user agent string, it will be logged as the log entry meta data.', 'coreactivity' ), Type::BOOLEAN ),
+								$this->i( 'settings', 'log_if_available_user_agent', __( 'User Agent', 'coreactivity' ), __( 'If the request has user agent string, it will be logged as the log entry meta data.', 'coreactivity' ), Type::BOOLEAN )->more( array(
+									__( 'User agent can be used to extract information about the request source device, OS, browsers, and more.' ),
+									__( 'User agent data is not always reliable, because request source can spoof the user agent and set it to anything.' ),
+								) ),
 								$this->i( 'settings', 'log_if_available_referer', __( 'Referer', 'coreactivity' ), __( 'If the request has referer, it will be logged as the log entry meta data.', 'coreactivity' ), Type::BOOLEAN ),
 							),
 						),
-					),
-				),
-				'optional-event'    => array(
-					'name'     => __( 'Event Specific Meta Data', 'coreactivity' ),
-					'sections' => array(
 						array(
-							'label'    => '',
+							'label'    => __( 'Device Detection', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'log_device_detection_data', __( 'Device Information', 'coreactivity' ), __( 'Based on the user agent, detect the information about the device and store it as meta when the request is logged.', 'coreactivity' ), Type::BOOLEAN )->more( array(
+									__( 'Device detection will be done at the request log time, and will be stored as meta data.' ),
+									__( 'Device detection data will take additional space in the meta table.' ),
+									__( 'If you don\'t save this as metadata, plugin can still display device detection data later, if you enable User Agent logging.' ),
+								) ),
+								$this->i( 'settings', 'log_device_detection_filter', __( 'Filter Information', 'coreactivity' ), __( 'Simplified detected information will be stored as individual meta elements that can be used for the log filtering.', 'coreactivity' ), Type::BOOLEAN )->more( array(
+									__( 'At this time, coreActivity plugin doesn\'t have filter by meta data implemented!' ),
+									__( 'Device detection data will take additional space in the meta table.' ),
+								) ),
+							),
+						),
+						array(
+							'label'    => __( 'Event Specific', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
@@ -346,6 +360,7 @@ class Settings extends BaseSettings {
 								$this->i( 'settings', 'display_request_column', __( 'Request as Column', 'coreactivity' ), __( 'Request value can be quite long, and it can cause layout issues if displayed as column. If this option is displayed, Request will be displayed as Meta value in the hidden Meta row.', 'coreactivity' ), Type::BOOLEAN ),
 								$this->i( 'settings', 'display_protocol_column', __( 'Protocol as Column', 'coreactivity' ), __( 'Protocol value would most likely be the same for each request, especially if your webserver is behind some sort of proxy setup. If this option is displayed, Protocol will be displayed as Meta value in the hidden Meta row.', 'coreactivity' ), Type::BOOLEAN ),
 								$this->i( 'settings', 'display_object_type_column', __( 'Object Type Column', 'coreactivity' ), __( 'If enabled, Object Type will have own column, if disabled, it will be displayed as a part of the Object column.', 'coreactivity' ), Type::BOOLEAN ),
+								$this->i( 'settings', 'display_detection_column', __( 'Device Detection Column', 'coreactivity' ), __( 'Show the Device Detection information, if available.', 'coreactivity' ), Type::BOOLEAN ),
 							),
 						),
 						array(

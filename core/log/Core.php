@@ -20,6 +20,8 @@ class Core {
 	private $page_events = array();
 	private $geo_code = false;
 	private $geo_meta = false;
+	private $device_filter = false;
+	private $device_meta = false;
 
 	private $request_contexts = array(
 		'AJAX',
@@ -61,6 +63,14 @@ class Core {
 
 		if ( coreactivity_settings()->get( 'log_if_available_expanded_location' ) ) {
 			$this->geo_meta = true;
+		}
+
+		if ( coreactivity_settings()->get( 'log_device_detection_filter' ) ) {
+			$this->device_filter = true;
+		}
+
+		if ( coreactivity_settings()->get( 'log_device_detection_data' ) ) {
+			$this->device_meta = true;
 		}
 
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );
@@ -112,6 +122,7 @@ class Core {
 
 		$data = $this->prepare_data( $data );
 		$meta = $this->prepare_meta( $meta );
+		$meta = $this->prepare_device( $meta );
 
 		if ( $this->geo_code || $this->geo_meta ) {
 			$geo = GEO::instance()->locate( $data['ip'] );
@@ -260,6 +271,32 @@ class Core {
 		if ( ! isset( $meta['ajax_action'] ) ) {
 			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.Security.NonceVerification
+			}
+		}
+
+		return $meta;
+	}
+
+	private function prepare_device( array $meta = array() ) : array {
+		if ( $this->device_filter || $this->device_meta ) {
+			$detect = Device::instance()->detect( $this->cached_data['ua'], true );
+
+			if ( $this->device_meta ) {
+				$meta['device'] = $detect;
+			}
+
+			if ( $this->device_filter ) {
+				if ( isset( $detect['bot'] ) ) {
+					$meta['device_bot_name']     = $detect['bot']['name'] ?? '';
+					$meta['device_bot_category'] = $detect['bot']['category'] ?? '';
+				} else {
+					$meta['device_type']   = $detect['client']['type'] ?? '';
+					$meta['device_client'] = trim( ( $detect['client']['name'] ?? '' ) . ' ' . ( $detect['client']['version'] ?? '' ) );
+					$meta['device_os']     = trim( ( $detect['os']['name'] ?? '' ) . ' ' . ( $detect['os']['version'] ?? '' ) );
+					$meta['device_device'] = $detect['device'] ?? '';
+					$meta['device_brand']  = $detect['brand'] ?? '';
+					$meta['device_model']  = $detect['model'] ?? '';
+				}
 			}
 		}
 

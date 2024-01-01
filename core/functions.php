@@ -67,5 +67,9 @@ function coreactivity_view_dialog_tabs() : array {
 			'label' => __( 'Location', 'coreactivity' ),
 			'icon'  => 'ui-location-map',
 		),
+		'device' => array(
+			'label' => __( 'Device', 'coreactivity' ),
+			'icon'  => 'ui-tablet',
+		),
 	) );
 }

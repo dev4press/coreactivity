@@ -33,6 +33,7 @@ class Logs extends Table {
 	protected $_display_ip_country_flag;
 	protected $_display_user_avatar;
 	protected $_display_request_column;
+	protected $_display_detection_column;
 	protected $_display_protocol_column;
 	protected $_display_object_type_column;
 	protected $_display_meta_column = null;
@@ -84,6 +85,7 @@ class Logs extends Table {
 		$this->_display_user_avatar        = coreactivity_settings()->get( 'display_user_avatar' );
 		$this->_display_request_column     = coreactivity_settings()->get( 'display_request_column' );
 		$this->_display_protocol_column    = coreactivity_settings()->get( 'display_protocol_column' );
+		$this->_display_detection_column   = coreactivity_settings()->get( 'display_detection_column' );
 		$this->_display_object_type_column = coreactivity_settings()->get( 'display_object_type_column' );
 
 		if ( is_null( $this->_display_meta_column ) ) {
@@ -130,10 +132,16 @@ class Logs extends Table {
 		$this->query_metas( coreactivity_db()->logmeta, 'log_id' );
 
 		foreach ( $this->items as &$item ) {
-			$ua = $item->meta['user-agent'] ?? '';
+			$ua = $item->meta['user_agent'] ?? '';
 
-			if ( ! empty( $ua ) ) {
-				$item->device = Device::instance()->detect( $ua );
+			if ( isset( $item->meta['device'] ) ) {
+				$item->{"device"} = $item->meta['device'];
+
+				unset( $item->meta['device'] );
+			} else {
+				if ( ! empty( $ua ) ) {
+					$item->{"device"} = Device::instance()->detect( $ua );
+				}
 			}
 
 			if ( $this->_display_ip_country_flag ) {
@@ -144,6 +152,8 @@ class Logs extends Table {
 				}
 			}
 		}
+
+		debugpress_store_object( $this->items );
 
 		if ( ! empty( $this->_items_ips ) ) {
 			GEO::instance()->bulk( $this->_items_ips );
@@ -166,6 +176,7 @@ class Logs extends Table {
 			'object_name' => __( 'Object', 'coreactivity' ),
 			'meta_data'   => __( 'Meta', 'coreactivity' ),
 			'ip'          => __( 'IP', 'coreactivity' ),
+			'detection'   => __( 'Detection', 'coreactivity' ),
 			'logged'      => __( 'Logged', 'coreactivity' ),
 			'meta'        => '<i class="vers d4p-icon d4p-ui-chevron-square-down d4p-icon-lg" title="' . esc_attr__( 'Toggle Meta', 'coreactivity' ) . '"></i><span class="screen-reader-text">' . esc_html__( 'Toggle Meta', 'coreactivity' ) . '</span>',
 		);
@@ -176,6 +187,10 @@ class Logs extends Table {
 
 		if ( ! $this->_display_protocol_column ) {
 			unset( $columns['protocol'] );
+		}
+
+		if ( ! $this->_display_detection_column ) {
+			unset( $columns['detection'] );
 		}
 
 		if ( ! $this->_display_meta_column ) {
@@ -1040,6 +1055,31 @@ class Logs extends Table {
 
 		$render  = apply_filters( 'coreactivity_logs_field_render_logged', $render, $item, $this );
 		$actions = apply_filters( 'coreactivity_logs_field_actions_logged', $actions, $item, $this );
+
+		return $render . $this->row_actions( $actions );
+	}
+
+	protected function column_detection( $item ) : string {
+		$actions = array();
+		$items   = array();
+
+		if ( isset( $item->device['bot'] ) ) {
+			$items[] = '<strong>' . __( 'Bot' ) . '</strong>: ' . $item->device['bot']['name'];
+			$items[] = $item->device['bot']['category'];
+		} else {
+			$items[] = '<strong>' . ucwords( $item->device['device'] ) . '</strong>';
+			$items[] = trim( $item->device['client']['name'] . ' ' . $item->device['client']['version'] );
+			$items[] = trim( $item->device['os']['name'] . ' ' . $item->device['os']['version'] );
+
+			if ( ! empty( $item->device['brand'] ) ) {
+				$items[] = trim( $item->device['brand'] . ' ' . $item->device['model'] );
+			}
+		}
+
+		$render = empty( $items ) ? '/' : '<ul><li>' . join( '</li><li>', $items ) . '</li></ul>';
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_detection', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_detection', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
