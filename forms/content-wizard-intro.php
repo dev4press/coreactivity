@@ -29,14 +29,21 @@ if ( ! defined( 'ABSPATH' ) ) {
         <p><?php esc_html_e( 'Do you want to log User Agent for each request?', 'coreactivity' ); ?></p>
         <div>
             <em><?php esc_html_e( 'Each request contains User Agent of the software (usually browser) making the request. This value can be faked by the request source. CoreActivity currently has no use for this value, but other plugins using the log may use it for some additional processing.', 'coreactivity' ); ?></em>
-			<?php coreactivity_wizard()->render_yes_no( 'intro', 'user_agent', 'no' ); ?>
+			<?php coreactivity_wizard()->render_yes_no( 'intro', 'user_agent' ); ?>
+        </div>
+    </div>
+    <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
+        <p><?php esc_html_e( 'Do you want to log Device Detection for each request?', 'coreactivity' ); ?></p>
+        <div>
+            <em><?php esc_html_e( 'Based on User Agent for each request, plugin can detect the type of device, client, OS and other information. Or it can identify various types of Bots..', 'coreactivity' ); ?></em>
+			<?php coreactivity_wizard()->render_yes_no( 'intro', 'device_detection' ); ?>
         </div>
     </div>
     <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
         <p><?php esc_html_e( 'Do you want to add Admin bar menu?', 'coreactivity' ); ?></p>
         <div>
             <em><?php esc_html_e( 'Menu in the WordPress Admin bar will show quick links to the plugin panels for direct access from anywhere on the website where the admin bar is visible. It is only available to website administrators.', 'coreactivity' ); ?></em>
-			<?php coreactivity_wizard()->render_yes_no( 'intro', 'admin_bar', 'no' ); ?>
+			<?php coreactivity_wizard()->render_yes_no( 'intro', 'admin_bar' ); ?>
         </div>
     </div>
 </div>

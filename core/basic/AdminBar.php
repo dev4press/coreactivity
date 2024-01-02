@@ -40,7 +40,7 @@ class AdminBar {
 
 			$wp_admin_bar->add_menu( array(
 				'id'    => 'coreactivity-menu',
-				'title' => '<span style="margin-top: 2px" class="ab-icon dashicons dashicons-database"></span><span class="ab-label">' . __( 'CoreActivity', 'coreactivity' ) . '</span>',
+				'title' => '<span style="margin-top: 2px" class="ab-icon dashicons dashicons-database"></span><span class="ab-label">' . __( 'coreActivity', 'coreactivity' ) . '</span>',
 				'href'  => network_admin_url( 'admin.php?page=coreactivity-dashboard' ),
 			) );
 

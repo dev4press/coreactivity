@@ -155,8 +155,6 @@ class Logs extends Table {
 			}
 		}
 
-		debugpress_store_object( $this->items );
-
 		if ( ! empty( $this->_items_ips ) ) {
 			GEO::instance()->bulk( $this->_items_ips );
 		}

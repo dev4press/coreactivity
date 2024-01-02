@@ -9,6 +9,8 @@
 * **new** device detection tab in the Log popup view for each entry
 * **new** matomo device detector library to parse user agent information
 * **edit** expanded information for some of the plugin settings
+* **edit** expanded setup wizard with few more questions
+* **edit** changed default activity status for some events
 * **edit** switch blogs to get object information in network mode
 * **edit** Dev4Press Library 4.6
 

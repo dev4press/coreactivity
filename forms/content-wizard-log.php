@@ -19,4 +19,11 @@
 			<?php coreactivity_wizard()->render_yes_no( 'log', 'avatar', 'no' ); ?>
         </div>
     </div>
+    <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
+        <p><?php esc_html_e( 'Do you want to show Device Detection column?', 'coreactivity' ); ?></p>
+        <div>
+            <em><?php esc_html_e( 'This column will show the logged device detection data, or the data detected from the user agent stored with each log entry.', 'coreactivity' ); ?></em>
+			<?php coreactivity_wizard()->render_yes_no( 'log', 'device', 'no' ); ?>
+        </div>
+    </div>
 </div>

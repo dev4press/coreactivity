@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Wizard extends CoreWizard {
 	public $default = array(
 		'intro'         => array(
-			'referer'    => array(
+			'referer'          => array(
 				array(
 					'settings',
 					'log_if_available_referer',
@@ -21,7 +21,7 @@ class Wizard extends CoreWizard {
 					),
 				),
 			),
-			'user_agent' => array(
+			'user_agent'       => array(
 				array(
 					'settings',
 					'log_if_available_user_agent',
@@ -31,20 +31,32 @@ class Wizard extends CoreWizard {
 					),
 				),
 			),
-			'admin_bar'  => array(
+			'device_detection' => array(
+				array(
+					'settings',
+					array(
+						'log_device_detection_data',
+						'log_device_detection_filter',
+					),
+					array(
+						'yes' => true,
+						'no'  => false,
+					),
+				),
+			),
+			'admin_bar'        => array(
 				array(
 					'settings',
 					'admin_bar_integration',
 					array(
-						'
-				yes'         => true,
-						'no' => false,
+						'yes' => true,
+						'no'  => false,
 					),
 				),
 			),
 		),
-		'geo' => array(
-			'country'   => array(
+		'geo'           => array(
+			'country'  => array(
 				array(
 					'settings',
 					'log_country_code',
@@ -80,6 +92,16 @@ class Wizard extends CoreWizard {
 				array(
 					'settings',
 					'display_user_avatar',
+					array(
+						'yes' => true,
+						'no'  => false,
+					),
+				),
+			),
+			'device' => array(
+				array(
+					'settings',
+					'display_detection_column',
 					array(
 						'yes' => true,
 						'no'  => false,
