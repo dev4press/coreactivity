@@ -1065,16 +1065,18 @@ class Logs extends Table {
 
 		if ( isset( $item->device['bot'] ) ) {
 			$items[] = '<strong>' . __( 'Bot' ) . '</strong>: ' . $item->device['bot']['name'];
-			$items[] = $item->device['bot']['category'];
-		} else {
-			$items[] = '<strong>' . ucwords( $item->device['device'] ) . '</strong>';
-			$items[] = trim( $item->device['client']['name'] . ' ' . $item->device['client']['version'] );
-			$items[] = trim( $item->device['os']['name'] . ' ' . $item->device['os']['version'] );
+			$items[] = ucwords( $item->device['bot']['category'] );
+		} else if ( ! empty( $item->device ) ) {
+			$items[] = '<strong>' . ucwords( $item->device['device'] ?? __( 'Unknown' ) ) . '</strong>';
+			$items[] = trim( ( $item->device['client']['name'] ?? '' ) . ' ' . ( $item->device['client']['version'] ?? '' ) );
+			$items[] = trim( ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) );
 
 			if ( ! empty( $item->device['brand'] ) ) {
 				$items[] = trim( $item->device['brand'] . ' ' . $item->device['model'] );
 			}
 		}
+
+		$items = array_filter( $items );
 
 		$render = empty( $items ) ? '/' : '<ul><li>' . join( '</li><li>', $items ) . '</li></ul>';
 

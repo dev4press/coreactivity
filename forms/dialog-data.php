@@ -115,12 +115,18 @@ function _coreactivity_dialog_tab_device( $item ) {
 			echo '<dt>' . __( 'Name', 'coreactivity' ) . '</dt>';
 			echo '<dd>' . $item->device['bot']['name'] . '</dd>';
 		} else {
-			echo '<dt>' . __( 'OS', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . $item->device['os']['name'] . ' ' . $item->device['os']['version'] . '</dd>';
-			echo '<dt>' . __( 'Client', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . $item->device['client']['name'] . ' ' . $item->device['client']['version'] . '</dd>';
+			if ( ! empty( $item->device['os']['name'] ) ) {
+				echo '<dt>' . __( 'OS', 'coreactivity' ) . '</dt>';
+				echo '<dd>' . ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) . '</dd>';
+			}
+
+			if ( ! empty( $item->device['client']['name'] ) ) {
+				echo '<dt>' . __( 'Client', 'coreactivity' ) . '</dt>';
+				echo '<dd>' . ( $item->device['client']['name'] ?? '' ) . ' ' . ( $item->device['client']['version'] ?? '' ) . '</dd>';
+			}
+
 			echo '<dt>' . __( 'Device', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . ucwords( $item->device['device'] ) . '</dd>';
+			echo '<dd>' . ucwords( $item->device['device'] ?? __( 'Unknown' ) ) . '</dd>';
 
 			if ( ! empty( $item->device['brand'] ) ) {
 				echo '<dt>' . __( 'Brand', 'coreactivity' ) . '</dt>';
