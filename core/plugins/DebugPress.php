@@ -70,8 +70,8 @@ class DebugPress extends Plugin {
 	protected function get_events() : array {
 		return array(
 			'php-error'              => array(
-				'label' => __( 'PHP Error', 'coreactivity' ),
-				'status'  => 'inactive',
+				'label'  => __( 'PHP Error', 'coreactivity' ),
+				'status' => 'inactive',
 			),
 			'doing-it-wrong'         => array(
 				'label' => __( 'Doing It Wrong', 'coreactivity' ),

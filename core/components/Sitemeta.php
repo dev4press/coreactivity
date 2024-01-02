@@ -121,12 +121,16 @@ class Sitemeta extends Component {
 		$event = in_array( $option, $this->monitor ) ? 'core-sitemeta-edited' : 'sitemeta-edited';
 
 		if ( $this->is_active( $event ) ) {
-			$this->log( $event, array(
-				'object_name' => $option,
-			), array(
-				'old' => $old_value,
-				'new' => $value,
-			) );
+			$equal = $value === $old_value || maybe_serialize( $value ) === maybe_serialize( $old_value );
+
+			if ( ! $equal ) {
+				$this->log( $event, array(
+					'object_name' => $option,
+				), array(
+					'old' => $old_value,
+					'new' => $value,
+				) );
+			}
 		}
 	}
 

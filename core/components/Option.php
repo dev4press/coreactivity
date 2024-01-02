@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
+use Dev4Press\Plugin\CoreActivity\Basic\DB;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -127,6 +128,8 @@ class Option extends Component {
 	protected $transient_value;
 
 	public function init() {
+		$this->monitor[] = DB::instance()->prefix() . 'user_roles';
+
 		$this->exceptions      = coreactivity_settings()->get( 'exceptions_option_list' );
 		$this->transient_value = coreactivity_settings()->get( 'log_transient_value' );
 
@@ -196,13 +199,17 @@ class Option extends Component {
 
 		$event = in_array( $option, $this->monitor ) ? 'core-option-edited' : 'option-edited';
 
-		if ( $this->is_active( $event ) && $old_value !== $value ) {
-			$this->log( $event, array(
-				'object_name' => $option,
-			), array(
-				'old' => $old_value,
-				'new' => $value,
-			) );
+		if ( $this->is_active( $event ) ) {
+			$equal = $value === $old_value || maybe_serialize( $value ) === maybe_serialize( $old_value );
+
+			if ( ! $equal ) {
+				$this->log( $event, array(
+					'object_name' => $option,
+				), array(
+					'old' => $old_value,
+					'new' => $value,
+				) );
+			}
 		}
 	}
 

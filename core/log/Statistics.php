@@ -46,8 +46,8 @@ class Statistics {
 		);
 
 		foreach ( $counts as $component => $count ) {
-			$results[ 'total' ]                    += $count;
-			$results[ 'components' ][ $component ] = array(
+			$results['total']                    += $count;
+			$results['components'][ $component ] = array(
 				'label' => $this->a()->get_component_label( $component ),
 				'icon'  => $this->a()->get_component_icon( $component ),
 				'count' => $count,
@@ -61,7 +61,7 @@ class Statistics {
 		$ids = array();
 
 		foreach ( $events as $event ) {
-			$event_id = $this->a()->get_event_id( $event[ 0 ], $event[ 1 ] );
+			$event_id = $this->a()->get_event_id( $event[0], $event[1] );
 
 			if ( $event_id > 0 && ! in_array( $event_id, $ids ) ) {
 				$ids[] = $event_id;
@@ -140,8 +140,8 @@ class Statistics {
 					continue;
 				}
 
-				if ( ! isset( $result[ 'events' ][ $event ] ) ) {
-					$result[ 'events' ][ $event ] = array(
+				if ( ! isset( $result['events'][ $event ] ) ) {
+					$result['events'][ $event ] = array(
 						'first'     => '',
 						'days'      => 0,
 						'total'     => 0,
@@ -156,50 +156,50 @@ class Statistics {
 				}
 
 				foreach ( $days as $day => $count ) {
-					if ( empty( $result[ 'events' ][ $event ][ 'first' ] ) ) {
-						$result[ 'events' ][ $event ][ 'first' ] = $day;
+					if ( empty( $result['events'][ $event ]['first'] ) ) {
+						$result['events'][ $event ]['first'] = $day;
 					}
 
-					$result[ 'events' ][ $event ][ 'days' ] ++;
-					$result[ 'events' ][ $event ][ 'total' ] += $count;
+					$result['events'][ $event ]['days'] ++;
+					$result['events'][ $event ]['total'] += $count;
 
 					if ( $day == $yesterday ) {
-						$result[ 'events' ][ $event ][ 'yesterday' ] += $count;
+						$result['events'][ $event ]['yesterday'] += $count;
 					}
 
 					if ( isset( $days_week[ $day ] ) ) {
-						$result[ 'events' ][ $event ][ 'week' ] += $count;
+						$result['events'][ $event ]['week'] += $count;
 
-						$result[ 'events' ][ $event ][ 'last' ][ 'week' ][ $day ] = $count;
+						$result['events'][ $event ]['last']['week'][ $day ] = $count;
 					}
 
 					if ( isset( $days_month[ $day ] ) ) {
-						$result[ 'events' ][ $event ][ 'month' ] += $count;
+						$result['events'][ $event ]['month'] += $count;
 
-						$result[ 'events' ][ $event ][ 'last' ][ 'month' ][ $day ] = $count;
+						$result['events'][ $event ]['last']['month'][ $day ] = $count;
 					}
 
-					if ( empty( $result[ 'first' ] ) ) {
-						$result[ 'first' ] = $day;
+					if ( empty( $result['first'] ) ) {
+						$result['first'] = $day;
 					}
 
-					$result[ 'days' ] ++;
-					$result[ 'total' ] += $count;
+					$result['days'] ++;
+					$result['total'] += $count;
 
 					if ( $day == $yesterday ) {
-						$result[ 'yesterday' ] += $count;
+						$result['yesterday'] += $count;
 					}
 
 					if ( isset( $days_week[ $day ] ) ) {
-						$result[ 'week' ] += $count;
+						$result['week'] += $count;
 
-						$result[ 'last' ][ 'week' ][ $day ] += $count;
+						$result['last']['week'][ $day ] += $count;
 					}
 
 					if ( isset( $days_month[ $day ] ) ) {
-						$result[ 'month' ] += $count;
+						$result['month'] += $count;
 
-						$result[ 'last' ][ 'month' ][ $day ] += $count;
+						$result['last']['month'][ $day ] += $count;
 					}
 				}
 			}

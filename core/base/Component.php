@@ -54,7 +54,7 @@ abstract class Component {
 			add_action( 'coreactivity_registered_object_types', array( $this, 'registered_object_types' ) );
 			add_action( 'coreactivity_logs_meta_column_keys', array( $this, 'logs_meta_column_keys' ) );
 			add_action( 'coreactivity_tracking_ready', array( $this, 'tracking' ) );
-			add_action( 'coreactivity_init', array( $this, 'init' ) );
+			add_action( 'coreactivity_tracking_ready', array( $this, 'init' ), 5 );
 		}
 	}
 
