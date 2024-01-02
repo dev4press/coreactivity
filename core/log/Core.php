@@ -283,6 +283,10 @@ class Core {
 
 			if ( $this->device_meta ) {
 				$meta['device'] = $detect;
+
+				if ( ! isset( $meta['device']['bot'] ) && empty( $meta['device']['client'] ) && empty( $meta['device']['os'] ) ) {
+					unset( $meta['device'] );
+				}
 			}
 
 			if ( $this->device_filter ) {

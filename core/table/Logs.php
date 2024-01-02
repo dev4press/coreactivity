@@ -138,7 +138,9 @@ class Logs extends Table {
 				$item->{"device"} = $item->meta['device'];
 
 				unset( $item->meta['device'] );
-			} else {
+			}
+
+			if ( ! isset( $item->device ) || ( ! isset( $item->device['bot'] ) && empty( $item->device['client'] ) && empty( $item->device['os'] ) ) ) {
 				if ( ! empty( $ua ) ) {
 					$item->{"device"} = Device::instance()->detect( $ua );
 				}
