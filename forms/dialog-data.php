@@ -33,7 +33,7 @@ function _coreactivity_dialog_tab_info( $item ) {
 	}
 
 	echo '</dl>';
-	echo '<div>';
+	echo '<div class="coreactivity-popup-tab-actions">';
 
 	do_action( 'coreactivity_logs_dialog_info', $item );
 
@@ -61,7 +61,7 @@ function _coreactivity_dialog_tab_meta( $item ) {
 	}
 
 	echo '</dl>';
-	echo '<div>';
+	echo '<div class="coreactivity-popup-tab-actions">';
 
 	do_action( 'coreactivity_logs_dialog_meta', $item );
 
@@ -92,7 +92,7 @@ function _coreactivity_dialog_tab_location( $item ) {
 	}
 
 	if ( ! empty( $item->country_code ) ) {
-		echo '<div>';
+		echo '<div class="coreactivity-popup-tab-actions">';
 
 		do_action( 'coreactivity_logs_dialog_location', $item );
 
@@ -142,7 +142,7 @@ function _coreactivity_dialog_tab_device( $item ) {
 		echo '</dl>';
 	}
 
-	echo '<div>';
+	echo '<div class="coreactivity-popup-tab-actions">';
 
 	do_action( 'coreactivity_logs_dialog_device', $item );
 

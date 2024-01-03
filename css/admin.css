@@ -221,6 +221,26 @@
   vertical-align: top;
 }
 
+#coreactivity-log-dialog dl.d4p-ctrl-list dt {
+  flex: 0 0 35%;
+}
+#coreactivity-log-dialog dl.d4p-ctrl-list dd {
+  flex: 0 0 65%;
+}
+#coreactivity-log-dialog .coreactivity-popup-tab-actions {
+  margin: 1em 0 0;
+  padding: 1em 0 0;
+  border-top: 1px solid #DDD;
+  display: flex;
+  column-gap: 1em;
+  row-gap: 0.5em;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+#coreactivity-log-dialog .coreactivity-popup-tab-actions:empty {
+  display: none;
+}
+
 .coreactivity-grid-logs.striped tbody tr {
   transition: background-color 2000ms linear;
 }

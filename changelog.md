@@ -7,12 +7,13 @@
 * **new** save device detection information and filter on saving log
 * **new** optional device detection column for the Log
 * **new** device detection tab in the Log popup view for each entry
-* **new** matomo device detector library to parse user agent information
+* **new** matomo `Device Detector` library to parse user agent information
 * **new** sitemeta option updated event has equal values check
 * **edit** expanded information for some of the plugin settings
 * **edit** expanded setup wizard with few more questions
 * **edit** changed default activity status for some events
 * **edit** switch blogs to get object information in network mode
+* **edit** improved styling for the `View` popup
 * **edit** Dev4Press Library 4.6
 * **fix** options on an exception list still were getting logged
 * **fix** order of the init and tracking actions for components

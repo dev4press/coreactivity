@@ -241,3 +241,30 @@
         }
     }
 }
+
+#coreactivity-log-dialog {
+    dl.d4p-ctrl-list {
+        dt {
+            flex: 0 0 35%;
+        }
+
+        dd {
+            flex: 0 0 65%;
+        }
+    }
+
+    .coreactivity-popup-tab-actions {
+        margin: 1em 0 0;
+        padding: 1em 0 0;
+        border-top: 1px solid #DDD;
+        display: flex;
+        column-gap: 1em;
+        row-gap: .5em;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+
+        &:empty {
+            display: none;
+        }
+    }
+}
