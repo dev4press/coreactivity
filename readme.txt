@@ -81,7 +81,7 @@ To use IP2Location, you need to have account on IP2Location, to get the download
 * Plugin doesn't work with PHP 7.3 or older versions.
 
 = WordPress Requirements =
-* WordPress: 5.7 or newer
+* WordPress: 5.8 or newer
 
 = WordPress Notice =
 * Plugin will work with WordPress 5.6 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
@@ -117,10 +117,17 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * New: save device detection information and filter on saving log
 * New: optional device detection column for the Log
 * New: device detection tab in the Log popup view for each entry
-* New: matomo device detector library to parse user agent information
+* New: matomo `Device Detector` library to parse user agent information
+* New: sitemeta option updated event has equal values check
 * Edit: expanded information for some of the plugin settings
+* Edit: expanded setup wizard with few more questions
+* Edit: changed default activity status for some events
 * Edit: switch blogs to get object information in network mode
+* Edit: improved styling for the `View` popup
 * Edit: Dev4Press Library 4.6
+* Fix: options on an exception list still were getting logged
+* Fix: order of the init and tracking actions for components
+* Fix: option updated event not always detecting equal values
 
 = 1.5.4 (2023.12.19) =
 * Edit: function `json_encode` replaced with `wp_json_encode`
@@ -233,7 +240,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Upgrade Notice ==
 = 1.6 =
-Library Updated. Device Detection support.
+Library Updated. Device Detection support. Many improvements and fixes.
 
 = 1.5 =
 Library Updated. Minor updates and improvements.
