@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### Version: 1.7 / January 3 2024
+
+* **edit** changes in display of the `Logs` detection column
+* **fix** object column missing under some conditions
+* **fix** minor issue with `Activity` linked check method 
+
 ### Version: 1.6 / January 3 2024
 
 * **new** save device detection information and filter on saving log

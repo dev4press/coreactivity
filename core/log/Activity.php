@@ -369,7 +369,7 @@ class Activity {
 			$e = $this->list[ $event_id ] ?? array();
 
 			$component = $e['component'] ?? '';
-			$event     = $e['event'] ?? '';
+			$event     = $e['name'] ?? '';
 		}
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {
