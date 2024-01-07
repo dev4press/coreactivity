@@ -50,7 +50,8 @@ class DB extends BaseDB {
 		$sql     = "SHOW TABLE STATUS FROM `" . DB_NAME . "` WHERE `Name` LIKE '" . $prefix . "%'";
 		$data    = $this->get_results( $sql, ARRAY_A );
 		$results = array(
-			'tables' => array(),
+			'tables'   => array(),
+			'overhead' => 0,
 		);
 
 		foreach ( $data as $row ) {
@@ -72,6 +73,8 @@ class DB extends BaseDB {
 				'updated'          => $row['Update_time'] ?? '',
 				'collation'        => $row['Collation'] ?? '',
 			);
+
+			$results['overhead'] += absint( $row['Data_free'] ?? 0 );
 		}
 
 		$results['size'] = $results['tables']['logs']['total'] + $results['tables']['logmeta']['total'] + $results['tables']['events']['total'];
@@ -83,6 +86,10 @@ class DB extends BaseDB {
 			$results['oldest'] = $data['oldest'];
 			$results['range']  = $data['range'];
 		}
+
+		$statistics = coreactivity_settings()->get( 'statistics', 'storage' );
+
+		$results['history'] = strlen( json_encode( $statistics ) );
 
 		return $results;
 	}

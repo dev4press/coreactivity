@@ -2,7 +2,7 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, events, audit log, event log
-Stable tag: 1.6
+Stable tag: 1.7
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
@@ -113,6 +113,20 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 1.7 (2024.01.07) =
+* New:  show blog information in the `Logs` popup view
+* New:  show view for Blog in the `Logs` for multisite network mode
+* New:  option to show linked Blog ID in the `Logs`
+* New:  option to show link to individual blog log for Blog ID
+* Edit: improvements in displaying objects info and links
+* Edit: improvements to the dashboard widgets display
+* Edit: several minor styling changes in the `Logs` display
+* Edit: changes in display of the `Logs` detection column
+* Fix: object column missing under some conditions
+* Fix: minor issue with `Activity` linked check method
+* Fix: component statistics scale using total instead of max value
+* Fix: several missing string translation contexts
+
 = 1.6 (2024.01.03) =
 * New: save device detection information and filter on saving log
 * New: optional device detection column for the Log
@@ -239,6 +253,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 1.7 =
+Many improvements and fixes.
+
 = 1.6 =
 Library Updated. Device Detection support. Many improvements and fixes.
 
@@ -247,9 +264,6 @@ Library Updated. Minor updates and improvements.
 
 = 1.4 =
 New components. Many tweaks, improvements, and fixes.
-
-= 1.3 =
-MaxMind GeoLite2 support. Many improvements and fixes.
 
 == Screenshots ==
 * Plugin Dashboard

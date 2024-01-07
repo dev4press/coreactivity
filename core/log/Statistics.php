@@ -41,12 +41,18 @@ class Statistics {
 	public function detailed( int $days = 30, int $blog_id = - 1 ) : array {
 		$counts  = $this->db()->statistics_components_log( $days, $blog_id );
 		$results = array(
+			'max'        => 0,
 			'total'      => 0,
 			'components' => array(),
 		);
 
 		foreach ( $counts as $component => $count ) {
-			$results['total']                    += $count;
+			$results['total'] += $count;
+
+			if ( $count > $results['max'] ) {
+				$results['max'] = $count;
+			}
+
 			$results['components'][ $component ] = array(
 				'label' => $this->a()->get_component_label( $component ),
 				'icon'  => $this->a()->get_component_icon( $component ),

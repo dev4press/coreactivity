@@ -45,7 +45,7 @@ $active     = coreactivity()->is_logging_active();
             </div>
         </div>
         <hr class="coreactivity-overall-sep"/>
-        <div class="coreactivity-activation-control">
+        <div class="coreactivity-activation-control" style="margin-bottom: 4em;">
             <i class="d4p-icon d4p-ui-sliders-base d4p-icon-5x d4p-icon-fw"></i>
             <div>
                 <div class="__element __full-width">
@@ -61,20 +61,20 @@ $active     = coreactivity()->is_logging_active();
 
 					?>
                 </div>
-                <div class="__element __full-width">
-					<?php
-
-					if ( $active ) {
-						?>
-                        <a class="button-secondary" href="<?php echo esc_url( panel()->a()->action_url( 'disable-logging', 'coreactivity-disable-logging' ) ); ?>"><?php esc_html_e( 'Disable all Events Logging', 'coreactivity' ); ?></a><?php
-					} else {
-						?>
-                        <a class="button-primary" href="<?php echo esc_url( panel()->a()->action_url( 'enable-logging', 'coreactivity-enable-logging' ) ); ?>"><?php esc_html_e( 'Enable Events Logging', 'coreactivity' ); ?></a><?php
-					}
-
-					?>
-                </div>
             </div>
         </div>
+    </div>
+    <div class="d4p-group-footer">
+		<?php
+
+		if ( $active ) {
+			?>
+            <a class="button-secondary" href="<?php echo esc_url( panel()->a()->action_url( 'disable-logging', 'coreactivity-disable-logging' ) ); ?>"><?php esc_html_e( 'Disable all Events Logging', 'coreactivity' ); ?></a><?php
+		} else {
+			?>
+            <a class="button-primary" href="<?php echo esc_url( panel()->a()->action_url( 'enable-logging', 'coreactivity-enable-logging' ) ); ?>"><?php esc_html_e( 'Enable Events Logging', 'coreactivity' ); ?></a><?php
+		}
+
+		?>
     </div>
 </div>

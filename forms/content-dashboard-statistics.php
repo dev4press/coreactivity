@@ -26,7 +26,7 @@ $statistics = Statistics::instance()->detailed( 30, $_blog_id );
 				<?php
 			} else {
 				foreach ( $statistics['components'] as $component => $data ) {
-					$width = ( $data['count'] / $statistics['total'] ) * 100;
+					$width = ( $data['count'] / $statistics['max'] ) * 100;
 
 					if ( $data['count'] > 0 ) {
 

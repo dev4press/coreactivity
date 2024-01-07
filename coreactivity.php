@@ -6,7 +6,7 @@
  * Author:            Milan Petrovic
  * Author URI:        https://www.dev4press.com/
  * Text Domain:       coreactivity
- * Version:           1.6
+ * Version:           1.7
  * Requires at least: 5.8
  * Tested up to:      6.4
  * Requires PHP:      7.4
@@ -35,7 +35,7 @@
 
 use Dev4Press\v46\WordPress;
 
-const COREACTIVITY_VERSION = '1.6';
+const COREACTIVITY_VERSION = '1.7';
 const COREACTIVITY_FILE    = __FILE__;
 
 $coreactivity_dirname_basic = dirname( COREACTIVITY_FILE ) . '/';

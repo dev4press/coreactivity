@@ -2,11 +2,20 @@
 
 ## Changelog
 
-### Version: 1.7 / January 3 2024
+### Version: 1.7 / January 7 2024
 
+* **new** show blog information in the `Logs` popup view
+* **new** show view for Blog in the `Logs` for multisite network mode
+* **new** option to show linked Blog ID in the `Logs`
+* **new** option to show link to individual blog log for Blog ID
+* **edit** improvements in displaying objects info and links
+* **edit** improvements to the dashboard widgets display
+* **edit** several minor styling changes in the `Logs` display
 * **edit** changes in display of the `Logs` detection column
 * **fix** object column missing under some conditions
-* **fix** minor issue with `Activity` linked check method 
+* **fix** minor issue with `Activity` linked check method
+* **fix** component statistics scale using total instead of max value
+* **fix** several missing string translation contexts
 
 ### Version: 1.6 / January 3 2024
 

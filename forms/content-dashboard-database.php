@@ -31,6 +31,9 @@ $db_stats = DB::instance()->get_statistics();
                     <strong><?php echo esc_html( File::size_format( $db_stats['size'], 2, ' ', false ) ); ?></strong> <?php esc_html_e( 'Total Tables Size', 'coreactivity' ); ?>
                 </div>
                 <div class="__element">
+                    <strong><?php echo esc_html( File::size_format( $db_stats['overhead'], 2, ' ', false ) ); ?></strong> <?php esc_html_e( 'Total Overhead', 'coreactivity' ); ?>
+                </div>
+                <div class="__element">
                     <strong><?php echo esc_html( $db_stats['tables']['logs']['rows'] ); ?></strong> <?php esc_html_e( 'Log Entries', 'coreactivity' ); ?>
                 </div>
                 <div class="__element">
@@ -47,6 +50,9 @@ $db_stats = DB::instance()->get_statistics();
                 </div>
                 <div class="__element">
                     <strong><?php echo esc_html( File::size_format( $db_stats['tables']['events']['total'], 2, ' ', false ) ); ?></strong> <?php esc_html_e( 'Events Size', 'coreactivity' ); ?>
+                </div>
+                <div class="__element">
+                    <strong><?php echo esc_html( File::size_format( $db_stats['history'], 2, ' ', false ) ); ?></strong> <?php esc_html_e( 'History Statistics', 'coreactivity' ); ?>
                 </div>
             </div>
         </div>

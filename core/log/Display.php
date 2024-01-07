@@ -361,7 +361,7 @@ class Display {
 		if ( class_exists( '\GFAPI' ) ) {
 			if ( GFAPI::form_id_exists( $item->object_id ) ) {
 				$form = GFAPI::get_form( $item->object_id );
-				$url  = admin_url( '/admin.php?page=gf_edit_forms&id=' . $form['id'] );
+				$url  = get_admin_url( $item->blog_id, '/admin.php?page=gf_edit_forms&id=' . $form['id'] );
 
 				/* translators: Display log GravityForm Form information. %1$s: Form ID. %2$s: Form Slug. %3$s: Form Name and Link. */
 				$render .= sprintf( __( 'ID: %1$s &middot; Slug: %2$s<br/>Name: %3$s', 'coreactivity' ), '<strong>' . $form['id'] . '</strong>', '<strong>' . $form['form_slug'] . '</strong>', '<strong><a href="' . $url . '">' . $form['title'] . '</a></strong>' );
@@ -376,6 +376,17 @@ class Display {
 	}
 
 	private function _display_gentry( stdClass $item ) : string {
+		$form_id = $item->meta['form_id'];
+
+		if ( class_exists( '\GFAPI' ) ) {
+			if ( GFAPI::form_id_exists( $form_id ) ) {
+				$form = GFAPI::get_form( $form_id );
+				$url  = get_admin_url( $item->blog_id, '/admin.php?page=gf_entries&view=entry&lid=' . $item->object_id . '&id=' . $form_id );
+
+				return __( 'ID', 'coreactivity' ) . ': <strong><a href="'.$url.'">' . $item->object_id . '</a></strong>';
+			}
+		}
+
 		return __( 'ID', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 	}
 

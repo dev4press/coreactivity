@@ -100,8 +100,8 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'log_if_available_user_agent', __( 'User Agent', 'coreactivity' ), __( 'If the request has user agent string, it will be logged as the log entry meta data.', 'coreactivity' ), Type::BOOLEAN )->more( array(
-									__( 'User agent can be used to extract information about the request source device, OS, browsers, and more.' ),
-									__( 'User agent data is not always reliable, because request source can spoof the user agent and set it to anything.' ),
+									__( 'User agent can be used to extract information about the request source device, OS, browsers, and more.', 'coreactivity' ),
+									__( 'User agent data is not always reliable, because request source can spoof the user agent and set it to anything.', 'coreactivity' ),
 								) ),
 								$this->i( 'settings', 'log_if_available_referer', __( 'Referer', 'coreactivity' ), __( 'If the request has referer, it will be logged as the log entry meta data.', 'coreactivity' ), Type::BOOLEAN ),
 							),
@@ -112,13 +112,13 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'log_device_detection_data', __( 'Device Information', 'coreactivity' ), __( 'Based on the user agent, detect the information about the device and store it as meta when the request is logged.', 'coreactivity' ), Type::BOOLEAN )->more( array(
-									__( 'Device detection will be done at the request log time, and will be stored as meta data.' ),
-									__( 'Device detection data will take additional space in the meta table.' ),
-									__( 'If you don\'t save this as metadata, plugin can still display device detection data later, if you enable User Agent logging.' ),
+									__( 'Device detection will be done at the request log time, and will be stored as meta data.', 'coreactivity' ),
+									__( 'Device detection data will take additional space in the meta table.', 'coreactivity' ),
+									__( 'If you don\'t save this as metadata, plugin can still display device detection data later, if you enable User Agent logging.', 'coreactivity' ),
 								) ),
 								$this->i( 'settings', 'log_device_detection_filter', __( 'Filter Information', 'coreactivity' ), __( 'Simplified detected information will be stored as individual meta elements that can be used for the log filtering.', 'coreactivity' ), Type::BOOLEAN )->more( array(
-									__( 'At this time, coreActivity plugin doesn\'t have filter by meta data implemented!' ),
-									__( 'Device detection data will take additional space in the meta table.' ),
+									__( 'At this time, coreActivity plugin doesn\'t have filter by meta data implemented!', 'coreactivity' ),
+									__( 'Device detection data will take additional space in the meta table.', 'coreactivity' ),
 								) ),
 							),
 						),
@@ -345,6 +345,7 @@ class Settings extends BaseSettings {
 								$this->i( 'settings', 'display_columns_simplified', __( 'Simplified values', 'coreactivity' ), __( 'Values for columns Component and Event will be displayed using labels.', 'coreactivity' ), Type::BOOLEAN ),
 								$this->i( 'settings', 'display_ip_country_flag', __( 'IP GEO location flag', 'coreactivity' ), __( 'Show country for the logged IP.', 'coreactivity' ), Type::BOOLEAN ),
 								$this->i( 'settings', 'display_user_avatar', __( 'User avatar', 'coreactivity' ), __( 'Show user avatar for logs that are related to the user.', 'coreactivity' ), Type::BOOLEAN ),
+								$this->i( 'settings', 'display_blog_column_linked', __( 'Linked Blog ID', 'coreactivity' ), __( 'In the multisite network mode, link the Blog ID to the Blog URL', 'coreactivity' ), Type::BOOLEAN ),
 							),
 						),
 					),
@@ -353,7 +354,7 @@ class Settings extends BaseSettings {
 					'name'     => __( 'Table Layout', 'coreactivity' ),
 					'sections' => array(
 						array(
-							'label'    => __( 'Log Basic Data', 'coreactivity' ),
+							'label'    => __( 'Basic Data', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
@@ -364,7 +365,7 @@ class Settings extends BaseSettings {
 							),
 						),
 						array(
-							'label'    => __( 'Log Meta Data', 'coreactivity' ),
+							'label'    => __( 'Meta Data', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(

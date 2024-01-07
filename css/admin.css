@@ -74,7 +74,10 @@
   width: 100px;
 }
 .coreactivity-grid-logs tr th.column-ip {
-  width: 260px;
+  width: 240px;
+}
+.coreactivity-grid-logs tr th.column-detection {
+  width: 200px;
 }
 .coreactivity-grid-logs tr th.column-object_type, .coreactivity-grid-logs tr th.column-logged {
   width: 120px;

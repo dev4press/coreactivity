@@ -53,6 +53,8 @@ class Core {
 			'protocol'  => wp_get_server_protocol(),
 			'request'   => URL::current_url_request(),
 			'context'   => WordPress::instance()->context(),
+			'multisite' => Scope::instance()->is_multisite(),
+			'scope'     => 'blog',
 		);
 
 		$this->cached_data['anon'] = in_array( $this->cached_data['context'], array( 'CLI', 'CRON' ) );
@@ -71,6 +73,12 @@ class Core {
 
 		if ( coreactivity_settings()->get( 'log_device_detection_data' ) ) {
 			$this->device_meta = true;
+		}
+
+		if ( $this->cached_data['multisite'] ) {
+			if ( Scope::instance()->is_network_admin() ) {
+				$this->cached_data['scope'] = 'network';
+			}
 		}
 
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );
@@ -177,6 +185,10 @@ class Core {
 
 	public function get( string $name ) : string {
 		return $this->cached_data[ $name ] ?? '';
+	}
+
+	public function show_blog_data() : bool {
+		return $this->cached_data['multisite'] && $this->cached_data['scope'] == 'network';
 	}
 
 	public function get_current_page_log() : array {

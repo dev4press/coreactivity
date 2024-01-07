@@ -1,5 +1,6 @@
 <?php
 
+use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
 
 $_tabs  = coreactivity_view_dialog_tabs();
@@ -8,7 +9,6 @@ $_items = $_grid->items ?? array();
 function _coreactivity_dialog_tab_info( $item ) {
 	$log = array(
 		'log_id'      => __( 'Log ID', 'coreactivity' ),
-		'blog_id'     => __( 'Blog ID', 'coreactivity' ),
 		'ip'          => __( 'IP', 'coreactivity' ),
 		'component'   => __( 'Component', 'coreactivity' ),
 		'event'       => __( 'Event', 'coreactivity' ),
@@ -33,6 +33,21 @@ function _coreactivity_dialog_tab_info( $item ) {
 	}
 
 	echo '</dl>';
+
+	if ( Core::instance()->show_blog_data() ) {
+		$blog = get_blog_details( array( 'blog_id' => $item->blog_id ) );
+
+		echo '<dl class="d4p-ctrl-list">';
+		echo '<dt>' . __( 'Blog ID', 'coreactivity' ) . '</dt><dd>' . $item->blog_id . '</dd>';
+
+		if ( $blog instanceof WP_Site ) {
+			echo '<dt>' . __( 'Blog Name', 'coreactivity' ) . '</dt><dd>' . $blog->blogname . '</dd>';
+			echo '<dt>' . __( 'Blog URL', 'coreactivity' ) . '</dt><dd>' . $blog->siteurl . '</dd>';
+		}
+
+		echo '</dl>';
+	}
+
 	echo '<div class="coreactivity-popup-tab-actions">';
 
 	do_action( 'coreactivity_logs_dialog_info', $item );
@@ -107,7 +122,7 @@ function _coreactivity_dialog_tab_device( $item ) {
 	if ( isset( $item->device ) ) {
 		echo '<dl class="d4p-ctrl-list">';
 		echo '<dt>' . __( 'Bot', 'coreactivity' ) . '</dt>';
-		echo '<dd>' . ( isset( $item->device['bot'] ) ? __( 'Yes' ) : __( 'No' ) ) . '</dd>';
+		echo '<dd>' . ( isset( $item->device['bot'] ) ? __( 'Yes', 'coreactivity' ) : __( 'No', 'coreactivity' ) ) . '</dd>';
 
 		if ( isset( $item->device['bot'] ) ) {
 			echo '<dt>' . __( 'Category', 'coreactivity' ) . '</dt>';
@@ -126,7 +141,7 @@ function _coreactivity_dialog_tab_device( $item ) {
 			}
 
 			echo '<dt>' . __( 'Device', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . ucwords( $item->device['device'] ?? __( 'Unknown' ) ) . '</dd>';
+			echo '<dd>' . ucwords( $item->device['device'] ?? __( 'Unknown', 'coreactivity' ) ) . '</dd>';
 
 			if ( ! empty( $item->device['brand'] ) ) {
 				echo '<dt>' . __( 'Brand', 'coreactivity' ) . '</dt>';

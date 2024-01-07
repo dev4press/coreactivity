@@ -60,6 +60,7 @@ class Settings extends BaseSettings {
 			'display_protocol_column'                 => false,
 			'display_object_type_column'              => false,
 			'display_meta_column'                     => false,
+			'display_blog_column_linked'              => true,
 			'auto_cleanup_active'                     => true,
 			'auto_cleanup_period'                     => 24,
 			'exceptions_option_action_scheduler_lock' => true,

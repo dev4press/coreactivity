@@ -12,6 +12,7 @@ use Dev4Press\v46\Core\Plugins\DBLite;
 use Dev4Press\v46\Core\Quick\Sanitize;
 use Dev4Press\v46\Core\UI\Elements;
 use Dev4Press\v46\WordPress\Admin\Table;
+use WP_Site;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -29,6 +30,7 @@ class Logs extends Table {
 	public $_current_ip = '';
 	public $_server_ip = '';
 
+	protected $_display_blog_column_linked;
 	protected $_display_columns_simplified;
 	protected $_display_ip_country_flag;
 	protected $_display_user_avatar;
@@ -80,6 +82,7 @@ class Logs extends Table {
 		$this->_current_ip = Core::instance()->get( 'ip' );
 		$this->_server_ip  = Core::instance()->get( 'server_ip' );
 
+		$this->_display_blog_column_linked = coreactivity_settings()->get( 'display_blog_column_linked' );
 		$this->_display_columns_simplified = coreactivity_settings()->get( 'display_columns_simplified' );
 		$this->_display_ip_country_flag    = coreactivity_settings()->get( 'display_ip_country_flag' );
 		$this->_display_user_avatar        = coreactivity_settings()->get( 'display_user_avatar' );
@@ -705,6 +708,22 @@ class Logs extends Table {
 
 					$current_key .= 'component';
 					break;
+				case 'blog_id':
+					$blog = get_blog_details( array( 'blog_id' => $this->_filter_lock['blog_id'] ) );
+
+					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-eye d4p-icon-fw"></i> <span>' . esc_html__( 'Blog', 'coreactivity' ) . '</span>';
+
+					if ( $blog instanceof WP_Site ) {
+						$current_view .= $blog->blogname . '<a target="_blank" href="' . $blog->siteurl . '">' . $blog->siteurl . '</a>';
+						$current_view .= '<span>[ID: ' . $this->_filter_lock['blog_id'] . ']</span>';
+					} else {
+						$current_view .= 'ID: ' . $this->_filter_lock['blog_id'];
+					}
+
+					$current_view .= '</span>';
+
+					$current_key .= 'blog_id';
+					break;
 				case 'ip':
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud d4p-icon-fw"></i> <span>' . esc_html__( 'IP', 'coreactivity' ) . '</span>';
 
@@ -843,6 +862,27 @@ class Logs extends Table {
 
 		$render  = apply_filters( 'coreactivity_logs_field_render_id', $render, $item, $this );
 		$actions = apply_filters( 'coreactivity_logs_field_actions_id', $actions, $item, $this );
+
+		return $render . $this->row_actions( $actions );
+	}
+
+	protected function column_blog_id( $item ) : string {
+		$blog   = get_blog_details( array( 'blog_id' => $item->blog_id ) );
+		$render = $item->blog_id;
+
+		$actions = array(
+			'view' => '<a href="' . $this->_view( 'blog_id', 'filter-blog_id=' . $item->blog_id ) . '">' . __( 'Logs', 'coreactivity' ) . '</a>',
+			'go'   => '<a target="_blank" href="' . get_admin_url( $item->blog_id, '/admin.php?page=coreactivity-logs' ) . '">' . __( 'Go', 'coreactivity' ) . '</a>',
+		);
+
+		if ( $this->_display_blog_column_linked ) {
+			if ( $blog instanceof WP_Site ) {
+				$render = '<a target="_blank" href="' . $blog->siteurl . '" title="' . $blog->blogname . '">' . $render . '</a>';
+			}
+		}
+
+		$render  = apply_filters( 'coreactivity_logs_field_render_blog_id', $render, $item, $this );
+		$actions = apply_filters( 'coreactivity_logs_field_actions_blog_id', $actions, $item, $this );
 
 		return $render . $this->row_actions( $actions );
 	}
@@ -1064,12 +1104,12 @@ class Logs extends Table {
 		$items   = array();
 
 		if ( isset( $item->device['bot'] ) ) {
-			$items[] = '<strong>' . __( 'Bot' ) . '</strong>: ' . $item->device['bot']['name'];
+			$items[] = '<strong>' . __( 'Bot', 'coreactivity' ) . '</strong>: ' . $item->device['bot']['name'];
 			$items[] = ucwords( $item->device['bot']['category'] );
 		} else if ( ! empty( $item->device ) ) {
-            $os = trim( ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) );
+			$os = trim( ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) );
 
-			$items[] = '<strong>' . ucwords( $item->device['device'] ?? __( 'Unknown' ) ) . '</strong>'.(!empty($os) ? ': '. $os : '');
+			$items[] = '<strong>' . ucwords( $item->device['device'] ?? __( 'Unknown', 'coreactivity' ) ) . '</strong>' . ( ! empty( $os ) ? ': ' . $os : '' );
 			$items[] = trim( ( $item->device['client']['name'] ?? '' ) . ' ' . ( $item->device['client']['version'] ?? '' ) );
 
 			if ( ! empty( $item->device['brand'] ) ) {
