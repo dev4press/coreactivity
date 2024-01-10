@@ -13,6 +13,7 @@ use Dev4Press\Plugin\CoreActivity\Components\Notification;
 use Dev4Press\Plugin\CoreActivity\Components\Option;
 use Dev4Press\Plugin\CoreActivity\Components\Plugin;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
+use Dev4Press\Plugin\CoreActivity\Components\Privacy;
 use Dev4Press\Plugin\CoreActivity\Components\Sitemeta;
 use Dev4Press\Plugin\CoreActivity\Components\Term;
 use Dev4Press\Plugin\CoreActivity\Components\Theme;
@@ -30,7 +31,6 @@ use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
 use Dev4Press\Plugin\CoreActivity\Plugins\WooCommerce;
-use Dev4Press\v46\Core\Quick\Sanitize;
 use Dev4Press\v46\Core\Quick\Str;
 use stdClass;
 
@@ -582,6 +582,7 @@ class Activity {
 		Term::instance();
 		Comment::instance();
 		Attachment::instance();
+		Privacy::instance();
 	}
 
 	private function _init_plugins() {

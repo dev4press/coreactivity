@@ -285,7 +285,7 @@ class Display {
 	private function _display_post( stdClass $item ) : string {
 		$render = '';
 
-		switch_to_blog( $item->blog_id );
+		$this->switch_to_blog( $item->blog_id );
 
 		$post = get_post( $item->object_id );
 
@@ -296,7 +296,7 @@ class Display {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
-		restore_current_blog();
+		$this->restore_current_blog();
 
 		return $render;
 	}
@@ -304,7 +304,7 @@ class Display {
 	private function _display_comment( stdClass $item ) : string {
 		$render = '';
 
-		switch_to_blog( $item->blog_id );
+		$this->switch_to_blog( $item->blog_id );
 
 		$comment = get_comment( $item->object_id );
 
@@ -322,7 +322,7 @@ class Display {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
-		restore_current_blog();
+		$this->restore_current_blog();
 
 		return $render;
 	}
@@ -330,7 +330,7 @@ class Display {
 	private function _display_attachment( stdClass $item ) : string {
 		$render = '';
 
-		switch_to_blog( $item->blog_id );
+		$this->switch_to_blog( $item->blog_id );
 
 		$post = get_post( $item->object_id );
 
@@ -341,7 +341,7 @@ class Display {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
-		restore_current_blog();
+		$this->restore_current_blog();
 
 		return $render;
 	}
@@ -393,7 +393,7 @@ class Display {
 				$form = GFAPI::get_form( $form_id );
 				$url  = get_admin_url( $item->blog_id, '/admin.php?page=gf_entries&view=entry&lid=' . $item->object_id . '&id=' . $form_id );
 
-				return __( 'ID', 'coreactivity' ) . ': <strong><a href="'.$url.'">' . $item->object_id . '</a></strong>';
+				return __( 'ID', 'coreactivity' ) . ': <strong><a href="' . $url . '">' . $item->object_id . '</a></strong>';
 			}
 		}
 
@@ -433,7 +433,7 @@ class Display {
 	private function _display_term( stdClass $item ) : string {
 		$render = '';
 
-		switch_to_blog( $item->blog_id );
+		$this->switch_to_blog( $item->blog_id );
 
 		$term = get_term( $item->object_id );
 
@@ -444,7 +444,7 @@ class Display {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';
 		}
 
-		restore_current_blog();
+		$this->restore_current_blog();
 
 		return $render;
 	}
@@ -510,7 +510,9 @@ class Display {
 	private function _brief_post( stdClass $item ) : string {
 		$render = '';
 
-		switch_to_blog( $item->blog_id );
+		if ( is_multisite() ) {
+			$this->switch_to_blog( $item->blog_id );
+		}
 
 		$post = get_post( $item->object_id );
 
@@ -521,7 +523,7 @@ class Display {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
-		restore_current_blog();
+		$this->restore_current_blog();
 
 		return $render;
 	}
@@ -529,7 +531,7 @@ class Display {
 	private function _brief_comment( stdClass $item ) : string {
 		$render = '';
 
-		switch_to_blog( $item->blog_id );
+		$this->switch_to_blog( $item->blog_id );
 
 		$comment = get_comment( $item->object_id );
 
@@ -547,7 +549,7 @@ class Display {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
-		restore_current_blog();
+		$this->restore_current_blog();
 
 		return $render;
 	}
@@ -555,7 +557,7 @@ class Display {
 	private function _brief_attachment( stdClass $item ) : string {
 		$render = '';
 
-		switch_to_blog( $item->blog_id );
+		$this->switch_to_blog( $item->blog_id );
 
 		$post = get_post( $item->object_id );
 
@@ -566,7 +568,7 @@ class Display {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
-		restore_current_blog();
+		$this->restore_current_blog();
 
 		return $render;
 	}
@@ -646,7 +648,7 @@ class Display {
 	private function _brief_term( stdClass $item ) : string {
 		$render = '';
 
-		switch_to_blog( $item->blog_id );
+		$this->switch_to_blog( $item->blog_id );
 
 		$term = get_term( $item->object_id );
 
@@ -657,8 +659,20 @@ class Display {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
 		}
 
-		restore_current_blog();
+		$this->restore_current_blog();
 
 		return $render;
+	}
+
+	private function switch_to_blog( $blog_id ) {
+		if ( is_multisite() ) {
+			switch_to_blog( $blog_id );
+		}
+	}
+
+	private function restore_current_blog() {
+		if ( is_multisite() ) {
+			restore_current_blog();
+		}
 	}
 }

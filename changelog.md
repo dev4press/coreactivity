@@ -2,9 +2,12 @@
 
 ## Changelog
 
-### Version: 1.8 / January 15 2024
+### Version: 1.8 / January 11 2024
 
+* **new** component: `Privacy` plugin, with 10 events
 * **new** component `WordPress` expanded with 3 new events
+* **fix** new events in the `Events` panel can trigger fatal error
+* **fix** errors with the display of some object information
 
 ### Version: 1.7 / January 7 2024
 
