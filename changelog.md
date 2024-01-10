@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 1.8 / January 15 2024
+
+* **new** component `WordPress` expanded with 3 new events
+
 ### Version: 1.7 / January 7 2024
 
 * **new** show blog information in the `Logs` popup view

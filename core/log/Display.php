@@ -197,8 +197,13 @@ class Display {
 				$render .= '<span>' . esc_html__( 'Theme', 'coreactivity' ) . ': <strong>' . $item->meta['theme_name'] . '</strong></span><br/>';
 			}
 			$render .= '<span>' . esc_html__( 'Directory', 'coreactivity' ) . ': <strong>' . $item->object_name . '</span>';
+
 			if ( isset( $item->meta['theme_version'] ) ) {
 				$render .= '<br/><span>' . esc_html__( 'Version', 'coreactivity' ) . ': <strong>' . $item->meta['theme_version'] . '</strong></span>';
+			}
+
+			if ( isset( $item->meta['new_version'] ) ) {
+				$render .= '<br/><span>' . esc_html__( 'New Version', 'coreactivity' ) . ': <strong>' . $item->meta['new_version'] . '</strong></span>';
 			}
 		}
 
@@ -214,8 +219,13 @@ class Display {
 			$plugin = $item->meta['plugin_title'] ?? '';
 			$render .= '<span>' . esc_html__( 'Plugin', 'coreactivity' ) . ': <strong>' . $plugin . '</strong></span>';
 			$render .= '<br/><span>' . esc_html__( 'File', 'coreactivity' ) . ': <strong>' . $item->object_name . '</strong></span>';
+
 			if ( isset( $item->meta['plugin_version'] ) ) {
 				$render .= '<br/><span>' . esc_html__( 'Version', 'coreactivity' ) . ': <strong>' . $item->meta['plugin_version'] . '</strong></span>';
+			}
+
+			if ( isset( $item->meta['new_version'] ) ) {
+				$render .= '<br/><span>' . esc_html__( 'New Version', 'coreactivity' ) . ': <strong>' . $item->meta['new_version'] . '</strong></span>';
 			}
 		}
 
