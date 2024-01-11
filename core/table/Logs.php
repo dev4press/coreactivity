@@ -1105,7 +1105,10 @@ class Logs extends Table {
 
 		if ( isset( $item->device['bot'] ) ) {
 			$items[] = '<strong>' . __( 'Bot', 'coreactivity' ) . '</strong>: ' . $item->device['bot']['name'];
-			$items[] = ucwords( $item->device['bot']['category'] );
+
+            if (!empty($item->device['bot']['category'])) {
+	            $items[] = ucwords( $item->device['bot']['category'] );
+            }
 		} else if ( ! empty( $item->device ) ) {
 			$os = trim( ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) );
 

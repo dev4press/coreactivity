@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.8</span></strong> &minus;
-        New components and events. Many tweaks, improvements and fixes.
+        New components and events. Few improvements and fixes.
     </p>
     <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.7</span></strong> &minus;

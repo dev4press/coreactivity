@@ -93,7 +93,7 @@ class Privacy extends Component {
 
 		if ( $user_request instanceof WP_User_Request ) {
 			$this->log( 'erased-personal-data', array(
-				'object_name' => 'erased_personal_data',
+				'object_name' => 'remove_personal_data',
 			), array(
 				'request_id' => $request_id,
 				'user_id'    => $user_request->user_id,
@@ -127,7 +127,7 @@ class Privacy extends Component {
 							'user_email' => $user_request->email,
 						) );
 					} else if ( 'export_personal_data' === $user_request->action_name && 'request-pending' && $user_request->status ) {
-						$this->log( 'remove-personal-data-completed', array(
+						$this->log( 'export-personal-data-requested', array(
 							'object_name' => 'export_personal_data',
 						), array(
 							'user_id'    => $user_request->user_id,
@@ -153,7 +153,7 @@ class Privacy extends Component {
 					'user_email' => $user_request->email,
 				) );
 			} else if ( 'remove_personal_data' === $user_request->action_name && 'request-confirmed' === $user_request->status ) {
-				$this->log( 'remove-personal-data-requested', array(
+				$this->log( 'remove-personal-data-confirmed', array(
 					'object_name' => 'remove_personal_data',
 				), array(
 					'user_id'    => $user_request->user_id,

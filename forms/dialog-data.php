@@ -125,8 +125,10 @@ function _coreactivity_dialog_tab_device( $item ) {
 		echo '<dd>' . ( isset( $item->device['bot'] ) ? __( 'Yes', 'coreactivity' ) : __( 'No', 'coreactivity' ) ) . '</dd>';
 
 		if ( isset( $item->device['bot'] ) ) {
-			echo '<dt>' . __( 'Category', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . $item->device['bot']['category'] . '</dd>';
+			if ( ! empty( $item->device['bot']['category'] ) ) {
+				echo '<dt>' . __( 'Category', 'coreactivity' ) . '</dt>';
+				echo '<dd>' . $item->device['bot']['category'] . '</dd>';
+			}
 			echo '<dt>' . __( 'Name', 'coreactivity' ) . '</dt>';
 			echo '<dd>' . $item->device['bot']['name'] . '</dd>';
 		} else {

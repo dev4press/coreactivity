@@ -4,10 +4,12 @@
 
 ### Version: 1.8 / January 11 2024
 
-* **new** component: `Privacy` plugin, with 10 events
+* **new** component: `Privacy` with 10 events
 * **new** component `WordPress` expanded with 3 new events
+* **edit** Device Detector Library 6.2.1
 * **fix** new events in the `Events` panel can trigger fatal error
 * **fix** errors with the display of some object information
+* **fix** few issues with displaying Bot detection information
 
 ### Version: 1.7 / January 7 2024
 

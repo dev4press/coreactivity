@@ -114,9 +114,13 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
-= 1.8 (2024.01.15) =
-* New: component: `Privacy` plugin, with XXX events
+= 1.8 (2024.01.11) =
+* New: component: `Privacy` with 10 events
 * New: component `WordPress` expanded with 3 new events
+* Edit: Device Detector Library 6.2.1
+* Fix: new events in the `Events` panel can trigger fatal error
+* Fix: errors with the display of some object information
+* Fix: few issues with displaying Bot detection information
 
 = 1.7 (2024.01.07) =
 * New:  show blog information in the `Logs` popup view
