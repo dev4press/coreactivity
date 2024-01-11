@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Privacy extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'privacy';
+	protected $version = '1.8';
 	protected $object_type = 'user_request';
 	protected $icon = 'ui-user-secret';
 
