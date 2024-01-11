@@ -59,12 +59,14 @@ The plugin can locate where the IP making the request is coming from. There are 
 * IP2Location Local Database
 * MaxMind GeoLite2 Local Database
 
-To use IP2Location, you need to have account on IP2Location, to get the download token, and getting the Lite versions of the database is free. To use MaxMind GeoLite2, you need to have MaxMind account, and the license for downloading the files, it is free for the GeoLite2 database files. Plugin supports use of all Lite databases for both providers, and using the provided token it can keep the database updated on a weekly basis.
+To use IP2Location, you need to have an account on IP2Location, to get the download token, and getting the Lite versions of the database is free. To use MaxMind GeoLite2, you need to have MaxMind account, and the license for downloading the files, it is free for the GeoLite2 database files. Plugin supports use of all Lite databases for both providers, and using the provided token it can keep the database updated on a weekly basis.
 
 = More Features =
 * Instant Notifications
 * Daily Digest Notifications
 * Weekly Digest Notifications
+* IP WhoIs Information / v1.8
+* Request Device Detection / v1.6
 * Log Cleanup Tools
 * Auto Log Cleanup
 * Log Live Updates
@@ -117,6 +119,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 = 1.8 (2024.01.11) =
 * New: component: `Privacy` with 10 events
 * New: component `WordPress` expanded with 3 new events
+* New: action for `Logs` to display WhoIs for IP
+* New: library `WhoIs` for getting IP WhoIs information
+* Edit: various improvements for the popup view data display
 * Edit: Device Detector Library 6.2.1
 * Fix: new events in the `Events` panel can trigger fatal error
 * Fix: errors with the display of some object information
@@ -262,6 +267,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 1.8 =
+New components and events. IP WhoIs. Few improvements and fixes.
+
 = 1.7 =
 Many improvements and fixes.
 
@@ -270,9 +278,6 @@ Library Updated. Device Detection support. Many improvements and fixes.
 
 = 1.5 =
 Library Updated. Minor updates and improvements.
-
-= 1.4 =
-New components. Many tweaks, improvements, and fixes.
 
 == Screenshots ==
 * Plugin Dashboard

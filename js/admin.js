@@ -25,9 +25,24 @@
                         }
                     })
                 ]
+            }), dialog_whois = $.extend({}, wp.dev4press.dialogs.default_dialog(), {
+                width: 600,
+                maxWidth: 720,
+                maxHeight: 640,
+                minWidth: 360,
+                minHeight: 360,
+                resizable: true,
+                buttons: [
+                    $.extend({}, wp.dev4press.dialogs.default_button('ok', true), {
+                        click: function() {
+                            $("#coreactivity-whois-dialog").wpdialog("close");
+                        }
+                    })
+                ]
             });
 
             $("#coreactivity-log-dialog").wpdialog(dialog_view);
+            $("#coreactivity-whois-dialog").wpdialog(dialog_whois);
 
             $(document).on("click", ".coreactivity-toggle-notification", function(e) {
                 e.preventDefault();
@@ -67,6 +82,24 @@
                     url: ajaxurl + "?action=coreactivity_toggle_event&_ajax_nonce=" + nonce,
                     success: function(json) {
                         wp.coreactivity.admin.helpers.toggle(button, json);
+                    }
+                });
+            });
+
+            $(document).on("click", ".coreactivity-show-whois-popup", function(e) {
+                e.preventDefault();
+
+                $("#coreactivity-whois-dialog").wpdialog("open");
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "html",
+                    data: {
+                        whois: $(this).data("ip")
+                    },
+                    url: ajaxurl + "?action=coreactivity_whois_ip&_ajax_nonce=" + $(this).data("nonce"),
+                    success: function(html) {
+                        $("#coreactivity-whois-dialog div").html(html);
                     }
                 });
             });

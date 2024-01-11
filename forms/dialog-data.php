@@ -38,11 +38,11 @@ function _coreactivity_dialog_tab_info( $item ) {
 		$blog = get_blog_details( array( 'blog_id' => $item->blog_id ) );
 
 		echo '<dl class="d4p-ctrl-list">';
-		echo '<dt>' . __( 'Blog ID', 'coreactivity' ) . '</dt><dd>' . $item->blog_id . '</dd>';
+		echo '<dt>' . esc_html__( 'Blog ID', 'coreactivity' ) . '</dt><dd>' . $item->blog_id . '</dd>';
 
 		if ( $blog instanceof WP_Site ) {
-			echo '<dt>' . __( 'Blog Name', 'coreactivity' ) . '</dt><dd>' . $blog->blogname . '</dd>';
-			echo '<dt>' . __( 'Blog URL', 'coreactivity' ) . '</dt><dd>' . $blog->siteurl . '</dd>';
+			echo '<dt>' . esc_html__( 'Blog Name', 'coreactivity' ) . '</dt><dd>' . $blog->blogname . '</dd>';
+			echo '<dt>' . esc_html__( 'Blog URL', 'coreactivity' ) . '</dt><dd>' . $blog->siteurl . '</dd>';
 		}
 
 		echo '</dl>';
@@ -88,12 +88,17 @@ function _coreactivity_dialog_tab_location( $item ) {
 	echo '<div id="coreactivity-popup-data-location-' . $item->log_id . '">';
 	if ( ! empty( $item->country_code ) ) {
 		echo '<dl class="d4p-ctrl-list">';
-		echo '<dt>' . __( 'Country Code', 'coreactivity' ) . '</dt>';
-		echo '<dd>' . $item->country_code . '</dd>';
-		echo '<dt>' . __( 'Country', 'coreactivity' ) . '</dt>';
-		echo '<dd>' . GEO::instance()->country( $item->country_code ) . '</dd>';
-		echo '<dt>' . __( 'Continent', 'coreactivity' ) . '</dt>';
-		echo '<dd>' . GEO::instance()->continent( $item->country_code ) . '</dd>';
+		if ( $item->country_code !== 'XX' ) {
+			echo '<dt>' . esc_html__( 'Country Code', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . $item->country_code . '</dd>';
+			echo '<dt>' . esc_html__( 'Country', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . GEO::instance()->country( $item->country_code ) . '</dd>';
+			echo '<dt>' . esc_html__( 'Continent', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . GEO::instance()->continent( $item->country_code ) . '</dd>';
+		} else {
+			echo '<dt>' . esc_html__( 'Unknown', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . esc_html__( 'Localhost IP', 'coreactivity' ) . '</dd>';
+		}
 		echo '</dl>';
 	}
 
@@ -121,37 +126,37 @@ function _coreactivity_dialog_tab_device( $item ) {
 
 	if ( isset( $item->device ) ) {
 		echo '<dl class="d4p-ctrl-list">';
-		echo '<dt>' . __( 'Bot', 'coreactivity' ) . '</dt>';
-		echo '<dd>' . ( isset( $item->device['bot'] ) ? __( 'Yes', 'coreactivity' ) : __( 'No', 'coreactivity' ) ) . '</dd>';
+		echo '<dt>' . esc_html__( 'Bot', 'coreactivity' ) . '</dt>';
+		echo '<dd>' . ( isset( $item->device['bot'] ) ? esc_html__( 'Yes', 'coreactivity' ) : esc_html__( 'No', 'coreactivity' ) ) . '</dd>';
 
 		if ( isset( $item->device['bot'] ) ) {
 			if ( ! empty( $item->device['bot']['category'] ) ) {
-				echo '<dt>' . __( 'Category', 'coreactivity' ) . '</dt>';
+				echo '<dt>' . esc_html__( 'Category', 'coreactivity' ) . '</dt>';
 				echo '<dd>' . $item->device['bot']['category'] . '</dd>';
 			}
-			echo '<dt>' . __( 'Name', 'coreactivity' ) . '</dt>';
+			echo '<dt>' . esc_html__( 'Name', 'coreactivity' ) . '</dt>';
 			echo '<dd>' . $item->device['bot']['name'] . '</dd>';
 		} else {
 			if ( ! empty( $item->device['os']['name'] ) ) {
-				echo '<dt>' . __( 'OS', 'coreactivity' ) . '</dt>';
+				echo '<dt>' . esc_html__( 'OS', 'coreactivity' ) . '</dt>';
 				echo '<dd>' . ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) . '</dd>';
 			}
 
 			if ( ! empty( $item->device['client']['name'] ) ) {
-				echo '<dt>' . __( 'Client', 'coreactivity' ) . '</dt>';
+				echo '<dt>' . esc_html__( 'Client', 'coreactivity' ) . '</dt>';
 				echo '<dd>' . ( $item->device['client']['name'] ?? '' ) . ' ' . ( $item->device['client']['version'] ?? '' ) . '</dd>';
 			}
 
-			echo '<dt>' . __( 'Device', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . ucwords( $item->device['device'] ?? __( 'Unknown', 'coreactivity' ) ) . '</dd>';
+			echo '<dt>' . esc_html__( 'Device', 'coreactivity' ) . '</dt>';
+			echo '<dd>' . ucwords( $item->device['device'] ?? esc_html__( 'Unknown', 'coreactivity' ) ) . '</dd>';
 
 			if ( ! empty( $item->device['brand'] ) ) {
-				echo '<dt>' . __( 'Brand', 'coreactivity' ) . '</dt>';
+				echo '<dt>' . esc_html__( 'Brand', 'coreactivity' ) . '</dt>';
 				echo '<dd>' . $item->device['brand'] . '</dd>';
 			}
 
 			if ( ! empty( $item->device['model'] ) ) {
-				echo '<dt>' . __( 'Model', 'coreactivity' ) . '</dt>';
+				echo '<dt>' . esc_html__( 'Model', 'coreactivity' ) . '</dt>';
 				echo '<dd>' . $item->device['model'] . '</dd>';
 			}
 		}

@@ -58,7 +58,6 @@ class IP2Location extends Locator {
 	}
 
 	public function bulk( array $ips ) {
-
 	}
 
 	protected function url( $ips ) : string {

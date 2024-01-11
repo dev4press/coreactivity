@@ -124,7 +124,6 @@ abstract class Component {
 	}
 
 	public function init() {
-
 	}
 
 	public function log( string $event, array $data = array(), array $meta = array() ) : int {

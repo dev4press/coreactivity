@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Cleanup {
 	public function __construct() {
-
 	}
 
 	public static function instance() : Cleanup {

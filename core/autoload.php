@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function dev4press_plugin_coreactivity_autoload( $class ) {
-	$path = dirname( __FILE__ ) . '/';
+	$path = __DIR__ . '/';
 	$base = 'Dev4Press\\Plugin\\CoreActivity\\';
 
 	if ( substr( $class, 0, strlen( $base ) ) == $base ) {
@@ -22,7 +22,7 @@ function dev4press_plugin_coreactivity_autoload( $class ) {
 		$path .= $class_namespace . '/' . $class_name . '.php';
 
 		if ( file_exists( $path ) ) {
-			include( $path );
+			include $path;
 		}
 	}
 }

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="d4p-update-info">
 			<?php
 
-			include( COREACTIVITY_PATH . 'forms/setup-database.php' );
+			include COREACTIVITY_PATH . 'forms/setup-database.php';
 
 			coreactivity_settings()->set( 'install', false, 'info' );
 			coreactivity_settings()->set( 'update', false, 'info', true );

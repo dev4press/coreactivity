@@ -136,7 +136,6 @@ class Activity {
 	}
 
 	public function init() {
-
 	}
 
 	public function is_instant_notification_enabled( int $event_id ) : bool {

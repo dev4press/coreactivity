@@ -60,7 +60,6 @@ class GeoIP2 extends Locator {
 	}
 
 	public function bulk( array $ips ) {
-
 	}
 
 	protected function url( $ips ) : string {

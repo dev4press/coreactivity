@@ -11,7 +11,6 @@ class Live extends Logs {
 	}
 
 	public function update() {
-
 	}
 
 	public function display() {

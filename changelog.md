@@ -6,6 +6,9 @@
 
 * **new** component: `Privacy` with 10 events
 * **new** component `WordPress` expanded with 3 new events
+* **new** action for `Logs` to display WhoIs for IP
+* **new** library `WhoIs` for getting IP WhoIs information
+* **edit** various improvements for the popup view data display
 * **edit** Device Detector Library 6.2.1
 * **fix** new events in the `Events` panel can trigger fatal error
 * **fix** errors with the display of some object information

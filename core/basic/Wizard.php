@@ -172,6 +172,5 @@ class Wizard extends CoreWizard {
 	}
 
 	protected function init_data() {
-
 	}
 }

@@ -4,6 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
+use Dev4Press\Plugin\CoreActivity\Log\WhoIs;
 use Dev4Press\Plugin\CoreActivity\Table\Live;
 use Dev4Press\v46\Core\Quick\Sanitize;
 
@@ -16,6 +17,7 @@ class AJAX {
 		add_action( 'wp_ajax_coreactivity_toggle_event', array( $this, 'toggle_event' ) );
 		add_action( 'wp_ajax_coreactivity_toggle_notification', array( $this, 'toggle_notification' ) );
 		add_action( 'wp_ajax_coreactivity_live_logs', array( $this, 'live_logs' ) );
+		add_action( 'wp_ajax_coreactivity_whois_ip', array( $this, 'whois_ip' ) );
 	}
 
 	public static function instance() : AJAX {
@@ -103,5 +105,16 @@ class AJAX {
 		}
 
 		die( $output ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	public function whois_ip() {
+		$ip  = isset( $_POST['whois'] ) ? Sanitize::basic( wp_unslash( $_POST['whois'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$out = __( 'WhoIs check failed', 'coreactivity' );
+
+		if ( ! empty( $ip ) && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-whois-' . $ip ) ) {
+			$out = nl2br( trim( WhoIs::instance()->get( $ip ) ) );
+		}
+
+		die( $out ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

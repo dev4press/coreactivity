@@ -41,7 +41,7 @@ class Device {
 
 		if ( $this->obj->isBot() ) {
 			$data = array(
-				'bot' => $this->obj->getBot()
+				'bot' => $this->obj->getBot(),
 			);
 		} else {
 			$data = array(
@@ -49,7 +49,7 @@ class Device {
 				'os'     => $this->obj->getOs(),
 				'device' => $this->obj->getDeviceName(),
 				'brand'  => $this->obj->getBrandName(),
-				'model'  => $this->obj->getModel()
+				'model'  => $this->obj->getModel(),
 			);
 		}
 

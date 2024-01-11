@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         <div class="d4p-group-inner">
 			<?php
 
-			include( COREACTIVITY_PATH . 'forms/setup-database.php' );
-			include( COREACTIVITY_PATH . 'forms/setup-statistics.php' );
+			include COREACTIVITY_PATH . 'forms/setup-database.php';
+			include COREACTIVITY_PATH . 'forms/setup-statistics.php';
 
 			?>
         </div>

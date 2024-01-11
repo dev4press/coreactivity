@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Statistics {
 	public function __construct() {
-
 	}
 
 	public static function instance() : Statistics {
@@ -257,7 +256,7 @@ class Statistics {
 		$interval  = new DateInterval( 'P1D' );
 		$dateRange = new DatePeriod( $begin, $interval, $end );
 
-		$range = [];
+		$range = array();
 		foreach ( $dateRange as $date ) {
 			$day           = $date->format( 'Y-m-d' );
 			$range[ $day ] = 0;

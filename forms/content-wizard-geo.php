@@ -28,7 +28,7 @@ use function Dev4Press\v46\Functions\panel;
         <p><?php esc_html_e( 'Setting up the geo location feature', 'coreactivity' ); ?></p>
         <div>
             <em><?php esc_html_e( 'Plugin can geo-locate IPs using Online service, and it has support for using geo-location databases. Both supported databases require registration to get token or key used to download the database, and both services are free. Check out the dedicated settings panel to configure this further.', 'coreactivity' ); ?></em>
-            <a target="_blank" class="button-secondary" href="<?php echo panel()->a()->panel_url( 'settings', 'geo' ); ?>"><?php esc_html_e( 'GEO-Location Settings', 'coreactivity' ); ?></a>
+            <a target="_blank" class="button-secondary" href="<?php echo panel()->a()->panel_url( 'settings', 'geo' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>"><?php esc_html_e( 'GEO-Location Settings', 'coreactivity' ); ?></a>
         </div>
     </div>
 </div>

@@ -8,6 +8,7 @@ use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
+use Dev4Press\v46\Core\Helpers\IP;
 use Dev4Press\v46\Core\Plugins\DBLite;
 use Dev4Press\v46\Core\Quick\Sanitize;
 use Dev4Press\v46\Core\UI\Elements;
@@ -906,6 +907,10 @@ class Logs extends Table {
 			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( 'IP Logs', 'coreactivity' ) . '</a>',
 		);
 
+		if ( ! IP::is_private( $item->ip ) ) {
+			$actions['whois'] = '<a href="#" class="coreactivity-show-whois-popup" data-nonce="' . wp_create_nonce( 'coreactivity-whois-' . $item->ip ) . '" data-ip="' . $item->ip . '">' . __( 'Who Is', 'coreactivity' ) . '</a>';
+		}
+
 		if ( ! empty( $item->country_code ) ) {
 			$actions['view-country'] = '<a href="' . $this->_view( 'country_code', 'filter-country_code=' . $item->country_code ) . '">' . __( 'Country Logs', 'coreactivity' ) . '</a>';
 		}
@@ -1106,9 +1111,9 @@ class Logs extends Table {
 		if ( isset( $item->device['bot'] ) ) {
 			$items[] = '<strong>' . __( 'Bot', 'coreactivity' ) . '</strong>: ' . $item->device['bot']['name'];
 
-            if (!empty($item->device['bot']['category'])) {
-	            $items[] = ucwords( $item->device['bot']['category'] );
-            }
+			if ( ! empty( $item->device['bot']['category'] ) ) {
+				$items[] = ucwords( $item->device['bot']['category'] );
+			}
 		} else if ( ! empty( $item->device ) ) {
 			$os = trim( ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) );
 
