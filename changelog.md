@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### Version: 1.8.1 / January 24 2024
+
+* **edit** various small updated to some of the components
+* **fix** log dialog data not all properly escaped on display 
+* **fix** potential unauthenticated stored XSS vulnerability
+
 ### Version: 1.8 / January 11 2024
 
 * **new** component: `Privacy` with 10 events

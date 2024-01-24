@@ -22,13 +22,13 @@ function _coreactivity_dialog_tab_info( $item ) {
 		'request'     => __( 'Request', 'coreactivity' ),
 	);
 
-	echo '<div id="coreactivity-popup-data-info-' . $item->log_id . '">';
+	echo '<div id="coreactivity-popup-data-info-' . esc_attr( $item->log_id ) . '">';
 	echo '<dl class="d4p-ctrl-list">';
 
 	foreach ( $log as $key => $label ) {
 		if ( ! empty( $item->$key ) ) {
-			echo '<dt>' . $label . '</dt>';
-			echo '<dd>' . $item->$key . '</dd>';
+			echo '<dt>' . esc_html( $label ) . '</dt>';
+			echo '<dd>' . esc_html( $item->$key ) . '</dd>';
 		}
 	}
 
@@ -38,11 +38,11 @@ function _coreactivity_dialog_tab_info( $item ) {
 		$blog = get_blog_details( array( 'blog_id' => $item->blog_id ) );
 
 		echo '<dl class="d4p-ctrl-list">';
-		echo '<dt>' . esc_html__( 'Blog ID', 'coreactivity' ) . '</dt><dd>' . $item->blog_id . '</dd>';
+		echo '<dt>' . esc_html__( 'Blog ID', 'coreactivity' ) . '</dt><dd>' . esc_html( $item->blog_id ) . '</dd>';
 
 		if ( $blog instanceof WP_Site ) {
-			echo '<dt>' . esc_html__( 'Blog Name', 'coreactivity' ) . '</dt><dd>' . $blog->blogname . '</dd>';
-			echo '<dt>' . esc_html__( 'Blog URL', 'coreactivity' ) . '</dt><dd>' . $blog->siteurl . '</dd>';
+			echo '<dt>' . esc_html__( 'Blog Name', 'coreactivity' ) . '</dt><dd>' . esc_html( $blog->blogname ) . '</dd>';
+			echo '<dt>' . esc_html__( 'Blog URL', 'coreactivity' ) . '</dt><dd>' . esc_url( $blog->siteurl ) . '</dd>';
 		}
 
 		echo '</dl>';
@@ -57,7 +57,7 @@ function _coreactivity_dialog_tab_info( $item ) {
 }
 
 function _coreactivity_dialog_tab_meta( $item ) {
-	echo '<div id="coreactivity-popup-data-meta-' . $item->log_id . '">';
+	echo '<div id="coreactivity-popup-data-meta-' . esc_attr( $item->log_id ) . '">';
 	echo '<dl class="d4p-ctrl-list">';
 
 	if ( isset( $item->meta ) ) {
@@ -69,8 +69,8 @@ function _coreactivity_dialog_tab_meta( $item ) {
 					$display = is_array( $value ) && count( $value ) < 9 ? coreactivity_print_array( $value ) : esc_html( wp_json_encode( $value ) );
 				}
 
-				echo '<dt>' . $key . '</dt>';
-				echo '<dd>' . $display . '</dd>';
+				echo '<dt>' . esc_html( $key ) . '</dt>';
+				echo '<dd>' . $display . '</dd>'; // phpcs:ignore WordPress.Security.EscapeOutput
 			}
 		}
 	}
@@ -85,16 +85,16 @@ function _coreactivity_dialog_tab_meta( $item ) {
 }
 
 function _coreactivity_dialog_tab_location( $item ) {
-	echo '<div id="coreactivity-popup-data-location-' . $item->log_id . '">';
+	echo '<div id="coreactivity-popup-data-location-' . esc_attr( $item->log_id ) . '">';
 	if ( ! empty( $item->country_code ) ) {
 		echo '<dl class="d4p-ctrl-list">';
 		if ( $item->country_code !== 'XX' ) {
 			echo '<dt>' . esc_html__( 'Country Code', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . $item->country_code . '</dd>';
+			echo '<dd>' . esc_html( $item->country_code ) . '</dd>';
 			echo '<dt>' . esc_html__( 'Country', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . GEO::instance()->country( $item->country_code ) . '</dd>';
+			echo '<dd>' . esc_html( GEO::instance()->country( $item->country_code ) ) . '</dd>';
 			echo '<dt>' . esc_html__( 'Continent', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . GEO::instance()->continent( $item->country_code ) . '</dd>';
+			echo '<dd>' . esc_html( GEO::instance()->continent( $item->country_code ) ) . '</dd>';
 		} else {
 			echo '<dt>' . esc_html__( 'Unknown', 'coreactivity' ) . '</dt>';
 			echo '<dd>' . esc_html__( 'Localhost IP', 'coreactivity' ) . '</dd>';
@@ -105,8 +105,8 @@ function _coreactivity_dialog_tab_location( $item ) {
 	if ( isset( $item->meta['geo_location'] ) ) {
 		echo '<dl class="d4p-ctrl-list">';
 		foreach ( $item->meta['geo_location'] as $key => $value ) {
-			echo '<dt>' . $key . '</dt>';
-			echo '<dd>' . $value . '</dd>';
+			echo '<dt>' . esc_html( $key ) . '</dt>';
+			echo '<dd>' . esc_html( $value ) . '</dd>';
 		}
 		echo '</dl>';
 	}
@@ -122,7 +122,7 @@ function _coreactivity_dialog_tab_location( $item ) {
 }
 
 function _coreactivity_dialog_tab_device( $item ) {
-	echo '<div id="coreactivity-popup-data-device-' . $item->log_id . '">';
+	echo '<div id="coreactivity-popup-data-device-' . esc_attr( $item->log_id ) . '">';
 
 	if ( isset( $item->device ) ) {
 		echo '<dl class="d4p-ctrl-list">';
@@ -132,32 +132,32 @@ function _coreactivity_dialog_tab_device( $item ) {
 		if ( isset( $item->device['bot'] ) ) {
 			if ( ! empty( $item->device['bot']['category'] ) ) {
 				echo '<dt>' . esc_html__( 'Category', 'coreactivity' ) . '</dt>';
-				echo '<dd>' . $item->device['bot']['category'] . '</dd>';
+				echo '<dd>' . esc_html( $item->device['bot']['category'] ) . '</dd>';
 			}
 			echo '<dt>' . esc_html__( 'Name', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . $item->device['bot']['name'] . '</dd>';
+			echo '<dd>' . esc_html( $item->device['bot']['name'] ) . '</dd>';
 		} else {
 			if ( ! empty( $item->device['os']['name'] ) ) {
 				echo '<dt>' . esc_html__( 'OS', 'coreactivity' ) . '</dt>';
-				echo '<dd>' . ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) . '</dd>';
+				echo '<dd>' . esc_html( ( $item->device['os']['name'] ?? '' ) . ' ' . ( $item->device['os']['version'] ?? '' ) ) . '</dd>';
 			}
 
 			if ( ! empty( $item->device['client']['name'] ) ) {
 				echo '<dt>' . esc_html__( 'Client', 'coreactivity' ) . '</dt>';
-				echo '<dd>' . ( $item->device['client']['name'] ?? '' ) . ' ' . ( $item->device['client']['version'] ?? '' ) . '</dd>';
+				echo '<dd>' . esc_html( ( $item->device['client']['name'] ?? '' ) . ' ' . ( $item->device['client']['version'] ?? '' ) ) . '</dd>';
 			}
 
 			echo '<dt>' . esc_html__( 'Device', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . ucwords( $item->device['device'] ?? esc_html__( 'Unknown', 'coreactivity' ) ) . '</dd>';
+			echo '<dd>' . esc_attr( ucwords( $item->device['device'] ?? __( 'Unknown', 'coreactivity' ) ) ) . '</dd>';
 
 			if ( ! empty( $item->device['brand'] ) ) {
 				echo '<dt>' . esc_html__( 'Brand', 'coreactivity' ) . '</dt>';
-				echo '<dd>' . $item->device['brand'] . '</dd>';
+				echo '<dd>' . esc_html( $item->device['brand'] ) . '</dd>';
 			}
 
 			if ( ! empty( $item->device['model'] ) ) {
 				echo '<dt>' . esc_html__( 'Model', 'coreactivity' ) . '</dt>';
-				echo '<dd>' . $item->device['model'] . '</dd>';
+				echo '<dd>' . esc_html( $item->device['model'] ) . '</dd>';
 			}
 		}
 
@@ -178,8 +178,8 @@ function _coreactivity_dialog_tab_device( $item ) {
 	<?php
 
 	foreach ( $_items as $item ) {
-		foreach ( array_keys( $_tabs ) as $tab ) {
-			$fnc = apply_filters( 'coreactivity_dialog_item_data_callback_' . $tab, '_coreactivity_dialog_tab_' . $tab );
+		foreach ( array_keys( $_tabs ) as $_tab ) {
+			$fnc = apply_filters( 'coreactivity_dialog_item_data_callback_' . $_tab, '_coreactivity_dialog_tab_' . $_tab );
 
 			if ( is_callable( $fnc ) ) {
 				call_user_func( $fnc, $item );

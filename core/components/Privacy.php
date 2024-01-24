@@ -199,7 +199,7 @@ class Privacy extends Component {
 		$user_request = wp_get_user_request( $post_id );
 
 		if ( $user_request instanceof WP_User_Request ) {
-			$action = wp_unslash( sanitize_key( $_REQUEST['action'] ) ?? '' );
+			$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : '';
 
 			if ( 'delete' === $action ) {
 				$this->log( 'remove-personal-data-request-deleted', array(
@@ -219,7 +219,7 @@ class Privacy extends Component {
 		$user_request = wp_get_user_request( $post_id );
 
 		if ( $user_request instanceof WP_User_Request ) {
-			$action = wp_unslash( sanitize_key( $_REQUEST['action'] ) ?? '' );
+			$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : '';
 
 			if ( 'delete' === $action ) {
 				$this->log( 'export-personal-data-request-deleted', array(

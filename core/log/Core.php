@@ -95,7 +95,6 @@ class Core {
 	}
 
 	public function ready() {
-
 	}
 
 	public function scope() : Scope {
