@@ -117,7 +117,6 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Changelog ==
 = 1.8.1 (2024.01.24) =
-
 * Edit: various small updated to some of the components
 * Fix: log dialog data not all properly escaped on display
 * Fix: potential unauthenticated stored XSS vulnerability
