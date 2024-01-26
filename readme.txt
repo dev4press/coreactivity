@@ -117,7 +117,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Changelog ==
 = 1.8.2 (2024.01.26) =
-* Edit: updated process for gettings visitor IP
+* Edit: updated process for getting visitor IP
 * Edit: Dev4Press Library 4.6.1
 
 = 1.8.1 (2024.01.24) =

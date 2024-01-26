@@ -4,7 +4,7 @@
 
 ### Version: 1.8.2 / January 26 2024
 
-* **edit** updated process for gettings visitor IP
+* **edit** updated process for getting visitor IP
 * **edit** Dev4Press Library 4.6.1
 
 ### Version: 1.8.1 / January 24 2024
