@@ -2,9 +2,14 @@
 
 ## Changelog
 
+### Version: 1.8.2 / January 26 2024
+
+* **edit** updated process for gettings visitor IP
+* **edit** Dev4Press Library 4.6.1
+
 ### Version: 1.8.1 / January 24 2024
 
-* **edit** various small updated to some of the components
+* **edit** various small updated to some components
 * **fix** log dialog data not all properly escaped on display 
 * **fix** potential unauthenticated stored XSS vulnerability
 
