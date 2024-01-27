@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 1.8.3 / January 31 2024
+
+* **fix** few issues related to the PHP 8.3
+
 ### Version: 1.8.2 / January 26 2024
 
 * **edit** updated process for getting visitor IP

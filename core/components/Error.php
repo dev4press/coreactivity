@@ -64,7 +64,8 @@ class Error extends Component {
 		if ( is_404() ) {
 			$url = Core::instance()->get( 'request' );
 
-			$query = trim( wp_parse_url( $url, PHP_URL_QUERY ) );
+			$query = wp_parse_url( $url, PHP_URL_QUERY );
+			$query = ! empty( $query ) ? trim( $query ) : '';
 			$path  = wp_parse_url( $url, PHP_URL_PATH );
 			$ext   = trim( strtolower( pathinfo( $path, PATHINFO_EXTENSION ) ) );
 

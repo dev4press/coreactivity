@@ -1121,7 +1121,7 @@ class Logs extends Table {
 			$items[] = trim( ( $item->device['client']['name'] ?? '' ) . ' ' . ( $item->device['client']['version'] ?? '' ) );
 
 			if ( ! empty( $item->device['brand'] ) ) {
-				$items[] = trim( $item->device['brand'] . ' ' . $item->device['model'] );
+				$items[] = trim( $item->device['brand'] . ' ' . ( $item->device['model'] ?? '' ) );
 			}
 		}
 
