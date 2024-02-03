@@ -11,47 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.8.1</span></strong> &minus;
-        Minor improvements and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.8</span></strong> &minus;
-        New components and events. IP WhoIs. Few improvements and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.7</span></strong> &minus;
-        Many tweaks, improvements and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.6</span></strong> &minus;
-        Library Updated. Device Detection for each request.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.5.1 / 1.5.2 / 1.5.3 / 1.5.4</span></strong> &minus;
-        Minor improvements and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.5</span></strong> &minus;
-        Library Updated. Minor updates and improvements.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.4</span></strong> &minus;
-        New components. Many tweaks, improvements and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.3</span></strong> &minus;
-        MaxMind GeoLite2 geolocation support. New DebugPress events. Many tweaks, improvements and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.2</span></strong> &minus;
-        IP2Download geolocation support. Expanded DB table. Many tweaks, improvements and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.1</span></strong> &minus;
-        Logs updates and new settings. WooCommerce component. Many tweaks, changes and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>1.0.1 / 1.0.2 / 1.0.3 / 1.0.4 / 1.0.5</span></strong> &minus;
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.0.1</span></strong> &minus;
         Library Updated. Few minor changes.
     </p>
     <p>

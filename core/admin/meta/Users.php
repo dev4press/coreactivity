@@ -29,20 +29,22 @@ class Users {
 	}
 
 	public function current_screen( $screen ) {
+		debugpress_store_object( $screen );
+
 		if ( $screen->id == 'users' ) {
 			add_filter( 'manage_users_columns', array( $this, 'manage_columns' ) );
-			add_filter( 'manage_users_custom_column', array( $this, 'column_values' ), 10, 3 );
 			add_filter( 'manage_users_sortable_columns', array( $this, 'sortable_columns' ) );
-			add_filter( 'users_list_table_query_args', array( $this, 'users_query_args' ) );
 			add_filter( 'user_row_actions', array( $this, 'user_row_actions' ), 10, 2 );
-			add_filter( 'views_users', array( $this, 'views_users' ) );
+		} else if ( $screen->id == 'users-network' ) {
+			add_filter( 'wpmu_users_columns', array( $this, 'manage_columns' ) );
+			add_filter( 'manage_users-network_sortable_columns', array( $this, 'sortable_columns' ) );
+			add_filter( 'ms_user_row_actions', array( $this, 'user_row_actions' ), 10, 2 );
 		}
-	}
 
-	public function views_users( $views ) {
-		$views['coreactivity_all_online'] = 'All Online';
-
-		return $views;
+		if ( $screen->id == 'users' || $screen->id == 'users-network' ) {
+			add_filter( 'manage_users_custom_column', array( $this, 'column_values' ), 10, 3 );
+			add_filter( 'users_list_table_query_args', array( $this, 'users_query_args' ) );
+		}
 	}
 
 	public function user_row_actions( $actions, $user_object ) {
