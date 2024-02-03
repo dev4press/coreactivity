@@ -54,6 +54,21 @@ class Comment extends Component {
 			'deleted'       => array(
 				'label' => __( 'Comment Deleted', 'coreactivity' ),
 			),
+			'meta-added'    => array(
+				'label'  => __( 'Comment Meta Added', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
+			'meta-updated'  => array(
+				'label'  => __( 'Comment Meta Updated', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
+			'meta-deleted'  => array(
+				'label'  => __( 'Comment Meta Deleted', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
 		);
 	}
 

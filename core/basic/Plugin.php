@@ -2,14 +2,13 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
+use Dev4Press\Plugin\CoreActivity\Log\Metas as LogMetas;
 use Dev4Press\Plugin\CoreActivity\Log\Users as LogUsers;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
-use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 use Dev4Press\v47\Core\Plugins\Core;
 use Dev4Press\v47\Core\Quick\WPR;
 
@@ -50,6 +49,7 @@ class Plugin extends Core {
 
 		LogActivity::instance();
 		LogLocation::instance();
+		LogMetas::instance();
 		LogCore::instance();
 		LogUsers::instance();
 

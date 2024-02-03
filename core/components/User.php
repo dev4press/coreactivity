@@ -174,6 +174,21 @@ class User extends Component {
 				'label' => __( 'Activate User', 'coreactivity' ),
 				'scope' => 'network',
 			),
+			'meta-added'               => array(
+				'label'  => __( 'User Meta Added', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
+			'meta-updated'             => array(
+				'label'  => __( 'User Meta Updated', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
+			'meta-deleted'             => array(
+				'label'  => __( 'User Meta Deleted', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
 		);
 	}
 

@@ -62,6 +62,21 @@ class Term extends Component {
 			'edited'  => array(
 				'label' => __( 'Term Edited', 'coreactivity' ),
 			),
+			'meta-added'               => array(
+				'label'  => __( 'Term Meta Added', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
+			'meta-updated'             => array(
+				'label'  => __( 'Term Meta Updated', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
+			'meta-deleted'             => array(
+				'label'  => __( 'Term Meta Deleted', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
 		);
 	}
 

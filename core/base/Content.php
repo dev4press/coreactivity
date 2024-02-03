@@ -102,6 +102,21 @@ abstract class Content extends Component {
 			'term-relationship-change' => array(
 				'label' => __( 'Post Term Relationship Changes', 'coreactivity' ),
 			),
+			'meta-added'               => array(
+				'label'  => __( 'Post Meta Added', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
+			'meta-updated'             => array(
+				'label'  => __( 'Post Meta Updated', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
+			'meta-deleted'             => array(
+				'label'  => __( 'Post Meta Deleted', 'coreactivity' ),
+				'status' => 'inactive',
+				'version' => '2.0',
+			),
 		);
 	}
 }

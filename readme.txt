@@ -15,20 +15,20 @@ Monitor and log all kinds of activity happening on the WordPress website, with f
 
 CoreActivity is a free plugin for monitoring and logging various activities of the WordPress powered website. The plugin is highly modular, with events registered and controlled by multiple Components.
 
-Currently, plugin has 27 components with a total of 140 events, with direct integration with 12 popular plugins.
+Currently, plugin has 27 components with a total of 158 events, with direct integration with 12 popular plugins.
 
 = WordPress Core Components =
 * Attachments (3 events)
-* Comments (2 events)
+* Comments (5 events)
 * Errors (6 events)
 * Notifications (4 events)
 * Options (7 events)
 * Plugins (5 events)
-* Posts (3 events)
-* Privacy (10 events) / v1.8
-* Terms (3 events)
+* Posts (6 events)
+* Privacy (10 events)
+* Terms (6 events)
 * Themes (2 events)
-* Users (18 events)
+* Users (21 events)
 * WordPress (8 events)
 
 = WordPress Network Only Components =
@@ -39,18 +39,18 @@ Currently, plugin has 27 components with a total of 140 events, with direct inte
 * Internal (4 events)
 
 = Third-party Plugins Components =
-* bbPress (3 events)
+* bbPress (6 events)
 * BuddyPress (4 events)
 * Contact Form 7 (3 events)
 * DebugPress (9 event)
 * Duplicate Post (1 event)
-* Forminator (1 event) / v1.4
-* GD Forum Manager (4 event) / v1.4
+* Forminator (1 event)
+* GD Forum Manager (4 event)
 * Gravity Forms (6 events)
 * Jetpack (2 events)
 * SweepPress (3 event)
 * User Switching (4 events)
-* WooCommerce (3 events) / v1.1
+* WooCommerce (6 events)
 
 = Geo Location of IPs =
 The plugin can locate where the IP making the request is coming from. There are currently three methods available, with more coming in the future:
