@@ -82,6 +82,8 @@ class Activity {
 			'plugin'    => __( 'Plugin', 'coreactivity' ),
 		);
 
+		Upgrader::instance();
+
 		$this->_init_events();
 		$this->_init_components();
 		$this->_init_plugins();

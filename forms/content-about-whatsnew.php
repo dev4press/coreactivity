@@ -30,7 +30,7 @@ add_user_meta( 1, 'test-three', 'testing.' );
 
                 <div class="coreactivity-about-counters">
                     <div><i class="d4p-icon d4p-ui-folder d4p-icon-fw"></i> <strong>27</strong> Components</div>
-                    <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>158</strong> Events</div>
+                    <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>162</strong> Events</div>
                     <div><i class="d4p-icon d4p-ui-plug d4p-icon-fw"></i> <strong>12</strong> Plugins</div>
                 </div>
             </div>

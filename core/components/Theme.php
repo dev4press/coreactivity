@@ -40,10 +40,18 @@ class Theme extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'deleted'  => array(
+			'installed' => array(
+				'label'   => __( 'Theme Installed', 'coreactivity' ),
+				'version' => '2.0',
+			),
+			'updated'   => array(
+				'label'   => __( 'Theme Updated', 'coreactivity' ),
+				'version' => '2.0',
+			),
+			'deleted'   => array(
 				'label' => __( 'Theme Deleted', 'coreactivity' ),
 			),
-			'switched' => array(
+			'switched'  => array(
 				'label' => __( 'Theme Switched', 'coreactivity' ),
 			),
 		);

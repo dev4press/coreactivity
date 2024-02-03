@@ -31,6 +31,7 @@ class Logs extends Table {
 	public $_current_ip = '';
 	public $_server_ip = '';
 
+	protected $_is_live_instance = false;
 	protected $_display_blog_column_linked;
 	protected $_display_columns_simplified;
 	protected $_display_ip_country_flag;
@@ -42,6 +43,7 @@ class Logs extends Table {
 	protected $_display_meta_column = null;
 	protected $_filter_key = 'coreactivity';
 	protected $_logs_instance = 'coreactivity';
+	protected $_url_page_name = '';
 	protected $_limit_lock = array();
 	protected $_filter_lock = array();
 	protected $_filter_remove = array();
@@ -247,6 +249,7 @@ class Logs extends Table {
 			'settings' => array(),
 			'id'       => DB::instance()->get_last_log_id(),
 			'nonce'    => wp_create_nonce( 'coreactivity-live-update' ),
+			'page'     => isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '',
 		);
 
 		foreach ( $this->_allowed_override_settings as $key ) {
@@ -455,6 +458,14 @@ class Logs extends Table {
 		$events = $this->i()->get_select_events( $this->_display_columns_simplified, empty( $component ) ? array() : (array) $component );
 
 		return apply_filters( $this->_filter_key . '_select_events', $events, $this );
+	}
+
+	protected function _url() : string {
+		if ( ! empty( $this->_url_page_name ) ) {
+			return admin_url( 'admin.php?page=' . $this->_url_page_name );
+		}
+
+		return parent::_url();
 	}
 
 	protected function _view( string $view, string $args ) : string {
@@ -856,6 +867,10 @@ class Logs extends Table {
 
 	protected function column_log_id( $item ) : string {
 		$render = $item->log_id;
+
+		if ( $this->_is_live_instance ) {
+			return $render;
+		}
 
 		$actions = array(
 			'popup' => '<a href="#" class="coreactivity-show-view-popup" data-log="' . $item->log_id . '">' . __( 'View', 'coreactivity' ) . '</a>',

@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Live extends Logs {
+	protected $_is_live_instance = true;
+
 	protected function process_request_args() {
 	}
 

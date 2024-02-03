@@ -35,6 +35,14 @@ class Plugin extends Component {
 		if ( $this->is_active( 'deactivated' ) || $this->is_active( 'network-deactivated' ) ) {
 			add_action( 'deactivated_plugin', array( $this, 'event_deactivated' ), 1000, 2 );
 		}
+
+		if ( $this->is_active( 'installed' ) ) {
+			add_action( 'coreactivity_upgrader_plugin_install', array( $this, 'event_installed' ), 10, 4 );
+		}
+
+		if ( $this->is_active( 'updated' ) ) {
+			add_action( 'coreactivity_upgrader_plugin_update', array( $this, 'event_updated' ), 10, 4 );
+		}
 	}
 
 	public function label() : string {
@@ -43,6 +51,14 @@ class Plugin extends Component {
 
 	protected function get_events() : array {
 		return array(
+			'installed'           => array(
+				'label'   => __( 'Plugin Installed', 'coreactivity' ),
+				'version' => '2.0',
+			),
+			'updated'             => array(
+				'label'   => __( 'Plugin Updated', 'coreactivity' ),
+				'version' => '2.0',
+			),
 			'deleted'             => array(
 				'label' => __( 'Plugin Deleted', 'coreactivity' ),
 			),
@@ -87,7 +103,9 @@ class Plugin extends Component {
 
 		if ( $deleted ) {
 			if ( isset( $this->storage[ $plugin_file ] ) ) {
-				$this->log( 'deleted', array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
+				$this->log( 'deleted', array(
+					'object_name' => $plugin_file,
+				), $this->_plugin_meta( $plugin_file ) );
 			}
 		}
 	}
@@ -102,7 +120,9 @@ class Plugin extends Component {
 		$event = $network_wide ? 'network-activated' : 'activated';
 
 		if ( $this->is_active( $event ) ) {
-			$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
+			$this->log( $event, array(
+				'object_name' => $plugin_file,
+			), $this->_plugin_meta( $plugin_file ) );
 		}
 	}
 
@@ -118,6 +138,23 @@ class Plugin extends Component {
 		if ( $this->is_active( $event ) ) {
 			$this->log( $event, array( 'object_name' => $plugin_file ), $this->_plugin_meta( $plugin_file ) );
 		}
+	}
+
+	public function event_installed( $plugin_code, $plugin, $package ) {
+
+	}
+
+	public function event_updated( $plugin_code, $plugin, $previous, $package ) {
+		$this->storage[ $plugin_code ] = $plugin;
+
+		$meta = $this->_plugin_meta( $plugin_code );
+
+		$meta['plugin_previous'] = $previous;
+		$meta['plugin_package']  = $package;
+
+		$this->log( 'updated', array(
+			'object_name' => $plugin_code,
+		), $meta );
 	}
 
 	private function _get_plugin( $plugin_file ) : array {
