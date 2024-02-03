@@ -2,8 +2,13 @@
 
 ## Changelog
 
-### Version: 1.8.3 / January 31 2024
+### Version: 1.9 / February 12 2024
 
+* **new** dedicated Users login, logout and online tracking
+* **new** expand Users panels with status and activity columns
+* **new** expand Users panel with link to activity logs for each user
+* **edit** reorganized scheduled jobs code into own class `Jobs`
+* **edit** Dev4Press Library 4.7
 * **fix** few issues related to the PHP 8.3
 
 ### Version: 1.8.2 / January 26 2024

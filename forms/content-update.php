@@ -1,7 +1,7 @@
 <?php
 
-use Dev4Press\v46\Core\Quick\WPR;
-use function Dev4Press\v46\Functions\panel;
+use Dev4Press\v47\Core\Quick\WPR;
+use function Dev4Press\v47\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -17,13 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			include COREACTIVITY_PATH . 'forms/setup-statistics.php';
 
 			coreactivity()->schedule_geo_db_update();
+			coreactivity()->clean_cron_jobs();
 
 			coreactivity_settings()->set( 'install', false, 'info' );
 			coreactivity_settings()->set( 'update', false, 'info', true );
-
-			if ( wp_next_scheduled( 'coreactivity_weekly_digest' ) ) {
-				WPR::remove_cron( 'coreactivity_weekly_digest' );
-			}
 
 			?>
 

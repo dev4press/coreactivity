@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v46\Core\Plugins\DB as BaseDB;
+use Dev4Press\v47\Core\Plugins\DB as BaseDB;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -320,5 +320,12 @@ class DB extends BaseDB {
 		}
 
 		return $statistics;
+	}
+
+	public function get_users_without_activity_keys() : array {
+		$sql = "SELECT `ID` FROM " . $this->users . " WHERE `ID` NOT IN (SELECT `user_id` FROM " . $this->usermeta . " WHERE `meta_key` = 'coreactivity_last_activity') LIMIT 500";
+		$raw = $this->get_results( $sql );
+
+		return $this->pluck( $raw, 'ID' );
 	}
 }

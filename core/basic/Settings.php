@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v46\Core\Plugins\Settings as BaseSettings;
+use Dev4Press\v47\Core\Plugins\Settings as BaseSettings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -30,11 +30,13 @@ class Settings extends BaseSettings {
 			'geoip2_error'          => '',
 		),
 		'storage'       => array(
+			'users_logged_in' => array(),
 			'statistics'        => '',
 			'statistics_latest' => '',
 		),
 		'settings'      => array(
 			'show_setup_wizard'                       => true,
+			'users_online_window' => 300,
 			'admin_bar_integration'                   => true,
 			'main_events_log_switch'                  => true,
 			'notice_if_logging_is_disabled'           => false,

@@ -3,9 +3,9 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v46\Core\DateTime;
-use Dev4Press\v46\Core\Quick\Str;
-use Dev4Press\v46\Core\Quick\WPR;
+use Dev4Press\v47\Core\DateTime;
+use Dev4Press\v47\Core\Quick\Str;
+use Dev4Press\v47\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -49,7 +49,7 @@ class Notifications {
 	}
 
 	public function schedule_digests() {
-		if ( is_multisite() && ! is_main_site() ) {
+		if ( ! is_main_site() ) {
 			return;
 		}
 

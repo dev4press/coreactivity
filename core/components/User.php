@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
-use Dev4Press\v46\Core\Quick\Request;
+use Dev4Press\v47\Core\Quick\Request;
 use WP_Error;
 use WP_User;
 

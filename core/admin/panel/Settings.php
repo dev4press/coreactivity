@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin\Panel;
 
-use Dev4Press\v46\Core\UI\Admin\PanelSettings;
+use Dev4Press\v47\Core\UI\Admin\PanelSettings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -34,6 +34,11 @@ class Settings extends PanelSettings {
 					'title' => __( 'Logs Panel', 'coreactivity' ),
 					'icon'  => 'ui-calendar-pen',
 					'info'  => __( 'Settings related to some aspects for the Logs panel display.', 'coreactivity' ),
+				),
+				'tracking'    => array(
+					'title' => __( 'Tracking', 'coreactivity' ),
+					'icon'  => 'ui-users',
+					'info'  => __( 'Additional settings for some of the plugin tracking features.', 'coreactivity' ),
 				),
 				'notifications' => array(
 					'title' => __( 'Notifications', 'coreactivity' ),

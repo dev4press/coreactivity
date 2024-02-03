@@ -3,8 +3,8 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v46\Core\Options\Settings as BaseSettings;
-use Dev4Press\v46\Core\Options\Type;
+use Dev4Press\v47\Core\Options\Settings as BaseSettings;
+use Dev4Press\v47\Core\Options\Type;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -383,6 +383,28 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'logs_live_updates', __( 'Live Updates', 'coreactivity' ), __( 'Live AJAX requests every 15 seconds to get the latest logged events. The live functionality with take into account the Log panel current filters and view settings.', 'coreactivity' ), Type::BOOLEAN ),
+							),
+						),
+					),
+				),
+			),
+			'tracking'      => array(
+				'tracking-users' => array(
+					'name'     => __( 'Users Online Status', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'users_online_window', __( 'Online Window', 'coreactivity' ), __( 'Knowing if the user is online or not is not easy to achieve without session tracking, which is not advisable in WordPress powered websites. The closest online status is the last activity with some added time for approximation.', 'coreactivity' ), Type::ABSINT )->more( array(
+									__( 'Do not set this value too high, 5 to 10 minutes (in seconds) is more than enough.', 'coreactivity' ),
+								) )->args( array(
+									'label_unit' => __( 'seconds' ),
+									'min'        => 30,
+									'step'       => 1,
+									'max'        => 3600,
+								) ),
 							),
 						),
 					),

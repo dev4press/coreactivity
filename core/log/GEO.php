@@ -5,11 +5,11 @@ namespace Dev4Press\Plugin\CoreActivity\Log;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Location\GeoIP2;
 use Dev4Press\Plugin\CoreActivity\Location\IP2Location;
-use Dev4Press\v46\Core\Helpers\Data;
-use Dev4Press\v46\Core\Quick\File;
-use Dev4Press\v46\Core\Quick\Misc;
-use Dev4Press\v46\Service\GEOIP\GEOJSIO;
-use Dev4Press\v46\Service\GEOIP\Location;
+use Dev4Press\v47\Core\Helpers\Data;
+use Dev4Press\v47\Core\Quick\File;
+use Dev4Press\v47\Core\Quick\Misc;
+use Dev4Press\v47\Service\GEOIP\GEOJSIO;
+use Dev4Press\v47\Service\GEOIP\Location;
 use GeoIp2\Database\Reader;
 use IP2Location\Database;
 use WP_Filesystem_Direct;
@@ -1045,6 +1045,10 @@ class GEO {
 		}
 
 		return $instance;
+	}
+
+	public function is_using_library() : bool {
+		return $this->method != 'online';
 	}
 
 	public function bulk( array $ips ) {

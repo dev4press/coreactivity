@@ -2,10 +2,11 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
+use Dev4Press\Plugin\CoreActivity\Admin\Meta\Users;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin as CorePlugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings as CoreSettings;
 use Dev4Press\Plugin\CoreActivity\Basic\Wizard;
-use Dev4Press\v46\Core\Admin\Network\Plugin as BasePlugin;
+use Dev4Press\v47\Core\Admin\Network\Plugin as BasePlugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -35,6 +36,8 @@ class Plugin extends BasePlugin {
 	public function constructor() {
 		$this->url  = COREACTIVITY_URL;
 		$this->path = COREACTIVITY_PATH;
+
+        Users::instance();
 	}
 
 	public function register_scripts_and_styles() {
@@ -56,6 +59,15 @@ class Plugin extends BasePlugin {
 				'ver'  => coreactivity_settings()->file_version(),
 				'src'  => 'plugin',
 				'int'  => array( 'ctrl' ),
+			) )->register( 'css', 'coreactivity-global',
+			array(
+				'path' => 'css/',
+				'file' => 'global',
+				'ext'  => 'css',
+				'min'  => true,
+				'ver'  => coreactivity_settings()->file_version(),
+				'src'  => 'plugin',
+				'int'  => array(),
 			) );
 	}
 
@@ -224,5 +236,9 @@ class Plugin extends BasePlugin {
 
 	protected function extra_enqueue_scripts_plugin() {
 		$this->enqueue();
+	}
+
+	protected function extra_enqueue_scripts_final( $hook ) {
+		$this->e()->css( 'coreactivity-global' );
 	}
 }

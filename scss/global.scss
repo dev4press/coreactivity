@@ -1,0 +1,30 @@
+@import 'includes/_variables';
+
+.coreactivity-user-status {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 2px;
+
+    .dashicons {
+        font-size: 18px;
+        height: 16px;
+        vertical-align: middle;
+    }
+
+    &.__is-online {
+        color: green;
+    }
+}
+
+.wp-list-table.users {
+    thead {
+        .column-coreactivity_online {
+            width: 80px;
+        }
+
+        .column-coreactivity_activity,
+        .column-coreactivity_login {
+            width: 120px;
+        }
+    }
+}

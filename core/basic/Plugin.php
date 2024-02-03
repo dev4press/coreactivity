@@ -7,10 +7,11 @@ use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
+use Dev4Press\Plugin\CoreActivity\Log\Users as LogUsers;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use Dev4Press\v46\Core\Plugins\Core;
-use Dev4Press\v46\Core\Quick\WPR;
+use Dev4Press\v47\Core\Plugins\Core;
+use Dev4Press\v47\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -50,6 +51,7 @@ class Plugin extends Core {
 		LogActivity::instance();
 		LogLocation::instance();
 		LogCore::instance();
+		LogUsers::instance();
 
 		do_action( 'coreactivity_plugin_core_ready' );
 
@@ -66,65 +68,7 @@ class Plugin extends Core {
 	public function after_setup_theme() {
 		do_action( 'coreactivity_prepare' );
 
-		add_action( 'coreactivity_log_purge', array( $this, 'log_purge' ) );
-		add_action( 'coreactivity_instant_notification', array( $this, 'instant_notification' ) );
-		add_action( 'coreactivity_daily_digest', array( $this, 'daily_digest' ) );
-		add_action( 'coreactivity_daily_statistics', array( $this, 'daily_statistics' ) );
-		add_action( 'coreactivity_weekly_digest', array( $this, 'weekly_digest' ) );
-		add_action( 'coreactivity_weekly_maintenance', array( $this, 'weekly_maintenance' ) );
-		add_action( 'coreactivity_task_geo_db', array( $this, 'weekly_task_geo_dab_update' ) );
-
-		if ( is_multisite() ) {
-			if ( is_main_site() ) {
-				$this->jobs_scheduler_init();
-			} else {
-				if ( is_admin() ) {
-					$jobs = array(
-						'coreactivity_log_purge',
-						'coreactivity_daily_statistics',
-						'coreactivity_weekly_maintenance',
-						'coreactivity_daily_digest',
-						'coreactivity_weekly_digest',
-					);
-
-					foreach ( $jobs as $job ) {
-						if ( wp_next_scheduled( $job ) ) {
-							WPR::remove_cron( $job );
-						}
-					}
-				}
-			}
-		} else {
-			$this->jobs_scheduler_init();
-		}
-	}
-
-	public function jobs_scheduler_init() {
-		if ( ! wp_next_scheduled( 'coreactivity_log_purge' ) ) {
-			if ( $this->s()->get( 'auto_cleanup_active' ) ) {
-				$cron_time = mktime( 3, 5, 0, gmdate( 'm' ), gmdate( 'd' ), gmdate( 'Y' ) );
-
-				wp_schedule_event( $cron_time, 'daily', 'coreactivity_log_purge' );
-			}
-		} else {
-			if ( ! $this->s()->get( 'auto_cleanup_active' ) ) {
-				WPR::remove_cron( 'coreactivity_log_purge' );
-			}
-		}
-
-		if ( ! wp_next_scheduled( 'coreactivity_daily_statistics' ) ) {
-			$cron_time = strtotime( 'tomorrow' ) + 5 * HOUR_IN_SECONDS;
-
-			wp_schedule_event( $cron_time, 'daily', 'coreactivity_daily_statistics' );
-		}
-
-		if ( ! wp_next_scheduled( 'coreactivity_weekly_maintenance' ) ) {
-			$cron_time = mktime( 4, 5, 0, gmdate( 'm' ), gmdate( 'd' ), gmdate( 'Y' ) );
-
-			wp_schedule_event( $cron_time, 'weekly', 'coreactivity_weekly_maintenance' );
-		}
-
-		Notifications::instance()->schedule_digests();
+		Jobs::instance();
 	}
 
 	public function debugpress() {
@@ -144,10 +88,6 @@ class Plugin extends Core {
 		do_action( 'coreactivity_init' );
 	}
 
-	public function log_purge() {
-		Cleanup::instance()->auto_cleanup_log();
-	}
-
 	public function is_logging_active() : bool {
 		return coreactivity_settings()->get( 'main_events_log_switch' );
 	}
@@ -155,36 +95,6 @@ class Plugin extends Core {
 	public function schedule_geo_db_update() {
 		if ( ! wp_next_scheduled( 'coreactivity_task_geo_db' ) ) {
 			wp_schedule_single_event( time() + 5, 'coreactivity_task_geo_db' );
-		}
-	}
-
-	public function instant_notification() {
-		Notifications::instance()->scheduled_instant();
-	}
-
-	public function daily_digest() {
-		Notifications::instance()->scheduled_daily();
-	}
-
-	public function daily_statistics() {
-		Statistics::instance()->daily_update();
-	}
-
-	public function weekly_digest() {
-		Notifications::instance()->scheduled_weekly();
-	}
-
-	public function weekly_maintenance() {
-		$this->weekly_task_geo_dab_update();
-	}
-
-	public function weekly_task_geo_dab_update() {
-		if ( $this->s()->get( 'geolocation_method' ) == 'ip2location' ) {
-			LogLocation::instance()->ip2location_db_update();
-		}
-
-		if ( $this->s()->get( 'geolocation_method' ) == 'geoip2' ) {
-			LogLocation::instance()->geoip2_db_update();
 		}
 	}
 
@@ -204,5 +114,26 @@ class Plugin extends Core {
 		}
 
 		return false;
+	}
+
+	public function clean_cron_jobs() {
+		if ( ! is_main_site() ) {
+			$jobs = array(
+				'coreactivity_task_log_purge',
+				'coreactivity_task_geo_db',
+				'coreactivity_task_users_meta',
+				'coreactivity_daily_statistics',
+				'coreactivity_daily_maintenance',
+				'coreactivity_weekly_maintenance',
+				'coreactivity_daily_digest',
+				'coreactivity_weekly_digest',
+			);
+
+			foreach ( $jobs as $job ) {
+				if ( wp_next_scheduled( $job ) ) {
+					WPR::remove_cron( $job );
+				}
+			}
+		}
 	}
 }

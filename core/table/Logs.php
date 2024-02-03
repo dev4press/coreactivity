@@ -8,11 +8,11 @@ use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use Dev4Press\v46\Core\Helpers\IP;
-use Dev4Press\v46\Core\Plugins\DBLite;
-use Dev4Press\v46\Core\Quick\Sanitize;
-use Dev4Press\v46\Core\UI\Elements;
-use Dev4Press\v46\WordPress\Admin\Table;
+use Dev4Press\v47\Core\Helpers\IP;
+use Dev4Press\v47\Core\Plugins\DBLite;
+use Dev4Press\v47\Core\Quick\Sanitize;
+use Dev4Press\v47\Core\UI\Elements;
+use Dev4Press\v47\WordPress\Admin\Table;
 use WP_Site;
 
 if ( ! defined( 'ABSPATH' ) ) {

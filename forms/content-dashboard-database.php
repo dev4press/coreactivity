@@ -2,7 +2,7 @@
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use Dev4Press\v46\Core\Quick\File;
+use Dev4Press\v47\Core\Quick\File;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
