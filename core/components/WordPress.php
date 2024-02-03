@@ -72,18 +72,18 @@ class WordPress extends Component {
 				'scope' => 'network',
 			),
 			'available-update-core'   => array(
-				'label' => __( 'Available WordPress Update', 'coreactivity' ),
-				'scope' => 'network',
+				'label'   => __( 'Available WordPress Update', 'coreactivity' ),
+				'scope'   => 'network',
 				'version' => '1.8',
 			),
 			'available-update-plugin' => array(
-				'label' => __( 'Available Plugin Updates', 'coreactivity' ),
-				'scope' => 'network',
+				'label'   => __( 'Available Plugin Updates', 'coreactivity' ),
+				'scope'   => 'network',
 				'version' => '1.8',
 			),
 			'available-update-theme'  => array(
-				'label' => __( 'Available Theme Updates', 'coreactivity' ),
-				'scope' => 'network',
+				'label'   => __( 'Available Theme Updates', 'coreactivity' ),
+				'scope'   => 'network',
 				'version' => '1.8',
 			),
 			'cron-schedule'           => array(

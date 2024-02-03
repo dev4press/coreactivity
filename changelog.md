@@ -5,8 +5,11 @@
 ### Version: 2.0 / February 12 2024
 
 * **new** dedicated Users login, logout and online tracking
+* **new** metadata events: for posts, woocommerce and bbpress
+* **new** metadata events: for terms, comments and users
 * **new** expand Users panels with status and activity columns
 * **new** expand Users panel with link to activity logs for each user
+* **new** settings for meta exceptions with some default values
 * **edit** reorganized scheduled jobs code into own class `Jobs`
 * **edit** Dev4Press Library 4.7
 * **fix** few issues related to the PHP 8.3

@@ -14,6 +14,7 @@ class Term extends Component {
 	protected $name = 'term';
 	protected $object_type = 'term';
 	protected $icon = 'ui-tags';
+	protected $exceptions = array();
 	protected $do_not_log = array();
 	protected $storage = array();
 
@@ -30,6 +31,18 @@ class Term extends Component {
 			add_action( 'edit_terms', array( $this, 'prepare_edit' ) );
 			add_action( 'edited_term', array( $this, 'event_edited' ) );
 		}
+
+		if ( $this->is_active( 'meta-added' ) ) {
+			add_action( 'coreactivity_metas_added_term', array( $this, 'event_meta_added' ), 10, 3 );
+		}
+
+		if ( $this->is_active( 'meta-updated' ) ) {
+			add_action( 'coreactivity_metas_updated_term', array( $this, 'event_meta_updated' ), 10, 4 );
+		}
+
+		if ( $this->is_active( 'meta-deleted' ) ) {
+			add_action( 'coreactivity_metas_deleted_term', array( $this, 'event_meta_deleted' ), 10, 3 );
+		}
 	}
 
 	public function init() {
@@ -41,6 +54,8 @@ class Term extends Component {
 		 * @return array array with names of taxonomies not to log.
 		 */
 		$this->do_not_log = apply_filters( 'coreactivity_term_do_not_log_taxonomies', array() );
+
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_term-meta_list' );
 	}
 
 	public function is_taxonomy_allowed( string $taxonomy ) : bool {
@@ -53,28 +68,28 @@ class Term extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'created' => array(
+			'created'      => array(
 				'label' => __( 'Term Created', 'coreactivity' ),
 			),
-			'deleted' => array(
+			'deleted'      => array(
 				'label' => __( 'Term Deleted', 'coreactivity' ),
 			),
-			'edited'  => array(
+			'edited'       => array(
 				'label' => __( 'Term Edited', 'coreactivity' ),
 			),
-			'meta-added'               => array(
-				'label'  => __( 'Term Meta Added', 'coreactivity' ),
-				'status' => 'inactive',
+			'meta-added'   => array(
+				'label'   => __( 'Term Meta Added', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
-			'meta-updated'             => array(
-				'label'  => __( 'Term Meta Updated', 'coreactivity' ),
-				'status' => 'inactive',
+			'meta-updated' => array(
+				'label'   => __( 'Term Meta Updated', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
-			'meta-deleted'             => array(
-				'label'  => __( 'Term Meta Deleted', 'coreactivity' ),
-				'status' => 'inactive',
+			'meta-deleted' => array(
+				'label'   => __( 'Term Meta Deleted', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
 		);
@@ -142,5 +157,59 @@ class Term extends Component {
 				}
 			}
 		}
+	}
+
+	public function event_meta_added( $object_id, $meta_key, $meta_value ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-added', array(
+			'object_type' => 'term-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'    => $object_id,
+			'meta_key'   => $meta_key,
+			'meta_value' => $meta_value,
+		) );
+	}
+
+	public function event_meta_updated( $object_id, $meta_key, $meta_value, $old ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-updated', array(
+			'object_type' => 'term-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'        => $object_id,
+			'meta_key'       => $meta_key,
+			'meta_value'     => $meta_value,
+			'meta_value_old' => $old,
+		) );
+	}
+
+	public function event_meta_deleted( $object_id, $meta_key, $meta_value ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-deleted', array(
+			'object_type' => 'term-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'    => $object_id,
+			'meta_key'   => $meta_key,
+			'meta_value' => $meta_value,
+		) );
+	}
+
+	private function is_exception( $option ) : bool {
+		if ( ! empty( $this->exceptions ) && in_array( $option, $this->exceptions ) ) {
+			return true;
+		}
+
+		return false;
 	}
 }

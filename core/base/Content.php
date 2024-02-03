@@ -12,9 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 abstract class Content extends Component {
 	protected $object_type = 'post';
 
+	protected $exceptions = array();
 	protected $do_not_log = array();
 	protected $do_log = array();
 	protected $skip_statuses = array( 'auto-draft' );
+
+	public function init() {
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_post-meta_list' );
+	}
 
 	public function tracking() {
 		if ( $this->is_active( 'status-change' ) ) {
@@ -27,6 +32,18 @@ abstract class Content extends Component {
 
 		if ( $this->is_active( 'term-relationship-change' ) ) {
 			add_action( 'set_object_terms', array( $this, 'event_object_terms' ), 10, 6 );
+		}
+
+		if ( $this->is_active( 'meta-added' ) ) {
+			add_action( 'coreactivity_metas_added_post', array( $this, 'event_meta_added' ), 10, 3 );
+		}
+
+		if ( $this->is_active( 'meta-updated' ) ) {
+			add_action( 'coreactivity_metas_updated_post', array( $this, 'event_meta_updated' ), 10, 4 );
+		}
+
+		if ( $this->is_active( 'meta-deleted' ) ) {
+			add_action( 'coreactivity_metas_deleted_post', array( $this, 'event_meta_deleted' ), 10, 3 );
 		}
 	}
 
@@ -91,6 +108,64 @@ abstract class Content extends Component {
 		}
 	}
 
+	public function event_meta_added( $object_id, $meta_key, $meta_value ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$post = get_post( $object_id );
+
+		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
+			$this->log( 'meta-added', array(
+				'object_type' => 'post-meta',
+				'object_name' => $meta_key,
+			), array(
+				'post_id'    => $object_id,
+				'meta_key'   => $meta_key,
+				'meta_value' => $meta_value,
+			) );
+		}
+	}
+
+	public function event_meta_updated( $object_id, $meta_key, $meta_value, $old ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$post = get_post( $object_id );
+
+		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
+			$this->log( 'meta-updated', array(
+				'object_type' => 'post-meta',
+				'object_name' => $meta_key,
+			), array(
+				'post_id'        => $object_id,
+				'meta_key'       => $meta_key,
+				'meta_value'     => $meta_value,
+				'meta_value_old' => $old,
+			) );
+		}
+	}
+
+	public function event_meta_deleted( $object_id, $meta_key, $meta_value ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$post = get_post( $object_id );
+
+		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
+			$this->log( 'meta-deleted', array(
+				'object_type' => 'post-meta',
+				'object_name' => $meta_key,
+			), array(
+				'post_id'    => $object_id,
+				'meta_key'   => $meta_key,
+				'meta_value' => $meta_value,
+			) );
+		}
+	}
+
 	protected function get_events() : array {
 		return array(
 			'status-change'            => array(
@@ -103,20 +178,28 @@ abstract class Content extends Component {
 				'label' => __( 'Post Term Relationship Changes', 'coreactivity' ),
 			),
 			'meta-added'               => array(
-				'label'  => __( 'Post Meta Added', 'coreactivity' ),
-				'status' => 'inactive',
+				'label'   => __( 'Post Meta Added', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
 			'meta-updated'             => array(
-				'label'  => __( 'Post Meta Updated', 'coreactivity' ),
-				'status' => 'inactive',
+				'label'   => __( 'Post Meta Updated', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
 			'meta-deleted'             => array(
-				'label'  => __( 'Post Meta Deleted', 'coreactivity' ),
-				'status' => 'inactive',
+				'label'   => __( 'Post Meta Deleted', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
 		);
+	}
+
+	private function is_exception( $option ) : bool {
+		if ( ! empty( $this->exceptions ) && in_array( $option, $this->exceptions ) ) {
+			return true;
+		}
+
+		return false;
 	}
 }

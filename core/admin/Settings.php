@@ -135,6 +135,22 @@ class Settings extends BaseSettings {
 				),
 			),
 			'exceptions'    => array(
+				'exceptions-metadata'     => array(
+					'name'     => __( 'Meta Data', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'exceptions_post-meta_list', __( 'Post Meta', 'coreactivity' ), __( 'Add one or more options (exact meta key name) to skip from logging.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+								$this->i( 'settings', 'exceptions_user-meta_list', __( 'User Meta', 'coreactivity' ), __( 'Add one or more options (exact meta key name) to skip from logging.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+								$this->i( 'settings', 'exceptions_term-meta_list', __( 'Term Meta', 'coreactivity' ), __( 'Add one or more options (exact meta key name) to skip from logging.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+								$this->i( 'settings', 'exceptions_comment-meta_list', __( 'Comment Meta', 'coreactivity' ), __( 'Add one or more options (exact meta key name) to skip from logging.', 'coreactivity' ), Type::EXPANDABLE_TEXT ),
+							),
+						),
+					),
+				),
 				'exceptions-option'       => array(
 					'name'     => __( 'Component: Options', 'coreactivity' ),
 					'sections' => array(

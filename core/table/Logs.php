@@ -1029,7 +1029,7 @@ class Logs extends Table {
 			$actions['view'] = '<a href="' . $this->_view( 'object', $_args ) . '">' . __( 'Object Logs', 'coreactivity' ) . '</a>';
 		}
 
-		if ( in_array( $item->object_type, array( 'plugin', 'theme', 'option', 'cron', 'sitemeta', 'notification' ) ) ) {
+		if ( in_array( $item->object_type, array( 'plugin', 'theme', 'option', 'cron', 'sitemeta', 'notification', 'post-meta', 'user-meta', 'term-meta', 'comment-meta' ) ) ) {
 			if ( ! coreactivity_settings()->is_in_exception_list( $item->object_type, $item->object_name ) ) {
 				$actions['exclude'] = '<a href="' . $this->_self( 'single-action=do-not-log&object-type=' . urlencode( $item->object_type ) . '&object-name=' . urlencode( $item->object_name ), true, wp_create_nonce( 'coreactivity-do-not-log-' . $item->object_name ) ) . '">' . __( 'Do Not Log', 'coreactivity' ) . '</a>';
 			} else {

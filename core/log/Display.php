@@ -55,6 +55,9 @@ class Display {
 		}
 
 		switch ( $item->object_type ) {
+			case 'post-meta':
+				$render = $this->_display_post_meta( $item );
+				break;
 			case 'post':
 				$render = $this->_display_post( $item );
 				break;
@@ -111,6 +114,9 @@ class Display {
 		}
 
 		switch ( $item->object_type ) {
+			case 'post-meta':
+				$render = $this->_brief_post_meta( $item );
+				break;
 			case 'post':
 				$render = $this->_brief_post( $item );
 				break;
@@ -278,6 +284,22 @@ class Display {
 		if ( ! empty( $meta ) ) {
 			$render .= '<br/>' . join( ' &middot; ', $meta );
 		}
+
+		return $render;
+	}
+
+	private function _display_post_meta( stdClass $item ) : string {
+		$this->switch_to_blog( $item->blog_id );
+
+		$post = get_post( $item->meta['post_id'] );
+
+		$render = '<span>'.__('KEY').': <strong>'.$item->object_name.'</strong>';
+
+		if ( $post instanceof WP_Post ) {
+			$render .='<br/>'. sprintf( __( 'Post: %1$s &middot; %2$s<br/>Post Type: %3$s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
+		}
+
+		$this->restore_current_blog();
 
 		return $render;
 	}
@@ -521,6 +543,22 @@ class Display {
 			$render .= sprintf( __( 'ID: %1$s &middot; Post: %2$s%3$sPost Type: %4$s', 'coreactivity' ), $post->ID, $post->post_title, ' · ', $post->post_type );
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': ' . $item->object_id;
+		}
+
+		$this->restore_current_blog();
+
+		return $render;
+	}
+
+	private function _brief_post_meta(stdClass $item) : string {
+		$this->switch_to_blog( $item->blog_id );
+
+		$post = get_post( $item->meta['post_id'] );
+
+		$render = __('KEY').': '.$item->object_name;
+
+		if ( $post instanceof WP_Post ) {
+			$render .= sprintf( __( ' &middot; Post: %1$s &middot; %2$s%3$sPost Type: %4$s', 'coreactivity' ), $post->ID, $post->post_title, ' · ', $post->post_type );
 		}
 
 		$this->restore_current_blog();

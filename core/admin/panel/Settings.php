@@ -35,7 +35,7 @@ class Settings extends PanelSettings {
 					'icon'  => 'ui-calendar-pen',
 					'info'  => __( 'Settings related to some aspects for the Logs panel display.', 'coreactivity' ),
 				),
-				'tracking'    => array(
+				'tracking'      => array(
 					'title' => __( 'Tracking', 'coreactivity' ),
 					'icon'  => 'ui-users',
 					'info'  => __( 'Additional settings for some of the plugin tracking features.', 'coreactivity' ),

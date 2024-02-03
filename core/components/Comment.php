@@ -15,6 +15,7 @@ class Comment extends Component {
 	protected $name = 'comment';
 	protected $object_type = 'comment';
 	protected $icon = 'ui-comment-dots';
+	protected $exceptions = array();
 	protected $do_not_log = array();
 
 	public function tracking() {
@@ -24,6 +25,18 @@ class Comment extends Component {
 
 		if ( $this->is_active( 'deleted' ) ) {
 			add_action( 'delete_comment', array( $this, 'event_delete_comment' ), 10, 2 );
+		}
+
+		if ( $this->is_active( 'meta-added' ) ) {
+			add_action( 'coreactivity_metas_added_comment', array( $this, 'event_meta_added' ), 10, 3 );
+		}
+
+		if ( $this->is_active( 'meta-updated' ) ) {
+			add_action( 'coreactivity_metas_updated_comment', array( $this, 'event_meta_updated' ), 10, 4 );
+		}
+
+		if ( $this->is_active( 'meta-deleted' ) ) {
+			add_action( 'coreactivity_metas_deleted_comment', array( $this, 'event_meta_deleted' ), 10, 3 );
 		}
 	}
 
@@ -36,6 +49,8 @@ class Comment extends Component {
 		 * @return array array with names of post types not to log.
 		 */
 		$this->do_not_log = apply_filters( 'coreactivity_comment_do_not_log_post_types', array() );
+
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_comment-meta_list' );
 	}
 
 	public function is_post_type_allowed( string $post_type ) : bool {
@@ -55,18 +70,18 @@ class Comment extends Component {
 				'label' => __( 'Comment Deleted', 'coreactivity' ),
 			),
 			'meta-added'    => array(
-				'label'  => __( 'Comment Meta Added', 'coreactivity' ),
-				'status' => 'inactive',
+				'label'   => __( 'Comment Meta Added', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
 			'meta-updated'  => array(
-				'label'  => __( 'Comment Meta Updated', 'coreactivity' ),
-				'status' => 'inactive',
+				'label'   => __( 'Comment Meta Updated', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
 			'meta-deleted'  => array(
-				'label'  => __( 'Comment Meta Deleted', 'coreactivity' ),
-				'status' => 'inactive',
+				'label'   => __( 'Comment Meta Deleted', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
 		);
@@ -122,5 +137,59 @@ class Comment extends Component {
 				) );
 			}
 		}
+	}
+
+	public function event_meta_added( $object_id, $meta_key, $meta_value ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-added', array(
+			'object_type' => 'comment-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'    => $object_id,
+			'meta_key'   => $meta_key,
+			'meta_value' => $meta_value,
+		) );
+	}
+
+	public function event_meta_updated( $object_id, $meta_key, $meta_value, $old ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-updated', array(
+			'object_type' => 'comment-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'        => $object_id,
+			'meta_key'       => $meta_key,
+			'meta_value'     => $meta_value,
+			'meta_value_old' => $old,
+		) );
+	}
+
+	public function event_meta_deleted( $object_id, $meta_key, $meta_value ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-deleted', array(
+			'object_type' => 'comment-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'    => $object_id,
+			'meta_key'   => $meta_key,
+			'meta_value' => $meta_value,
+		) );
+	}
+
+	private function is_exception( $option ) : bool {
+		if ( ! empty( $this->exceptions ) && in_array( $option, $this->exceptions ) ) {
+			return true;
+		}
+
+		return false;
 	}
 }

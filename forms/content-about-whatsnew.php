@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // include COREACTIVITY_PATH . 'forms/content-about-minor.php';
 
+add_user_meta( 1, 'test-three', 'testing.' );
+
 ?>
 
 <div class="d4p-about-whatsnew">

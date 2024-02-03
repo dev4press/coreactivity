@@ -30,13 +30,13 @@ class Settings extends BaseSettings {
 			'geoip2_error'          => '',
 		),
 		'storage'       => array(
-			'users_logged_in' => array(),
+			'users_logged_in'   => array(),
 			'statistics'        => '',
 			'statistics_latest' => '',
 		),
 		'settings'      => array(
 			'show_setup_wizard'                       => true,
-			'users_online_window' => 300,
+			'users_online_window'                     => 300,
 			'admin_bar_integration'                   => true,
 			'main_events_log_switch'                  => true,
 			'notice_if_logging_is_disabled'           => false,
@@ -71,6 +71,10 @@ class Settings extends BaseSettings {
 			'exceptions_cron_list'                    => array(),
 			'exceptions_notification_list'            => array(),
 			'exceptions_option_list'                  => array(),
+			'exceptions_post-meta_list'               => array( '_edit_lock' ),
+			'exceptions_user-meta_list'               => array( 'coreactivity_last_activity', 'coreactivity_last_login' ),
+			'exceptions_term-meta_list'               => array(),
+			'exceptions_comment-meta_list'            => array(),
 			'exceptions_sitemeta_list'                => array(),
 			'exceptions_error_file_regex_list'        => array(
 				'js\.map$',

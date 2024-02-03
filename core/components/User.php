@@ -30,6 +30,7 @@ class User extends Component {
 		'show_admin_bar_front',
 		'locale',
 	);
+	protected $exceptions = array();
 	protected $storage = array();
 	protected $user_login = '';
 
@@ -93,6 +94,18 @@ class User extends Component {
 		if ( $this->is_active( 'registered' ) ) {
 			add_action( 'user_register', array( $this, 'event_user_register' ) );
 		}
+
+		if ( $this->is_active( 'meta-added' ) ) {
+			add_action( 'coreactivity_metas_added_user', array( $this, 'event_meta_added' ), 10, 3 );
+		}
+
+		if ( $this->is_active( 'meta-updated' ) ) {
+			add_action( 'coreactivity_metas_updated_user', array( $this, 'event_meta_updated' ), 10, 4 );
+		}
+
+		if ( $this->is_active( 'meta-deleted' ) ) {
+			add_action( 'coreactivity_metas_deleted_user', array( $this, 'event_meta_deleted' ), 10, 3 );
+		}
 	}
 
 	public function init() {
@@ -105,6 +118,8 @@ class User extends Component {
 		 * @return array array with names of meta fields to monitor and log changes.
 		 */
 		$this->monitor = apply_filters( 'coreactivity_user_meta_fields_to_monitor', $this->monitor );
+
+		$this->exceptions = coreactivity_settings()->get( 'exceptions_user-meta_list' );
 	}
 
 	public function label() : string {
@@ -174,19 +189,19 @@ class User extends Component {
 				'label' => __( 'Activate User', 'coreactivity' ),
 				'scope' => 'network',
 			),
-			'meta-added'               => array(
-				'label'  => __( 'User Meta Added', 'coreactivity' ),
-				'status' => 'inactive',
+			'meta-added'                     => array(
+				'label'   => __( 'User Meta Added', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
-			'meta-updated'             => array(
-				'label'  => __( 'User Meta Updated', 'coreactivity' ),
-				'status' => 'inactive',
+			'meta-updated'                   => array(
+				'label'   => __( 'User Meta Updated', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
-			'meta-deleted'             => array(
-				'label'  => __( 'User Meta Deleted', 'coreactivity' ),
-				'status' => 'inactive',
+			'meta-deleted'                   => array(
+				'label'   => __( 'User Meta Deleted', 'coreactivity' ),
+				'status'  => 'inactive',
 				'version' => '2.0',
 			),
 		);
@@ -429,6 +444,8 @@ class User extends Component {
 				}
 			}
 
+			array_filter( $changed );
+
 			if ( ! empty( $changed ) ) {
 				$this->log( 'edited-meta-data', array(
 					'object_id' => $user->ID,
@@ -469,5 +486,59 @@ class User extends Component {
 
 	public function event_user_register( $user_id ) {
 		$this->log( 'registered', array( 'object_id' => $user_id ) );
+	}
+
+	public function event_meta_added( $object_id, $meta_key, $meta_value ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-added', array(
+			'object_type' => 'user-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'    => $object_id,
+			'meta_key'   => $meta_key,
+			'meta_value' => $meta_value,
+		) );
+	}
+
+	public function event_meta_updated( $object_id, $meta_key, $meta_value, $old ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-updated', array(
+			'object_type' => 'user-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'        => $object_id,
+			'meta_key'       => $meta_key,
+			'meta_value'     => $meta_value,
+			'meta_value_old' => $old,
+		) );
+	}
+
+	public function event_meta_deleted( $object_id, $meta_key, $meta_value ) {
+		if ( $this->is_exception( $meta_key ) ) {
+			return;
+		}
+
+		$this->log( 'meta-deleted', array(
+			'object_type' => 'user-meta',
+			'object_name' => $meta_key,
+		), array(
+			'user_id'    => $object_id,
+			'meta_key'   => $meta_key,
+			'meta_value' => $meta_value,
+		) );
+	}
+
+	private function is_exception( $option ) : bool {
+		if ( ! empty( $this->exceptions ) && in_array( $option, $this->exceptions ) ) {
+			return true;
+		}
+
+		return false;
 	}
 }

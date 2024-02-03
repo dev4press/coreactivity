@@ -37,7 +37,7 @@ class Plugin extends BasePlugin {
 		$this->url  = COREACTIVITY_URL;
 		$this->path = COREACTIVITY_PATH;
 
-        Users::instance();
+		Users::instance();
 	}
 
 	public function register_scripts_and_styles() {

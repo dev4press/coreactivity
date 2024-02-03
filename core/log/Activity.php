@@ -95,10 +95,14 @@ class Activity {
 
 		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
 			'post'         => __( 'Post', 'coreactivity' ),
+			'post-meta'    => __( 'Post Meta', 'coreactivity' ),
 			'attachment'   => __( 'Attachment', 'coreactivity' ),
 			'term'         => __( 'Term', 'coreactivity' ),
+			'term-meta'    => __( 'Term Meta', 'coreactivity' ),
 			'comment'      => __( 'Comment', 'coreactivity' ),
+			'comment-meta' => __( 'Comment Meta', 'coreactivity' ),
 			'user'         => __( 'User', 'coreactivity' ),
+			'user-meta'    => __( 'User Meta', 'coreactivity' ),
 			'plugin'       => __( 'Plugin', 'coreactivity' ),
 			'theme'        => __( 'Theme', 'coreactivity' ),
 			'cron'         => __( 'Cron', 'coreactivity' ),
