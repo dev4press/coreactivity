@@ -244,6 +244,25 @@
   display: none;
 }
 
+.coreactivity-live-button {
+  font-weight: normal;
+  line-height: 2;
+  background-color: var(--d4p-color-main-background);
+  padding: 2px 8px;
+  border-radius: var(--d4p-layout-main-border-radius);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.coreactivity-live-button strong,
+.coreactivity-live-button i {
+  color: var(--d4p-color-layout-accent);
+}
+.coreactivity-live-button strong i {
+  vertical-align: sub;
+  font-size: 1.2em;
+}
+
 .coreactivity-grid-logs.striped tbody tr {
   transition: background-color 2000ms linear;
 }

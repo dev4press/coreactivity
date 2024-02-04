@@ -8,6 +8,7 @@ use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
+use Dev4Press\Plugin\CoreActivity\Log\Users;
 use Dev4Press\v47\Core\Helpers\IP;
 use Dev4Press\v47\Core\Plugins\DBLite;
 use Dev4Press\v47\Core\Quick\Sanitize;
@@ -130,6 +131,12 @@ class Logs extends Table {
 	}
 
 	public function prepare_items() {
+		if ( $this->_logs_instance == 'coreactivity' ) {
+			Users::instance()->update_last_user_log_visit();
+		}
+
+		do_action( $this->_filter_key . '_prepare_items_start', $this );
+
 		$this->prepare_column_headers();
 
 		$sql = $this->prepare_query_arguments();
@@ -164,6 +171,8 @@ class Logs extends Table {
 		if ( ! empty( $this->_items_ips ) ) {
 			GEO::instance()->bulk( $this->_items_ips );
 		}
+
+		do_action( $this->_filter_key . '_prepare_items_finish', $this );
 	}
 
 	public function get_columns() : array {
@@ -773,6 +782,10 @@ class Logs extends Table {
 			$views[ $current_key ] = $current_view;
 		}
 
+		if ( coreactivity_settings()->get( 'logs_live_updates' ) ) {
+			$views['view live-loader'] = '<span class="coreactivity-live-button"><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <span>' . esc_html__( 'Live Refresh', 'coreactivity' ) . ': </span><strong>10</strong></span>';
+		}
+
 		return $views;
 	}
 
@@ -936,6 +949,10 @@ class Logs extends Table {
 			} else {
 				$render = GEO::instance()->flag( $item->ip ) . ' ' . $render;
 			}
+		}
+
+		if ( isset( $item->device['bot'] ) ) {
+			$render .= '<i class="d4p-icon d4p-ui-robot" title="' . esc_attr__( 'Bot', 'coreactivity' ) . '"></i>';
 		}
 
 		if ( $item->ip == $this->_server_ip ) {

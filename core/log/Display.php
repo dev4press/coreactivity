@@ -293,10 +293,10 @@ class Display {
 
 		$post = get_post( $item->meta['post_id'] );
 
-		$render = '<span>'.__('KEY').': <strong>'.$item->object_name.'</strong>';
+		$render = '<span>' . __( 'KEY', 'coreactivity' ) . ': <strong>' . $item->object_name . '</strong>';
 
 		if ( $post instanceof WP_Post ) {
-			$render .='<br/>'. sprintf( __( 'Post: %1$s &middot; %2$s<br/>Post Type: %3$s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
+			$render .= '<br/>' . sprintf( __( 'Post: %1$s &middot; %2$s<br/>Post Type: %3$s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
 		}
 
 		$this->restore_current_blog();
@@ -550,12 +550,12 @@ class Display {
 		return $render;
 	}
 
-	private function _brief_post_meta(stdClass $item) : string {
+	private function _brief_post_meta( stdClass $item ) : string {
 		$this->switch_to_blog( $item->blog_id );
 
 		$post = get_post( $item->meta['post_id'] );
 
-		$render = __('KEY').': '.$item->object_name;
+		$render = __( 'KEY', 'coreactivity' ) . ': ' . $item->object_name;
 
 		if ( $post instanceof WP_Post ) {
 			$render .= sprintf( __( ' &middot; Post: %1$s &middot; %2$s%3$sPost Type: %4$s', 'coreactivity' ), $post->ID, $post->post_title, ' · ', $post->post_type );

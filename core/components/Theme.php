@@ -32,6 +32,22 @@ class Theme extends Component {
 			add_action( 'delete_theme', array( $this, 'prepare_stylesheet' ) );
 			add_action( 'deleted_theme', array( $this, 'event_deleted' ), 10, 2 );
 		}
+
+		if ( $this->is_active( 'installed' ) ) {
+			add_action( 'coreactivity_upgrader_theme_install', array( $this, 'event_installed' ), 10, 2 );
+		}
+
+		if ( $this->is_active( 'updated' ) ) {
+			add_action( 'coreactivity_upgrader_theme_update', array( $this, 'event_updated' ), 10, 4 );
+		}
+
+		if ( $this->is_active( 'install-error' ) ) {
+			add_action( 'coreactivity_upgrader_theme_install_error', array( $this, 'event_install_error' ), 10, 3 );
+		}
+
+		if ( $this->is_active( 'update-error' ) ) {
+			add_action( 'coreactivity_upgrader_theme_update_error', array( $this, 'event_update_error' ), 10, 5 );
+		}
 	}
 
 	public function label() : string {
@@ -40,18 +56,26 @@ class Theme extends Component {
 
 	protected function get_events() : array {
 		return array(
-			'installed' => array(
+			'installed'     => array(
 				'label'   => __( 'Theme Installed', 'coreactivity' ),
 				'version' => '2.0',
 			),
-			'updated'   => array(
+			'updated'       => array(
 				'label'   => __( 'Theme Updated', 'coreactivity' ),
 				'version' => '2.0',
 			),
-			'deleted'   => array(
+			'install-error' => array(
+				'label'   => __( 'Theme Install Error', 'coreactivity' ),
+				'version' => '2.0',
+			),
+			'update-error'  => array(
+				'label'   => __( 'Theme Updated Error', 'coreactivity' ),
+				'version' => '2.0',
+			),
+			'deleted'       => array(
 				'label' => __( 'Theme Deleted', 'coreactivity' ),
 			),
-			'switched'  => array(
+			'switched'      => array(
 				'label' => __( 'Theme Switched', 'coreactivity' ),
 			),
 		);
@@ -103,6 +127,49 @@ class Theme extends Component {
 			$this->_get_theme( $old_theme->get_stylesheet(), 'old_' ),
 			$this->_get_theme( $new_theme->get_stylesheet() )
 		) );
+	}
+
+	public function event_installed( $theme_code, $theme ) {
+		$this->storage[ $theme_code ] = $this->_get_theme( $theme_code );
+
+		$this->log( 'installed', array(
+			'object_name' => $theme_code,
+		), $this->_theme_meta( $theme_code ) );
+	}
+
+	public function event_updated( $theme_code, $theme, $previous, $package ) {
+		$this->storage[ $theme_code ] = $this->_get_theme( $theme_code );
+
+		$meta = $this->_theme_meta( $theme_code );
+
+		$meta['theme_previous'] = $previous;
+		$meta['theme_package']  = $package;
+
+		$this->log( 'updated', array(
+			'object_name' => $theme_code,
+		), $meta );
+	}
+
+	public function event_install_error( $theme_code, $theme, $error ) {
+		$this->log( 'install-error', array(
+			'object_name' => $theme_code,
+		), array(
+			'error' => $error->get_error_message(),
+		) );
+	}
+
+	public function event_update_error( $theme_code, $theme, $previous, $package, $error ) {
+		$this->storage[ $theme_code ] = $this->_get_theme( $theme_code );
+
+		$meta = $this->_theme_meta( $theme_code );
+
+		$meta['theme_previous'] = $previous;
+		$meta['theme_package']  = $package;
+		$meta['error']          = $error->get_error_message();
+
+		$this->log( 'update-error', array(
+			'object_name' => $theme_code,
+		), $meta );
 	}
 
 	private function _get_theme( $stylesheet, $prefix = '' ) : array {

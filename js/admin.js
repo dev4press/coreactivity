@@ -10,6 +10,11 @@
             on: "d4p-ui-toggle-on",
             off: "d4p-ui-toggle-off"
         },
+        counter: {
+            value: 10,
+            show: 10,
+            status: true,
+        },
         init: function() {
             const dialog_view = $.extend({}, wp.dev4press.dialogs.default_dialog(), {
                 width: 600,
@@ -173,7 +178,19 @@
         },
         live: {
             init: function() {
-                setTimeout(wp.coreactivity.admin.live.ajax, 15000);
+                setTimeout(wp.coreactivity.admin.live.ajax, 10000);
+                setInterval(function() {
+                    if (wp.coreactivity.admin.counter.status) {
+                        var show = wp.coreactivity.admin.counter.value < 1 ? '<i class="d4p-icon d4p-ui-spinner d4p-icon-fw d4p-icon-spin"></i>' : wp.coreactivity.admin.counter.value;
+
+                        if (show !== wp.coreactivity.admin.counter.show) {
+                            $(".coreactivity-live-button strong").html(show);
+                        }
+
+                        wp.coreactivity.admin.counter.value--;
+                        wp.coreactivity.admin.counter.show = show
+                    }
+                }, 1000);
             },
             ajax: function() {
                 let hidden = [];
@@ -227,7 +244,10 @@
                             });
                         }
 
-                        setTimeout(wp.coreactivity.admin.live.ajax, 15000);
+                        setTimeout(wp.coreactivity.admin.live.ajax, 10000);
+
+                        wp.coreactivity.admin.counter.status = true;
+                        wp.coreactivity.admin.counter.value = 10;
                     }
                 });
             }

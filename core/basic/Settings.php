@@ -36,8 +36,10 @@ class Settings extends BaseSettings {
 		),
 		'settings'      => array(
 			'show_setup_wizard'                       => true,
+			'skip_duplicated'                         => true,
 			'users_online_window'                     => 300,
 			'admin_bar_integration'                   => true,
+			'admin_bar_indicator'                     => true,
 			'main_events_log_switch'                  => true,
 			'notice_if_logging_is_disabled'           => false,
 			'log_transient_value'                     => false,
@@ -71,8 +73,15 @@ class Settings extends BaseSettings {
 			'exceptions_cron_list'                    => array(),
 			'exceptions_notification_list'            => array(),
 			'exceptions_option_list'                  => array(),
-			'exceptions_post-meta_list'               => array( '_edit_lock' ),
-			'exceptions_user-meta_list'               => array( 'coreactivity_last_activity', 'coreactivity_last_login' ),
+			'exceptions_post-meta_list'               => array(
+				'_edit_lock',
+			),
+			'exceptions_user-meta_list'               => array(
+				'coreactivity_last_activity',
+				'coreactivity_last_login',
+				'coreactivity_last_log_visit',
+				'coreactivity_last_logout',
+			),
 			'exceptions_term-meta_list'               => array(),
 			'exceptions_comment-meta_list'            => array(),
 			'exceptions_sitemeta_list'                => array(),

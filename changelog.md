@@ -8,10 +8,18 @@
 * **new** metadata events: for posts, woocommerce and bbpress
 * **new** metadata events: for terms, comments and users
 * **new** plugins component: installed and updated events
+* **new** plugins component: error install and update events
 * **new** themes component: installed and updated events
+* **new** themes component: error install and update events
 * **new** expand Users panels with status and activity columns
 * **new** expand Users panel with link to activity logs for each user
+* **new** option to allow for skipping duplicated event entries
+* **new** some components and events have the `skip_duplicates` flag
+* **new** logs panel shows the live updates countdown to new update
 * **new** settings for meta exceptions with some default values
+* **new** show number of new logged entries in the admin bar menu 
+* **edit** various updates and improvements to the logs and live updates
+* **edit** improvements to the admin bar menu display
 * **edit** reorganized scheduled jobs code into own class `Jobs`
 * **edit** Dev4Press Library 4.7
 * **fix** issue with the wrong URLs for actions in the live log items

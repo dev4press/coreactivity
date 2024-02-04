@@ -272,3 +272,26 @@
         }
     }
 }
+
+.coreactivity-live-button {
+    font-weight: normal;
+    line-height: 2;
+    background-color: var(--d4p-color-main-background);
+    padding: 2px 8px;
+    border-radius: var(--d4p-layout-main-border-radius);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    strong,
+    i {
+        color: var(--d4p-color-layout-accent);
+    }
+
+    strong {
+        i {
+            vertical-align: sub;
+            font-size: 1.2em;
+        }
+    }
+}

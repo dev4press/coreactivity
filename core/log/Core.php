@@ -17,6 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Core {
 	private $cached_data;
+	private $duplicates;
 	private $page_events = array();
 	private $geo_code = false;
 	private $geo_meta = false;
@@ -81,6 +82,12 @@ class Core {
 			}
 		}
 
+		$this->duplicates = get_site_transient( 'coreactivity_daily_duplicates' );
+
+		if ( ! is_array( $this->duplicates ) ) {
+			$this->duplicates = array();
+		}
+
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );
 	}
 
@@ -127,8 +134,23 @@ class Core {
 			return 0;
 		}
 
-		$data = $this->prepare_data( $data );
+		$data = $this->prepare_data( $event_id, $data );
 		$meta = $this->prepare_meta( $meta );
+
+		if ( coreactivity_settings()->get( 'skip_duplicated' ) ) {
+			if ( Activity::instance()->can_event_skip_duplicates( $event_id ) ) {
+				$hash = $this->calculate_duplication_hash( $data, $meta );
+
+				if ( ! empty( $this->duplicates ) && in_array( $hash, $this->duplicates ) ) {
+					return 0;
+				}
+
+				$this->duplicates[] = $hash;
+
+				set_site_transient( 'coreactivity_daily_duplicates', $this->duplicates, DAY_IN_SECONDS );
+			}
+		}
+
 		$meta = $this->prepare_device( $meta );
 
 		if ( $this->geo_code || $this->geo_meta ) {
@@ -148,8 +170,6 @@ class Core {
 				}
 			}
 		}
-
-		$data['event_id'] = $event_id;
 
 		$id = DB::instance()->log_event( $data, $meta );
 
@@ -226,7 +246,9 @@ class Core {
 		return in_array( $method, $this->request_methods ) ? $method : '';
 	}
 
-	private function prepare_data( array $data = array() ) : array {
+	private function prepare_data( int $event_id, array $data = array() ) : array {
+		$data['event_id'] = $event_id;
+
 		if ( ! isset( $data['blog_id'] ) ) {
 			$data['blog_id'] = get_current_blog_id();
 		}
@@ -281,7 +303,7 @@ class Core {
 
 		if ( ! isset( $meta['ajax_action'] ) ) {
 			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
-				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.Security.NonceVerification
+				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 			}
 		}
 
@@ -316,5 +338,18 @@ class Core {
 		}
 
 		return $meta;
+	}
+
+	private function calculate_duplication_hash( $data, $meta ) : string {
+		$temp = array_merge( $data, $meta );
+		$skip = array( 'user_agent', 'logged', 'ip', 'user_id' );
+
+		foreach ( $skip as $key ) {
+			if ( isset( $temp[ $key ] ) ) {
+				unset( $temp[ $key ] );
+			}
+		}
+
+		return md5( wp_json_encode( $temp ) );
 	}
 }

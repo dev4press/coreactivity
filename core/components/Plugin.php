@@ -37,11 +37,19 @@ class Plugin extends Component {
 		}
 
 		if ( $this->is_active( 'installed' ) ) {
-			add_action( 'coreactivity_upgrader_plugin_install', array( $this, 'event_installed' ), 10, 4 );
+			add_action( 'coreactivity_upgrader_plugin_install', array( $this, 'event_installed' ), 10, 2 );
 		}
 
 		if ( $this->is_active( 'updated' ) ) {
 			add_action( 'coreactivity_upgrader_plugin_update', array( $this, 'event_updated' ), 10, 4 );
+		}
+
+		if ( $this->is_active( 'install-error' ) ) {
+			add_action( 'coreactivity_upgrader_plugin_install_error', array( $this, 'event_install_error' ), 10, 3 );
+		}
+
+		if ( $this->is_active( 'update-error' ) ) {
+			add_action( 'coreactivity_upgrader_plugin_update_error', array( $this, 'event_update_error' ), 10, 5 );
 		}
 	}
 
@@ -57,6 +65,14 @@ class Plugin extends Component {
 			),
 			'updated'             => array(
 				'label'   => __( 'Plugin Updated', 'coreactivity' ),
+				'version' => '2.0',
+			),
+			'install-error'       => array(
+				'label'   => __( 'Plugin Install Error', 'coreactivity' ),
+				'version' => '2.0',
+			),
+			'update-error'        => array(
+				'label'   => __( 'Plugin Updated Error', 'coreactivity' ),
 				'version' => '2.0',
 			),
 			'deleted'             => array(
@@ -140,8 +156,12 @@ class Plugin extends Component {
 		}
 	}
 
-	public function event_installed( $plugin_code, $plugin, $package ) {
+	public function event_installed( $plugin_code, $plugin ) {
+		$this->storage[ $plugin_code ] = $plugin;
 
+		$this->log( 'installed', array(
+			'object_name' => $plugin_code,
+		), $this->_plugin_meta( $plugin_code ) );
 	}
 
 	public function event_updated( $plugin_code, $plugin, $previous, $package ) {
@@ -153,6 +173,31 @@ class Plugin extends Component {
 		$meta['plugin_package']  = $package;
 
 		$this->log( 'updated', array(
+			'object_name' => $plugin_code,
+		), $meta );
+	}
+
+	public function event_install_error( $plugin_code, $plugin, $error ) {
+		$this->storage[ $plugin_code ] = $plugin;
+
+		$meta          = $this->_plugin_meta( $plugin_code );
+		$meta['error'] = $error->get_error_message();
+
+		$this->log( 'install-error', array(
+			'object_name' => $plugin_code,
+		), $meta );
+	}
+
+	public function event_update_error( $plugin_code, $plugin, $previous, $package, $error ) {
+		$this->storage[ $plugin_code ] = $plugin;
+
+		$meta = $this->_plugin_meta( $plugin_code );
+
+		$meta['plugin_previous'] = $previous;
+		$meta['plugin_package']  = $package;
+		$meta['error']           = $error->get_error_message();
+
+		$this->log( 'update-error', array(
 			'object_name' => $plugin_code,
 		), $meta );
 	}

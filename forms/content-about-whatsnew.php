@@ -8,8 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // include COREACTIVITY_PATH . 'forms/content-about-minor.php';
 
-add_user_meta( 1, 'test-three', 'testing.' );
-
 ?>
 
 <div class="d4p-about-whatsnew">
@@ -18,10 +16,10 @@ add_user_meta( 1, 'test-three', 'testing.' );
             <div class="d4p-layout-unit whole align-center">
                 <h2>WordPress Activity Logging</h2>
                 <p class="lead-description">
-                    CoreActivity is a new free plugin that can monitor your website
+                    coreActivity now has over 150 events to monitor your website
                 </p>
                 <p>
-                    Version 1.0 brings support for a huge number of different events it can log, it logs a lot of details, it has a powerful Logs panel to find and filter events and much more.
+                    Since the version 1.0 is released, the coreActivity plugin has seen extensive updates, and the Version 2.0 again expands the list of events, integrates into Users panel and more.
                 </p>
 
 				<?php if ( isset( $_GET['install'] ) && sanitize_key( $_GET['install'] ) === 'on' ) { // phpcs:ignore WordPress.Security.NonceVerification ?>
@@ -30,7 +28,7 @@ add_user_meta( 1, 'test-three', 'testing.' );
 
                 <div class="coreactivity-about-counters">
                     <div><i class="d4p-icon d4p-ui-folder d4p-icon-fw"></i> <strong>27</strong> Components</div>
-                    <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>162</strong> Events</div>
+                    <div><i class="d4p-icon d4p-ui-radar d4p-icon-fw"></i> <strong>166</strong> Events</div>
                     <div><i class="d4p-icon d4p-ui-plug d4p-icon-fw"></i> <strong>12</strong> Plugins</div>
                 </div>
             </div>

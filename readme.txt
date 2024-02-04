@@ -15,7 +15,7 @@ Monitor and log all kinds of activity happening on the WordPress website, with f
 
 CoreActivity is a free plugin for monitoring and logging various activities of the WordPress powered website. The plugin is highly modular, with events registered and controlled by multiple Components.
 
-Currently, plugin has 27 components with a total of 162 events, with direct integration with 12 popular plugins.
+Currently, plugin has 27 components with a total of 166 events, with direct integration with 12 popular plugins.
 
 = WordPress Core Components =
 * Attachments (3 events)
@@ -23,11 +23,11 @@ Currently, plugin has 27 components with a total of 162 events, with direct inte
 * Errors (6 events)
 * Notifications (4 events)
 * Options (7 events)
-* Plugins (7 events)
+* Plugins (9 events)
 * Posts (6 events)
 * Privacy (10 events)
 * Terms (6 events)
-* Themes (4 events)
+* Themes (6 events)
 * Users (21 events)
 * WordPress (8 events)
 
@@ -116,6 +116,8 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.0 (2024.02.26) =
+
 = 1.8.2 (2024.01.26) =
 * Edit: updated process for getting visitor IP
 * Edit: Dev4Press Library 4.6.1
@@ -276,17 +278,14 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 2.0 =
+New events and features. Library Updated. Few improvements and fixes.
+
 = 1.8 =
 New components and events. IP WhoIs. Few improvements and fixes.
 
 = 1.7 =
 Many improvements and fixes.
-
-= 1.6 =
-Library Updated. Device Detection support. Many improvements and fixes.
-
-= 1.5 =
-Library Updated. Minor updates and improvements.
 
 == Screenshots ==
 * Plugin Dashboard

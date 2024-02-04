@@ -49,6 +49,14 @@ class Users {
 		return absint( get_user_option( 'coreactivity_last_login', $user_id ) );
 	}
 
+	public function get_user_last_logout( $user_id = 0 ) : int {
+		return absint( get_user_option( 'coreactivity_last_logout', $user_id ) );
+	}
+
+	public function get_user_last_log_visit( $user_id = 0 ) : int {
+		return absint( get_user_option( 'coreactivity_last_log_visit', $user_id ) );
+	}
+
 	public function update_last_user_activity() {
 		if ( is_user_logged_in() ) {
 			update_user_option( get_current_user_id(), 'coreactivity_last_activity', time(), true );
@@ -69,6 +77,12 @@ class Users {
 		update_user_option( $user_id, 'coreactivity_last_logout', time(), true );
 
 		$this->remove_user_from_logged_in( $user_id );
+	}
+
+	public function update_last_user_log_visit() {
+		if ( is_user_logged_in() ) {
+			update_user_option( get_current_user_id(), 'coreactivity_last_log_visit', time(), true );
+		}
 	}
 
 	private function add_user_to_logged_in( $user_id, $timestamp ) {

@@ -369,6 +369,12 @@ class Activity {
 		return false;
 	}
 
+	public function can_event_skip_duplicates( int $event_id ) {
+		$event = $this->get_event_by_id( $event_id );
+
+		return $event ? $event->skip_duplicates : false;
+	}
+
 	public function is_event_object_linked( int $event_id = 0, string $component = '', string $event = '' ) : bool {
 		if ( $event_id > 0 ) {
 			$e = $this->list[ $event_id ] ?? array();
@@ -471,18 +477,19 @@ class Activity {
 
 	public function register_event( string $component, string $event, array $args = array(), array $rules = array() ) : bool {
 		$obj = (object) array(
-			'event_id'     => 0,
-			'component'    => $component,
-			'event'        => $event,
-			'rules'        => $rules,
-			'version'      => $args['version'] ?? '1.0',
-			'status'       => $args['status'] ?? 'active',
-			'scope'        => $args['scope'] ?? '',
-			'label'        => $args['label'] ?? Str::slug_to_name( $event, '-' ),
-			'object_type'  => $args['object_type'] ?? '',
-			'is_security'  => $args['is_security'] ?? false,
-			'is_malicious' => $args['is_malicious'] ?? false,
-			'level'        => $args['level'] ?? 0,
+			'event_id'        => 0,
+			'component'       => $component,
+			'event'           => $event,
+			'rules'           => $rules,
+			'version'         => $args['version'] ?? '1.0',
+			'status'          => $args['status'] ?? 'active',
+			'scope'           => $args['scope'] ?? '',
+			'label'           => $args['label'] ?? Str::slug_to_name( $event, '-' ),
+			'object_type'     => $args['object_type'] ?? '',
+			'is_security'     => $args['is_security'] ?? false,
+			'is_malicious'    => $args['is_malicious'] ?? false,
+			'skip_duplicates' => $args['skip_duplicates'] ?? false,
+			'level'           => $args['level'] ?? 0,
 		);
 
 		if ( isset( $this->events[ $component ][ $event ] ) ) {

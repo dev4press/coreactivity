@@ -350,6 +350,23 @@ class Settings extends BaseSettings {
 				),
 			),
 			'logs'          => array(
+				'logs-logging' => array(
+					'name'     => __( 'Logging Process', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'skip_duplicated', __( 'Skip Duplicates', 'coreactivity' ), __( 'Plugin can hold of logging duplicated events for a period of 24 hours by detecting duplicated events.', 'coreactivity' ), Type::BOOLEAN )->more( array(
+									__( 'Duplication skipping affects only some components and events that can produce exactly the same event entry over and over again.', 'coreactivity' ),
+									__( 'Duplication is tracked over the period of 24 hours, allowing for repeated duplicated events to be logged only once a day.', 'coreactivity' ),
+									__( 'IP, user ID, logged date and time, and user agent are not taken into account when determining if the event is duplicate.', 'coreactivity' ),
+								) ),
+							),
+						),
+					),
+				),
 				'logs-content' => array(
 					'name'     => __( 'Content Display', 'coreactivity' ),
 					'sections' => array(
@@ -416,7 +433,7 @@ class Settings extends BaseSettings {
 								$this->i( 'settings', 'users_online_window', __( 'Online Window', 'coreactivity' ), __( 'Knowing if the user is online or not is not easy to achieve without session tracking, which is not advisable in WordPress powered websites. The closest online status is the last activity with some added time for approximation.', 'coreactivity' ), Type::ABSINT )->more( array(
 									__( 'Do not set this value too high, 5 to 10 minutes (in seconds) is more than enough.', 'coreactivity' ),
 								) )->args( array(
-									'label_unit' => __( 'seconds' ),
+									'label_unit' => __( 'seconds', 'coreactivity' ),
 									'min'        => 30,
 									'step'       => 1,
 									'max'        => 3600,
@@ -575,6 +592,7 @@ class Settings extends BaseSettings {
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'admin_bar_integration', __( 'Add Menu', 'coreactivity' ), __( 'Simple menu will be added to the WordPress admin bar, on both admin side and front end, only available to website administrators with quick links to the plugin panels.', 'coreactivity' ), Type::BOOLEAN ),
+								$this->i( 'settings', 'admin_bar_indicator', __( 'New log entries counter', 'coreactivity' ), __( 'Show number with the new logged entries since the last time you visited the Logs panel.', 'coreactivity' ), Type::BOOLEAN ),
 							),
 						),
 					),

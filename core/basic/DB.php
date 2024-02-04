@@ -2,6 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
+use Dev4Press\Plugin\CoreActivity\Log\Users;
 use Dev4Press\v47\Core\Plugins\DB as BaseDB;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -327,5 +328,14 @@ class DB extends BaseDB {
 		$raw = $this->get_results( $sql );
 
 		return $this->pluck( $raw, 'ID' );
+	}
+
+	public function get_new_log_entries_since_last_log_visit() : int {
+		$timestamp = Users::instance()->get_user_last_log_visit();
+		$datetime  = coresecurity()->datetime()->mysql_date( true, $timestamp );
+
+		$sql = $this->prepare( "SELECT COUNT(*) FROM " . $this->logs . " WHERE `logged` > %s", $datetime );
+
+		return absint( $this->get_var( $sql ) );
 	}
 }

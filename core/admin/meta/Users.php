@@ -29,8 +29,6 @@ class Users {
 	}
 
 	public function current_screen( $screen ) {
-		debugpress_store_object( $screen );
-
 		if ( $screen->id == 'users' ) {
 			add_filter( 'manage_users_columns', array( $this, 'manage_columns' ) );
 			add_filter( 'manage_users_sortable_columns', array( $this, 'sortable_columns' ) );
@@ -48,15 +46,15 @@ class Users {
 	}
 
 	public function user_row_actions( $actions, $user_object ) {
-		$actions['log'] = "<a class='coreactivity-log' href='" . coreactivity_admin()->panel_url( 'logs', '', 'view=user_id&filter-user_id=' . $user_object->ID ) . "'>" . __( 'Log' ) . '</a>';
+		$actions['log'] = "<a class='coreactivity-log' href='" . coreactivity_admin()->panel_url( 'logs', '', 'view=user_id&filter-user_id=' . $user_object->ID ) . "'>" . __( 'Log', 'coreactivity' ) . '</a>';
 
 		return apply_filters( 'coreactivity_users_panel_row_actions', $actions );
 	}
 
 	public function manage_columns( $columns ) {
-		$columns['coreactivity_online']   = __( 'Status' );
-		$columns['coreactivity_activity'] = __( 'Last Active' );
-		$columns['coreactivity_login']    = __( 'Last Login' );
+		$columns['coreactivity_online']   = __( 'Status', 'coreactivity' );
+		$columns['coreactivity_activity'] = __( 'Last Active', 'coreactivity' );
+		$columns['coreactivity_login']    = __( 'Last Login', 'coreactivity' );
 
 		return apply_filters( 'coreactivity_users_panel_columns', $columns );
 	}
@@ -65,9 +63,9 @@ class Users {
 		switch ( $column ) {
 			case 'coreactivity_online':
 				if ( Feature::instance()->is_user_online( $user_id ) ) {
-					return '<div class="coreactivity-user-status __is-online"><i class="dashicons dashicons-yes-alt"></i> <span>' . __( 'Online' ) . '</span></div>';
+					return '<div class="coreactivity-user-status __is-online"><i class="dashicons dashicons-yes-alt"></i> <span>' . __( 'Online', 'coreactivity' ) . '</span></div>';
 				} else {
-					return '<div class="coreactivity-user-status __is-offline"><i class="dashicons dashicons-dismiss"></i> <span>' . __( 'Offline' ) . '</span></div>';
+					return '<div class="coreactivity-user-status __is-offline"><i class="dashicons dashicons-dismiss"></i> <span>' . __( 'Offline', 'coreactivity' ) . '</span></div>';
 				}
 			case 'coreactivity_activity':
 				$last_activity = Feature::instance()->get_user_last_activity( $user_id );
