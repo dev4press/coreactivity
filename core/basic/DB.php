@@ -332,10 +332,15 @@ class DB extends BaseDB {
 
 	public function get_new_log_entries_since_last_log_visit() : int {
 		$timestamp = Users::instance()->get_user_last_log_visit();
-		$datetime  = coresecurity()->datetime()->mysql_date( true, $timestamp );
 
-		$sql = $this->prepare( "SELECT COUNT(*) FROM " . $this->logs . " WHERE `logged` > %s", $datetime );
+		if ( $timestamp > 0 ) {
+			$datetime = coresecurity()->datetime()->mysql_date( true, $timestamp );
 
-		return absint( $this->get_var( $sql ) );
+			$sql = $this->prepare( "SELECT COUNT(*) FROM " . $this->logs . " WHERE `logged` > %s", $datetime );
+
+			return absint( $this->get_var( $sql ) );
+		}
+
+		return 0;
 	}
 }
