@@ -72,8 +72,9 @@ To use IP2Location, you need to have an account on IP2Location, to get the downl
 * Log Live Updates
 * Define Exceptions
 
-= Home and GitHub =
+= Home, Documentation and GitHub =
 * Learn more about the plugin: [CoreActivity Website](https://plugins.dev4press.com/coreactivity/)
+* Plugin Knowledge Base: [CoreActivity Support](https://support.dev4press.com/kb/coreactivity/)
 * Contribute to plugin development: [CoreActivity on GitHub](https://github.com/dev4press/coreactivity)
 
 == Installation ==
@@ -116,7 +117,27 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
-= 2.0 (2024.02.26) =
+= 2.0 (2024.02.12) =
+* New: dedicated Users login, logout and online tracking
+* New: metadata events: for posts, woocommerce and bbpress
+* New: metadata events: for terms, comments and users
+* New: plugins component: installed and updated events
+* New: plugins component: error install and update events
+* New: themes component: installed and updated events
+* New: themes component: error install and update events
+* New: expand Users panels with status and activity columns
+* New: expand Users panel with link to activity logs for each user
+* New: option to allow for skipping duplicated event entries
+* New: some components and events have the `skip_duplicates` flag
+* New: logs panel shows the live updates countdown to new update
+* New: settings for meta exceptions with some default values
+* New: show number of new logged entries in the admin bar menu 
+* Edit: various updates and improvements to the logs and live updates
+* Edit: improvements to the admin bar menu display
+* Edit: reorganized scheduled jobs code into own class `Jobs`
+* Edit: Dev4Press Library 4.7
+* Fix: issue with the wrong URLs for actions in the live log items
+* Fix: few issues related to the PHP 8.3
 
 = 1.8.2 (2024.01.26) =
 * Edit: updated process for getting visitor IP
