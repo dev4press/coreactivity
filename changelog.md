@@ -16,6 +16,7 @@
 * **new** option to allow for skipping duplicated event entries
 * **new** some components and events have the `skip_duplicates` flag
 * **new** logs panel shows the live updates countdown to new update
+* **new** option to control the visibility of the IPv4 address in the log
 * **new** settings for meta exceptions with some default values
 * **new** show number of new logged entries in the admin bar menu 
 * **edit** blog dashboard in multisite network updated and improved

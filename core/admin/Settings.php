@@ -371,12 +371,20 @@ class Settings extends BaseSettings {
 					'name'     => __( 'Content Display', 'coreactivity' ),
 					'sections' => array(
 						array(
-							'label'    => '',
+							'label'    => __('IP'),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'display_ip_country_flag', __( 'IP GEO location flag', 'coreactivity' ), __( 'Show country for the logged IP.', 'coreactivity' ), Type::BOOLEAN ),
+								$this->i( 'settings', 'log_ipv4_display', __( 'IPv4 Display', 'coreactivity' ), __( 'You can hide parts of the IP address when displayed. This will work for IPv4 address only, and it doesn\'t affect use of IP in URLs for filtering.', 'coreactivity' ), Type::SELECT )->data('array', Data::get_ip_display_method()),
+							),
+						),
+						array(
+							'label'    => __('Other Information'),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'display_columns_simplified', __( 'Simplified values', 'coreactivity' ), __( 'Values for columns Component and Event will be displayed using labels.', 'coreactivity' ), Type::BOOLEAN ),
-								$this->i( 'settings', 'display_ip_country_flag', __( 'IP GEO location flag', 'coreactivity' ), __( 'Show country for the logged IP.', 'coreactivity' ), Type::BOOLEAN ),
 								$this->i( 'settings', 'display_user_avatar', __( 'User avatar', 'coreactivity' ), __( 'Show user avatar for logs that are related to the user.', 'coreactivity' ), Type::BOOLEAN ),
 								$this->i( 'settings', 'display_blog_column_linked', __( 'Linked Blog ID', 'coreactivity' ), __( 'In the multisite network mode, link the Blog ID to the Blog URL', 'coreactivity' ), Type::BOOLEAN ),
 							),

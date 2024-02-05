@@ -42,6 +42,7 @@ class Settings extends BaseSettings {
 			'admin_bar_indicator'                     => true,
 			'main_events_log_switch'                  => true,
 			'notice_if_logging_is_disabled'           => false,
+			'log_ipv4_display'                        => 'full',
 			'log_transient_value'                     => false,
 			'log_if_available_user_agent'             => true,
 			'log_device_detection_data'               => false,

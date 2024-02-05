@@ -34,4 +34,25 @@ class Render {
 
 		return $render;
 	}
+
+	public static function ip_masked( $ip ) {
+		$format = coreactivity_settings()->get( 'log_ipv4_display' );
+
+		if ( $format != 'full' ) {
+			$parts = explode( '.', $ip );
+
+			if ( count( $parts ) == 4 ) {
+				switch ( $format ) {
+					case 'partial':
+						return $parts[0] . '.' . $parts[1] . '.' . $parts[2] . '.***';
+					case 'half':
+						return $parts[0] . '.' . $parts[1] . '.***.***';
+					case 'hide':
+						return '***.***.***.***';
+				}
+			}
+		}
+
+		return $ip;
+	}
 }

@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
+use Dev4Press\Plugin\CoreActivity\Basic\Render;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
@@ -749,7 +750,7 @@ class Logs extends Table {
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud d4p-icon-fw"></i> <span>' . esc_html__( 'IP', 'coreactivity' ) . '</span>';
 
 					if ( $this->_display_ip_country_flag ) {
-						$current_view .= '<span>' . esc_html( $this->_filter_lock['ip'] ) . '</span> ' . GEO::instance()->flag( $this->_filter_lock['ip'] );
+						$current_view .= '<span class="coreactivity-ip">' . esc_html( Render::ip_masked( $this->_filter_lock['ip'] ) ) . '</span> ' . GEO::instance()->flag( $this->_filter_lock['ip'] );
 					} else {
 						$current_view .= $this->_filter_lock['ip'];
 					}
@@ -930,7 +931,7 @@ class Logs extends Table {
 	}
 
 	protected function column_ip( $item ) : string {
-		$render  = '<span>' . $item->ip . '</span>';
+		$render  = '<span class="coreactivity-ip">' . Render::ip_masked( $item->ip ) . '</span>';
 		$actions = array(
 			'view' => '<a href="' . $this->_view( 'ip', 'filter-ip=' . $item->ip ) . '">' . __( 'IP Logs', 'coreactivity' ) . '</a>',
 		);

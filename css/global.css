@@ -19,3 +19,7 @@
 .wp-list-table.users thead .column-coreactivity_login {
   width: 120px;
 }
+
+.coreactivity-ip {
+  font-family: monospace;
+}
