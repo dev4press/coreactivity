@@ -118,7 +118,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Changelog ==
 = 2.0 (2024.02.12) =
-* New: dedicated Users login, logout and online tracking
+* New: dedicated `Users` login, logout and online tracking
 * New: metadata events: for posts, woocommerce and bbpress
 * New: metadata events: for terms, comments and users
 * New: plugins component: installed and updated events
@@ -126,13 +126,16 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * New: themes component: installed and updated events
 * New: themes component: error install and update events
 * New: expand Users panels with status and activity columns
-* New: expand Users panel with link to activity logs for each user
+* New: expand Users panels with a link to activity logs for each user
 * New: option to allow for skipping duplicated event entries
 * New: some components and events have the `skip_duplicates` flag
 * New: logs panel shows the live updates countdown to new update
-* New: settings for meta exceptions with some default values
+* New: option to control the visibility of the IPv4 address in the log
+* New: settings for metadata exceptions with some default values
 * New: show number of new logged entries in the admin bar menu 
+* Edit: blog dashboard in multisite network updated and improved
 * Edit: various updates and improvements to the logs and live updates
+* Edit: improvements to the page header current IPs integration
 * Edit: improvements to the admin bar menu display
 * Edit: reorganized scheduled jobs code into own class `Jobs`
 * Edit: Dev4Press Library 4.7
@@ -300,7 +303,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Upgrade Notice ==
 = 2.0 =
-New events and features. Library Updated. Few improvements and fixes.
+New events and features. Library Updated. Many improvements and fixes.
 
 = 1.8 =
 New components and events. IP WhoIs. Few improvements and fixes.

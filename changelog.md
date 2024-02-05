@@ -4,7 +4,7 @@
 
 ### Version: 2.0 / February 12, 2024
 
-* **new** dedicated Users login, logout and online tracking
+* **new** dedicated `Users` login, logout and online tracking
 * **new** metadata events: for posts, woocommerce and bbpress
 * **new** metadata events: for terms, comments and users
 * **new** plugins component: installed and updated events
@@ -12,12 +12,12 @@
 * **new** themes component: installed and updated events
 * **new** themes component: error install and update events
 * **new** expand Users panels with status and activity columns
-* **new** expand Users panel with link to activity logs for each user
+* **new** expand Users panels with a link to activity logs for each user
 * **new** option to allow for skipping duplicated event entries
 * **new** some components and events have the `skip_duplicates` flag
 * **new** logs panel shows the live updates countdown to new update
 * **new** option to control the visibility of the IPv4 address in the log
-* **new** settings for meta exceptions with some default values
+* **new** settings for metadata exceptions with some default values
 * **new** show number of new logged entries in the admin bar menu 
 * **edit** blog dashboard in multisite network updated and improved
 * **edit** various updates and improvements to the logs and live updates
