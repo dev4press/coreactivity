@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
-"Project-Id-Version: CoreActivity\n"
-"POT-Creation-Date: 02/04/2024 06:22:46 PM\n"
+"Project-Id-Version: coreActivity\n"
+"POT-Creation-Date: 02/05/2024 01:01:57 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,16 +48,21 @@ msgstr ""
 msgid "Components"
 msgstr ""
 
-#: core/admin/panel/Dashboard.php:21
+#: core/admin/panel/Dashboard.php:22
 #: core/admin/Plugin.php:136
-#: core/basic/AdminBar.php:87
+#: core/basic/AdminBar.php:91
 #: forms/content-dashboard-overall.php:34
 msgid "Events"
 msgstr ""
 
 #: core/admin/panel/Dashboard.php:30
+#: forms/content-dashboard-blog.php:15
+msgid "Network Dashboard"
+msgstr ""
+
+#: core/admin/panel/Dashboard.php:39
 #: core/admin/Plugin.php:129
-#: core/basic/AdminBar.php:94
+#: core/basic/AdminBar.php:98
 #: core/table/Events.php:102
 #: core/table/Logs.php:903
 #: core/table/Logs.php:923
@@ -298,12 +303,12 @@ msgid "All the events registered for activity tracking and logging."
 msgstr ""
 
 #: core/admin/Plugin.php:143
-#: core/basic/AdminBar.php:101
+#: core/basic/AdminBar.php:105
 msgid "Settings"
 msgstr ""
 
 #: core/admin/Plugin.php:149
-#: core/basic/AdminBar.php:108
+#: core/basic/AdminBar.php:112
 msgid "Tools"
 msgstr ""
 
@@ -1001,22 +1006,22 @@ msgstr ""
 msgid "Post Meta Deleted"
 msgstr ""
 
-#: core/basic/AdminBar.php:61
+#: core/basic/AdminBar.php:65
 msgid "coreActivity"
 msgstr ""
 
-#: core/basic/Render.php:28
+#: core/basic/Render.php:29
 #: core/table/Logs.php:963
 msgid "Current Request IP"
 msgstr ""
 
-#: core/basic/Render.php:23
+#: core/basic/Render.php:24
 #: core/table/Logs.php:959
 msgid "Server IP"
 msgstr ""
 
-#: core/basic/Render.php:24
-#: core/basic/Render.php:29
+#: core/basic/Render.php:25
+#: core/basic/Render.php:30
 #: core/table/Logs.php:1152
 #: forms/content-dashboard-location.php:8
 #: forms/dialog-data.php:151
@@ -2293,6 +2298,26 @@ msgstr ""
 
 #: forms/content-about-whatsnew.php:26
 msgid "Run Setup Wizard"
+msgstr ""
+
+#: forms/content-dashboard-blog.php:8
+msgid "Blog Activity Logs"
+msgstr ""
+
+#: forms/content-dashboard-blog.php:11
+msgid "This is a limited use dashboard for the individual blog on your multisite network. You can see only log entries logged for this individual blog only. To access plugin settings, events, and logs for the whole network, you need to go to the Network Admin."
+msgstr ""
+
+#: forms/content-dashboard-blog.php:16
+msgid "Full Activity Logs"
+msgstr ""
+
+#: forms/content-dashboard-blog.php:17
+msgid "Events Management"
+msgstr ""
+
+#: forms/content-dashboard-blog.php:18
+msgid "Plugin Settings"
 msgstr ""
 
 #: forms/content-dashboard-database.php:16

@@ -18,7 +18,9 @@
 * **new** logs panel shows the live updates countdown to new update
 * **new** settings for meta exceptions with some default values
 * **new** show number of new logged entries in the admin bar menu 
+* **edit** blog dashboard in multisite network updated and improved
 * **edit** various updates and improvements to the logs and live updates
+* **edit** improvements to the page header current IPs integration
 * **edit** improvements to the admin bar menu display
 * **edit** reorganized scheduled jobs code into own class `Jobs`
 * **edit** Dev4Press Library 4.7
