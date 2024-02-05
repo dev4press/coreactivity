@@ -44,6 +44,10 @@ class AdminBar {
             }
 
             @media screen and (max-width: 782px) {
+                #wpadminbar .coreactivity-adminbar-count {
+                    display: none;
+                }
+
                 #wpadminbar li#wp-admin-bar-coreactivity-menu {
                     display: block;
                 }

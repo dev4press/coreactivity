@@ -1,5 +1,7 @@
 <?php
 
+use Dev4Press\v47\Core\Scope;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -9,10 +11,18 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="d4p-cards-wrapper">
 		<?php
 
-		include COREACTIVITY_PATH . 'forms/content-dashboard-overall.php';
-		include COREACTIVITY_PATH . 'forms/content-dashboard-database.php';
+		if ( Scope::instance()->is_master_network_admin() ) {
+			include COREACTIVITY_PATH . 'forms/content-dashboard-overall.php';
+			include COREACTIVITY_PATH . 'forms/content-dashboard-database.php';
+		} else {
+			include COREACTIVITY_PATH . 'forms/content-dashboard-blog.php';
+		}
+
 		include COREACTIVITY_PATH . 'forms/content-dashboard-statistics.php';
-		include COREACTIVITY_PATH . 'forms/content-dashboard-location.php';
+
+		if ( Scope::instance()->is_master_network_admin() ) {
+			include COREACTIVITY_PATH . 'forms/content-dashboard-location.php';
+		}
 
 		?>
     </div>
