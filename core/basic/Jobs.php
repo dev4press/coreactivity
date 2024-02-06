@@ -15,16 +15,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Jobs {
 	public function __construct() {
 		add_action( 'coreactivity_instant_notification', array( $this, 'instant_notification' ) );
-		add_action( 'coreactivity_daily_maintenance', array( $this, 'daily_maintenance' ) );
-		add_action( 'coreactivity_daily_digest', array( $this, 'daily_digest' ) );
-		add_action( 'coreactivity_daily_statistics', array( $this, 'daily_statistics' ) );
-		add_action( 'coreactivity_weekly_digest', array( $this, 'weekly_digest' ) );
-		add_action( 'coreactivity_weekly_maintenance', array( $this, 'weekly_maintenance' ) );
-		add_action( 'coreactivity_task_log_purge', array( $this, 'task_log_purge' ) );
-		add_action( 'coreactivity_task_geo_db', array( $this, 'task_geo_db_update' ) );
-		add_action( 'coreactivity_task_users_meta', array( $this, 'task_users_meta' ) );
 
 		if ( is_main_site() ) {
+			add_action( 'coreactivity_daily_maintenance', array( $this, 'daily_maintenance' ) );
+			add_action( 'coreactivity_daily_digest', array( $this, 'daily_digest' ) );
+			add_action( 'coreactivity_daily_statistics', array( $this, 'daily_statistics' ) );
+			add_action( 'coreactivity_weekly_digest', array( $this, 'weekly_digest' ) );
+			add_action( 'coreactivity_weekly_maintenance', array( $this, 'weekly_maintenance' ) );
+			add_action( 'coreactivity_task_log_purge', array( $this, 'task_log_purge' ) );
+			add_action( 'coreactivity_task_geo_db', array( $this, 'task_geo_db_update' ) );
+			add_action( 'coreactivity_task_users_meta', array( $this, 'task_users_meta' ) );
+
 			$this->jobs_scheduler_init();
 		}
 	}
