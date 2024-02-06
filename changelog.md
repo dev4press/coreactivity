@@ -19,6 +19,7 @@
 * **new** option to control the visibility of the IPv4 address in the log
 * **new** settings for metadata exceptions with some default values
 * **new** show number of new logged entries in the admin bar menu 
+* **edit** logs live updates time is now set to 10 seconds
 * **edit** blog dashboard in multisite network updated and improved
 * **edit** various updates and improvements to the logs and live updates
 * **edit** improvements to the page header current IPs integration

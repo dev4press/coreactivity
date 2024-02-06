@@ -814,7 +814,7 @@ msgid "Live Updates"
 msgstr ""
 
 #: core/admin/Settings.php:418
-msgid "Live AJAX requests every 15 seconds to get the latest logged events. The live functionality with take into account the Log panel current filters and view settings."
+msgid "Live AJAX requests every 10 seconds to get the latest logged events. The live functionality with take into account the Log panel current filters and view settings."
 msgstr ""
 
 #: core/admin/Settings.php:426

@@ -79,7 +79,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     Plugin can run geolocation for each logged IP and display the flag of country (if possible). And, each IP in the log will be marked with the comparison with current server and current visitor IPs.
                 </p>
                 <p>
-                    Logs panel has live update feature, and every 15 seconds will make the AJAX call to get the latest events based on the current Log filters, allowing you to monitor events logged in real time.
+                    Logs panel has live update feature, and every 10 seconds will make the AJAX call to get the latest events based on the current Log filters, allowing you to monitor events logged in real time.
                 </p>
             </div>
         </div>
