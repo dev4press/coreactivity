@@ -153,6 +153,19 @@ class DB extends BaseDB {
 		return empty( $raw ) ? array() : $this->pluck( $raw, 'logs', 'event_id' );
 	}
 
+	public function delete_log_entries( array $ids ) : int {
+		if ( empty( $ids ) ) {
+			return 0;
+		}
+
+		$sql = "DELETE i, im FROM " . $this->logs . " i 
+                LEFT JOIN " . $this->logmeta . " im ON i.log_id = im.log_id 
+                WHERE i.log_id in (" . join( ', ', $ids ) . ")";
+		$this->query( $sql );
+
+		return $this->rows_affected();
+	}
+
 	public function statistics_components_log( int $days = 30, int $blog_id = - 1 ) : array {
 		$query = array(
 			'select' => array(

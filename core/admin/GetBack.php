@@ -19,6 +19,8 @@ class GetBack extends BaseGetBack {
 			if ( $this->is_bulk_action() ) {
 				if ( $this->a()->panel == 'events' ) {
 					$this->bulk_panel_events();
+				} else if ( $this->a()->panel == 'logs' ) {
+					$this->bulk_panel_logs();
 				}
 			} else {
 				if ( $this->a()->panel == 'dashboard' ) {
@@ -105,6 +107,28 @@ class GetBack extends BaseGetBack {
 			}
 
 			wp_redirect( $this->a()->current_url() . '&message=events-updated' );
+			exit;
+		}
+	}
+
+	private function bulk_panel_logs() {
+		check_admin_referer( 'bulk-logs' );
+
+		$action = $this->get_bulk_action();
+
+		if ( $action != '' ) {
+			$ids = Sanitize::_get_ids( 'log' );
+
+			if ( ! empty( $ids ) ) {
+				if ( $action == 'delete' ) {
+					DB::instance()->delete_log_entries( $ids );
+
+					wp_redirect( $this->a()->current_url() . '&message=delete-completed' );
+					exit;
+				}
+			}
+
+			wp_redirect( $this->a()->current_url() );
 			exit;
 		}
 	}

@@ -26,6 +26,7 @@
 * **edit** improvements to the admin bar menu display
 * **edit** reorganized scheduled jobs code into own class `Jobs`
 * **edit** Dev4Press Library 4.7
+* **fix** logs panel bulk removal of selected entries not working
 * **fix** issue with the wrong URLs for actions in the live log items
 * **fix** few issues related to the PHP 8.3
 
