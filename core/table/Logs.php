@@ -227,16 +227,6 @@ class Logs extends Table {
 			unset( $columns['component'] );
 		}
 
-		if ( $this->_current_view == 'event_id' ) {
-			if ( ! Activity::instance()->is_event_object_linked( $this->_filter_lock['event_id'] ) ) {
-				unset( $columns['object_name'] );
-
-				if ( isset( $columns['object_type'] ) ) {
-					unset( $columns['object_type'] );
-				}
-			}
-		}
-
 		return apply_filters( $this->_filter_key . '_logs_columns', $columns, $this );
 	}
 

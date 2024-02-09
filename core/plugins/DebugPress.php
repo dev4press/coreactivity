@@ -15,6 +15,7 @@ class DebugPress extends Plugin {
 	protected $object_type = 'phperror';
 	protected $plugin_file = 'debugpress/debugpress.php';
 	protected $skip_duplicates = true;
+	protected $skip_duplicates_request = false;
 
 	public function init() {
 		add_filter( 'coreactivity_debugpress_ajax_call_log_active', array( $this, 'skip_heartbeat' ), 10, 3 );

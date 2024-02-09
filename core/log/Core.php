@@ -139,7 +139,7 @@ class Core {
 
 		if ( coreactivity_settings()->get( 'skip_duplicated' ) ) {
 			if ( Activity::instance()->can_event_skip_duplicates( $event_id ) ) {
-				$hash = $this->calculate_duplication_hash( $data, $meta );
+				$hash = $this->calculate_duplication_hash( $data, $meta, Activity::instance()->get_event_skip_duplicates_request( $event_id ) );
 
 				if ( ! empty( $this->duplicates ) && in_array( $hash, $this->duplicates ) ) {
 					return 0;
@@ -340,9 +340,13 @@ class Core {
 		return $meta;
 	}
 
-	private function calculate_duplication_hash( $data, $meta ) : string {
+	private function calculate_duplication_hash( $data, $meta, $skip_request = false ) : string {
 		$temp = array_merge( $data, $meta );
 		$skip = array( 'user_agent', 'logged', 'ip', 'user_id' );
+
+		if ( $skip_request ) {
+			$skip[] = 'request';
+		}
 
 		foreach ( $skip as $key ) {
 			if ( isset( $temp[ $key ] ) ) {

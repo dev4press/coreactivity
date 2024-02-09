@@ -45,6 +45,7 @@ abstract class Component {
 	protected $is_security = false;
 	protected $is_malicious = false;
 	protected $skip_duplicates = false;
+	protected $skip_duplicates_request = false;
 	protected $plugin_file = '';
 
 	public function __construct() {
@@ -88,15 +89,16 @@ abstract class Component {
 		foreach ( $this->events() as $event => $data ) {
 			$event  = strtolower( $event );
 			$status = $init->register_event( $this->code(), $event, array(
-				'label'           => $data['label'],
-				'status'          => $data['status'] ?? 'active',
-				'scope'           => $data['scope'] ?? $this->scope,
-				'object_type'     => $data['object_type'] ?? $this->object_type,
-				'is_security'     => $data['is_security'] ?? $this->is_security,
-				'is_malicious'    => $data['is_malicious'] ?? $this->is_malicious,
-				'skip_duplicates' => $data['skip_duplicates'] ?? $this->skip_duplicates,
-				'version'         => $data['version'] ?? $this->version,
-				'level'           => $data['level'] ?? 0,
+				'label'                   => $data['label'],
+				'status'                  => $data['status'] ?? 'active',
+				'scope'                   => $data['scope'] ?? $this->scope,
+				'object_type'             => $data['object_type'] ?? $this->object_type,
+				'is_security'             => $data['is_security'] ?? $this->is_security,
+				'is_malicious'            => $data['is_malicious'] ?? $this->is_malicious,
+				'skip_duplicates'         => $data['skip_duplicates'] ?? $this->skip_duplicates,
+				'skip_duplicates_request' => $data['skip_duplicates_request'] ?? $this->skip_duplicates_request,
+				'version'                 => $data['version'] ?? $this->version,
+				'level'                   => $data['level'] ?? 0,
 			), $data['rules'] ?? array() );
 
 			if ( $status ) {
