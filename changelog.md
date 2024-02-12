@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 2.0.1 / February 12, 2024
+
+* **fix** fatal error on the plugin dashboard
+
 ### Version: 2.0 / February 12, 2024
 
 * **new** dedicated `Users` login, logout and online tracking

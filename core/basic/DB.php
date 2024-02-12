@@ -347,7 +347,7 @@ class DB extends BaseDB {
 		$timestamp = Users::instance()->get_user_last_log_visit();
 
 		if ( $timestamp > 0 ) {
-			$datetime = coresecurity()->datetime()->mysql_date( true, $timestamp );
+			$datetime = coreactivity()->datetime()->mysql_date( true, $timestamp );
 
 			$sql = $this->prepare( "SELECT COUNT(*) FROM " . $this->logs . " WHERE `logged` > %s", $datetime );
 
