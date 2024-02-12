@@ -67,6 +67,7 @@ To use IP2Location, you need to have an account on IP2Location, to get the downl
 * Weekly Digest Notifications
 * IP WhoIs Information / v1.8
 * Request Device Detection / v1.6
+* Users login, logout, online tracking / v2.0
 * Log Cleanup Tools
 * Auto Log Cleanup
 * Log Live Updates
@@ -133,12 +134,14 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * New: option to control the visibility of the IPv4 address in the log
 * New: settings for metadata exceptions with some default values
 * New: show number of new logged entries in the admin bar menu 
+* Edit: logs live updates time is now set to 10 seconds
 * Edit: blog dashboard in multisite network updated and improved
 * Edit: various updates and improvements to the logs and live updates
 * Edit: improvements to the page header current IPs integration
 * Edit: improvements to the admin bar menu display
 * Edit: reorganized scheduled jobs code into own class `Jobs`
 * Edit: Dev4Press Library 4.7
+* Fix: logs panel bulk removal of selected entries not working
 * Fix: issue with the wrong URLs for actions in the live log items
 * Fix: few issues related to the PHP 8.3
 
