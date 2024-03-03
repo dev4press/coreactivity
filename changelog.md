@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### Version: 2.1 / March 03, 2024
+
+* **new** settings for main data logging, currently for IP only
+* **new** option for controlling the process of getting forwarded IPs
+* **new** wizard options for forwarded IP and duplicated entries logging
+
 ### Version: 2.0.1 / February 12, 2024
 
 * **fix** fatal error on the plugin dashboard

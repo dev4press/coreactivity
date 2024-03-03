@@ -19,6 +19,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="d4p-wizard-panel-content">
     <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
+        <p><?php esc_html_e( 'Do you want to get forwarded IP for visitors?', 'coreactivity' ); ?></p>
+        <div>
+            <em><?php esc_html_e( 'Forwarded IP header key can be faked, but it is the only way to get real IP of visitors behind proxies or internal networks. By default, if this option is disabled, plugin will only use REMOTE_ADDR key for visitor IP.', 'coreactivity' ); ?></em>
+			<?php coreactivity_wizard()->render_yes_no( 'intro', 'forwarded', 'no' ); ?>
+        </div>
+    </div>
+    <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
+        <p><?php esc_html_e( 'Do you want to skip logging duplicated entries?', 'coreactivity' ); ?></p>
+        <div>
+            <em><?php esc_html_e( 'Plugin can attempt to detected duplicated events, and skip logging duplicated events inside the 24 hours period to avoid flooding database with the same entry over and over again.', 'coreactivity' ); ?></em>
+			<?php coreactivity_wizard()->render_yes_no( 'intro', 'duplicated' ); ?>
+        </div>
+    </div>
+    <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
         <p><?php esc_html_e( 'Do you want to log Referer URL for each request?', 'coreactivity' ); ?></p>
         <div>
             <em><?php esc_html_e( 'Each request should referer URL, and depending on the request, this can be quite a long string. Referer is useful for checking the source of the request, but it can be faked by the request source. CoreActivity currently has no direct use for this value.', 'coreactivity' ); ?></em>

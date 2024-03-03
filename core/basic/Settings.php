@@ -37,6 +37,7 @@ class Settings extends BaseSettings {
 		'settings'      => array(
 			'show_setup_wizard'                       => true,
 			'skip_duplicated'                         => true,
+			'ip_visitor_forwarded'                    => false,
 			'users_online_window'                     => 300,
 			'admin_bar_integration'                   => true,
 			'admin_bar_indicator'                     => true,

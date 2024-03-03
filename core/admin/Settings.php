@@ -57,6 +57,28 @@ class Settings extends BaseSettings {
 
 	protected function init() {
 		$this->settings = array(
+			'logging'       => array(
+				'logging-ip' => array(
+					'name'     => __( 'Visitor IP', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'ip_visitor_forwarded', __( 'Use Forwarded IPs', 'coreactivity' ), __( 'To get visitor IP, plugin can only use main REMOTE_ADDR key, or it can test for one of the possible FORWARD keys.', 'coreactivity' ), Type::BOOLEAN )->more( array(
+									__( 'Many of the request header keys can be faked before reaching the website, with the exception of REMOTE_ADDR key which is the only key that is safe from tampering.', 'coreactivity' ),
+									__( 'But, REMOTE_ADDR is the IP of the machine connecting to your website, it doesn\'t have to be an IP of the machine actually making the request.', 'coreactivity' ),
+									__( 'If your visitor is behind proxy, or some other network interface, the real visitor IP can be set inside of the FORWARD keys.', 'coreactivity' ),
+									__( 'If you want to always check if one of the FORWARD keys is set, you need to enable this option, but there is no guarantee that any of the forwarded IPs will be a real one.', 'coreactivity' ),
+									__( 'When FORWARDED and REMOTE_ADDR are different, plugin will log both IPs (this was implemented from plugin version 2.1).', 'coreactivity' ),
+									__( 'If your website is behind CloudFlare, plugin will be able to detect this, and will get real IP, and this option will not be used.', 'coreactivity' ),
+								) ),
+							),
+						),
+					),
+				),
+			),
 			'optional'      => array(
 				'optional-location' => array(
 					'name'     => __( 'IP Location Data', 'coreactivity' ),
@@ -371,16 +393,16 @@ class Settings extends BaseSettings {
 					'name'     => __( 'Content Display', 'coreactivity' ),
 					'sections' => array(
 						array(
-							'label'    => __('IP'),
+							'label'    => __( 'IP' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
 								$this->i( 'settings', 'display_ip_country_flag', __( 'IP GEO location flag', 'coreactivity' ), __( 'Show country for the logged IP.', 'coreactivity' ), Type::BOOLEAN ),
-								$this->i( 'settings', 'log_ipv4_display', __( 'IPv4 Display', 'coreactivity' ), __( 'You can hide parts of the IP address when displayed. This will work for IPv4 address only, and it doesn\'t affect use of IP in URLs for filtering.', 'coreactivity' ), Type::SELECT )->data('array', Data::get_ip_display_method()),
+								$this->i( 'settings', 'log_ipv4_display', __( 'IPv4 Display', 'coreactivity' ), __( 'You can hide parts of the IP address when displayed. This will work for IPv4 address only, and it doesn\'t affect use of IP in URLs for filtering.', 'coreactivity' ), Type::SELECT )->data( 'array', Data::get_ip_display_method() ),
 							),
 						),
 						array(
-							'label'    => __('Other Information'),
+							'label'    => __( 'Other Information' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(

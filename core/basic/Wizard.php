@@ -11,6 +11,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Wizard extends CoreWizard {
 	public $default = array(
 		'intro'         => array(
+			'forwarded'        => array(
+				array(
+					'settings',
+					'ip_visitor_forwarded',
+					array(
+						'yes' => true,
+						'no'  => false,
+					),
+				),
+			),
+			'duplicated'       => array(
+				array(
+					'settings',
+					'skip_duplicated',
+					array(
+						'yes' => true,
+						'no'  => false,
+					),
+				),
+			),
 			'referer'          => array(
 				array(
 					'settings',

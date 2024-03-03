@@ -9,10 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Data {
 	public static function get_ip_display_method() : array {
 		return array(
-			'full'     => __( 'Full IP', 'coreactivity' ),
+			'full'    => __( 'Full IP', 'coreactivity' ),
 			'partial' => __( 'Mask last Byte', 'coreactivity' ),
-			'half' => __( 'Mask last 2 Bytes', 'coreactivity' ),
-			'hide' => __( 'Maks whole IP', 'coreactivity' ),
+			'half'    => __( 'Mask last 2 Bytes', 'coreactivity' ),
+			'hide'    => __( 'Maks whole IP', 'coreactivity' ),
 		);
 	}
 

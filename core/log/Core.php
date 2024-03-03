@@ -46,16 +46,18 @@ class Core {
 
 	public function __construct() {
 		$this->cached_data = array(
-			'ip'        => IP::visitor(),
-			'server_ip' => isset( $_SERVER['SERVER_ADDR'] ) ? IP::server() : '',
-			'ua'        => $this->get_user_agent(),
-			'referer'   => $this->get_referer(),
-			'method'    => $this->get_request_method(),
-			'protocol'  => wp_get_server_protocol(),
-			'request'   => URL::current_url_request(),
-			'context'   => WordPress::instance()->context(),
-			'multisite' => Scope::instance()->is_multisite(),
-			'scope'     => 'blog',
+			'ip'          => IP::visitor( coreactivity_settings()->get( 'ip_visitor_forwarded' ) ),
+			'remove_addr' => IP::visitor( false ),
+			'server_ip'   => isset( $_SERVER['SERVER_ADDR'] ) ? IP::server() : '',
+			'ua'          => $this->get_user_agent(),
+			'referer'     => $this->get_referer(),
+			'method'      => $this->get_request_method(),
+			'protocol'    => wp_get_server_protocol(),
+			'request'     => URL::current_url_request(),
+			'context'     => WordPress::instance()->context(),
+			'multisite'   => Scope::instance()->is_multisite(),
+			'scope'       => 'blog',
+			'local'       => false,
 		);
 
 		$this->cached_data['anon'] = in_array( $this->cached_data['context'], array( 'CLI', 'CRON' ) );
@@ -86,6 +88,10 @@ class Core {
 
 		if ( ! is_array( $this->duplicates ) ) {
 			$this->duplicates = array();
+		}
+
+		if ( empty( $this->cached_data['ip'] ) ) {
+			$this->cached_data['local'] = true;
 		}
 
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );
@@ -169,6 +175,10 @@ class Core {
 					}
 				}
 			}
+		}
+
+		if ( ! $this->get( 'local' ) && $this->get( 'remote_addr' ) !== $this->get( 'ip' ) ) {
+			$meta['remote_addr'] = $this->get( 'remote_addr' );
 		}
 
 		$id = DB::instance()->log_event( $data, $meta );
@@ -305,6 +315,10 @@ class Core {
 			if ( $this->cached_data['context'] === 'AJAX' && isset( $_REQUEST['action'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$meta['ajax_action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 			}
+		}
+
+		if ( isset( $meta['remote_addr'] ) ) {
+			unset( $meta['remote_addr'] );
 		}
 
 		return $meta;

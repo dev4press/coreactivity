@@ -942,6 +942,10 @@ class Logs extends Table {
 			}
 		}
 
+		if ( isset( $item->meta['remote_addr'] ) ) {
+			$render .= '<i class="d4p-icon d4p-ui-shield" title="REMOTE_ADDR: ' . esc_attr( $item->meta['remote_addr'] ) . '"></i>';
+		}
+
 		if ( isset( $item->device['bot'] ) ) {
 			$render .= '<i class="d4p-icon d4p-ui-robot" title="' . esc_attr__( 'Bot', 'coreactivity' ) . '"></i>';
 		}
