@@ -7,6 +7,7 @@
 * **new** settings for main data logging, currently for IP only
 * **new** option for controlling the process of getting forwarded IPs
 * **new** wizard options for forwarded IP and duplicated entries logging
+* **edit** Dev4Press Library 4.7.1
 
 ### Version: 2.0.1 / February 12, 2024
 
