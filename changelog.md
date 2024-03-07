@@ -2,11 +2,12 @@
 
 ## Changelog
 
-### Version: 2.1 / March 03, 2024
+### Version: 2.1 / March 07, 2024
 
-* **new** settings for main data logging, currently for IP only
+* **new** settings for the main data logging, currently for IP only
 * **new** option for controlling the process of getting forwarded IPs
 * **new** wizard options for forwarded IP and duplicated entries logging
+* **edit** display shorter log counts numbers in the admin bar menu
 * **edit** Dev4Press Library 4.7.1
 
 ### Version: 2.0.1 / February 12, 2024
@@ -29,7 +30,7 @@
 * **new** logs panel shows the live updates countdown to new update
 * **new** option to control the visibility of the IPv4 address in the log
 * **new** settings for metadata exceptions with some default values
-* **new** show number of new logged entries in the admin bar menu 
+* **new** show number of new logged entries in the admin bar menu
 * **edit** logs live updates time is now set to 10 seconds
 * **edit** blog dashboard in multisite network updated and improved
 * **edit** various updates and improvements to the logs and live updates

@@ -2,6 +2,8 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
+use Dev4Press\v47\Core\Quick\File;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -55,6 +57,20 @@ class AdminBar {
 		<?php
 	}
 
+	public function short_count( $number ) {
+		$suffix = array( '', 'K', 'M' );
+
+		for ( $i = 0; $i < count( $suffix ); $i ++ ) {
+			$divide = $number / pow( 1000, $i );
+
+			if ( $divide < 1000 ) {
+				return round( $divide ) . $suffix[ $i ];
+			}
+		}
+
+		return $number;
+	}
+
 	public function integration() {
 		if ( current_user_can( 'manage_options' ) ) {
 			global $wp_admin_bar;
@@ -65,7 +81,7 @@ class AdminBar {
 			$title = '<span style="margin-top: 2px" class="ab-icon dashicons dashicons-database"></span><span class="ab-label">' . __( 'coreActivity', 'coreactivity' ) . '</span>';
 
 			if ( $count > 0 ) {
-				$show  = '<span class="wp-ui-notification coreactivity-adminbar-count">' . $count . '</span>';
+				$show  = '<span class="wp-ui-notification coreactivity-adminbar-count">' . $this->short_count( $count ) . '</span>';
 				$title .= $show;
 			}
 
