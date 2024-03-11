@@ -177,8 +177,10 @@ abstract class Component {
 	}
 
 	protected function prepare_data_for_log( string $event, array $data = array() ) : array {
-		if ( ( isset( $data['object_id'] ) || isset( $data['object_name'] ) ) && ! isset( $data['object_type'] ) ) {
-			$data['object_type'] = $this->object_type;
+		if ( ! empty( $this->object_type ) ) {
+			if ( ( isset( $data['object_id'] ) || isset( $data['object_name'] ) ) && ! isset( $data['object_type'] ) ) {
+				$data['object_type'] = $this->object_type;
+			}
 		}
 
 		return $data;
