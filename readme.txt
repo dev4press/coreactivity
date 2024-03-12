@@ -4,7 +4,7 @@ Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, events, audit log, event log
 Stable tag: 2.1
 Requires at least: 5.8
-Tested up to: 6.4
+Tested up to: 6.5
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -118,6 +118,15 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.1 (2024.03.12) =
+
+* New: settings for the main data logging, currently for IP only
+* New: option for controlling the process of getting forwarded IPs
+* New: wizard options for forwarded IP and duplicated entries logging
+* Edit: display shorter log counts numbers in the admin bar menu
+* Edit: Dev4Press Library 4.7.1
+* Fix: minor issue with the logging entries object type
+
 = 2.0.1 (2024.02.12) =
 * Fix: fatal error on the plugin dashboard
 
@@ -308,6 +317,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 2.1 =
+Improved forwarded IPs handling. Few more updates.
+
 = 2.0 =
 New events and features. Library Updated. Many improvements and fixes.
 

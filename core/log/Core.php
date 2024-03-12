@@ -47,7 +47,7 @@ class Core {
 	public function __construct() {
 		$this->cached_data = array(
 			'ip'          => IP::visitor( coreactivity_settings()->get( 'ip_visitor_forwarded' ) ),
-			'remove_addr' => IP::visitor( false ),
+			'remote_addr' => IP::visitor( false ),
 			'server_ip'   => isset( $_SERVER['SERVER_ADDR'] ) ? IP::server() : '',
 			'ua'          => $this->get_user_agent(),
 			'referer'     => $this->get_referer(),
