@@ -1,7 +1,7 @@
 === coreActivity: Activity Logging plugin for WordPress ===
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
-Tags: dev4press, activity log, activity, events, audit log, event log
+Tags: dev4press, activity log, activity, audit log, event log
 Stable tag: 2.1
 Requires at least: 5.8
 Tested up to: 6.5
@@ -9,7 +9,7 @@ Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Monitor and log all kinds of activity happening on the WordPress website, with fine control over events to log, detailed log and events panels, and more.
+Monitor and log all kinds of activity happening on the WordPress website, with fine control over events to log, detailed log and events panels...
 
 == Description ==
 
@@ -119,7 +119,6 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Changelog ==
 = 2.1 (2024.03.12) =
-
 * New: settings for the main data logging, currently for IP only
 * New: option for controlling the process of getting forwarded IPs
 * New: wizard options for forwarded IP and duplicated entries logging
