@@ -5,6 +5,7 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\v47\Core\Options\Settings as BaseSettings;
 use Dev4Press\v47\Core\Options\Type;
+use Dev4Press\v47\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,6 +19,12 @@ class Settings extends BaseSettings {
 
 	protected function value( $name, $group = 'settings', $default = null ) {
 		if ( $group == 'tools-cleanup' ) {
+			$event = $_GET['event'] ? Sanitize::absint( $_GET['event'] ) : 0;
+
+			if ( $event > 0 ) {
+				$this->_tools_cleanup['events'] = array( $event );
+			}
+
 			return $this->_tools_cleanup[ $name ];
 		}
 
@@ -25,8 +32,8 @@ class Settings extends BaseSettings {
 	}
 
 	public function tools_cleanup() : array {
-		return array(
-			'cleanup-basic'  => array(
+		$settings = array(
+			'cleanup-basic' => array(
 				'name'     => __( 'Cleanup Period', 'coreactivity' ),
 				'sections' => array(
 					array(
@@ -39,20 +46,26 @@ class Settings extends BaseSettings {
 					),
 				),
 			),
-			'cleanup-events' => array(
-				'name'     => __( 'Cleanup Events', 'coreactivity' ),
-				'sections' => array(
-					array(
-						'label'    => '',
-						'name'     => '',
-						'class'    => '',
-						'settings' => array(
-							$this->i( 'tools-cleanup', 'events', __( 'Events to remove', 'coreactivity' ), '', Type::CHECKBOXES_GROUP )->data( 'array', Activity::instance()->get_select_events() ),
-						),
+		);
+
+		$component = $_GET['component'] ? Sanitize::basic( $_GET['component'] ) : '';
+		$listing   = empty( $component ) ? Activity::instance()->get_select_events() : Activity::instance()->get_select_events( false, array( $component ) );
+
+		$settings['cleanup-events'] = array(
+			'name'     => __( 'Cleanup Events', 'coreactivity' ),
+			'sections' => array(
+				array(
+					'label'    => '',
+					'name'     => '',
+					'class'    => '',
+					'settings' => array(
+						$this->i( 'tools-cleanup', 'events', __( 'Events to remove', 'coreactivity' ), '', Type::CHECKBOXES_GROUP )->data( 'array', $listing ),
 					),
 				),
 			),
 		);
+
+		return $settings;
 	}
 
 	protected function init() {
