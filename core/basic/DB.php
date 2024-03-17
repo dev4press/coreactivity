@@ -90,7 +90,7 @@ class DB extends BaseDB {
 
 		$statistics = coreactivity_settings()->get( 'statistics', 'storage' );
 
-		$results['history'] = strlen( json_encode( $statistics ) );
+		$results['history'] = strlen( wp_json_encode( $statistics ) );
 
 		return $results;
 	}

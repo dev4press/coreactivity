@@ -249,7 +249,7 @@ class Logs extends Table {
 			'settings' => array(),
 			'id'       => DB::instance()->get_last_log_id(),
 			'nonce'    => wp_create_nonce( 'coreactivity-live-update' ),
-			'page'     => isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '',
+			'page'     => isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification
 		);
 
 		foreach ( $this->_allowed_override_settings as $key ) {

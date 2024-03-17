@@ -176,7 +176,7 @@ class Privacy extends Component {
 	public function event_export_personal_data_completed() {
 		require_once ABSPATH . 'wp-admin/includes/user.php';
 
-		$request_ids = isset( $_REQUEST['request_id'] ) ? wp_parse_id_list( wp_unslash( $_REQUEST['request_id'] ) ) : array();
+		$request_ids = isset( $_REQUEST['request_id'] ) ? wp_parse_id_list( wp_unslash( $_REQUEST['request_id'] ) ) : array(); // phpcs:ignore WordPress.Security.NonceVerification
 
 		foreach ( $request_ids as $request_id ) {
 			$user_request = wp_get_user_request( $request_id );
@@ -199,7 +199,7 @@ class Privacy extends Component {
 		$user_request = wp_get_user_request( $post_id );
 
 		if ( $user_request instanceof WP_User_Request ) {
-			$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : '';
+			$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
 
 			if ( 'delete' === $action ) {
 				$this->log( 'remove-personal-data-request-deleted', array(
@@ -219,7 +219,7 @@ class Privacy extends Component {
 		$user_request = wp_get_user_request( $post_id );
 
 		if ( $user_request instanceof WP_User_Request ) {
-			$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : '';
+			$action = isset( $_REQUEST['action'] ) ? sanitize_key( wp_unslash( $_REQUEST['action'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
 
 			if ( 'delete' === $action ) {
 				$this->log( 'export-personal-data-request-deleted', array(
