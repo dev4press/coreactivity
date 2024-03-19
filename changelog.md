@@ -5,6 +5,7 @@
 ### Version: 2.2 / March 21, 2024
 
 * **new** events panel links to the filtered cleanup tools panel
+* **edit** expanded list of default WordPress Options keys
 * **edit** various plugin core updates and tweaks
 * **edit** Device Detector Library 6.3.0
 * **edit** Dev4Press Library 4.7.2
