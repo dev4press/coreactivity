@@ -194,6 +194,16 @@ class Core {
 			 */
 			do_action( 'coreactivity_event_logged', $id, $data, $meta, $event );
 
+			/**
+			 * Action fired after the event has been logged successfully.
+			 *
+			 * @param int    $log_id ID of the log entry
+			 * @param array  $data   main data array
+			 * @param array  $meta   additional data array
+			 * @param object $event  event object with all the event information
+			 */
+			do_action( 'coreactivity_event_logged_' . $event->component . '_' . $event->event, $id, $data, $meta, $event );
+
 			$this->page_events[ $id ] = array(
 				'data' => $data,
 				'meta' => $meta,
