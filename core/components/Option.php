@@ -149,6 +149,8 @@ class Option extends Component {
 		'can_compress_scripts',
 		'active_sitewide_plugins',
 		'nav_menu_options',
+		'blog_upload_space',
+		'upload_space_check_disabled',
 		'_wp_suggested_policy_text_has_changed',
 	);
 
