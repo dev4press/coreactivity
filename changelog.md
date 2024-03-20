@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### Version: 2.2 / March 21, 2024
+### Version: 2.2 / March 20, 2024
 
 * **new** events panel links to the filtered cleanup tools panel
 * **edit** expanded list of default WordPress Options keys

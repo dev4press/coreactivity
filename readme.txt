@@ -118,11 +118,14 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
-= 2.2 (2024.03.21) =
+= 2.2 (2024.03.20) =
 * New: events panel links to the filtered cleanup tools panel
+* Edit: expanded list of default WordPress Options keys
+* Edit: expanded list of default WordPress Sitemeta keys
 * Edit: various plugin core updates and tweaks
 * Edit: Device Detector Library 6.3.0
-* Edit: Dev4Press Library 4.7.2
+* Edit: Dev4Press Library 4.7.3
+* Fix: logs panel order by IP was not working
 
 = 2.1 (2024.03.12) =
 * New: settings for the main data logging, currently for IP only
