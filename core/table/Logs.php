@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Logs extends Table {
-	public $_sanitize_orderby_fields = array( 'l.log_id', 'e.component', 'e.event' );
+	public $_sanitize_orderby_fields = array( 'l.log_id', 'l.ip', 'e.component', 'e.event' );
 	public $_table_class_name = 'coreactivity-grid-logs';
 	public $_checkbox_field = 'log_id';
 	public $_self_nonce_key = 'coreactivity-table-logs';
