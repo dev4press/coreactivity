@@ -36,10 +36,18 @@ class bbPress extends Content {
 	}
 
 	private function _post_types() : array {
-		return array(
-			bbp_get_forum_post_type(),
-			bbp_get_topic_post_type(),
-			bbp_get_reply_post_type(),
-		);
+		if ( function_exists( 'bbp_get_forum_post_type' ) ) {
+			return array(
+				bbp_get_forum_post_type(),
+				bbp_get_topic_post_type(),
+				bbp_get_reply_post_type(),
+			);
+		} else {
+			return array(
+				'forum',
+				'topic',
+				'reply',
+			);
+		}
 	}
 }

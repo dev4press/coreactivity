@@ -69,7 +69,7 @@ class Error extends Component {
 			$query = wp_parse_url( $url, PHP_URL_QUERY );
 			$query = ! empty( $query ) ? trim( $query ) : '';
 			$path  = wp_parse_url( $url, PHP_URL_PATH );
-			$ext   = trim( strtolower( pathinfo( $path, PATHINFO_EXTENSION ) ) );
+			$ext   = ! empty( $path ) ? trim( strtolower( pathinfo( $path, PATHINFO_EXTENSION ) ) ) : '';
 
 			if ( ! empty( $ext ) ) {
 				if ( $this->check_for_exceptions( $url ) ) {

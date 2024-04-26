@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### Version: 2.3 / April 30, 2024
+
+* **edit** Dev4Press Library 4.8
+* **fix** few minor issues with the component loading
+* **fix** several issues with PHP 8.1 and newer
+
 ### Version: 2.2 / March 20, 2024
 
 * **new** events panel links to the filtered cleanup tools panel
