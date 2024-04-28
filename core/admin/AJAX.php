@@ -6,7 +6,7 @@ use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\WhoIs;
 use Dev4Press\Plugin\CoreActivity\Table\Live;
-use Dev4Press\v47\Core\Quick\Sanitize;
+use Dev4Press\v48\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -109,7 +109,7 @@ class AJAX {
 	}
 
 	public function whois_ip() {
-		$ip  = isset( $_POST['whois'] ) ? Sanitize::basic( wp_unslash( $_POST['whois'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$ip  = isset( $_POST['whois'] ) ? Sanitize::text( $_POST['whois'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 		$out = __( 'WhoIs check failed', 'coreactivity' );
 
 		if ( ! empty( $ip ) && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-whois-' . $ip ) ) {

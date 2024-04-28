@@ -1,12 +1,12 @@
 <?php
 
-use function Dev4Press\v47\Functions\panel;
+use function Dev4Press\v48\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// include COREACTIVITY_PATH . 'forms/content-about-minor.php';
+include COREACTIVITY_PATH . 'forms/content-about-minor.php';
 
 ?>
 

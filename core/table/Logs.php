@@ -10,11 +10,11 @@ use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
 use Dev4Press\Plugin\CoreActivity\Log\Users;
-use Dev4Press\v47\Core\Helpers\IP;
-use Dev4Press\v47\Core\Plugins\DBLite;
-use Dev4Press\v47\Core\Quick\Sanitize;
-use Dev4Press\v47\Core\UI\Elements;
-use Dev4Press\v47\WordPress\Admin\Table;
+use Dev4Press\v48\Core\Helpers\IP;
+use Dev4Press\v48\Core\Plugins\DBLite;
+use Dev4Press\v48\Core\Quick\Sanitize;
+use Dev4Press\v48\Core\UI\Elements;
+use Dev4Press\v48\WordPress\Admin\Table;
 use WP_Site;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -22,13 +22,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Logs extends Table {
-	public $_sanitize_orderby_fields = array( 'l.log_id', 'l.ip', 'e.component', 'e.event' );
-	public $_table_class_name = 'coreactivity-grid-logs';
-	public $_checkbox_field = 'log_id';
-	public $_self_nonce_key = 'coreactivity-table-logs';
-	public $_rows_per_page_key = 'coreactivity_logs_rows_per_page';
-	public $_rows_per_page_default = 25;
-	public $_views_separator = '';
+	public array $_sanitize_orderby_fields = array( 'l.log_id', 'l.ip', 'e.component', 'e.event' );
+	public string $_table_class_name = 'coreactivity-grid-logs';
+	public string $_checkbox_field = 'log_id';
+	public string $_self_nonce_key = 'coreactivity-table-logs';
+	public string $_rows_per_page_key = 'coreactivity_logs_rows_per_page';
+	public int $_rows_per_page_default = 25;
+	public string $_views_separator = '';
 	public $_current_view = '';
 	public $_current_ip = '';
 	public $_server_ip = '';
@@ -264,14 +264,14 @@ class Logs extends Table {
 			'filter-blog_id'      => Sanitize::_get_absint( 'filter-blog_id' ),
 			'filter-user_id'      => Sanitize::_get_absint( 'filter-user_id' ),
 			'filter-event_id'     => Sanitize::_get_absint( 'filter-event_id' ),
-			'filter-ip'           => Sanitize::_get_basic( 'filter-ip' ),
-			'filter-component'    => Sanitize::_get_basic( 'filter-component' ),
+			'filter-ip'           => Sanitize::_get_text( 'filter-ip' ),
+			'filter-component'    => Sanitize::_get_text( 'filter-component' ),
 			'filter-country_code' => strtoupper( Sanitize::_get_slug( 'filter-country_code' ) ),
 			'filter-context'      => strtoupper( Sanitize::_get_slug( 'filter-context' ) ),
 			'filter-method'       => strtoupper( Sanitize::_get_slug( 'filter-method' ) ),
 			'filter-object_type'  => Sanitize::_get_slug( 'filter-object_type' ),
 			'filter-object_id'    => Sanitize::_get_absint( 'filter-object_id' ),
-			'filter-object_name'  => Sanitize::_get_basic( 'filter-object_name' ),
+			'filter-object_name'  => Sanitize::_get_text( 'filter-object_name' ),
 			'view'                => $this->_get_field( 'view' ),
 			'search'              => $this->_get_field( 's' ),
 			'period'              => $this->_get_field( 'period' ),

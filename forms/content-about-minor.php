@@ -1,7 +1,7 @@
 <?php
 
-use Dev4Press\v47\Core\Quick\KSES;
-use function Dev4Press\v47\Functions\panel;
+use Dev4Press\v48\Core\Quick\KSES;
+use function Dev4Press\v48\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -10,6 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
+    <p>
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.3</span></strong> &minus;
+        External libraries updated. Few minor changes and fixes.
+    </p>
     <p>
         <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.2</span></strong> &minus;
         Events link to cleanup. Device Detector library update Library Updated. Few minor changes.

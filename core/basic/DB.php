@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
 use Dev4Press\Plugin\CoreActivity\Log\Users;
-use Dev4Press\v47\Core\Plugins\DB as BaseDB;
+use Dev4Press\v48\Core\Plugins\DB as BaseDB;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

@@ -3,13 +3,13 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v47\Core\DateTime;
-use Dev4Press\v47\Core\Helpers\IP;
-use Dev4Press\v47\Core\Quick\Sanitize;
-use Dev4Press\v47\Core\Quick\URL;
-use Dev4Press\v47\Core\Scope;
-use Dev4Press\v47\Service\GEOIP\Location;
-use Dev4Press\v47\WordPress;
+use Dev4Press\v48\Core\DateTime;
+use Dev4Press\v48\Core\Helpers\IP;
+use Dev4Press\v48\Core\Quick\Sanitize;
+use Dev4Press\v48\Core\Quick\URL;
+use Dev4Press\v48\Core\Scope;
+use Dev4Press\v48\Service\GEOIP\Location;
+use Dev4Press\v48\WordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -244,7 +244,7 @@ class Core {
 
 	private function get_user_agent() : string {
 		if ( coreactivity_settings()->get( 'log_if_available_user_agent' ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			return Sanitize::basic( trim( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+			return Sanitize::text( trim( $_SERVER['HTTP_USER_AGENT'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 		}
 
 		return '';

@@ -4,6 +4,8 @@
 
 ### Version: 2.3 / April 30, 2024
 
+* **edit** IP2Location Library 9.7.3
+* **edit** Device Detector Library 6.3.1
 * **edit** Dev4Press Library 4.8
 * **fix** few minor issues with the component loading
 * **fix** several issues with PHP 8.1 and newer

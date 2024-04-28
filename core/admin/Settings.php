@@ -3,9 +3,9 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v47\Core\Options\Settings as BaseSettings;
-use Dev4Press\v47\Core\Options\Type;
-use Dev4Press\v47\Core\Quick\Sanitize;
+use Dev4Press\v48\Core\Options\Settings as BaseSettings;
+use Dev4Press\v48\Core\Options\Type;
+use Dev4Press\v48\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -48,7 +48,7 @@ class Settings extends BaseSettings {
 			),
 		);
 
-		$component = $_GET['component'] ? Sanitize::basic( $_GET['component'] ) : '';
+		$component = $_GET['component'] ? Sanitize::text( $_GET['component'] ) : '';
 		$listing   = empty( $component ) ? Activity::instance()->get_select_events() : Activity::instance()->get_select_events( false, array( $component ) );
 
 		$settings['cleanup-events'] = array(

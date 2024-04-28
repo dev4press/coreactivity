@@ -1,6 +1,6 @@
 <?php
 
-use Dev4Press\v47\Core\UI\Icons;
+use Dev4Press\v48\Core\UI\Icons;
 
 $_tabs = coreactivity_view_dialog_tabs();
 

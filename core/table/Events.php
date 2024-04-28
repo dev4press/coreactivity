@@ -3,23 +3,23 @@
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v47\Core\Quick\Sanitize;
-use Dev4Press\v47\Core\Quick\Str;
-use Dev4Press\v47\Core\UI\Elements;
-use Dev4Press\v47\WordPress\Admin\Table;
-use Dev4Press\v47\Core\Plugins\DBLite;
+use Dev4Press\v48\Core\Quick\Sanitize;
+use Dev4Press\v48\Core\Quick\Str;
+use Dev4Press\v48\Core\UI\Elements;
+use Dev4Press\v48\WordPress\Admin\Table;
+use Dev4Press\v48\Core\Plugins\DBLite;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class Events extends Table {
-	public $_sanitize_orderby_fields = array( 'e.event_id', 'e.component', 'e.event', 'logs' );
-	public $_table_class_name = 'coreactivity-grid-events';
-	public $_checkbox_field = 'event_id';
-	public $_self_nonce_key = 'coreactivity-table-events';
-	public $_rows_per_page_key = 'coreactivity_events_rows_per_page';
-	public $_rows_per_page_default = 50;
+	public array $_sanitize_orderby_fields = array( 'e.event_id', 'e.component', 'e.event', 'logs' );
+	public string $_table_class_name = 'coreactivity-grid-events';
+	public string $_checkbox_field = 'event_id';
+	public string $_self_nonce_key = 'coreactivity-table-events';
+	public string $_rows_per_page_key = 'coreactivity_events_rows_per_page';
+	public int $_rows_per_page_default = 50;
 	public $_logged_counts = array();
 
 	public function __construct( $args = array() ) {
@@ -118,9 +118,9 @@ class Events extends Table {
 
 	protected function process_request_args() {
 		$this->_request_args = array(
-			'filter-source'    => Sanitize::_get_basic( 'filter-source', '' ),
-			'filter-group'     => Sanitize::_get_basic( 'filter-group', '' ),
-			'filter-component' => Sanitize::_get_basic( 'filter-component', '' ),
+			'filter-source'    => Sanitize::_get_text( 'filter-source', '' ),
+			'filter-group'     => Sanitize::_get_text( 'filter-group', '' ),
+			'filter-component' => Sanitize::_get_text( 'filter-component', '' ),
 			'search'           => $this->_get_field( 's' ),
 			'orderby'          => $this->_get_field( 'orderby', 'event_id' ),
 			'order'            => $this->_get_field( 'order', 'DESC' ),

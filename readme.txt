@@ -6,6 +6,7 @@ Stable tag: 2.3
 Requires at least: 5.8
 Tested up to: 6.5
 Requires PHP: 7.4
+Requires CP: 2.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 

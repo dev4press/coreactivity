@@ -4,8 +4,8 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v47\Core\Admin\GetBack as BaseGetBack;
-use Dev4Press\v47\Core\Quick\Sanitize;
+use Dev4Press\v48\Core\Admin\GetBack as BaseGetBack;
+use Dev4Press\v48\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -54,7 +54,7 @@ class GetBack extends BaseGetBack {
 
 		if ( $action == 'do-not-log' ) {
 			$object_type = Sanitize::_get_slug( 'object-type' );
-			$object_name = isset( $_GET['object-name'] ) ? Sanitize::basic( wp_unslash( urldecode( $_GET['object-name'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
+			$object_name = isset( $_GET['object-name'] ) ? Sanitize::text( urldecode( $_GET['object-name'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
 			if ( ! empty( $object_name ) && ! empty( $object_type ) ) {
 				check_admin_referer( 'coreactivity-do-not-log-' . $object_name );

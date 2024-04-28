@@ -10,6 +10,7 @@
  * Requires at least: 5.8
  * Tested up to:      6.5
  * Requires PHP:      7.4
+ * Requires CP:       2.0
  * Network:           true
  * License:           GPLv3 or later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
@@ -33,7 +34,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  */
 
-use Dev4Press\v47\WordPress;
+use Dev4Press\v48\WordPress;
 
 const COREACTIVITY_VERSION = '2.3';
 const COREACTIVITY_FILE    = __FILE__;

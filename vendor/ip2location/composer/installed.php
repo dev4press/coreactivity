@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'ip2location/ip2location-php' => array(
-            'pretty_version' => '9.7.2',
-            'version' => '9.7.2.0',
-            'reference' => 'e23084a50ebaf3d2633b178523a21c7a8a771550',
+            'pretty_version' => '9.7.3',
+            'version' => '9.7.3.0',
+            'reference' => '67c7bf13b0571b70925435e640ea5598e9fdeee9',
             'type' => 'library',
             'install_path' => __DIR__ . '/../ip2location/ip2location-php',
             'aliases' => array(),
