@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### Version: 2.3 / April 30, 2024
+### Version: 2.3 / May 2, 2024
 
 * **edit** IP2Location Library 9.7.3
 * **edit** Device Detector Library 6.3.1

@@ -119,6 +119,13 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.3 (2024.05.02) =
+* Edit: IP2Location Library 9.7.3
+* Edit: Device Detector Library 6.3.1
+* Edit: Dev4Press Library 4.8
+* Fix: few minor issues with the component loading
+* Fix: several issues with PHP 8.1 and newer
+
 = 2.2 (2024.03.20) =
 * New: events panel links to the filtered cleanup tools panel
 * Edit: expanded list of default WordPress Options keys
@@ -326,6 +333,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 2.3 =
+External libraries updated. Few minor changes and fixes.
+
 = 2.2 =
 Events link to cleanup. Device Detector library update Library Updated. Few minor changes.
 
@@ -334,9 +344,6 @@ Improved forwarded IPs handling. Few more updates.
 
 = 2.0 =
 New events and features. Library Updated. Many improvements and fixes.
-
-= 1.8 =
-New components and events. IP WhoIs. Few improvements and fixes.
 
 == Screenshots ==
 * Plugin Dashboard

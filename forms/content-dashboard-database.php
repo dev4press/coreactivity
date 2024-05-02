@@ -1,7 +1,6 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 use Dev4Press\v48\Core\Quick\File;
 
 if ( ! defined( 'ABSPATH' ) ) {
