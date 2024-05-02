@@ -120,6 +120,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Changelog ==
 = 2.3 (2024.05.02) =
+* Edit: improvements to the Logs panel display for some events
 * Edit: IP2Location Library 9.7.3
 * Edit: Device Detector Library 6.3.1
 * Edit: Dev4Press Library 4.8

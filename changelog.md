@@ -4,6 +4,7 @@
 
 ### Version: 2.3 / May 2, 2024
 
+* **edit** improvements to the Logs panel display for some events
 * **edit** IP2Location Library 9.7.3
 * **edit** Device Detector Library 6.3.1
 * **edit** Dev4Press Library 4.8

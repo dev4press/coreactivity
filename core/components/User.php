@@ -217,6 +217,8 @@ class User extends Component {
 				'old_display_name',
 				'new_display_name',
 				'user_roles',
+				'user_login',
+				'user_email',
 			),
 			'role-changed' => array(
 				'role',
