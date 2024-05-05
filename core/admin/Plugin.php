@@ -235,6 +235,14 @@ class Plugin extends BasePlugin {
 		return Wizard::instance();
 	}
 
+	public function help_tab_getting_help() {
+		if ( ! empty( $this->panel ) ) {
+			Help::instance();
+		}
+
+		parent::help_tab_getting_help();
+	}
+
 	protected function extra_enqueue_scripts_plugin() {
 		$this->enqueue();
 	}

@@ -4,6 +4,7 @@
 
 ### Version: 2.3.1 / May 5, 2024
 
+* **edit** expanded context help for several panels
 * **edit** changes to organization of some plugin settings
 * **edit** few changes to the plugin `readme.txt` file
 
