@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Settings extends BaseSettings {
-	private $_tools_cleanup = array(
+	private array $_tools_cleanup = array(
 		'period' => '',
 		'events' => true,
 	);
@@ -71,7 +71,24 @@ class Settings extends BaseSettings {
 	protected function init() {
 		$this->settings = array(
 			'logging'       => array(
-				'logging-ip' => array(
+				'logging-process' => array(
+					'name'     => __( 'Logging Process', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => '',
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'skip_duplicated', __( 'Skip Duplicates', 'coreactivity' ), __( 'Plugin can hold of logging duplicated events for a period of 24 hours by detecting duplicated events.', 'coreactivity' ), Type::BOOLEAN )->more( array(
+									__( 'Duplication skipping affects only some components and events that can produce exactly the same event entry over and over again.', 'coreactivity' ),
+									__( 'Duplication is tracked over the period of 24 hours, allowing for repeated duplicated events to be logged only once a day.', 'coreactivity' ),
+									__( 'IP, user ID, logged date and time, and user agent are not taken into account when determining if the event is duplicate.', 'coreactivity' ),
+								) ),
+							),
+						),
+					),
+				),
+				'logging-ip'      => array(
 					'name'     => __( 'Visitor IP', 'coreactivity' ),
 					'sections' => array(
 						array(
@@ -385,28 +402,11 @@ class Settings extends BaseSettings {
 				),
 			),
 			'logs'          => array(
-				'logs-logging' => array(
-					'name'     => __( 'Logging Process', 'coreactivity' ),
-					'sections' => array(
-						array(
-							'label'    => '',
-							'name'     => '',
-							'class'    => '',
-							'settings' => array(
-								$this->i( 'settings', 'skip_duplicated', __( 'Skip Duplicates', 'coreactivity' ), __( 'Plugin can hold of logging duplicated events for a period of 24 hours by detecting duplicated events.', 'coreactivity' ), Type::BOOLEAN )->more( array(
-									__( 'Duplication skipping affects only some components and events that can produce exactly the same event entry over and over again.', 'coreactivity' ),
-									__( 'Duplication is tracked over the period of 24 hours, allowing for repeated duplicated events to be logged only once a day.', 'coreactivity' ),
-									__( 'IP, user ID, logged date and time, and user agent are not taken into account when determining if the event is duplicate.', 'coreactivity' ),
-								) ),
-							),
-						),
-					),
-				),
 				'logs-content' => array(
 					'name'     => __( 'Content Display', 'coreactivity' ),
 					'sections' => array(
 						array(
-							'label'    => __( 'IP' ),
+							'label'    => __( 'IP', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(
@@ -415,7 +415,7 @@ class Settings extends BaseSettings {
 							),
 						),
 						array(
-							'label'    => __( 'Other Information' ),
+							'label'    => __( 'Other Information', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',
 							'settings' => array(

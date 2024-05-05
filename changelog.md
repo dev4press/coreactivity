@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 2.3.1 / May 5, 2024
+
+* **edit** changes to organization of some plugin settings
+* **edit** few changes to the plugin `readme.txt` file
+
 ### Version: 2.3 / May 2, 2024
 
 * **edit** improvements to the Logs panel display for some events

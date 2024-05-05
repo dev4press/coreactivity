@@ -16,9 +16,11 @@ class Settings extends PanelSettings {
 
 		$this->subpanels = $this->subpanels + array(
 				'logging'       => array(
-					'title' => __( 'Logging Data', 'coreactivity' ),
-					'icon'  => 'ui-terms',
-					'info'  => __( 'Settings related to logging of main activity information.', 'coreactivity' ),
+					'title'      => __( 'Logging Data', 'coreactivity' ),
+					'icon'       => 'ui-database',
+					'break'      => __( 'Logging', 'coreactivity' ),
+					'break-icon' => 'ui-memo-pad',
+					'info'       => __( 'Settings related to logging of main activity information.', 'coreactivity' ),
 				),
 				'optional'      => array(
 					'title' => __( 'Optional Data', 'coreactivity' ),
@@ -36,14 +38,23 @@ class Settings extends PanelSettings {
 					'info'  => __( 'Plugin can use online geolocation services, or the local database for geolocation.', 'coreactivity' ),
 				),
 				'logs'          => array(
-					'title' => __( 'Logs Panel', 'coreactivity' ),
-					'icon'  => 'ui-calendar-pen',
-					'info'  => __( 'Settings related to some aspects for the Logs panel display.', 'coreactivity' ),
+					'title'      => __( 'Logs Panel', 'coreactivity' ),
+					'icon'       => 'ui-calendar-pen',
+					'break'      => __( 'Log Core', 'coreactivity' ),
+					'break-icon' => 'ui-calendar-pen',
+					'info'       => __( 'Settings related to some aspects for the Logs panel display.', 'coreactivity' ),
+				),
+				'advanced'      => array(
+					'title' => __( 'Advanced', 'coreactivity' ),
+					'icon'  => 'ui-warning-triangle',
+					'info'  => __( 'More advanced settings that should not be changed for most websites.', 'coreactivity' ),
 				),
 				'tracking'      => array(
-					'title' => __( 'Tracking', 'coreactivity' ),
-					'icon'  => 'ui-users',
-					'info'  => __( 'Additional settings for some of the plugin tracking features.', 'coreactivity' ),
+					'title'      => __( 'Tracking', 'coreactivity' ),
+					'icon'       => 'ui-users',
+					'break'      => __( 'Features', 'coreactivity' ),
+					'break-icon' => 'ui-puzzle',
+					'info'       => __( 'Additional settings for some of the plugin tracking features.', 'coreactivity' ),
 				),
 				'notifications' => array(
 					'title' => __( 'Notifications', 'coreactivity' ),
@@ -54,11 +65,6 @@ class Settings extends PanelSettings {
 					'title' => __( 'Maintenance', 'coreactivity' ),
 					'icon'  => 'ui-trash',
 					'info'  => __( 'Settings related to maintenance and cleanup of the log database tables.', 'coreactivity' ),
-				),
-				'advanced'      => array(
-					'title' => __( 'Advanced', 'coreactivity' ),
-					'icon'  => 'ui-warning-triangle',
-					'info'  => __( 'More advanced settings that should not be changed for most websites.', 'coreactivity' ),
 				),
 			);
 	}

@@ -2,7 +2,7 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 2.3
+Stable tag: 2.3.1
 Requires at least: 5.8
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -13,8 +13,10 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Monitor and log all kinds of activity happening on the WordPress website, with fine control over events to log, detailed log and events panels...
 
 == Description ==
-
 CoreActivity is a free plugin for monitoring and logging various activities of the WordPress powered website. The plugin is highly modular, with events registered and controlled by multiple Components.
+
+= Quick Video Overview =
+https://www.youtube.com/watch?v=XXX
 
 Currently, plugin has 27 components with a total of 166 events, with direct integration with 12 popular plugins.
 
@@ -119,6 +121,10 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.3.1 (2024.05.05) =
+* Edit: changes to organization of some plugin settings
+* Edit: few changes to the plugin `readme.txt` file
+
 = 2.3 (2024.05.02) =
 * Edit: improvements to the Logs panel display for some events
 * Edit: IP2Location Library 9.7.3
