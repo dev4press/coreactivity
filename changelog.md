@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### Version: 2.3.2 / May 17, 2024
+### Version: 2.3.2 / May 16, 2024
 
 * **fix** notifications tracking has broken detection process
 * **fix** wordpress database delta tracking not working

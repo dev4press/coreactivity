@@ -121,6 +121,11 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.3.2 (2024.05.16) =
+* **fix** notifications tracking has broken detection process
+* **fix** wordpress database delta tracking not working
+* **fix** events panel button for bulk deleting has broken URL
+
 = 2.3.1 (2024.05.05) =
 * Edit: expanded context help for several panels
 * Edit: changes to organization of some plugin settings
