@@ -203,7 +203,7 @@ class Events extends Table {
 		if ( $this->_logged_counts[ $item->component ] > 0 ) {
 			$render .= '<a href="admin.php?page=coreactivity-logs&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Filter', 'coreactivity' ) . '</span></a>';
 			$render .= '<a href="admin.php?page=coreactivity-logs&view=component&filter-component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'View', 'coreactivity' ) . '</span></a>';
-			$render .= '<a href="https://toolbox.wp/wp-admin/admin.php?page=coreactivity-tools&subpanel=cleanup&component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-trash"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Clean Up', 'coreactivity' ) . '</span></a>';
+			$render .= '<a href="admin.php?page=coreactivity-tools&subpanel=cleanup&component=' . esc_attr( $item->component ) . '"><i class="d4p-icon d4p-ui-trash"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Clean Up', 'coreactivity' ) . '</span></a>';
 		}
 
 		$render .= '</div>';
@@ -218,7 +218,7 @@ class Events extends Table {
 		if ( $item->logs > 0 ) {
 			$render .= '<a href="admin.php?page=coreactivity-logs&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-filter"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Filter', 'coreactivity' ) . '</span></a>';
 			$render .= '<a href="admin.php?page=coreactivity-logs&view=event_id&filter-event_id=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-eye"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'View', 'coreactivity' ) . '</span></a>';
-			$render .= '<a href="https://toolbox.wp/wp-admin/admin.php?page=coreactivity-tools&subpanel=cleanup&component=' . esc_attr( $item->component ) . '&event=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-trash"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Clean Up', 'coreactivity' ) . '</span></a>';
+			$render .= '<a href="admin.php?page=coreactivity-tools&subpanel=cleanup&component=' . esc_attr( $item->component ) . '&event=' . esc_attr( $item->event_id ) . '"><i class="d4p-icon d4p-ui-trash"></i> <span class="d4p-accessibility-show-for-sr">' . esc_html__( 'Clean Up', 'coreactivity' ) . '</span></a>';
 		}
 
 		$render .= '</div>';

@@ -2,7 +2,7 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 Requires at least: 5.8
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -15,7 +15,7 @@ Monitor and log all kinds of activity happening on the WordPress website, with f
 == Description ==
 CoreActivity is a free plugin for monitoring and logging various activities of the WordPress powered website. The plugin is highly modular, with events registered and controlled by multiple Components.
 
-= Quick Video Overview =
+= Quick Introduction Video =
 https://www.youtube.com/watch?v=JCukiRMWjeA
 
 Currently, plugin has 27 components with a total of 166 events, with direct integration with 12 popular plugins.

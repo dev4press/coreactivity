@@ -60,7 +60,7 @@ class Notification extends Component {
 	public function tracking() {
 		Detection::instance();
 
-		add_action( 'd4p_mailer_notification_detected', array( $this, 'prepare_detection' ) );
+		add_action( 'dev4press_mailer_notification_detected', array( $this, 'prepare_detection' ) );
 
 		if ( $this->is_active( 'email-sent' ) || $this->is_active( 'email-sent-unknown' ) ) {
 			add_action( 'wp_mail_succeeded', array( $this, 'event_sent' ) );
@@ -132,10 +132,10 @@ class Notification extends Component {
 				return;
 			}
 
-			if ( ! in_array( $this->storage['name'], $this->do_not_log ) ) {
+			if ( ! in_array( $option, $this->do_not_log ) ) {
 				$data = array( 'object_name' => $option );
 
-				if ( in_array( $this->storage['name'], $this->network ) ) {
+				if ( in_array( $option, $this->network ) ) {
 					$data['blog_id'] = 0;
 				}
 
@@ -143,7 +143,7 @@ class Notification extends Component {
 					'subject' => isset( $email_data['subject'] ) ? esc_sql( $email_data['subject'] ) : '',
 					'email'   => isset( $email_data['to'] ) ? esc_sql( $email_data['to'] ) : '',
 					'error'   => $error,
-					'source'  => $this->storage['call'],
+					'source'  => $this->storage['call'] ?? '',
 				) );
 			}
 		}

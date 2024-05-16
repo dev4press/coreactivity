@@ -35,7 +35,7 @@ class WordPress extends Component {
 		}
 
 		if ( $this->is_active( 'database-delta' ) ) {
-			add_filter( 'd4p_install_db_delta', array( $this, 'prepare_db_delta' ) );
+			add_filter( 'dev4press_install_db_delta', array( $this, 'prepare_db_delta' ) );
 			add_filter( 'dbdelta_queries', array( $this, 'event_db_delta' ) );
 		}
 

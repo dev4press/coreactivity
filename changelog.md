@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### Version: 2.3.2 / May 17, 2024
+
+* **fix** notifications tracking has broken detection process
+* **fix** wordpress database delta tracking not working
+* **fix** events panel button for bulk deleting has broken URL
+
 ### Version: 2.3.1 / May 5, 2024
 
 * **edit** expanded context help for several panels
