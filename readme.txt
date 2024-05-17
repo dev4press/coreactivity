@@ -122,9 +122,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 
 == Changelog ==
 = 2.3.2 (2024.05.16) =
-* **fix** notifications tracking has broken detection process
-* **fix** wordpress database delta tracking not working
-* **fix** events panel button for bulk deleting has broken URL
+* Fix: notifications tracking has broken detection process
+* Fix: wordpress database delta tracking not working
+* Fix: events panel button for bulk deleting has broken URL
 
 = 2.3.1 (2024.05.05) =
 * Edit: expanded context help for several panels
