@@ -1,8 +1,8 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Admin\Settings;
-use Dev4Press\v48\Core\Options\Render;
-use function Dev4Press\v48\Functions\panel;
+use Dev4Press\v49\Core\Options\Render;
+use function Dev4Press\v49\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

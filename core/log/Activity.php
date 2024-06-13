@@ -31,7 +31,7 @@ use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
 use Dev4Press\Plugin\CoreActivity\Plugins\WooCommerce;
-use Dev4Press\v48\Core\Quick\Str;
+use Dev4Press\v49\Core\Quick\Str;
 use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {

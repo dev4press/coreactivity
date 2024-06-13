@@ -4,7 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Base;
 
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v48\Core\Quick\WPR;
+use Dev4Press\v49\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

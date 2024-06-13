@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v48\Core\Quick\File;
+use Dev4Press\v49\Core\Quick\File;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

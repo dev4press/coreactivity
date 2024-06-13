@@ -8,23 +8,7 @@ function dev4press_plugin_coreactivity_autoload( $class ) {
 	$path = __DIR__ . '/';
 	$base = 'Dev4Press\\Plugin\\CoreActivity\\';
 
-	if ( substr( $class, 0, strlen( $base ) ) == $base ) {
-		$clean = substr( $class, strlen( $base ) );
-
-		$parts = explode( '\\', $clean );
-
-		$class_name = $parts[ count( $parts ) - 1 ];
-		unset( $parts[ count( $parts ) - 1 ] );
-
-		$class_namespace = join( '/', $parts );
-		$class_namespace = strtolower( $class_namespace );
-
-		$path .= $class_namespace . '/' . $class_name . '.php';
-
-		if ( file_exists( $path ) ) {
-			include $path;
-		}
-	}
+	dev4press_v49_autoload_for_plugin( $class, $base, $path );
 }
 
 spl_autoload_register( 'dev4press_plugin_coreactivity_autoload' );

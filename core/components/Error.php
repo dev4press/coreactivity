@@ -4,7 +4,6 @@ namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
-use Dev4Press\v48\Core\Helpers\IP;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

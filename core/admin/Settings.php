@@ -3,9 +3,9 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v48\Core\Options\Settings as BaseSettings;
-use Dev4Press\v48\Core\Options\Type;
-use Dev4Press\v48\Core\Quick\Sanitize;
+use Dev4Press\v49\Core\Options\Settings as BaseSettings;
+use Dev4Press\v49\Core\Options\Type;
+use Dev4Press\v49\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

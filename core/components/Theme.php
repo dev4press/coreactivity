@@ -3,7 +3,6 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
-use WP_Theme;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

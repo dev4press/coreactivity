@@ -1,6 +1,6 @@
 <?php
 
-use function Dev4Press\v48\Functions\panel;
+use function Dev4Press\v49\Functions\panel;
 
 ?>
 

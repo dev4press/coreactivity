@@ -1,6 +1,6 @@
 <?php
 
-use Dev4Press\v48\Core\Scope;
+use Dev4Press\v49\Core\Scope;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

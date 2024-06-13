@@ -6,7 +6,7 @@ use Dev4Press\Plugin\CoreActivity\Admin\Meta\Users;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin as CorePlugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings as CoreSettings;
 use Dev4Press\Plugin\CoreActivity\Basic\Wizard;
-use Dev4Press\v48\Core\Admin\Network\Plugin as BasePlugin;
+use Dev4Press\v49\Core\Admin\Network\Plugin as BasePlugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
