@@ -174,8 +174,10 @@
 .d4p-wrap.d4p-plugin-coreactivity.d4p-panel-logs {
     ul.subsubsub {
         display: inline-flex;
-        gap: 1em;
+        column-gap: 1em;
+        row-gap: .5em;
         align-items: center;
+        flex-wrap: wrap;
 
         .view {
             font-weight: bold;

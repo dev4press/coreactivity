@@ -93,7 +93,11 @@ class Plugin extends Core {
 	}
 
 	public function schedule_geo_db_update() {
-		if ( ! wp_next_scheduled( 'coreactivity_task_geo_db' ) ) {
+		if ( ! is_main_site() ) {
+			return;
+		}
+
+		if (  ! wp_next_scheduled( 'coreactivity_task_geo_db' ) ) {
 			wp_schedule_single_event( time() + 5, 'coreactivity_task_geo_db' );
 		}
 	}
