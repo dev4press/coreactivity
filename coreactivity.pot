@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural - Forms: nplurals = INTEGER; plural = EXPRESSION;\n"
 "Project-Id-Version: coreActivity\n"
-"POT-Creation-Date: 05/05/2024 05:10:04 PM\n"
+"POT-Creation-Date: 06/23/2024 10:18:22 PM\n"
 "Language-Team: Milan Petrovic <support@dev4press.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,7 +58,7 @@ msgid "Events"
 msgstr ""
 
 #: core/admin/panel/Dashboard.php:30
-#: forms/content-dashboard-blog.php:15
+#: forms/content-dashboard-blog.php:19
 msgid "Network Dashboard"
 msgstr ""
 
@@ -337,7 +337,7 @@ msgid "Plugin has 3 database tables, and the widget on the dashboard shows the c
 msgstr ""
 
 #: core/admin/Help.php:45
-#: forms/content-dashboard-location.php:12
+#: forms/content-dashboard-location.php:16
 msgid "GEO Location"
 msgstr ""
 
@@ -346,7 +346,7 @@ msgid "To identify the country for each logged event, plugin can use logged IP t
 msgstr ""
 
 #: core/admin/Help.php:47
-#: forms/content-dashboard-location.php:77
+#: forms/content-dashboard-location.php:81
 msgid "GEO Location Settings"
 msgstr ""
 
@@ -542,7 +542,7 @@ msgid "IP Location Data"
 msgstr ""
 
 #: core/admin/Settings.php:121
-#: forms/dialog-data.php:92
+#: forms/dialog-data.php:96
 msgid "Country Code"
 msgstr ""
 
@@ -801,7 +801,7 @@ msgstr ""
 
 #: core/admin/Settings.php:315
 #: core/table/Logs.php:188
-#: forms/dialog-data.php:16
+#: forms/dialog-data.php:20
 msgid "Method"
 msgstr ""
 
@@ -896,7 +896,7 @@ msgstr ""
 #: core/admin/Settings.php:409
 #: core/table/Logs.php:194
 #: core/table/Logs.php:740
-#: forms/dialog-data.php:12
+#: forms/dialog-data.php:16
 msgid "IP"
 msgstr ""
 
@@ -1210,9 +1210,9 @@ msgstr ""
 #: core/basic/Render.php:25
 #: core/basic/Render.php:30
 #: core/table/Logs.php:1147
-#: forms/content-dashboard-location.php:8
-#: forms/dialog-data.php:151
-#: forms/dialog-data.php:99
+#: forms/content-dashboard-location.php:12
+#: forms/dialog-data.php:155
+#: forms/dialog-data.php:103
 msgid "Unknown"
 msgstr ""
 
@@ -1264,31 +1264,31 @@ msgstr ""
 msgid "Comment Meta Deleted"
 msgstr ""
 
-#: core/components/Error.php:29
+#: core/components/Error.php:28
 msgid "Errors"
 msgstr ""
 
-#: core/components/Error.php:35
+#: core/components/Error.php:34
 msgid "404 Not Found"
 msgstr ""
 
-#: core/components/Error.php:38
+#: core/components/Error.php:37
 msgid "404 Not Found PHP"
 msgstr ""
 
-#: core/components/Error.php:41
+#: core/components/Error.php:40
 msgid "404 Not Found File"
 msgstr ""
 
-#: core/components/Error.php:44
+#: core/components/Error.php:43
 msgid "404 Not Found Media"
 msgstr ""
 
-#: core/components/Error.php:47
+#: core/components/Error.php:46
 msgid "404 Not Found Script"
 msgstr ""
 
-#: core/components/Error.php:50
+#: core/components/Error.php:49
 msgid "404 Not Found Style"
 msgstr ""
 
@@ -1583,31 +1583,31 @@ msgstr ""
 msgid "Term Meta Deleted"
 msgstr ""
 
-#: core/components/Theme.php:54
+#: core/components/Theme.php:53
 msgid "Themes"
 msgstr ""
 
-#: core/components/Theme.php:60
+#: core/components/Theme.php:59
 msgid "Theme Installed"
 msgstr ""
 
-#: core/components/Theme.php:64
+#: core/components/Theme.php:63
 msgid "Theme Updated"
 msgstr ""
 
-#: core/components/Theme.php:68
+#: core/components/Theme.php:67
 msgid "Theme Install Error"
 msgstr ""
 
-#: core/components/Theme.php:72
+#: core/components/Theme.php:71
 msgid "Theme Updated Error"
 msgstr ""
 
-#: core/components/Theme.php:76
+#: core/components/Theme.php:75
 msgid "Theme Deleted"
 msgstr ""
 
-#: core/components/Theme.php:79
+#: core/components/Theme.php:78
 msgid "Theme Switched"
 msgstr ""
 
@@ -1927,6 +1927,7 @@ msgstr ""
 #: forms/content-about-minor.php:14
 #: forms/content-about-minor.php:18
 #: forms/content-about-minor.php:22
+#: forms/content-about-minor.php:26
 msgid "Version"
 msgstr ""
 
@@ -1945,7 +1946,7 @@ msgid "Source"
 msgstr ""
 
 #: core/log/Display.php:253
-#: forms/dialog-data.php:137
+#: forms/dialog-data.php:141
 msgid "Name"
 msgstr ""
 
@@ -2184,21 +2185,21 @@ msgid "WooCommerce"
 msgstr ""
 
 #: core/table/Events.php:98
-#: forms/dialog-data.php:134
+#: forms/dialog-data.php:138
 msgid "Category"
 msgstr ""
 
 #: core/table/Events.php:100
 #: core/table/Logs.php:185
 #: core/table/Logs.php:705
-#: forms/dialog-data.php:13
+#: forms/dialog-data.php:17
 msgid "Component"
 msgstr ""
 
 #: core/table/Events.php:101
 #: core/table/Logs.php:186
 #: core/table/Logs.php:716
-#: forms/dialog-data.php:14
+#: forms/dialog-data.php:18
 msgid "Event"
 msgstr ""
 
@@ -2271,12 +2272,12 @@ msgid "Disable Weekly Notifications"
 msgstr ""
 
 #: core/table/Events.php:234
-#: forms/dialog-data.php:130
+#: forms/dialog-data.php:134
 msgid "Yes"
 msgstr ""
 
 #: core/table/Events.php:234
-#: forms/dialog-data.php:130
+#: forms/dialog-data.php:134
 msgid "No"
 msgstr ""
 
@@ -2313,17 +2314,17 @@ msgstr ""
 
 #: core/table/Logs.php:187
 #: core/table/Logs.php:688
-#: forms/dialog-data.php:15
+#: forms/dialog-data.php:19
 msgid "Context"
 msgstr ""
 
 #: core/table/Logs.php:189
-#: forms/dialog-data.php:17
+#: forms/dialog-data.php:21
 msgid "Protocol"
 msgstr ""
 
 #: core/table/Logs.php:190
-#: forms/dialog-data.php:22
+#: forms/dialog-data.php:26
 msgid "Request"
 msgstr ""
 
@@ -2333,7 +2334,7 @@ msgid "Object Type"
 msgstr ""
 
 #: core/table/Logs.php:192
-#: forms/dialog-data.php:19
+#: forms/dialog-data.php:23
 msgid "Object"
 msgstr ""
 
@@ -2421,7 +2422,7 @@ msgstr ""
 
 #: core/table/Logs.php:1139
 #: core/table/Logs.php:950
-#: forms/dialog-data.php:129
+#: forms/dialog-data.php:133
 msgid "Bot"
 msgstr ""
 
@@ -2439,7 +2440,7 @@ msgid "Request Method"
 msgstr ""
 
 #: core/table/Logs.php:752
-#: forms/dialog-data.php:94
+#: forms/dialog-data.php:98
 msgid "Country"
 msgstr ""
 
@@ -2472,7 +2473,7 @@ msgid "Location"
 msgstr ""
 
 #: core/functions.php:71
-#: forms/dialog-data.php:150
+#: forms/dialog-data.php:154
 msgid "Device"
 msgstr ""
 
@@ -2480,7 +2481,7 @@ msgstr ""
 msgid "Maintenance and Security Releases"
 msgstr ""
 
-#: forms/content-about-minor.php:29
+#: forms/content-about-minor.php:33
 msgid "For more information, see <a href='%s'>the changelog</a>."
 msgstr ""
 
@@ -2488,23 +2489,23 @@ msgstr ""
 msgid "Run Setup Wizard"
 msgstr ""
 
-#: forms/content-dashboard-blog.php:8
+#: forms/content-dashboard-blog.php:12
 msgid "Blog Activity Logs"
 msgstr ""
 
-#: forms/content-dashboard-blog.php:11
+#: forms/content-dashboard-blog.php:15
 msgid "This is a limited use dashboard for the individual blog on your multisite network. You can see only log entries logged for this individual blog only. To access plugin settings, events, and logs for the whole network, you need to go to the Network Admin."
 msgstr ""
 
-#: forms/content-dashboard-blog.php:16
+#: forms/content-dashboard-blog.php:20
 msgid "Full Activity Logs"
 msgstr ""
 
-#: forms/content-dashboard-blog.php:17
+#: forms/content-dashboard-blog.php:21
 msgid "Events Management"
 msgstr ""
 
-#: forms/content-dashboard-blog.php:18
+#: forms/content-dashboard-blog.php:22
 msgid "Plugin Settings"
 msgstr ""
 
@@ -2560,31 +2561,31 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: forms/content-dashboard-location.php:16
+#: forms/content-dashboard-location.php:20
 msgid "GEO Location Method"
 msgstr ""
 
-#: forms/content-dashboard-location.php:22
-#: forms/content-dashboard-location.php:50
+#: forms/content-dashboard-location.php:26
+#: forms/content-dashboard-location.php:54
 msgid "Database Path"
 msgstr ""
 
-#: forms/content-dashboard-location.php:25
-#: forms/content-dashboard-location.php:53
+#: forms/content-dashboard-location.php:29
+#: forms/content-dashboard-location.php:57
 msgid "Database Downloaded"
 msgstr ""
 
-#: forms/content-dashboard-location.php:35
-#: forms/content-dashboard-location.php:63
+#: forms/content-dashboard-location.php:39
+#: forms/content-dashboard-location.php:67
 msgid "Download Error"
 msgstr ""
 
-#: forms/content-dashboard-location.php:43
-#: forms/content-dashboard-location.php:71
+#: forms/content-dashboard-location.php:47
+#: forms/content-dashboard-location.php:75
 msgid "About the Database"
 msgstr ""
 
-#: forms/content-dashboard-location.php:78
+#: forms/content-dashboard-location.php:82
 msgid "IP Location Data Logging"
 msgstr ""
 
@@ -2765,36 +2766,36 @@ msgstr ""
 msgid "Update completed."
 msgstr ""
 
-#: forms/content-wizard-geo.php:8
-#: forms/content-wizard-log.php:3
+#: forms/content-wizard-geo.php:12
+#: forms/content-wizard-log.php:10
 msgid "Main Logs panel has a lot of moving parts and elements, and some of things may be useful to have depending on what your preferences are."
 msgstr ""
 
-#: forms/content-wizard-geo.php:14
+#: forms/content-wizard-geo.php:18
 msgid "Do you want to store country code for each activity logged?"
 msgstr ""
 
-#: forms/content-wizard-geo.php:16
+#: forms/content-wizard-geo.php:20
 msgid "This will improve speed for geo location later on, and will add additional information layer for requests activity analysis, and can be beneficial to other plugins related to the coreActivity."
 msgstr ""
 
-#: forms/content-wizard-geo.php:21
+#: forms/content-wizard-geo.php:25
 msgid "Do you want to store extended geo location data?"
 msgstr ""
 
-#: forms/content-wizard-geo.php:23
+#: forms/content-wizard-geo.php:27
 msgid "All retrieved geo-location data can be stored in the log as a meta data. Right now, it is not used much, but it can be useful to view the IP information at the time it was logged."
 msgstr ""
 
-#: forms/content-wizard-geo.php:28
+#: forms/content-wizard-geo.php:32
 msgid "Setting up the geo location feature"
 msgstr ""
 
-#: forms/content-wizard-geo.php:30
+#: forms/content-wizard-geo.php:34
 msgid "Plugin can geo-locate IPs using Online service, and it has support for using geo-location databases. Both supported databases require registration to get token or key used to download the database, and both services are free. Check out the dedicated settings panel to configure this further."
 msgstr ""
 
-#: forms/content-wizard-geo.php:31
+#: forms/content-wizard-geo.php:35
 msgid "GEO-Location Settings"
 msgstr ""
 
@@ -2858,27 +2859,27 @@ msgstr ""
 msgid "Menu in the WordPress Admin bar will show quick links to the plugin panels for direct access from anywhere on the website where the admin bar is visible. It is only available to website administrators."
 msgstr ""
 
-#: forms/content-wizard-log.php:9
+#: forms/content-wizard-log.php:16
 msgid "Do you want to show the Geolocation information based on IP?"
 msgstr ""
 
-#: forms/content-wizard-log.php:11
+#: forms/content-wizard-log.php:18
 msgid "For each request, IP is logged, and based on the IP, Geo location can be retrieved, and plugin can show Flag and other useful location information."
 msgstr ""
 
-#: forms/content-wizard-log.php:16
+#: forms/content-wizard-log.php:23
 msgid "Do you want to show Gravatar for users?"
 msgstr ""
 
-#: forms/content-wizard-log.php:18
+#: forms/content-wizard-log.php:25
 msgid "If the user is logged for the event, alongside name and other information, plugin can also display the avatar image provided by the Gravatar service."
 msgstr ""
 
-#: forms/content-wizard-log.php:23
+#: forms/content-wizard-log.php:30
 msgid "Do you want to show Device Detection column?"
 msgstr ""
 
-#: forms/content-wizard-log.php:25
+#: forms/content-wizard-log.php:32
 msgid "This column will show the logged device detection data, or the data detected from the user agent stored with each log entry."
 msgstr ""
 
@@ -2918,71 +2919,71 @@ msgstr ""
 msgid "This digest is sent once a week with overview of all components and events in the previous 7 days."
 msgstr ""
 
-#: forms/dialog-data.php:11
+#: forms/dialog-data.php:15
 msgid "Log ID"
 msgstr ""
 
-#: forms/dialog-data.php:18
+#: forms/dialog-data.php:22
 msgid "Date/Time"
 msgstr ""
 
-#: forms/dialog-data.php:20
+#: forms/dialog-data.php:24
 msgid "Object ID"
 msgstr ""
 
-#: forms/dialog-data.php:21
+#: forms/dialog-data.php:25
 msgid "Object Name"
 msgstr ""
 
-#: forms/dialog-data.php:41
+#: forms/dialog-data.php:45
 msgid "Blog ID"
 msgstr ""
 
-#: forms/dialog-data.php:44
+#: forms/dialog-data.php:48
 msgid "Blog Name"
 msgstr ""
 
-#: forms/dialog-data.php:45
+#: forms/dialog-data.php:49
 msgid "Blog URL"
 msgstr ""
 
-#: forms/dialog-data.php:96
+#: forms/dialog-data.php:100
 msgid "Continent"
 msgstr ""
 
-#: forms/dialog-data.php:100
+#: forms/dialog-data.php:104
 msgid "Localhost IP"
 msgstr ""
 
-#: forms/dialog-data.php:141
+#: forms/dialog-data.php:145
 msgid "OS"
 msgstr ""
 
-#: forms/dialog-data.php:146
+#: forms/dialog-data.php:150
 msgid "Client"
 msgstr ""
 
-#: forms/dialog-data.php:154
+#: forms/dialog-data.php:158
 msgid "Brand"
 msgstr ""
 
-#: forms/dialog-data.php:159
+#: forms/dialog-data.php:163
 msgid "Model"
 msgstr ""
 
-#: forms/dialog-logs.php:9
+#: forms/dialog-logs.php:13
 msgid "IP WhoIs"
 msgstr ""
 
-#: forms/dialog-logs.php:11
+#: forms/dialog-logs.php:15
 msgid "Please wait..."
 msgstr ""
 
-#: forms/dialog-logs.php:14
+#: forms/dialog-logs.php:18
 msgid "Log Data"
 msgstr ""
 
-#: forms/dialog-logs.php:16
+#: forms/dialog-logs.php:20
 msgid "Log Dialog Popup"
 msgstr ""
 
