@@ -3,6 +3,10 @@
 use Dev4Press\Plugin\CoreActivity\Admin\Data;
 use function Dev4Press\v49\Functions\panel;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $methods = Data::get_geo_location_methods();
 $method  = coreactivity_settings()->get( 'geolocation_method' );
 $label   = $methods[ $method ] ?? __( 'Unknown', 'coreactivity' );

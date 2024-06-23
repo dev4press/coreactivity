@@ -2,6 +2,10 @@
 
 use function Dev4Press\v49\Functions\panel;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 
 <div class="d4p-group d4p-dashboard-card d4p-card-double">

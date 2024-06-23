@@ -3,6 +3,10 @@
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $_tabs  = coreactivity_view_dialog_tabs();
 $_items = $_grid->items ?? array();
 

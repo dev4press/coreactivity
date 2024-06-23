@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
 <div class="d4p-wizard-panel-header">
     <p>
 		<?php esc_html_e( 'Main Logs panel has a lot of moving parts and elements, and some of things may be useful to have depending on what your preferences are.', 'coreactivity' ); ?>

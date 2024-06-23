@@ -2,6 +2,10 @@
 
 use Dev4Press\v49\Core\UI\Icons;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $_tabs = coreactivity_view_dialog_tabs();
 
 ?>

@@ -6,6 +6,7 @@
 
 * **edit** expanded list of detected email notifications
 * **edit** few various minor updates and tweaks
+* **edit** protect all PHP files from direct file access
 * **edit** Dev4Press Library 4.9.2
 * **fix** minor issue with the GEO DB download schedule
 
