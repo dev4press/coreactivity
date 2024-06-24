@@ -22,12 +22,12 @@ class Render {
 		$render = '<li class="d4p-nav-button d4p-header-special-button">';
 		$render .= '<div class="d4p-nav-button-inner">';
 		$render .= '<i class="d4p-icon d4p-ui-database" title="' . esc_html__( 'Server IP', 'coreactivity' ) . '"></i>';
-		$render .= '<span>' . ( empty( $_server_ip ) ? esc_html__( 'Unknown', 'coreactivity' ) : Core::instance()->get( 'server_ip' ) ) . '</span>';
+		$render .= '<span>' . ( empty( $_server_ip ) ? esc_html__( 'Unknown', 'coreactivity' ) : $_server_ip ) . '</span>';
 		$render .= $server_ip ? $server_ip->flag() : '';
 		$render .= '</div>';
 		$render .= '<div class="d4p-nav-button-inner">';
 		$render .= '<i class="d4p-icon d4p-ui-user-square" title="' . esc_attr__( 'Current Request IP', 'coreactivity' ) . '"></i>';
-		$render .= '<span>' . ( empty( $_visitor_ip ) ? esc_html__( 'Unknown', 'coreactivity' ) : Core::instance()->get( 'ip' ) ) . '</span>';
+		$render .= '<span>' . ( empty( $_visitor_ip ) ? esc_html__( 'Unknown', 'coreactivity' ) : $_visitor_ip ) . '</span>';
 		$render .= $visitor_ip ? $visitor_ip->flag() : '';
 		$render .= '</div>';
 		$render .= '</li>';

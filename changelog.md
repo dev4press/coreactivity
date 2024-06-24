@@ -9,6 +9,7 @@
 * **edit** protect all PHP files from direct file access
 * **edit** Dev4Press Library 4.9.2
 * **fix** minor issue with the GEO DB download schedule
+* **fix** flags doesn't show on the page header server and visitor IP
 
 ### Version: 2.3.3 / June 13, 2024
 
