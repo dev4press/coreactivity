@@ -124,8 +124,10 @@ If the database for GEO location is regularly updated, locating the IP to the co
 = 2.3.4 (2024.06.26) =
 * Edit: expanded list of detected email notifications
 * Edit: few various minor updates and tweaks
+* Edit: protect all PHP files from direct file access
 * Edit: Dev4Press Library 4.9.2
 * Fix: minor issue with the GEO DB download schedule
+* Fix: flags doesn't show on the page header server and visitor IP
 
 = 2.3.3 (2024.06.13) =
 * Edit: few various minor updates and tweaks
