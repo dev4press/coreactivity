@@ -4,10 +4,10 @@ namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Basic\Render;
+use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
-use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
 use Dev4Press\Plugin\CoreActivity\Log\Users;
 use Dev4Press\v49\Core\Helpers\IP;
@@ -16,6 +16,7 @@ use Dev4Press\v49\Core\Quick\Sanitize;
 use Dev4Press\v49\Core\UI\Elements;
 use Dev4Press\v49\WordPress\Admin\Table;
 use WP_Site;
+use function Dev4Press\v49\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -43,6 +44,7 @@ class Logs extends Table {
 	protected $_display_protocol_column;
 	protected $_display_object_type_column;
 	protected $_display_meta_column = null;
+	protected $_admin_object = null;
 	protected $_filter_key = 'coreactivity';
 	protected $_logs_instance = 'coreactivity';
 	protected $_url_page_name = '';
@@ -458,6 +460,10 @@ class Logs extends Table {
 		$events = $this->i()->get_select_events( $this->_display_columns_simplified, empty( $component ) ? array() : (array) $component );
 
 		return apply_filters( $this->_filter_key . '_select_events', $events, $this );
+	}
+
+	protected function _admin() {
+		return $this->_admin_object ?? panel()->a();
 	}
 
 	protected function _url() : string {

@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 2.3.5 / June 26, 2024
+
+* **edit** minor changes to the `Logs` class
+
 ### Version: 2.3.4 / June 26, 2024
 
 * **edit** expanded list of detected email notifications
