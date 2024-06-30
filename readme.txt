@@ -121,7 +121,7 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
-= 2.3.5 (2024.07.01) =
+= 2.3.5 (2024.06.30) =
 * Edit: minor changes to the `Logs` class
 
 = 2.3.4 (2024.06.26) =

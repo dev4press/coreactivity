@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### Version: 2.3.5 / June 26, 2024
+### Version: 2.3.5 / June 30, 2024
 
 * **edit** minor changes to the `Logs` class
 
