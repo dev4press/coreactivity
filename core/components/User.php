@@ -249,7 +249,7 @@ class User extends Component {
 
 	public function event_login( $username, $user = null ) {
 		if ( is_null( $user ) ) {
-			$user = get_user_by( 'login', $username );
+			$user = coreactivity_get_user_by( 'login', $username );
 		}
 
 		if ( $user !== false ) {
@@ -264,7 +264,7 @@ class User extends Component {
 	}
 
 	public function event_logout( $user_id ) {
-		$user = get_user_by( 'id', $user_id );
+		$user = coreactivity_get_user_by( 'id', $user_id );
 
 		if ( $user !== false ) {
 			$this->log( 'logout', array(
@@ -310,11 +310,11 @@ class User extends Component {
 	}
 
 	public function event_failed_login( $username, $error ) {
-		$user    = get_user_by( 'login', $username );
+		$user    = coreactivity_get_user_by( 'login', $username );
 		$user_id = $user->ID ?? 0;
 
 		if ( $user_id == 0 ) {
-			$user    = get_user_by( 'email', $username );
+			$user    = coreactivity_get_user_by( 'email', $username );
 			$user_id = $user->ID ?? 0;
 		}
 
@@ -385,7 +385,7 @@ class User extends Component {
 
 	public function event_insert_user_data( $data, $update, $user_id, $userdata ) {
 		if ( $update ) {
-			$user = get_user_by( 'id', $user_id );
+			$user = coreactivity_get_user_by( 'id', $user_id );
 
 			if ( isset( $data['user_pass'] ) && $user->user_pass != $data['user_pass'] ) {
 				$this->log( 'edited-password', array(

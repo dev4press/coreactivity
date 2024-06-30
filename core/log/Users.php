@@ -65,7 +65,7 @@ class Users {
 
 	public function update_last_user_login( $username, $user = null ) {
 		if ( is_null( $user ) ) {
-			$user = get_user_by( 'login', $username );
+			$user = coreactivity_get_user_by( 'login', $username );
 		}
 
 		update_user_option( $user->ID, 'coreactivity_last_login', time(), true );

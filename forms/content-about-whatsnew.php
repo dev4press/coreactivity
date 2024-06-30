@@ -52,13 +52,13 @@ include COREACTIVITY_PATH . 'forms/content-about-minor.php';
             <div class="core-col-sm-12 core-col-md-6">
                 <h3>Database Logging</h3>
                 <p>
-                    All the events logged are stored in the database. The Plugin adds 3 database tables, one for all the registered events, and two for log with the additional logmeta table.
+                    All the events logged are stored in the database. The Plugin adds three database tables, one for all the registered events, and two for log with the additional logmeta table.
                 </p>
                 <p>
-                    The Plugin has the ability to automatically remove old entries from the log (controllable via settings), and it also has a tool where you can remove by age and selected events.
+                    The Plugin can automatically remove old entries from the log (controllable via settings), and it also has a tool where you can remove by age and selected events.
                 </p>
                 <p>
-                    The Plugin has the ability to automatically remove old entries from the log (controllable via settings), and it also has a tool where you can remove by age and selected events.
+                    The Plugin can automatically remove old entries from the log (controllable via settings), and it also has a tool where you can remove by age and selected events.
                 </p>
             </div>
         </div>

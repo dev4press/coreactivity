@@ -73,3 +73,15 @@ function coreactivity_view_dialog_tabs() : array {
 		),
 	) );
 }
+
+function coreactivity_get_user_by( $field, $value ) {
+	$userdata = WP_User::get_data_by( $field, $value );
+
+	if ( ! $userdata ) {
+		return false;
+	}
+
+	$userdata->ID = absint( $userdata->ID ?? 0 );
+
+	return $userdata;
+}

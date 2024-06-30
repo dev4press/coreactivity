@@ -761,7 +761,7 @@ class Logs extends Table {
 					$current_key  .= 'ip';
 					break;
 				case 'user_id':
-					$user = get_user_by( 'id', $this->_filter_lock['user_id'] );
+					$user = coreactivity_get_user_by( 'id', $this->_filter_lock['user_id'] );
 					$name = ! $user ? __( 'Not Found', 'coreactivity' ) : $user->display_name;
 
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-user d4p-icon-fw"></i> <span>' . esc_html__( 'User', 'coreactivity' ) . '</span>';
@@ -987,7 +987,7 @@ class Logs extends Table {
 				$render .= get_avatar( $item->user_id, 20 );
 			}
 
-			$user = get_user_by( 'id', $item->user_id );
+			$user = coreactivity_get_user_by( 'id', $item->user_id );
 
 			$render .= '<span>ID: <strong>' . $item->user_id . '</strong> &middot; ';
 

@@ -264,7 +264,7 @@ class Display {
 		if ( $item->object_id == 0 ) {
 			$render = '<span>ID: <strong>0</strong> &middot; ' . esc_html__( 'Invalid', 'coreactivity' ) . '</span>';
 		} else {
-			$user = get_user_by( 'id', $item->object_id );
+			$user = coreactivity_get_user_by( 'id', $item->object_id );
 
 			$render .= '<span>ID: <strong>' . $item->object_id . '</strong> &middot; ';
 
@@ -515,7 +515,7 @@ class Display {
 		if ( $item->object_id == 0 ) {
 			$render = 'ID: 0 · ' . esc_html__( 'Invalid', 'coreactivity' ) . '</>';
 		} else {
-			$user = get_user_by( 'id', $item->object_id );
+			$user = coreactivity_get_user_by( 'id', $item->object_id );
 
 			$render .= 'ID: ' . $item->object_id . ' · ';
 

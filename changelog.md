@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 2.4 / July 8, 2024
+
+* **new** replaced `get_user_by()` with internal function
+
 ### Version: 2.3.5 / June 30, 2024
 
 * **edit** minor changes to the `Logs` class

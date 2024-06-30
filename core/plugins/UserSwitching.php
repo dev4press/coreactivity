@@ -50,7 +50,7 @@ class UserSwitching extends Plugin {
 	}
 
 	public function event_switch_to_user( $user_id, $old_user_id ) {
-		$user = get_user_by( 'id', $user_id );
+		$user = coreactivity_get_user_by( 'id', $user_id );
 
 		$this->log( 'switch-to-user',
 			array(
@@ -76,7 +76,7 @@ class UserSwitching extends Plugin {
 			}
 		} else {
 			if ( $this->is_active( 'switch-back-user' ) ) {
-				$user = get_user_by( 'id', $old_user_id );
+				$user = coreactivity_get_user_by( 'id', $old_user_id );
 
 				$this->log( 'switch-back-user',
 					array(
