@@ -2,9 +2,11 @@
 
 ## Changelog
 
-### Version: 2.4 / July 8, 2024
+### Version: 2.3.6 / July 5, 2024
 
 * **new** replaced `get_user_by()` with internal function
+* **edit** few minor tweaks to internal actions and filters
+* **edit** minor updates to the popup dialogs look and feel
 
 ### Version: 2.3.5 / June 30, 2024
 

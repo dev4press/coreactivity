@@ -49,6 +49,9 @@
             $("#coreactivity-log-dialog").wpdialog(dialog_view);
             $("#coreactivity-whois-dialog").wpdialog(dialog_whois);
 
+            wp.dev4press.dialogs.icons("#coreactivity-log-dialog");
+            wp.dev4press.dialogs.icons("#coreactivity-whois-dialog");
+
             $(document).on("click", ".coreactivity-toggle-notification", function(e) {
                 e.preventDefault();
 

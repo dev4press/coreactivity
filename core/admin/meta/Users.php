@@ -48,7 +48,7 @@ class Users {
 	public function user_row_actions( $actions, $user_object ) {
 		$actions['log'] = "<a class='coreactivity-log' href='" . coreactivity_admin()->panel_url( 'logs', '', 'view=user_id&filter-user_id=' . $user_object->ID ) . "'>" . __( 'Log', 'coreactivity' ) . '</a>';
 
-		return apply_filters( 'coreactivity_users_panel_row_actions', $actions );
+		return apply_filters( 'coreactivity_users_panel_row_actions', $actions, $user_object );
 	}
 
 	public function manage_columns( $columns ) {
