@@ -36,7 +36,7 @@
 
 use Dev4Press\v49\WordPress;
 
-const COREACTIVITY_VERSION = '2.4';
+const COREACTIVITY_VERSION = '2.3.6';
 const COREACTIVITY_FILE    = __FILE__;
 
 $coreactivity_dirname_basic = dirname( COREACTIVITY_FILE ) . '/';
