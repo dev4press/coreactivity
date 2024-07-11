@@ -3,13 +3,13 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v49\Core\DateTime;
-use Dev4Press\v49\Core\Helpers\IP;
-use Dev4Press\v49\Core\Quick\Sanitize;
-use Dev4Press\v49\Core\Quick\URL;
-use Dev4Press\v49\Core\Scope;
-use Dev4Press\v49\Service\GEOIP\Location;
-use Dev4Press\v49\WordPress;
+use Dev4Press\v50\Core\DateTime;
+use Dev4Press\v50\Core\Helpers\IP;
+use Dev4Press\v50\Core\Quick\Sanitize;
+use Dev4Press\v50\Core\Quick\URL;
+use Dev4Press\v50\Core\Scope;
+use Dev4Press\v50\Service\GEOIP\Location;
+use Dev4Press\v50\WordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

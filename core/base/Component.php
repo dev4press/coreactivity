@@ -2,9 +2,9 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Base;
 
-use Dev4Press\Plugin\CoreActivity\Log\Core;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v49\Core\Quick\WPR;
+use Dev4Press\Plugin\CoreActivity\Log\Core;
+use Dev4Press\v50\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -127,6 +127,10 @@ abstract class Component {
 		return $this->events;
 	}
 
+	public function events_codes() : array {
+		return array_keys( $this->events );
+	}
+
 	public function init() {
 	}
 
@@ -150,6 +154,10 @@ abstract class Component {
 
 	public function is_active( string $event ) : bool {
 		return Activity::instance()->is_event_active( $this->code(), $event );
+	}
+
+	public function is_any_event_active() : bool {
+		return $this->are_active( $this->events_codes() );
 	}
 
 	public function are_active( array $events, bool $any = true ) : bool {

@@ -6,8 +6,8 @@ use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
-use Dev4Press\v49\Core\Admin\PostBack as BasePostBack;
-use Dev4Press\v49\Core\Quick\Sanitize;
+use Dev4Press\v50\Core\Admin\PostBack as BasePostBack;
+use Dev4Press\v50\Core\Quick\Sanitize;
 use WP_Filesystem_Direct;
 
 if ( ! defined( 'ABSPATH' ) ) {

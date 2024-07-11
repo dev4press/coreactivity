@@ -1,7 +1,7 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v49\Core\Quick\File;
+use Dev4Press\v50\Core\Quick\File;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

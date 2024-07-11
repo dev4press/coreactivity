@@ -1,7 +1,7 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Admin\Data;
-use function Dev4Press\v49\Functions\panel;
+use function Dev4Press\v50\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

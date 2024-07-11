@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 2.4 / July 16, 2024
+
+* **new** component: `REST` with 8 events
+* **edit** Dev4Press Library 5.0
+
 ### Version: 2.3.6 / July 5, 2024
 
 * **new** replaced `get_user_by()` with internal function

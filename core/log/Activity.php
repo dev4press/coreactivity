@@ -19,6 +19,7 @@ use Dev4Press\Plugin\CoreActivity\Components\Term;
 use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\Plugin\CoreActivity\Components\WordPress;
+use Dev4Press\Plugin\CoreActivity\Components\RESTAPI;
 use Dev4Press\Plugin\CoreActivity\Plugins\bbPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\BuddyPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\ContactForm7;
@@ -31,7 +32,7 @@ use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
 use Dev4Press\Plugin\CoreActivity\Plugins\WooCommerce;
-use Dev4Press\v49\Core\Quick\Str;
+use Dev4Press\v50\Core\Quick\Str;
 use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -112,6 +113,7 @@ class Activity {
 			'sitemeta'     => __( 'Site Meta', 'coreactivity' ),
 			'transient'    => __( 'Transient', 'coreactivity' ),
 			'notification' => __( 'Notification', 'coreactivity' ),
+			'route'     => __( 'REST Route', 'coreactivity' ),
 		) );
 
 		foreach ( $this->components as $component ) {
@@ -602,6 +604,7 @@ class Activity {
 		Comment::instance();
 		Attachment::instance();
 		Privacy::instance();
+		RESTAPI::instance();
 	}
 
 	private function _init_plugins() {
