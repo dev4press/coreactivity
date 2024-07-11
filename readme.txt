@@ -3,7 +3,7 @@ Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
 Stable tag: 2.3.6
-Requires at least: 5.8
+Requires at least: 5.9
 Tested up to: 6.6
 Requires PHP: 7.4
 Requires CP: 2.0
@@ -69,9 +69,9 @@ To use IP2Location, you need to have an account on IP2Location, to get the downl
 * Instant Notifications
 * Daily Digest Notifications
 * Weekly Digest Notifications
-* IP WhoIs Information / v1.8
-* Request Device Detection / v1.6
-* Users login, logout, online tracking / v2.0
+* IP WhoIs Information
+* Request Device Detection
+* Users login, logout, online tracking
 * Log Cleanup Tools
 * Auto Log Cleanup
 * Log Live Updates
@@ -90,10 +90,10 @@ To use IP2Location, you need to have an account on IP2Location, to get the downl
 * Plugin doesn't work with PHP 7.3 or older versions.
 
 = WordPress Requirements =
-* WordPress: 5.8 or newer
+* WordPress: 5.9 or newer
 
 = WordPress Notice =
-* Plugin will work with WordPress 5.6 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
+* Plugin may work with WordPress 5.8 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
 
 = Basic Installation =
 * Plugin folder in the WordPress plugins should be `coreactivity`.
@@ -122,6 +122,10 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.4 (2024.07.16) =
+* New: component: `REST` with 8 events
+* Edit: Dev4Press Library 5.0
+
 = 2.3.6 (2024.07.05) =
 * New: replaced `get_user_by()` with internal function
 * Edit: few minor tweaks to internal actions and filters

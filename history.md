@@ -2,6 +2,15 @@
 
 ## Changelog
 
+### Version: 2.1 / March 12, 2024
+
+* **new** settings for the main data logging, currently for IP only
+* **new** option for controlling the process of getting forwarded IPs
+* **new** wizard options for forwarded IP and duplicated entries logging
+* **edit** display shorter log counts numbers in the admin bar menu
+* **edit** Dev4Press Library 4.7.1
+* **fix** minor issue with the logging entries object type
+
 ### Version: 2.0.1 / February 12, 2024
 
 * **fix** fatal error on the plugin dashboard

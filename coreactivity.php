@@ -7,7 +7,7 @@
  * Author URI:        https://www.dev4press.com/
  * Text Domain:       coreactivity
  * Version:           2.4
- * Requires at least: 5.8
+ * Requires at least: 5.9
  * Tested up to:      6.6
  * Requires PHP:      7.4
  * Requires CP:       2.0
@@ -44,8 +44,8 @@ $coreactivity_urlname_basic = plugins_url( '/', COREACTIVITY_FILE );
 
 define( 'COREACTIVITY_PATH', $coreactivity_dirname_basic );
 define( 'COREACTIVITY_URL', $coreactivity_urlname_basic );
-define( 'COREACTIVITY_D4PLIB_PATH', $coreactivity_dirname_basic . 'd4plib/' );
-define( 'COREACTIVITY_D4PLIB_URL', $coreactivity_urlname_basic . 'd4plib/' );
+define( 'COREACTIVITY_D4PLIB_PATH', $coreactivity_dirname_basic . 'library/' );
+define( 'COREACTIVITY_D4PLIB_URL', $coreactivity_urlname_basic . 'library/' );
 
 require_once COREACTIVITY_D4PLIB_PATH . 'core.php';
 
