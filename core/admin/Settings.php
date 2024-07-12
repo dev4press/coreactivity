@@ -19,7 +19,7 @@ class Settings extends BaseSettings {
 
 	protected function value( $name, $group = 'settings', $default = null ) {
 		if ( $group == 'tools-cleanup' ) {
-			$event = $_GET['event'] ? Sanitize::absint( $_GET['event'] ) : 0;
+			$event = isset( $_GET['event'] ) ? Sanitize::absint( $_GET['event'] ) : 0;
 
 			if ( $event > 0 ) {
 				$this->_tools_cleanup['events'] = array( $event );
@@ -48,7 +48,7 @@ class Settings extends BaseSettings {
 			),
 		);
 
-		$component = $_GET['component'] ? Sanitize::text( $_GET['component'] ) : '';
+		$component = isset( $_GET['component'] ) ? Sanitize::text( $_GET['component'] ) : '';
 		$listing   = empty( $component ) ? Activity::instance()->get_select_events() : Activity::instance()->get_select_events( false, array( $component ) );
 
 		$settings['cleanup-events'] = array(

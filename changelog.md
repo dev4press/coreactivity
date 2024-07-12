@@ -6,6 +6,7 @@
 
 * **new** component: `REST` with 8 events
 * **edit** Dev4Press Library 5.0
+* **fix** input not checked for the cleanup panel
 
 ### Version: 2.3.6 / July 5, 2024
 
