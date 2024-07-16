@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class RESTAPI extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'rest-api';
+	protected $version = '2.4';
 	protected $object_type = 'route';
 	protected $icon = 'ui-target';
 

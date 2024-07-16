@@ -2,7 +2,7 @@
 
 ## Changelog
 
-### Version: 2.4 / July 16, 2024
+### Version: 2.4 / July 17, 2024
 
 * **new** component: `REST` with 8 events
 * **edit** Dev4Press Library 5.0
