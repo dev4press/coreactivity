@@ -125,6 +125,7 @@ If the database for GEO location is regularly updated, locating the IP to the co
 = 2.4 (2024.07.17) =
 * New: component: `REST` with 8 events
 * Edit: Dev4Press Library 5.0
+* Fix: input not checked for the cleanup panel
 
 = 2.3.6 (2024.07.05) =
 * New: replaced `get_user_by()` with internal function
