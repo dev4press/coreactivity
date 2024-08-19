@@ -2,6 +2,16 @@
 
 ## Changelog
 
+### Version: 2.2 / March 20, 2024
+
+* **new** events panel links to the filtered cleanup tools panel
+* **edit** expanded list of default WordPress Options keys
+* **edit** expanded list of default WordPress Sitemeta keys
+* **edit** various plugin core updates and tweaks
+* **edit** Device Detector Library 6.3.0
+* **edit** Dev4Press Library 4.7.3
+* **fix** logs panel order by IP was not working
+
 ### Version: 2.1 / March 12, 2024
 
 * **new** settings for the main data logging, currently for IP only

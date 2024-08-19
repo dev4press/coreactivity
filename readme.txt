@@ -2,7 +2,7 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 2.4
+Stable tag: 2.4.1
 Requires at least: 5.9
 Tested up to: 6.6
 Requires PHP: 7.4
@@ -78,8 +78,8 @@ To use IP2Location, you need to have an account on IP2Location, to get the downl
 * Define Exceptions
 
 = Home, Documentation and GitHub =
-* Learn more about the plugin: [CoreActivity Website](https://plugins.dev4press.com/coreactivity/)
-* Plugin Knowledge Base: [CoreActivity Support](https://support.dev4press.com/kb/coreactivity/)
+* Learn more about the plugin: [CoreActivity Website](https://www.dev4press.com/plugins/coreactivity/)
+* Plugin Knowledge Base: [CoreActivity Support](https://www.dev4press.com/kb/coreactivity/)
 * Contribute to plugin development: [CoreActivity on GitHub](https://github.com/dev4press/coreactivity)
 
 == Installation ==
@@ -116,12 +116,16 @@ Plugin creates three new database tables where all events are registered, and al
 If you have all events enabled, the plugin will add 150+ hooks into various elements of WordPress and plugins. That is not too much when compared to 3000+ hooks WordPress runs on average, so it will not have a big impact on WordPress performance. And, it is a good idea to disable events you don't need to use.
 
 = Will coreActivity work if the cache plugin is used? =
-Yes. But since cache plugins are bypassing WordPress to serve cached response, some events will be affected when the cached response is returned. To learn more, check out this article: [CoreActivity and Cache Plugins](https://support.dev4press.com/kb/article/coreactivity-cache-plugins/).
+Yes. But since cache plugins are bypassing WordPress to serve cached response, some events will be affected when the cached response is returned. To learn more, check out this article: [CoreActivity and Cache Plugins](https://www.dev4press.com/kb/article/coreactivity-cache-plugins/).
 
 = How precise is GEO Location? =
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.4.1 (2024.08.19) =
+* Edit: updated Dev4Press links
+* Edit: Dev4Press Library 5.0.1
+
 = 2.4 (2024.07.17) =
 * New: component: `REST` with 8 events
 * Edit: Dev4Press Library 5.0

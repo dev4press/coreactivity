@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 2.4.1 / August 19, 2024
+
+* **edit** updated Dev4Press links
+* **edit** Dev4Press Library 5.0.1
+
 ### Version: 2.4 / July 17, 2024
 
 * **new** component: `REST` with 8 events
@@ -53,13 +58,3 @@
 * **edit** Dev4Press Library 4.8
 * **fix** few minor issues with the component loading
 * **fix** several issues with PHP 8.1 and newer
-
-### Version: 2.2 / March 20, 2024
-
-* **new** events panel links to the filtered cleanup tools panel
-* **edit** expanded list of default WordPress Options keys
-* **edit** expanded list of default WordPress Sitemeta keys
-* **edit** various plugin core updates and tweaks
-* **edit** Device Detector Library 6.3.0
-* **edit** Dev4Press Library 4.7.3
-* **fix** logs panel order by IP was not working

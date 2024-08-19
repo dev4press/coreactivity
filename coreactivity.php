@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name:       coreActivity: Activity Logging plugin for WordPress
- * Plugin URI:        https://plugins.dev4press.com/coreactivity/
+ * Plugin URI:        https://www.dev4press.com/plugins/coreactivity/
  * Description:       Monitor and log all kinds of activity happening on the WordPress website, with fine control over events to log, detailed log and events panels, and more.
  * Author:            Milan Petrovic
  * Author URI:        https://www.dev4press.com/
  * Text Domain:       coreactivity
- * Version:           2.4
+ * Version:           2.4.1
  * Requires at least: 5.9
  * Tested up to:      6.6
  * Requires PHP:      7.4
@@ -36,7 +36,7 @@
 
 use Dev4Press\v50\WordPress;
 
-const COREACTIVITY_VERSION = '2.4';
+const COREACTIVITY_VERSION = '2.4.1';
 const COREACTIVITY_FILE    = __FILE__;
 
 $coreactivity_dirname_basic = dirname( COREACTIVITY_FILE ) . '/';
