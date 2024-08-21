@@ -2,6 +2,10 @@
 
 ## Changelog
 
+### Version: 2.4.2 / August 26, 2024
+
+* **edit** few minor updates and tweaks
+
 ### Version: 2.4.1 / August 19, 2024
 
 * **edit** updated Dev4Press links
