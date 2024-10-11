@@ -10,13 +10,13 @@ use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
 use Dev4Press\Plugin\CoreActivity\Log\Users;
-use Dev4Press\v50\Core\Helpers\IP;
-use Dev4Press\v50\Core\Plugins\DBLite;
-use Dev4Press\v50\Core\Quick\Sanitize;
-use Dev4Press\v50\Core\UI\Elements;
-use Dev4Press\v50\WordPress\Admin\Table;
+use Dev4Press\v51\Core\Helpers\IP;
+use Dev4Press\v51\Core\Plugins\DBLite;
+use Dev4Press\v51\Core\Quick\Sanitize;
+use Dev4Press\v51\Core\UI\Elements;
+use Dev4Press\v51\WordPress\Admin\Table;
 use WP_Site;
-use function Dev4Press\v50\Functions\panel;
+use function Dev4Press\v51\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

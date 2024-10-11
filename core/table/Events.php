@@ -3,11 +3,11 @@
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v50\Core\Quick\Sanitize;
-use Dev4Press\v50\Core\Quick\Str;
-use Dev4Press\v50\Core\UI\Elements;
-use Dev4Press\v50\WordPress\Admin\Table;
-use Dev4Press\v50\Core\Plugins\DBLite;
+use Dev4Press\v51\Core\Quick\Sanitize;
+use Dev4Press\v51\Core\Quick\Str;
+use Dev4Press\v51\Core\UI\Elements;
+use Dev4Press\v51\WordPress\Admin\Table;
+use Dev4Press\v51\Core\Plugins\DBLite;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
