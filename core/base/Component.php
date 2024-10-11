@@ -76,13 +76,15 @@ abstract class Component {
 	}
 
 	public function register_component( Activity $init ) {
-		$init->register_component( $this->category, $this->code(), array(
+		$args = array(
 			'plugin'       => $this->plugin,
 			'label'        => $this->label(),
 			'icon'         => $this->icon,
 			'source'       => $this->source,
 			'is_available' => $this->is_available(),
-		) );
+		);
+
+		$init->register_component( $this->category, $this->code(), $args );
 	}
 
 	public function register_events( Activity $init ) {

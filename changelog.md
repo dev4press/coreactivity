@@ -5,6 +5,8 @@
 ### Version: 2.5 / October 15, 2024
 
 * **new** use composer to install third party libraries
+* **edit** updates to the loading of third party libraries
+* **edit** many updates to the plugin loading process
 * **edit** Device Detector Library 6.4.1
 * **edit** Dev4Press Library 5.1
 

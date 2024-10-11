@@ -656,4 +656,8 @@ class Settings extends BaseSettings {
 			),
 		);
 	}
+
+	protected function admin() {
+		return coreactivity_admin();
+	}
 }

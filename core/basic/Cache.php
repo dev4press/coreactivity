@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Cache extends Core {
-	public $store = 'coreactivity';
+	public string $store = 'coreactivity';
 
 	public function get_all_registered_events() {
 		if ( ! $this->in( 'events', 'registered' ) ) {

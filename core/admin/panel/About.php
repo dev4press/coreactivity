@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class About extends PanelAbout {
-	protected $history = true;
+	protected bool $history = true;
 
 	protected function init_default_subpanels() {
 		parent::init_default_subpanels();
