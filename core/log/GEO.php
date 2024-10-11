@@ -1170,8 +1170,6 @@ class GEO {
 
 	public function geoip2() : ?Reader {
 		if ( ! ( $this->geoip2 instanceof Reader ) ) {
-			require_once COREACTIVITY_PATH . 'vendor/geoip2/autoload.php';
-
 			$path = coreactivity_settings()->get( 'geoip2_db', 'core' );
 
 			if ( ! empty( $path ) && file_exists( $path ) ) {
@@ -1239,8 +1237,6 @@ class GEO {
 
 	public function ip2location() : ?Database {
 		if ( ! ( $this->ip2download instanceof Database ) ) {
-			require_once COREACTIVITY_PATH . 'vendor/ip2location/autoload.php';
-
 			$path = coreactivity_settings()->get( 'ip2location_db', 'core' );
 
 			if ( ! empty( $path ) && file_exists( $path ) ) {

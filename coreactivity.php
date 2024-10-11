@@ -52,6 +52,7 @@ require_once COREACTIVITY_D4PLIB_PATH . 'core.php';
 require_once COREACTIVITY_PATH . 'core/autoload.php';
 require_once COREACTIVITY_PATH . 'core/bridge.php';
 require_once COREACTIVITY_PATH . 'core/functions.php';
+require_once COREACTIVITY_PATH . 'vendor/autoload.php';
 
 coreactivity();
 coreactivity_settings();

@@ -13,8 +13,6 @@ class Device {
 	private $obj;
 
 	public function __construct() {
-		require_once COREACTIVITY_PATH . 'vendor/device-detector/autoload.php';
-
 		$this->obj = new DeviceDetector();
 	}
 
