@@ -60,7 +60,8 @@ class Core {
 			'local'       => false,
 		);
 
-		$this->cached_data['anon'] = in_array( $this->cached_data['context'], array( 'CLI', 'CRON' ) );
+		$this->cached_data['is_server'] = $this->cached_data['server_ip'] === $this->cached_data['ip'];
+		$this->cached_data['anon']      = in_array( $this->cached_data['context'], array( 'CLI', 'CRON' ) );
 
 		if ( coreactivity_settings()->get( 'log_country_code' ) ) {
 			$this->geo_code = true;

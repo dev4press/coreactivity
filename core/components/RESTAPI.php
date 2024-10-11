@@ -3,6 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
+use Dev4Press\Plugin\CoreActivity\Log\Core;
 use WP_HTTP_Response;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -18,6 +19,10 @@ class RESTAPI extends Component {
 	protected $object_type = 'route';
 	protected $icon = 'ui-target';
 
+	protected array $settings = array(
+		'skip_own_server_read',
+	);
+
 	private array $actions = array(
 		'HEAD'    => 'read',
 		'OPTIONS' => 'read',
@@ -27,6 +32,12 @@ class RESTAPI extends Component {
 		'PUT'     => 'edit',
 		'DELETE'  => 'delete',
 	);
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->settings['skip_own_server_read'] = coreactivity_settings()->get( 'rest_api_skip_own_server_read' );
+	}
 
 	public function tracking() {
 		if ( $this->is_any_event_active() ) {
@@ -103,7 +114,14 @@ class RESTAPI extends Component {
 			} else if ( $rest['action'] == 'edit' ) {
 				$this->_log( 'rest-edit-item', $request->get_route(), $rest );
 			} else {
-				$this->_log( 'rest-read-item', $request->get_route(), $rest );
+				$log = true;
+				if ( $this->settings['skip_own_server_read'] && Core::instance()->get( 'is_server' ) ) {
+					$log = false;
+				}
+
+				if ( $log ) {
+					$this->_log( 'rest-read-item', $request->get_route(), $rest );
+				}
 			}
 		}
 

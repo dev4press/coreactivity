@@ -108,6 +108,19 @@ class Settings extends BaseSettings {
 						),
 					),
 				),
+				'logging-extra'   => array(
+					'name'     => __( 'Additional Settings', 'coreactivity' ),
+					'sections' => array(
+						array(
+							'label'    => __( 'REST-API', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'rest_api_skip_own_server_read', __( 'Skip read logging for server requests', 'coreactivity' ), __( 'If read requests for REST-API are coming from the website own server, the plugin will skip logging those requests.', 'coreactivity' ), Type::BOOLEAN ),
+							),
+						),
+					),
+				),
 			),
 			'optional'      => array(
 				'optional-location' => array(

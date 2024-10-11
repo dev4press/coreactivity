@@ -91,6 +91,7 @@ class Settings extends BaseSettings {
 				'js\.map$',
 				'css\.map$',
 			),
+			'rest_api_skip_own_server_read'           => true,
 		),
 		'notifications' => array(
 			'daily'                 => false,
