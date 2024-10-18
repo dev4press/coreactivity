@@ -135,15 +135,17 @@ abstract class Content extends Component {
 		$post = get_post( $object_id );
 
 		if ( $post instanceof WP_Post && $this->is_post_allowed( $post->post_type, $post->post_status ) ) {
-			$this->log( 'meta-updated', array(
-				'object_type' => 'post-meta',
-				'object_name' => $meta_key,
-			), array(
+			$args = array(
 				'post_id'        => $object_id,
 				'meta_key'       => $meta_key,
 				'meta_value'     => $meta_value,
 				'meta_value_old' => $old,
-			) );
+			);
+
+			$this->log( 'meta-updated', array(
+				'object_type' => 'post-meta',
+				'object_name' => $meta_key,
+			), $this->validate_old_new( $args, 'meta_value', 'meta_value_old' ) );
 		}
 	}
 

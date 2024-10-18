@@ -510,15 +510,17 @@ class User extends Component {
 			return;
 		}
 
-		$this->log( 'meta-updated', array(
-			'object_type' => 'user-meta',
-			'object_name' => $meta_key,
-		), array(
+		$args = array(
 			'user_id'        => $object_id,
 			'meta_key'       => $meta_key,
 			'meta_value'     => $meta_value,
 			'meta_value_old' => $old,
-		) );
+		);
+
+		$this->log( 'meta-updated', array(
+			'object_type' => 'user-meta',
+			'object_name' => $meta_key,
+		), $this->validate_old_new( $args, 'meta_value', 'meta_value_old' ) );
 	}
 
 	public function event_meta_deleted( $object_id, $meta_key, $meta_value ) {

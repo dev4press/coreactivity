@@ -46,9 +46,12 @@ abstract class Component {
 	protected $is_malicious = false;
 	protected $skip_duplicates = false;
 	protected $skip_duplicates_request = false;
+	protected $log_values_if_array_or_object = false;
 	protected $plugin_file = '';
 
 	public function __construct() {
+		$this->log_values_if_array_or_object = coreactivity_settings()->get( 'log_values_if_array_or_object' );
+
 		add_action( 'coreactivity_component_registration', array( $this, 'register_component' ) );
 		add_action( 'coreactivity_events_registration', array( $this, 'register_events' ) );
 
@@ -184,6 +187,20 @@ abstract class Component {
 		}
 
 		return $is;
+	}
+
+	public function validate_old_new( $args, $new = 'new', $old = 'old' ) {
+		if ( ! $this->log_values_if_array_or_object ) {
+			if ( isset( $args[ $new ] ) && ( is_array( $args[ $new ] ) || is_object( $args[ $new ] ) ) ) {
+				unset( $args[ $new ] );
+			}
+
+			if ( isset( $args[ $old ] ) && ( is_array( $args[ $old ] ) || is_object( $args[ $old ] ) ) ) {
+				unset( $args[ $old ] );
+			}
+		}
+
+		return $args;
 	}
 
 	protected function prepare_data_for_log( string $event, array $data = array() ) : array {

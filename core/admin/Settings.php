@@ -172,6 +172,18 @@ class Settings extends BaseSettings {
 							),
 						),
 						array(
+							'label'    => __( 'Value Changes', 'coreactivity' ),
+							'name'     => '',
+							'class'    => '',
+							'settings' => array(
+								$this->i( 'settings', 'log_values_if_array_or_object', __( 'Log for Arrays or Objects', 'coreactivity' ), __( 'If the option, sitemeta option or meta value change needs to be logged, value change by default, will be logged for scalars only. To log array or object changes, you need to enable this option.', 'coreactivity' ), Type::BOOLEAN )->more( array(
+									__( 'Space taken by logging changes of non scalar value will be larger, especially for big objects or array changes.', 'coreactivity' ),
+									__( 'If the change is occurring often, and logged objects are large, the log meta table can grow to a huge size and slow down the log process.', 'coreactivity' ),
+									__( 'Do not enable this option unless you fully understand what the implications are!', 'coreactivity' ),
+								) ),
+							),
+						),
+						array(
 							'label'    => __( 'Device Detection', 'coreactivity' ),
 							'name'     => '',
 							'class'    => '',

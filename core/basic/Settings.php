@@ -51,6 +51,7 @@ class Settings extends BaseSettings {
 			'log_if_available_referer'                => false,
 			'log_if_available_description'            => false,
 			'log_if_available_expanded_location'      => false,
+			'log_values_if_array_or_object'           => false,
 			'log_country_code'                        => false,
 			'geolocation_method'                      => 'online',
 			'geolocation_ip2location_token'           => '',
@@ -72,7 +73,10 @@ class Settings extends BaseSettings {
 			'exceptions_option_action_scheduler_lock' => true,
 			'exceptions_plugin_list'                  => array(),
 			'exceptions_theme_list'                   => array(),
-			'exceptions_cron_list'                    => array(),
+			'exceptions_cron_list'                    => array(
+				'coresecurity-scanner-job',
+				'coresecurity-db-scanner-job',
+			),
 			'exceptions_notification_list'            => array(),
 			'exceptions_option_list'                  => array(),
 			'exceptions_post-meta_list'               => array(
@@ -86,7 +90,10 @@ class Settings extends BaseSettings {
 			),
 			'exceptions_term-meta_list'               => array(),
 			'exceptions_comment-meta_list'            => array(),
-			'exceptions_sitemeta_list'                => array(),
+			'exceptions_sitemeta_list'                => array(
+				'd4p_network_coreactivity_storage',
+				'd4p_network_coresecurity_storage',
+			),
 			'exceptions_error_file_regex_list'        => array(
 				'js\.map$',
 				'css\.map$',

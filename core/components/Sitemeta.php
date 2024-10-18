@@ -145,12 +145,14 @@ class Sitemeta extends Component {
 			$equal = $value === $old_value || maybe_serialize( $value ) === maybe_serialize( $old_value );
 
 			if ( ! $equal ) {
-				$this->log( $event, array(
-					'object_name' => $option,
-				), array(
+				$args = array(
 					'old' => $old_value,
 					'new' => $value,
-				) );
+				);
+
+				$this->log( $event, array(
+					'object_name' => $option,
+				), $this->validate_old_new( $args ) );
 			}
 		}
 	}

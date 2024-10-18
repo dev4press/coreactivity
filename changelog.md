@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 2.6 / October 31, 2024
+
+* **new** option to control logging options and meta changes
+* **fix** some metadata logging events used wrong meta arguments
+
 ### Version: 2.5 / October 15, 2024
 
 * **new** use composer to install third party libraries
