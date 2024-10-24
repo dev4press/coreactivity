@@ -510,17 +510,21 @@ class User extends Component {
 			return;
 		}
 
-		$args = array(
-			'user_id'        => $object_id,
-			'meta_key'       => $meta_key,
-			'meta_value'     => $meta_value,
-			'meta_value_old' => $old,
-		);
+		$equal = $meta_value === $old || json_encode( $meta_value ) === json_encode( $old );
 
-		$this->log( 'meta-updated', array(
-			'object_type' => 'user-meta',
-			'object_name' => $meta_key,
-		), $this->validate_old_new( $args, 'meta_value', 'meta_value_old' ) );
+		if ( ! $equal ) {
+			$args = array(
+				'user_id'        => $object_id,
+				'meta_key'       => $meta_key,
+				'meta_value'     => $meta_value,
+				'meta_value_old' => $old,
+			);
+
+			$this->log( 'meta-updated', array(
+				'object_type' => 'user-meta',
+				'object_name' => $meta_key,
+			), $this->validate_old_new( $args, 'meta_value', 'meta_value_old' ) );
+		}
 	}
 
 	public function event_meta_deleted( $object_id, $meta_key, $meta_value ) {

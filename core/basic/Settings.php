@@ -78,7 +78,11 @@ class Settings extends BaseSettings {
 				'coresecurity-db-scanner-job',
 			),
 			'exceptions_notification_list'            => array(),
-			'exceptions_option_list'                  => array(),
+			'exceptions_option_list'                  => array(
+				'd4p_network_coreactivity_storage',
+				'd4p_network_coresecurity_storage',
+				'd4p_network_sweeppress_storage',
+			),
 			'exceptions_post-meta_list'               => array(
 				'_edit_lock',
 			),
@@ -93,6 +97,7 @@ class Settings extends BaseSettings {
 			'exceptions_sitemeta_list'                => array(
 				'd4p_network_coreactivity_storage',
 				'd4p_network_coresecurity_storage',
+				'd4p_network_sweeppress_storage',
 			),
 			'exceptions_error_file_regex_list'        => array(
 				'js\.map$',

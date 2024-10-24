@@ -178,18 +178,21 @@ class Term extends Component {
 		if ( $this->is_exception( $meta_key ) ) {
 			return;
 		}
+		$equal = $meta_value === $old || json_encode( $meta_value ) === json_encode( $old );
 
-		$args = array(
-			'term_id'        => $object_id,
-			'meta_key'       => $meta_key,
-			'meta_value'     => $meta_value,
-			'meta_value_old' => $old,
-		);
+		if ( ! $equal ) {
+			$args = array(
+				'term_id'        => $object_id,
+				'meta_key'       => $meta_key,
+				'meta_value'     => $meta_value,
+				'meta_value_old' => $old,
+			);
 
-		$this->log( 'meta-updated', array(
-			'object_type' => 'term-meta',
-			'object_name' => $meta_key,
-		), $this->validate_old_new( $args, 'meta_value', 'meta_value_old' ) );
+			$this->log( 'meta-updated', array(
+				'object_type' => 'term-meta',
+				'object_name' => $meta_key,
+			), $this->validate_old_new( $args, 'meta_value', 'meta_value_old' ) );
+		}
 	}
 
 	public function event_meta_deleted( $object_id, $meta_key, $meta_value ) {

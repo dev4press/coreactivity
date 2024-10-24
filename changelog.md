@@ -2,10 +2,19 @@
 
 ## Changelog
 
-### Version: 2.6 / October 31, 2024
+### Version: 2.6 / October 24, 2024
 
+* **new** component: `SweepPress` with 8 more events
+* **new** post meta updated: check for values equality
+* **new** comment meta updated: check for values equality
+* **new** term meta updated: check for values equality
+* **new** user meta updated: check for values equality
 * **new** option to control logging options and meta changes
+* **edit** option edited event: change to equality detection
+* **edit** sitemeta edited event: change to equality detection
+* **edit** expanded default values for some settings
 * **fix** some metadata logging events used wrong meta arguments
+* **fix** minor issue with the generating hidden logs row
 
 ### Version: 2.5 / October 15, 2024
 

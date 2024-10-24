@@ -235,7 +235,7 @@ class Option extends Component {
 		$event = in_array( $option, $this->monitor ) ? 'core-option-edited' : 'option-edited';
 
 		if ( $this->is_active( $event ) ) {
-			$equal = $value === $old_value || maybe_serialize( $value ) === maybe_serialize( $old_value );
+			$equal = $value === $old_value || json_encode( $value ) === json_encode( $old_value );
 
 			if ( ! $equal ) {
 				$args = array(

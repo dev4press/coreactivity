@@ -18,7 +18,7 @@ CoreActivity is a free plugin for monitoring and logging various activities of t
 = Quick Introduction Video =
 https://www.youtube.com/watch?v=JCukiRMWjeA
 
-Currently, plugin has 28 components with a total of 174 events, with direct integration with 12 popular plugins.
+Currently, plugin has 28 components with a total of 182 events, with direct integration with 12 popular plugins.
 
 = WordPress Core Components =
 * Attachments (3 events)
@@ -52,7 +52,7 @@ Currently, plugin has 28 components with a total of 174 events, with direct inte
 * GD Forum Manager (4 event)
 * Gravity Forms (6 events)
 * Jetpack (2 events)
-* SweepPress (3 event)
+* SweepPress (11 event)
 * User Switching (4 events)
 * WooCommerce (6 events)
 
@@ -122,7 +122,20 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
-= 2.5 (2024.10.15) = 
+= 2.6 (2024.10.24) =
+* New: component: `SweepPress` with 8 more events
+* New: post meta updated: check for values equality
+* New: comment meta updated: check for values equality
+* New: term meta updated: check for values equality
+* New: user meta updated: check for values equality
+* New: option to control logging options and meta changes
+* Edit: option edited event: change to equality detection
+* Edit: sitemeta edited event: change to equality detection
+* Edit: expanded default values for some settings
+* Fix: some metadata logging events used wrong meta arguments
+* Fix: minor issue with the generating hidden logs row
+
+= 2.5 (2024.10.15) =
 * New: use composer to install third party libraries
 * New: REST API option to skip logging read requests from server
 * Edit: updates to the loading of third party libraries
@@ -388,6 +401,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 2.6 =
+New events. Many improvements and changes.
+
 = 2.5 =
 Library Updated. Many improvements and changes.
 

@@ -840,7 +840,7 @@ class Logs extends Table {
 			}
 		}
 
-		if ( empty( $left ) ) {
+		if ( empty( $left ) && ! empty( $right ) ) {
 			$_chunk_size = ceil( count( $right ) / 2 );
 			$_chunks     = array_chunk( $right, $_chunk_size );
 
