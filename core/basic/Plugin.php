@@ -7,10 +7,10 @@ use Dev4Press\Plugin\CoreActivity\Log\Activity as LogActivity;
 use Dev4Press\Plugin\CoreActivity\Log\Core as LogCore;
 use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Metas as LogMetas;
-use Dev4Press\Plugin\CoreActivity\Log\Users as LogUsers;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
-use Dev4Press\v51\Core\Plugins\Core;
-use Dev4Press\v51\Core\Quick\WPR;
+use Dev4Press\Plugin\CoreActivity\Log\Users as LogUsers;
+use Dev4Press\v52\Core\Plugins\Core;
+use Dev4Press\v52\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -97,7 +97,7 @@ class Plugin extends Core {
 			return;
 		}
 
-		if (  ! wp_next_scheduled( 'coreactivity_task_geo_db' ) ) {
+		if ( ! wp_next_scheduled( 'coreactivity_task_geo_db' ) ) {
 			wp_schedule_single_event( time() + 5, 'coreactivity_task_geo_db' );
 		}
 	}

@@ -6,7 +6,7 @@
  * Author:            Milan Petrovic
  * Author URI:        https://www.dev4press.com/
  * Text Domain:       coreactivity
- * Version:           2.6
+ * Version:           2.7
  * Requires at least: 6.0
  * Tested up to:      6.7
  * Requires PHP:      7.4
@@ -34,9 +34,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  */
 
-use Dev4Press\v51\WordPress;
+use Dev4Press\v52\WordPress;
 
-const COREACTIVITY_VERSION = '2.5';
+const COREACTIVITY_VERSION = '2.7';
 const COREACTIVITY_FILE    = __FILE__;
 
 $coreactivity_dirname_basic = dirname( COREACTIVITY_FILE ) . '/';
@@ -44,15 +44,11 @@ $coreactivity_urlname_basic = plugins_url( '/', COREACTIVITY_FILE );
 
 define( 'COREACTIVITY_PATH', $coreactivity_dirname_basic );
 define( 'COREACTIVITY_URL', $coreactivity_urlname_basic );
-define( 'COREACTIVITY_D4PLIB_PATH', $coreactivity_dirname_basic . 'library/' );
-define( 'COREACTIVITY_D4PLIB_URL', $coreactivity_urlname_basic . 'library/' );
 
-require_once COREACTIVITY_D4PLIB_PATH . 'core.php';
-
+require_once COREACTIVITY_PATH . 'vendor/autoload.php';
 require_once COREACTIVITY_PATH . 'core/autoload.php';
 require_once COREACTIVITY_PATH . 'core/bridge.php';
 require_once COREACTIVITY_PATH . 'core/functions.php';
-require_once COREACTIVITY_PATH . 'vendor/autoload.php';
 
 coreactivity();
 coreactivity_settings();

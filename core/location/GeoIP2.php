@@ -3,11 +3,11 @@
 namespace Dev4Press\Plugin\CoreActivity\Location;
 
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use Dev4Press\v51\Core\Helpers\IP;
-use Dev4Press\v51\Service\GEOIP\Location;
-use Dev4Press\v51\Service\GEOIP\Locator;
-use GeoIp2\Database\Reader;
+use Dev4Press\v52\Core\Helpers\IP;
+use Dev4Press\v52\Service\GEOIP\Location;
+use Dev4Press\v52\Service\GEOIP\Locator;
 use Exception;
+use GeoIp2\Database\Reader;
 
 class GeoIP2 extends Locator {
 	public function locate( string $ip ) : ?Location {

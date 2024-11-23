@@ -1,7 +1,7 @@
 <?php
 
-use Dev4Press\Plugin\CoreActivity\Admin\Plugin as AdminPlugin;
 use Dev4Press\Plugin\CoreActivity\Admin\AJAX;
+use Dev4Press\Plugin\CoreActivity\Admin\Plugin as AdminPlugin;
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings;

@@ -2,7 +2,7 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 2.6
+Stable tag: 2.7
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4

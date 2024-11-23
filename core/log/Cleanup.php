@@ -3,7 +3,6 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v51\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

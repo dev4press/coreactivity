@@ -2,6 +2,12 @@
 
 ## Changelog
 
+### Version: 2.7 / November 25, 2024
+
+* **edit** various small tweaks and loading changes
+* **edit** Dev4Press Library 5.2.2
+* **fix** doing it wrong warning for translations on WordPress 6.7
+
 ### Version: 2.6 / October 24, 2024
 
 * **new** component: `SweepPress` with 8 more events
@@ -24,18 +30,3 @@
 * **edit** many updates to the plugin loading process
 * **edit** Device Detector Library 6.4.1
 * **edit** Dev4Press Library 5.1
-
-### Version: 2.4.2 / August 26, 2024
-
-* **edit** few minor updates and tweaks
-
-### Version: 2.4.1 / August 19, 2024
-
-* **edit** updated Dev4Press links
-* **edit** Dev4Press Library 5.0.1
-
-### Version: 2.4 / July 17, 2024
-
-* **new** component: `REST` with 8 events
-* **edit** Dev4Press Library 5.0
-* **fix** input not checked for the cleanup panel

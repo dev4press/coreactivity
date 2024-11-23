@@ -14,12 +14,12 @@ use Dev4Press\Plugin\CoreActivity\Components\Option;
 use Dev4Press\Plugin\CoreActivity\Components\Plugin;
 use Dev4Press\Plugin\CoreActivity\Components\Post;
 use Dev4Press\Plugin\CoreActivity\Components\Privacy;
+use Dev4Press\Plugin\CoreActivity\Components\RESTAPI;
 use Dev4Press\Plugin\CoreActivity\Components\Sitemeta;
 use Dev4Press\Plugin\CoreActivity\Components\Term;
 use Dev4Press\Plugin\CoreActivity\Components\Theme;
 use Dev4Press\Plugin\CoreActivity\Components\User;
 use Dev4Press\Plugin\CoreActivity\Components\WordPress;
-use Dev4Press\Plugin\CoreActivity\Components\RESTAPI;
 use Dev4Press\Plugin\CoreActivity\Plugins\bbPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\BuddyPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\ContactForm7;
@@ -32,7 +32,7 @@ use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
 use Dev4Press\Plugin\CoreActivity\Plugins\WooCommerce;
-use Dev4Press\v51\Core\Quick\Str;
+use Dev4Press\v52\Core\Quick\Str;
 use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -56,7 +56,11 @@ class Activity {
 	private $sources = array();
 	private $components = array();
 	private $events = array();
-	private $categories = array();
+	private $categories = array(
+		'internal'  => 'internal',
+		'wordpress' => 'wordpress',
+		'plugin'    => 'plugin',
+	);
 	private $list = array();
 	private $object_types = array();
 
@@ -77,12 +81,6 @@ class Activity {
 	}
 
 	public function ready() {
-		$this->categories = array(
-			'internal'  => __( 'Internal', 'coreactivity' ),
-			'wordpress' => __( 'WordPress', 'coreactivity' ),
-			'plugin'    => __( 'Plugin', 'coreactivity' ),
-		);
-
 		Upgrader::instance();
 
 		$this->_init_events();
@@ -95,26 +93,6 @@ class Activity {
 		do_action( 'coreactivity_events_registration', $this );
 
 		Cache::instance()->set( 'events', 'registered', $this->events );
-
-		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
-			'post'         => __( 'Post', 'coreactivity' ),
-			'post-meta'    => __( 'Post Meta', 'coreactivity' ),
-			'attachment'   => __( 'Attachment', 'coreactivity' ),
-			'term'         => __( 'Term', 'coreactivity' ),
-			'term-meta'    => __( 'Term Meta', 'coreactivity' ),
-			'comment'      => __( 'Comment', 'coreactivity' ),
-			'comment-meta' => __( 'Comment Meta', 'coreactivity' ),
-			'user'         => __( 'User', 'coreactivity' ),
-			'user-meta'    => __( 'User Meta', 'coreactivity' ),
-			'plugin'       => __( 'Plugin', 'coreactivity' ),
-			'theme'        => __( 'Theme', 'coreactivity' ),
-			'cron'         => __( 'Cron', 'coreactivity' ),
-			'option'       => __( 'Option', 'coreactivity' ),
-			'sitemeta'     => __( 'Site Meta', 'coreactivity' ),
-			'transient'    => __( 'Transient', 'coreactivity' ),
-			'notification' => __( 'Notification', 'coreactivity' ),
-			'route'     => __( 'REST Route', 'coreactivity' ),
-		) );
 
 		foreach ( $this->components as $component ) {
 			$this->statistics['components']['total'] ++;
@@ -144,6 +122,31 @@ class Activity {
 	}
 
 	public function init() {
+		$this->categories = array(
+			'internal'  => __( 'Internal', 'coreactivity' ),
+			'wordpress' => __( 'WordPress', 'coreactivity' ),
+			'plugin'    => __( 'Plugin', 'coreactivity' ),
+		);
+
+		$this->object_types = apply_filters( 'coreactivity_registered_object_types', array(
+			'post'         => __( 'Post', 'coreactivity' ),
+			'post-meta'    => __( 'Post Meta', 'coreactivity' ),
+			'attachment'   => __( 'Attachment', 'coreactivity' ),
+			'term'         => __( 'Term', 'coreactivity' ),
+			'term-meta'    => __( 'Term Meta', 'coreactivity' ),
+			'comment'      => __( 'Comment', 'coreactivity' ),
+			'comment-meta' => __( 'Comment Meta', 'coreactivity' ),
+			'user'         => __( 'User', 'coreactivity' ),
+			'user-meta'    => __( 'User Meta', 'coreactivity' ),
+			'plugin'       => __( 'Plugin', 'coreactivity' ),
+			'theme'        => __( 'Theme', 'coreactivity' ),
+			'cron'         => __( 'Cron', 'coreactivity' ),
+			'option'       => __( 'Option', 'coreactivity' ),
+			'sitemeta'     => __( 'Site Meta', 'coreactivity' ),
+			'transient'    => __( 'Transient', 'coreactivity' ),
+			'notification' => __( 'Notification', 'coreactivity' ),
+			'route'        => __( 'REST Route', 'coreactivity' ),
+		) );
 	}
 
 	public function is_instant_notification_enabled( int $event_id ) : bool {

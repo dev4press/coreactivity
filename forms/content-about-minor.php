@@ -1,7 +1,7 @@
 <?php
 
-use Dev4Press\v51\Core\Quick\KSES;
-use function Dev4Press\v51\Functions\panel;
+use Dev4Press\v52\Core\Quick\KSES;
+use function Dev4Press\v52\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.5 / 2.6</span></strong> &minus;
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.5 / 2.6 / 2.7</span></strong> &minus;
         Library Updated. Many improvements and changes.
     </p>
     <p>

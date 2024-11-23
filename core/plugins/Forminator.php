@@ -4,7 +4,6 @@ namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
 use Dev4Press\Plugin\CoreActivity\Base\Plugin;
 use WP_Post;
-use WPCF7_Submission;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

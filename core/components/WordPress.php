@@ -3,8 +3,8 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
-use Dev4Press\v51\Core\Helpers\Source;
-use Dev4Press\v51\WordPress as LibWordPress;
+use Dev4Press\v52\Core\Helpers\Source;
+use Dev4Press\v52\WordPress as LibWordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

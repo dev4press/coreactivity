@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use BP_Groups_Group;
-use Dev4Press\v51\Core\Mailer\Detection;
+use Dev4Press\v52\Core\Mailer\Detection;
 use GFAPI;
 use stdClass;
 use WP_Comment;
@@ -338,7 +338,7 @@ class Display {
 				$render .= sprintf( __( 'ID: %1$s &middot; Author: %2$s<br/>Post: %3$s', 'coreactivity' ), '<strong><a href="' . get_edit_comment_link( $comment->comment_ID ) . '">' . $comment->comment_ID . '</a></strong>', '<strong>' . $comment->comment_author . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>' );
 			} else {
 				/* translators: Display log comment information for missing post. %1$s: Comment ID and Link. %2$s: Author. */
-				$render .= sprintf( __( 'ID: %1$s &middot; Author: %2$s<br/>Post: MISSING', 'coreactivity' ), '<strong>' . get_edit_comment_link( $comment->comment_ID ) . '</strong>', '<strong>' . $comment->comment_author . '</strong>', );
+				$render .= sprintf( __( 'ID: %1$s &middot; Author: %2$s<br/>Post: MISSING', 'coreactivity' ), '<strong>' . get_edit_comment_link( $comment->comment_ID ) . '</strong>', '<strong>' . $comment->comment_author . '</strong>' );
 			}
 		} else {
 			$render .= __( 'MISSING', 'coreactivity' ) . ': <strong>' . $item->object_id . '</strong>';

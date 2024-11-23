@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v51\Core\Plugins\Wizard as CoreWizard;
+use Dev4Press\v52\Core\Plugins\Wizard as CoreWizard;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
