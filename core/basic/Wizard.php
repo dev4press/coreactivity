@@ -2,14 +2,14 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v52\Core\Plugins\Wizard as CoreWizard;
+use Dev4Press\v53\Core\Plugins\Wizard as CoreWizard;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class Wizard extends CoreWizard {
-	public $default = array(
+	public array $default = array(
 		'intro'         => array(
 			'forwarded'        => array(
 				array(

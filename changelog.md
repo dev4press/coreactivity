@@ -2,10 +2,13 @@
 
 ## Changelog
 
-### Version: 2.7 / November 25, 2024
+### Version: 2.7 / February 18, 2025
 
+* **new** loading of `Dev4Press Library` via Composer
+* **new** loading of various libraries via Composer
 * **edit** various small tweaks and loading changes
-* **edit** Dev4Press Library 5.2.2
+* **edit** Device Detector Library 6.4.3
+* **edit** Dev4Press Library 5.3
 * **fix** doing it wrong warning for translations on WordPress 6.7
 
 ### Version: 2.6 / October 24, 2024

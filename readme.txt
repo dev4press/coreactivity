@@ -122,6 +122,14 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.7 (2024.02.18) =
+* New: loading of `Dev4Press Library` via Composer
+* New: loading of various libraries via Composer
+* Edit: various small tweaks and loading changes
+* Edit: Device Detector Library 6.4.3
+* Edit: Dev4Press Library 5.3
+* Fix: doing it wrong warning for translations on WordPress 6.7
+
 = 2.6 (2024.10.24) =
 * New: component: `SweepPress` with 8 more events
 * New: post meta updated: check for values equality
@@ -401,6 +409,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 2.7 =
+Library Updated. Many improvements and changes.
+
 = 2.6 =
 New events. Many improvements and changes.
 
@@ -409,12 +420,6 @@ Library Updated. Many improvements and changes.
 
 = 2.4 =
 New component and events. Library Updated.
-
-= 2.3 =
-External libraries updated. Few minor changes and fixes.
-
-= 2.2 =
-Events link to clean up. Device Detector library update Library Updated. Few minor changes.
 
 == Screenshots ==
 * Plugin Dashboard

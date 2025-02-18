@@ -2,18 +2,18 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v52\Core\Plugins\Settings as BaseSettings;
+use Dev4Press\v53\Core\Plugins\Settings as BaseSettings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class Settings extends BaseSettings {
-	public $base = 'coreactivity';
-	public $scope = 'network';
-	public $has_db = true;
+	public string $base = 'coreactivity';
+	public string $scope = 'network';
+	public bool $has_db = true;
 
-	public $settings = array(
+	public array $settings = array(
 		'core'          => array(
 			'installed'             => '',
 			'updated'               => '',

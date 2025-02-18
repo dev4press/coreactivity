@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "85d0f7b0699f903824be3806b82da1fe",
+    "content-hash": "18cd487e4e743f25c043dc62c5a98b1c",
     "packages": [
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.3",
+            "version": "1.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "3b1fc3f0be055baa7c6258b1467849c3e8204eb2"
+                "reference": "08c50d5ec4c6ced7d0271d2862dec8c1033283e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/3b1fc3f0be055baa7c6258b1467849c3e8204eb2",
-                "reference": "3b1fc3f0be055baa7c6258b1467849c3e8204eb2",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/08c50d5ec4c6ced7d0271d2862dec8c1033283e6",
+                "reference": "08c50d5ec4c6ced7d0271d2862dec8c1033283e6",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.5.3"
+                "source": "https://github.com/composer/ca-bundle/tree/1.5.5"
             },
             "funding": [
                 {
@@ -80,25 +80,29 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-04T10:15:26+00:00"
+            "time": "2025-01-08T16:17:16+00:00"
         },
         {
             "name": "dev4press/library",
-            "version": "5.2.2",
+            "version": "5.3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dev4press/library.git",
-                "reference": "90ab3d4cadfbc13c30b0dcb6de990a8bff485077"
+                "reference": "7dd9c8245961cc3112b26be1b8543e01fc4f8f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dev4press/library/zipball/90ab3d4cadfbc13c30b0dcb6de990a8bff485077",
-                "reference": "90ab3d4cadfbc13c30b0dcb6de990a8bff485077",
+                "url": "https://api.github.com/repos/dev4press/library/zipball/7dd9c8245961cc3112b26be1b8543e01fc4f8f1f",
+                "reference": "7dd9c8245961cc3112b26be1b8543e01fc4f8f1f",
                 "shasum": ""
             },
             "require": {
-                "erusev/parsedown-extra": "*",
-                "php": "^7.4"
+                "composer/ca-bundle": "^1.5",
+                "erusev/parsedown-extra": "^0.8",
+                "ext-curl": "*",
+                "ext-fileinfo": "*",
+                "ext-json": "*",
+                "php": ">=7.4"
             },
             "type": "library",
             "autoload": {
@@ -135,7 +139,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2024-11-12T18:54:37+00:00"
+            "time": "2025-01-30T20:07:15+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -359,16 +363,16 @@
         },
         {
             "name": "matomo/device-detector",
-            "version": "6.4.1",
+            "version": "6.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matomo-org/device-detector.git",
-                "reference": "0d364e0dd6c177da3c24cd4049178026324fd7ac"
+                "reference": "aa4586d495a7f59029d46d976f160b13eb769bb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/0d364e0dd6c177da3c24cd4049178026324fd7ac",
-                "reference": "0d364e0dd6c177da3c24cd4049178026324fd7ac",
+                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/aa4586d495a7f59029d46d976f160b13eb769bb0",
+                "reference": "aa4586d495a7f59029d46d976f160b13eb769bb0",
                 "shasum": ""
             },
             "require": {
@@ -424,7 +428,7 @@
                 "source": "https://github.com/matomo-org/matomo",
                 "wiki": "https://dev.matomo.org/"
             },
-            "time": "2024-09-24T13:50:04+00:00"
+            "time": "2025-01-17T09:59:39+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -598,10 +602,10 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform": {},
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

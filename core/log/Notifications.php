@@ -3,9 +3,9 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v52\Core\DateTime;
-use Dev4Press\v52\Core\Quick\Str;
-use Dev4Press\v52\Core\Quick\WPR;
+use Dev4Press\v53\Core\DateTime;
+use Dev4Press\v53\Core\Quick\Str;
+use Dev4Press\v53\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

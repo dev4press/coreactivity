@@ -2,17 +2,17 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v52\Core\Plugins\InstallDB as BaseInstallDB;
+use Dev4Press\v53\Core\Plugins\InstallDB as BaseInstallDB;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class InstallDB extends BaseInstallDB {
-	protected $version = 20231024;
-	protected $prefix = 'coreactivity';
-	protected $plugin = 'coreactivity';
-	protected $tables = array(
+	protected int $version = 20231024;
+	protected string $prefix = 'coreactivity';
+	protected string $plugin = 'coreactivity';
+	protected array $tables = array(
 		'events'  => array(
 			'name'    => 'events',
 			'columns' => 6,

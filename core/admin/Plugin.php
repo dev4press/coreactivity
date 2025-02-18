@@ -6,29 +6,29 @@ use Dev4Press\Plugin\CoreActivity\Admin\Meta\Users;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin as CorePlugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings as CoreSettings;
 use Dev4Press\Plugin\CoreActivity\Basic\Wizard;
-use Dev4Press\v52\Core\Admin\Network\Plugin as BasePlugin;
+use Dev4Press\v53\Core\Admin\Network\Plugin as BasePlugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class Plugin extends BasePlugin {
-	public $plugin = 'coreactivity';
-	public $plugin_prefix = 'coreactivity';
-	public $plugin_menu = 'coreActivity';
-	public $plugin_title = 'coreActivity';
-	public $buy_me_a_coffee = true;
-	public $plugin_settings = 'network-only';
+	public string $plugin = 'coreactivity';
+	public string $plugin_prefix = 'coreactivity';
+	public string $plugin_menu = 'coreActivity';
+	public string $plugin_title = 'coreActivity';
+	public bool $buy_me_a_coffee = true;
+	public string $plugin_settings = 'network-only';
 
-	public $auto_mod_interface_colors = true;
-	public $has_widgets = true;
-	public $has_metabox = true;
+	public bool $auto_mod_interface_colors = true;
+	public bool $has_widgets = true;
+	public bool $has_metabox = true;
 
-	public $enqueue_wp = array(
+	public array $enqueue_wp = array(
 		'dialog'       => true,
 		'color_picker' => true,
 	);
-	public $per_page_options = array(
+	public array $per_page_options = array(
 		'coreactivity_logs_rows_per_page',
 		'coreactivity_events_rows_per_page',
 	);

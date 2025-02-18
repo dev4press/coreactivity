@@ -18,7 +18,7 @@
  * @package coreActivity
  *
  * == Copyright ==
- * Copyright 2008 - 2024 Milan Petrovic (email: support@dev4press.com)
+ * Copyright 2008 - 2025 Milan Petrovic (email: support@dev4press.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  */
 
-use Dev4Press\v52\WordPress;
+use Dev4Press\v53\WordPress;
 
 const COREACTIVITY_VERSION = '2.7';
 const COREACTIVITY_FILE    = __FILE__;
@@ -46,6 +46,9 @@ define( 'COREACTIVITY_PATH', $coreactivity_dirname_basic );
 define( 'COREACTIVITY_URL', $coreactivity_urlname_basic );
 
 require_once COREACTIVITY_PATH . 'vendor/autoload.php';
+
+require_once COREACTIVITY_PATH . 'vendor/dev4press/library/core.php';
+
 require_once COREACTIVITY_PATH . 'core/autoload.php';
 require_once COREACTIVITY_PATH . 'core/bridge.php';
 require_once COREACTIVITY_PATH . 'core/functions.php';

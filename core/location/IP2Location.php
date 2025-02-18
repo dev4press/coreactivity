@@ -3,9 +3,9 @@
 namespace Dev4Press\Plugin\CoreActivity\Location;
 
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use Dev4Press\v52\Core\Helpers\IP;
-use Dev4Press\v52\Service\GEOIP\Location;
-use Dev4Press\v52\Service\GEOIP\Locator;
+use Dev4Press\v53\Core\Helpers\IP;
+use Dev4Press\v53\Service\GEOIP\Location;
+use Dev4Press\v53\Service\GEOIP\Locator;
 use IP2Location\Database;
 
 class IP2Location extends Locator {

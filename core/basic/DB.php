@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
 use Dev4Press\Plugin\CoreActivity\Log\Users;
-use Dev4Press\v52\Core\Plugins\DB as BaseDB;
+use Dev4Press\v53\Core\Plugins\DB as BaseDB;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -15,12 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @property string $logmeta
  */
 class DB extends BaseDB {
-	protected $plugin_name = 'coreactivity';
-	public $_prefix = 'coreactivity';
-	public $_tables = array( 'events', 'logs', 'logmeta' );
-	public $_network_tables = array( 'events', 'logs', 'logmeta' );
-	public $_metas = array( 'log' => 'log_id' );
-	public $_log_columns = array(
+	protected string $plugin_name = 'coreactivity';
+	public string $_prefix = 'coreactivity';
+	public array $_tables = array( 'events', 'logs', 'logmeta' );
+	public array $_network_tables = array( 'events', 'logs', 'logmeta' );
+	public array $_metas = array( 'log' => 'log_id' );
+	public array $_log_columns = array(
 		'blog_id'      => '%d',
 		'event_id'     => '%d',
 		'user_id'      => '%d',
