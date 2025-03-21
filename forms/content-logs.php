@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php
 
+        /** @var \Dev4Press\Plugin\CoreActivity\Table\Logs $_grid */
 		$_grid = panel()->get_table_object();
 
 		if ( is_multisite() && ! is_network_admin() ) {

@@ -109,7 +109,7 @@ class AJAX {
 	}
 
 	public function whois_ip() {
-		$ip  = isset( $_POST['whois'] ) ? Sanitize::text( $_POST['whois'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$ip  = isset( $_POST['whois'] ) ? Sanitize::text( $_POST['whois'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 		$out = __( 'WhoIs check failed', 'coreactivity' );
 
 		if ( ! empty( $ip ) && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-whois-' . $ip ) ) {

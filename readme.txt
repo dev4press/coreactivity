@@ -1,10 +1,10 @@
-=== coreActivity: Activity Logging plugin for WordPress ===
+=== coreActivity: Activity Logging for WordPress ===
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 2.7
+Stable tag: 2.7.1
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.4
 Requires CP: 2.0
 License: GPLv3 or later
@@ -122,6 +122,12 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 2.7.1 (2024.03.21) =
+* Edit: improvements to the various panel code decorations
+* Edit: improved sanitization of the Live Logs input arguments
+* Edit: Device Detector Library 6.4.5
+* Fix: SQL injections related to the Live Logs loading
+
 = 2.7 (2024.02.18) =
 * New: loading of `Dev4Press Library` via Composer
 * New: loading of various libraries via Composer

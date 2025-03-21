@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php
 
+	/** @var \Dev4Press\Plugin\CoreActivity\Table\Events $_grid */
 	$_grid = panel()->get_table_object();
 	$_grid->prepare_table();
 	$_grid->prepare_items();

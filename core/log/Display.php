@@ -296,6 +296,7 @@ class Display {
 		$render = '<span>' . __( 'KEY', 'coreactivity' ) . ': <strong>' . $item->object_name . '</strong>';
 
 		if ( $post instanceof WP_Post ) {
+			/* translators: 1: Post ID, 2: Post Type. */
 			$render .= '<br/>' . sprintf( __( 'Post: %1$s &middot; %2$s<br/>Post Type: %3$s', 'coreactivity' ), '<strong>' . $post->ID . '</strong>', '<strong><a href="' . get_edit_post_link( $post ) . '">' . $post->post_title . '</a></strong>', '<strong>' . $post->post_type . '</strong>' );
 		}
 
@@ -558,6 +559,7 @@ class Display {
 		$render = __( 'KEY', 'coreactivity' ) . ': ' . $item->object_name;
 
 		if ( $post instanceof WP_Post ) {
+			/* translators: 1: Post ID, 2: Post Type. */
 			$render .= sprintf( __( ' &middot; Post: %1$s &middot; %2$s%3$sPost Type: %4$s', 'coreactivity' ), $post->ID, $post->post_title, ' · ', $post->post_type );
 		}
 

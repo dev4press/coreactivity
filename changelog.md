@@ -2,6 +2,13 @@
 
 ## Changelog
 
+### Version: 2.7.1 / March 21, 2025
+
+* **edit** improvements to the various panel code decorations
+* **edit** improved sanitization of the Live Logs input arguments
+* **edit** Device Detector Library 6.4.5
+* **fix** SQL injections related to the Live Logs loading
+
 ### Version: 2.7 / February 18, 2025
 
 * **new** loading of `Dev4Press Library` via Composer
@@ -24,12 +31,3 @@
 * **edit** expanded default values for some settings
 * **fix** some metadata logging events used wrong meta arguments
 * **fix** minor issue with the generating hidden logs row
-
-### Version: 2.5 / October 15, 2024
-
-* **new** use composer to install third party libraries
-* **new** REST API option to skip logging read requests from server
-* **edit** updates to the loading of third party libraries
-* **edit** many updates to the plugin loading process
-* **edit** Device Detector Library 6.4.1
-* **edit** Dev4Press Library 5.1
