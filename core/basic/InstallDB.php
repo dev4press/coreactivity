@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v53\Core\Plugins\InstallDB as BaseInstallDB;
+use Dev4Press\v54\Core\Plugins\InstallDB as BaseInstallDB;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

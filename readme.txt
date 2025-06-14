@@ -2,7 +2,7 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 2.7.1
+Stable tag: 2.8
 Requires at least: 6.0
 Tested up to: 6.8
 Requires PHP: 7.4
@@ -90,10 +90,10 @@ To use IP2Location, you need to have an account on IP2Location, to get the downl
 * Plugin doesn't work with PHP 7.3 or older versions.
 
 = WordPress Requirements =
-* WordPress: 5.9 or newer
+* WordPress: 6.0 or newer
 
 = WordPress Notice =
-* Plugin may work with WordPress 5.8 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
+* Plugin may work with WordPress 5.9 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
 
 = Basic Installation =
 * Plugin folder in the WordPress plugins should be `coreactivity`.
@@ -122,13 +122,17 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
-= 2.7.1 (2024.03.21) =
+= 2.8 (2024.06.14) =
+* Edit: Device Detector Library 6.4.6
+* Edit: Dev4Press Library 5.4
+
+= 2.7.1 (2025.03.21) =
 * Edit: improvements to the various panel code decorations
 * Edit: improved sanitization of the Live Logs input arguments
 * Edit: Device Detector Library 6.4.5
 * Fix: SQL injections related to the Live Logs loading
 
-= 2.7 (2024.02.18) =
+= 2.7 (2025.02.18) =
 * New: loading of `Dev4Press Library` via Composer
 * New: loading of various libraries via Composer
 * Edit: various small tweaks and loading changes
@@ -415,6 +419,9 @@ If the database for GEO location is regularly updated, locating the IP to the co
 * First official release
 
 == Upgrade Notice ==
+= 2.8 =
+Library Updated.
+
 = 2.7 =
 Library Updated. Many improvements and changes.
 
@@ -423,9 +430,6 @@ New events. Many improvements and changes.
 
 = 2.5 =
 Library Updated. Many improvements and changes.
-
-= 2.4 =
-New component and events. Library Updated.
 
 == Screenshots ==
 * Plugin Dashboard

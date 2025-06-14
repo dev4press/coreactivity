@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 2.8 / June 14, 2025
+
+* **edit** Device Detector Library 6.4.6
+* **edit** Dev4Press Library 5.4
+
 ### Version: 2.7.1 / March 21, 2025
 
 * **edit** improvements to the various panel code decorations
