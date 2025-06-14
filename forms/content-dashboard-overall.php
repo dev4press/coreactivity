@@ -1,7 +1,7 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use function Dev4Press\v53\Functions\panel;
+use function Dev4Press\v54\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
