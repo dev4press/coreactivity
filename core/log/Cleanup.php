@@ -9,10 +9,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Cleanup {
-	public function __construct() {
+	private function __construct() {
 	}
 
-	public static function instance() : Cleanup {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -47,24 +52,24 @@ class Cleanup {
 	}
 
 	private function cleanup( $interval, $value, $events = null ) : int {
-		$sql   = "DELETE FROM " . DB::instance()->logs;
+		$sql   = "DELETE FROM " . DB::i()->logs;
 		$where = array();
 
 		if ( $value > 0 ) {
-			$where[] = DB::instance()->prepare( "logged < DATE_SUB(NOW(), INTERVAL %d " . ( $interval == 'd' ? 'DAY' : 'MONTH' ) . ")", $value );
+			$where[] = DB::i()->prepare( "logged < DATE_SUB(NOW(), INTERVAL %d " . ( $interval == 'd' ? 'DAY' : 'MONTH' ) . ")", $value );
 		}
 
 		if ( is_array( $events ) && ! empty( $events ) ) {
-			$where[] = 'event_id IN (' . DB::instance()->prepare_in_list( $events, '%d' ) . ')';
+			$where[] = 'event_id IN (' . DB::i()->prepare_in_list( $events, '%d' ) . ')';
 		}
 
 		if ( ! empty( $where ) ) {
 			$sql .= " WHERE " . join( " AND ", $where );
 		}
 
-		$rows = DB::instance()->query( $sql );
+		$rows = DB::i()->query( $sql );
 
-		DB::instance()->remove_log_meta_orphans();
+		DB::i()->remove_log_meta_orphans();
 
 		return is_numeric( $rows ) ? absint( $rows ) : 0;
 	}

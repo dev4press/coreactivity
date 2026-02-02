@@ -6,14 +6,14 @@ use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
 use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use Dev4Press\v54\Core\Quick\WPR;
+use Dev4Press\v55\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class Jobs {
-	public function __construct() {
+	private function __construct() {
 		add_action( 'coreactivity_instant_notification', array( $this, 'instant_notification' ) );
 
 		if ( is_main_site() ) {
@@ -30,7 +30,12 @@ class Jobs {
 		}
 	}
 
-	public static function instance() : Jobs {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -71,11 +76,11 @@ class Jobs {
 			wp_schedule_event( $cron_time, 'weekly', 'coreactivity_weekly_maintenance' );
 		}
 
-		Notifications::instance()->schedule_digests();
+		Notifications::i()->schedule_digests();
 	}
 
 	public function instant_notification() {
-		Notifications::instance()->scheduled_instant();
+		Notifications::i()->scheduled_instant();
 	}
 
 	public function daily_maintenance() {
@@ -85,17 +90,17 @@ class Jobs {
 	}
 
 	public function daily_digest() {
-		Notifications::instance()->scheduled_daily();
+		Notifications::i()->scheduled_daily();
 	}
 
 	public function daily_statistics() {
-		Statistics::instance()->daily_update();
+		Statistics::i()->daily_update();
 	}
 
 	public function weekly_digest() {
 		coreactivity()->clean_cron_jobs();
 
-		Notifications::instance()->scheduled_weekly();
+		Notifications::i()->scheduled_weekly();
 	}
 
 	public function weekly_maintenance() {
@@ -103,21 +108,21 @@ class Jobs {
 	}
 
 	public function task_log_purge() {
-		Cleanup::instance()->auto_cleanup_log();
+		Cleanup::i()->auto_cleanup_log();
 	}
 
 	public function task_geo_db_update() {
 		if ( coreactivity()->s()->get( 'geolocation_method' ) == 'ip2location' ) {
-			LogLocation::instance()->ip2location_db_update();
+			LogLocation::i()->ip2location_db_update();
 		}
 
 		if ( coreactivity()->s()->get( 'geolocation_method' ) == 'geoip2' ) {
-			LogLocation::instance()->geoip2_db_update();
+			LogLocation::i()->geoip2_db_update();
 		}
 	}
 
 	public function task_users_meta() {
-		$ids = DB::instance()->get_users_without_activity_keys();
+		$ids = DB::i()->get_users_without_activity_keys();
 
 		foreach ( $ids as $id ) {
 			$id = absint( $id );

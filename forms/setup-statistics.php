@@ -9,5 +9,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 $statistics = coreactivity_settings()->get( 'statistics', 'storage' );
 
 if ( empty( $statistics ) ) {
-	Statistics::instance()->initial_update();
+	Statistics::i()->initial_update();
 }

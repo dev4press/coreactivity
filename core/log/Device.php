@@ -12,11 +12,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Device {
 	private $obj;
 
-	public function __construct() {
+	private function __construct() {
 		$this->obj = new DeviceDetector();
 	}
 
-	public static function instance() : Device {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {

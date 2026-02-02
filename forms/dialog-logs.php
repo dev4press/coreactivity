@@ -1,6 +1,6 @@
 <?php
 
-use Dev4Press\v54\Core\UI\Icons;
+use Dev4Press\v55\Core\UI\Icons;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -28,7 +28,7 @@ $_tabs = coreactivity_view_dialog_tabs();
 
 					?>
                     <button type="button" id="<?php echo esc_attr( $the_tab ); ?>-tab" aria-controls="<?php echo esc_attr( $ctrl ); ?>" aria-selected="<?php echo $_selected ? 'true' : 'false'; ?>" role="tab" data-tabname="<?php echo esc_attr( $_tab ); ?>" class="<?php echo esc_attr( $class ); ?>">
-						<?php echo Icons::instance()->icon( $args['icon'], 'i', array( 'full' => true ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+						<?php echo Icons::i()->icon( $args['icon'], 'i', array( 'full' => true ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
                         <span><?php echo esc_html( $args['label'] ); ?></span>
                     </button>
 					<?php

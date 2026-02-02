@@ -6,14 +6,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$components = Activity::instance()->get_all_components();
-$events     = Activity::instance()->get_all_events();
+$components = Activity::i()->get_all_components();
+$events     = Activity::i()->get_all_events();
 
 ?>
 <div class="coreactivity-about-components">
 	<?php
 
-	foreach ( Activity::instance()->get_all_categories() as $category => $label ) {
+	foreach ( Activity::i()->get_all_categories() as $category => $label ) {
 		echo '<h3>' . esc_html( $label ) . '</h3>';
 
 		foreach ( $components as $component ) {

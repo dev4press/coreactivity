@@ -3,13 +3,13 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v54\Core\DateTime;
-use Dev4Press\v54\Core\Helpers\IP;
-use Dev4Press\v54\Core\Quick\Sanitize;
-use Dev4Press\v54\Core\Quick\URL;
-use Dev4Press\v54\Core\Scope;
-use Dev4Press\v54\Service\GEOIP\Location;
-use Dev4Press\v54\WordPress;
+use Dev4Press\v55\Core\DateTime;
+use Dev4Press\v55\Core\Helpers\IP;
+use Dev4Press\v55\Core\Quick\Sanitize;
+use Dev4Press\v55\Core\Quick\URL;
+use Dev4Press\v55\Core\Scope;
+use Dev4Press\v55\Service\GEOIP\Location;
+use Dev4Press\v55\WordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -44,7 +44,7 @@ class Core {
 		'SEARCH',
 	);
 
-	public function __construct() {
+	private function __construct() {
 		$this->cached_data = array(
 			'ip'          => IP::visitor( coreactivity_settings()->get( 'ip_visitor_forwarded' ) ),
 			'remote_addr' => IP::visitor( false ),
@@ -54,8 +54,8 @@ class Core {
 			'method'      => $this->get_request_method(),
 			'protocol'    => wp_get_server_protocol(),
 			'request'     => URL::current_url_request(),
-			'context'     => WordPress::instance()->context(),
-			'multisite'   => Scope::instance()->is_multisite(),
+			'context'     => WordPress::i()->context(),
+			'multisite'   => Scope::i()->is_multisite(),
 			'scope'       => 'blog',
 			'local'       => false,
 		);
@@ -80,7 +80,7 @@ class Core {
 		}
 
 		if ( $this->cached_data['multisite'] ) {
-			if ( Scope::instance()->is_network_admin() ) {
+			if ( Scope::i()->is_network_admin() ) {
 				$this->cached_data['scope'] = 'network';
 			}
 		}
@@ -98,7 +98,12 @@ class Core {
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 20 );
 	}
 
-	public static function instance() : Core {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -112,11 +117,11 @@ class Core {
 	}
 
 	public function scope() : Scope {
-		return Scope::instance();
+		return Scope::i();
 	}
 
 	public function wp() : WordPress {
-		return WordPress::instance();
+		return WordPress::i();
 	}
 
 	public function log( int $event_id, array $data = array(), array $meta = array() ) : int {
@@ -124,7 +129,7 @@ class Core {
 			return - 1;
 		}
 
-		$event = Activity::instance()->get_event_by_id( $event_id );
+		$event = Activity::i()->get_event_by_id( $event_id );
 
 		/**
 		 * Main control filter controlling if the event logging will proceed or not. Only hook to this filter if you want to control the logging process.
@@ -145,8 +150,8 @@ class Core {
 		$meta = $this->prepare_meta( $meta );
 
 		if ( coreactivity_settings()->get( 'skip_duplicated' ) ) {
-			if ( Activity::instance()->can_event_skip_duplicates( $event_id ) ) {
-				$hash = $this->calculate_duplication_hash( $data, $meta, Activity::instance()->get_event_skip_duplicates_request( $event_id ) );
+			if ( Activity::i()->can_event_skip_duplicates( $event_id ) ) {
+				$hash = $this->calculate_duplication_hash( $data, $meta, Activity::i()->get_event_skip_duplicates_request( $event_id ) );
 
 				if ( ! empty( $this->duplicates ) && in_array( $hash, $this->duplicates ) ) {
 					return 0;
@@ -161,7 +166,7 @@ class Core {
 		$meta = $this->prepare_device( $meta );
 
 		if ( $this->geo_code || $this->geo_meta ) {
-			$geo = GEO::instance()->locate( $data['ip'] );
+			$geo = GEO::i()->locate( $data['ip'] );
 
 			if ( $geo instanceof Location ) {
 				if ( ! isset( $data['country_code'] ) && ! empty( $geo->country_code ) ) {
@@ -182,7 +187,7 @@ class Core {
 			$meta['remote_addr'] = $this->get( 'remote_addr' );
 		}
 
-		$id = DB::instance()->log_event( $data, $meta );
+		$id = DB::i()->log_event( $data, $meta );
 
 		if ( $id ) {
 			/**
@@ -275,7 +280,7 @@ class Core {
 		}
 
 		if ( ! isset( $data['logged'] ) ) {
-			$data['logged'] = DateTime::instance()->mysql_date();
+			$data['logged'] = DateTime::i()->mysql_date();
 		}
 
 		if ( ! isset( $data['ip'] ) ) {
@@ -337,7 +342,7 @@ class Core {
 
 	private function prepare_device( array $meta = array() ) : array {
 		if ( $this->device_filter || $this->device_meta ) {
-			$detect = Device::instance()->detect( $this->cached_data['ua'], true );
+			$detect = Device::i()->detect( $this->cached_data['ua'], true );
 
 			if ( $this->device_meta ) {
 				$meta['device'] = $detect;

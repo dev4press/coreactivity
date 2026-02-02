@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Help {
-	public function __construct() {
+	private function __construct() {
 		if ( $this->a()->panel == 'dashboard' ) {
 			$this->_for_dashboard();
 		} else if ( $this->a()->panel == 'logs' ) {
@@ -17,7 +17,12 @@ class Help {
 		}
 	}
 
-	public static function instance() : Help {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( is_null( $instance ) ) {
@@ -31,7 +36,7 @@ class Help {
 		return coreactivity_admin();
 	}
 
-	private function _for_dashboard() {
+	private function _for_dashboard() : void {
 		$this->a()->screen()->add_help_tab(
 			array(
 				'id'      => 'coreactivity-dashboard-events',
@@ -59,7 +64,7 @@ class Help {
 		);
 	}
 
-	private function _for_logs() {
+	private function _for_logs() : void {
 		$this->a()->screen()->add_help_tab(
 			array(
 				'id'      => 'coreactivity-logs-help',
@@ -76,7 +81,7 @@ class Help {
 		);
 	}
 
-	private function _for_events() {
+	private function _for_events() : void {
 		$this->a()->screen()->add_help_tab(
 			array(
 				'id'      => 'coreactivity-events-help',

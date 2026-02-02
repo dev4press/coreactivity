@@ -3,22 +3,27 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
-use Dev4Press\v54\Core\DateTime;
-use Dev4Press\v54\Core\Quick\Str;
-use Dev4Press\v54\Core\Quick\WPR;
+use Dev4Press\v55\Core\DateTime;
+use Dev4Press\v55\Core\Quick\Str;
+use Dev4Press\v55\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class Notifications {
-	public function __construct() {
+	private function __construct() {
 		if ( $this->s( 'instant' ) ) {
 			add_action( 'coreactivity_event_logged', array( $this, 'check_for_instant' ), 10, 3 );
 		}
 	}
 
-	public static function instance() : Notifications {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -171,7 +176,7 @@ https://www.dev4press.com/plugins/coreactivity/',
 			return;
 		}
 
-		coreactivity_settings()->set( 'instant_datetime', DateTime::instance()->mysql_date(), 'core' );
+		coreactivity_settings()->set( 'instant_datetime', DateTime::i()->mysql_date(), 'core' );
 		coreactivity_settings()->set( 'instant_timestamp', time(), 'core', true );
 
 		$notification = array(
@@ -214,7 +219,7 @@ https://www.dev4press.com/plugins/coreactivity/',
 	}
 
 	public function check_for_instant( $id, $data, $meta ) {
-		if ( Activity::instance()->is_instant_notification_enabled( $data['event_id'] ) ) {
+		if ( Activity::i()->is_instant_notification_enabled( $data['event_id'] ) ) {
 			if ( ! wp_next_scheduled( 'coreactivity_instant_notification' ) ) {
 				if ( ! $this->is_instant_allowed() ) {
 					wp_schedule_single_event( $this->next_instant_timestamp(), 'coreactivity_instant_notification' );
@@ -229,36 +234,36 @@ https://www.dev4press.com/plugins/coreactivity/',
 	}
 
 	public function scheduled_instant() {
-		$events = Activity::instance()->get_events_with_notifications( 'instant' );
-		$to     = DateTime::instance()->mysql_date();
+		$events = Activity::i()->get_events_with_notifications( 'instant' );
+		$to     = DateTime::i()->mysql_date();
 		$from   = $this->last_instant_datetime();
 
-		$log = DB::instance()->get_entries_by_event_ids_and_date_range( $events, $from, $to );
+		$log = DB::i()->get_entries_by_event_ids_and_date_range( $events, $from, $to );
 
 		$this->instant_notify( $log, $from, $to );
 	}
 
 	public function scheduled_daily() {
-		$events = Activity::instance()->get_events_with_notifications( 'daily' );
+		$events = Activity::i()->get_events_with_notifications( 'daily' );
 
 		if ( ! empty( $events ) ) {
-			$to   = gmdate( DateTime::instance()->mysql_format(), strtotime( 'today' ) - 1 );
-			$from = gmdate( DateTime::instance()->mysql_format(), strtotime( 'yesterday' ) );
+			$to   = gmdate( DateTime::i()->mysql_format(), strtotime( 'today' ) - 1 );
+			$from = gmdate( DateTime::i()->mysql_format(), strtotime( 'yesterday' ) );
 
-			$log = DB::instance()->get_entries_counts_by_event_ids_and_date_range( $events, $from, $to );
+			$log = DB::i()->get_entries_counts_by_event_ids_and_date_range( $events, $from, $to );
 
 			$this->daily_digest( $log, $from, $to );
 		}
 	}
 
 	public function scheduled_weekly() {
-		$events = Activity::instance()->get_events_with_notifications( 'weekly' );
+		$events = Activity::i()->get_events_with_notifications( 'weekly' );
 
 		if ( ! empty( $events ) ) {
-			$to   = gmdate( DateTime::instance()->mysql_format(), strtotime( 'today' ) - 1 );
-			$from = gmdate( DateTime::instance()->mysql_format(), strtotime( 'today' ) - WEEK_IN_SECONDS );
+			$to   = gmdate( DateTime::i()->mysql_format(), strtotime( 'today' ) - 1 );
+			$from = gmdate( DateTime::i()->mysql_format(), strtotime( 'today' ) - WEEK_IN_SECONDS );
 
-			$log = DB::instance()->get_entries_counts_by_event_ids_and_date_range( $events, $from, $to );
+			$log = DB::i()->get_entries_counts_by_event_ids_and_date_range( $events, $from, $to );
 
 			$this->weekly_digest( $log, $from, $to );
 		}
@@ -299,14 +304,14 @@ https://www.dev4press.com/plugins/coreactivity/',
 		$i = 1;
 		foreach ( $events as $component => $data ) {
 			$item = str_pad( $i, 3, ' ', STR_PAD_LEFT ) . '. ';
-			$item .= '[' . $component . '] ' . Activity::instance()->get_component_label( $component ) . PHP_EOL;
+			$item .= '[' . $component . '] ' . Activity::i()->get_component_label( $component ) . PHP_EOL;
 			$item .= '     Logged Entries: ' . $data['total'] . PHP_EOL;
 			$item .= '     View All in Log: ' . network_admin_url( 'admin.php?page=coreactivity-logs&view=component&filter-component=' . $component ) . PHP_EOL;
 
 			foreach ( $data['events'] as $event => $count ) {
-				$event_id = Activity::instance()->get_event_id( $component, $event );
+				$event_id = Activity::i()->get_event_id( $component, $event );
 
-				$item .= '     * [' . $event . '] ' . Activity::instance()->get_event_label( $event_id, $event ) . ': ' . $count . PHP_EOL;
+				$item .= '     * [' . $event . '] ' . Activity::i()->get_event_label( $event_id, $event ) . ': ' . $count . PHP_EOL;
 			}
 
 			$render[] = $item;
@@ -322,10 +327,10 @@ https://www.dev4press.com/plugins/coreactivity/',
 
 		$i = 1;
 		foreach ( $events as $event ) {
-			$object = Display::instance()->email_object_name( '', (object) $event );
+			$object = Display::i()->email_object_name( '', (object) $event );
 
 			$item = str_pad( $i, 4, ' ', STR_PAD_LEFT ) . '. ';
-			$item .= Activity::instance()->get_event_display( $event['event_id'] ) . PHP_EOL;
+			$item .= Activity::i()->get_event_display( $event['event_id'] ) . PHP_EOL;
 			$item .= '      Logged: ' . $event['logged'] . PHP_EOL;
 			$item .= '      IP: ' . $event['ip'] . ' · ' . $event['method'] . ( empty( $event['context'] ) ? '' : ' · ' . $event['context'] );
 

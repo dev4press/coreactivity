@@ -12,10 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Statistics {
-	public function __construct() {
+	private function __construct() {
 	}
 
-	public static function instance() : Statistics {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -26,11 +31,11 @@ class Statistics {
 	}
 
 	public function a() : Activity {
-		return Activity::instance();
+		return Activity::i();
 	}
 
 	public function db() : DB {
-		return DB::instance();
+		return DB::i();
 	}
 
 	public function overall() {
@@ -91,7 +96,7 @@ class Statistics {
 	}
 
 	public function initial_update() {
-		$statistics = DB::instance()->get_events_statistics();
+		$statistics = DB::i()->get_events_statistics();
 
 		$this->save_statistics( $statistics );
 	}
@@ -107,8 +112,8 @@ class Statistics {
 			if ( ! is_array( $statistics ) ) {
 				$this->initial_update();
 			} else {
-				$two = DB::instance()->get_events_statistics( 'two' );
-				$one = DB::instance()->get_events_statistics( 'one' );
+				$two = DB::i()->get_events_statistics( 'two' );
+				$one = DB::i()->get_events_statistics( 'one' );
 
 				$statistics = $this->update_statistics_array( $statistics, $two );
 				$statistics = $this->update_statistics_array( $statistics, $one );

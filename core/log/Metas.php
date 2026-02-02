@@ -10,7 +10,7 @@ class Metas {
 	private array $scopes = array( 'post', 'comment', 'term', 'user' );
 	private array $previous = array();
 
-	public function __construct() {
+	private function __construct() {
 		foreach ( $this->scopes as $scope ) {
 			add_action( 'added_' . $scope . '_meta', array( $this, 'added_meta' ), 10, 4 );
 			add_action( 'deleted_' . $scope . '_meta', array( $this, 'deleted_meta' ), 10, 4 );
@@ -21,7 +21,12 @@ class Metas {
 		}
 	}
 
-	public static function instance() : Metas {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {

@@ -3,8 +3,8 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin\Panel;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Render;
-use Dev4Press\v54\Core\Scope;
-use Dev4Press\v54\Core\UI\Admin\PanelDashboard;
+use Dev4Press\v55\Core\Scope;
+use Dev4Press\v55\Core\UI\Admin\PanelDashboard;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,7 +14,7 @@ class Dashboard extends PanelDashboard {
 	public function __construct( $admin ) {
 		parent::__construct( $admin );
 
-		if ( Scope::instance()->is_master_network_admin() ) {
+		if ( Scope::i()->is_master_network_admin() ) {
 			$this->sidebar_links['plugin']['events'] = array(
 				'icon'  => $this->a()->menu_items['events']['icon'],
 				'class' => 'button-primary',
@@ -34,13 +34,13 @@ class Dashboard extends PanelDashboard {
 
 		$this->sidebar_links['plugin']['logs'] = array(
 			'icon'  => $this->a()->menu_items['logs']['icon'],
-			'class' => Scope::instance()->is_master_network_admin() ? 'button-primary' : 'button-secondary',
+			'class' => Scope::i()->is_master_network_admin() ? 'button-primary' : 'button-secondary',
 			'url'   => $this->a()->panel_url( 'logs', '', '', $this->a()->get_menu_item_network_url_flag( 'logs' ) ),
 			'label' => __( 'Logs', 'coreactivity' ),
 			'scope' => $this->a()->menu_items['logs']['scope'] ?? array(),
 		);
 
-		if ( ! Scope::instance()->is_master_network_admin() ) {
+		if ( ! Scope::i()->is_master_network_admin() ) {
 			unset( $this->sidebar_links['basic']['settings'], $this->sidebar_links['basic']['tools'] );
 		}
 	}

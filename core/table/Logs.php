@@ -10,13 +10,13 @@ use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
 use Dev4Press\Plugin\CoreActivity\Log\Users;
-use Dev4Press\v54\Core\Helpers\IP;
-use Dev4Press\v54\Core\Plugins\DBLite;
-use Dev4Press\v54\Core\Quick\Sanitize;
-use Dev4Press\v54\Core\UI\Elements;
-use Dev4Press\v54\WordPress\Admin\Table;
+use Dev4Press\v55\Core\Helpers\IP;
+use Dev4Press\v55\Core\Plugins\DBLite;
+use Dev4Press\v55\Core\Quick\Sanitize;
+use Dev4Press\v55\Core\UI\Elements;
+use Dev4Press\v55\WordPress\Admin\Table;
 use WP_Site;
-use function Dev4Press\v54\Functions\panel;
+use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -78,7 +78,7 @@ class Logs extends Table {
 	);
 
 	public function __construct( $args = array() ) {
-		Display::instance();
+		Display::i();
 
 		foreach ( $args as $key => $value ) {
 			if ( property_exists( $this, $key ) ) {
@@ -86,8 +86,8 @@ class Logs extends Table {
 			}
 		}
 
-		$this->_current_ip = Core::instance()->get( 'ip' );
-		$this->_server_ip  = Core::instance()->get( 'server_ip' );
+		$this->_current_ip = Core::i()->get( 'ip' );
+		$this->_server_ip  = Core::i()->get( 'server_ip' );
 
 		$this->_display_blog_column_linked = coreactivity_settings()->get( 'display_blog_column_linked' );
 		$this->_display_columns_simplified = coreactivity_settings()->get( 'display_columns_simplified' );
@@ -114,7 +114,7 @@ class Logs extends Table {
 	}
 
 	public function i() : Activity {
-		return Activity::instance();
+		return Activity::i();
 	}
 
 	public function get_instance_code() : string {
@@ -135,7 +135,7 @@ class Logs extends Table {
 
 	public function prepare_items() {
 		if ( $this->_logs_instance == 'coreactivity' ) {
-			Users::instance()->update_last_user_log_visit();
+			Users::i()->update_last_user_log_visit();
 		}
 
 		do_action( $this->_filter_key . '_prepare_items_start', $this );
@@ -158,7 +158,7 @@ class Logs extends Table {
 
 			if ( ! isset( $item->device ) || ( ! isset( $item->device['bot'] ) && empty( $item->device['client'] ) && empty( $item->device['os'] ) ) ) {
 				if ( ! empty( $ua ) ) {
-					$item->{"device"} = Device::instance()->detect( $ua );
+					$item->{"device"} = Device::i()->detect( $ua );
 				}
 			}
 
@@ -172,7 +172,7 @@ class Logs extends Table {
 		}
 
 		if ( ! empty( $this->_items_ips ) ) {
-			GEO::instance()->bulk( $this->_items_ips );
+			GEO::i()->bulk( $this->_items_ips );
 		}
 
 		do_action( $this->_filter_key . '_prepare_items_finish', $this );
@@ -249,7 +249,7 @@ class Logs extends Table {
 			'limit'    => $this->_limit_lock,
 			'filter'   => $this->_filter_key,
 			'settings' => array(),
-			'id'       => DB::instance()->get_last_log_id(),
+			'id'       => DB::i()->get_last_log_id(),
 			'nonce'    => wp_create_nonce( 'coreactivity-live-update' ),
 			'page'     => isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification
 		);
@@ -526,13 +526,13 @@ class Logs extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
-		Elements::instance()->select( $this->get_period_dropdown( 'logged', coreactivity_db()->logs ), array(
+		Elements::i()->select( $this->get_period_dropdown( 'logged', coreactivity_db()->logs ), array(
 			'selected' => $this->get_request_arg( 'period' ),
 			'name'     => 'period',
 		) );
 
 		if ( ! isset( $this->_filter_lock['component'] ) && ! isset( $this->_filter_lock['event_id'] ) ) {
-			Elements::instance()->select_grouped( $this->get_select_components(), array(
+			Elements::i()->select_grouped( $this->get_select_components(), array(
 				'empty'    => __( 'All Components', 'coreactivity' ),
 				'selected' => $this->get_request_arg( 'filter-component' ),
 				'name'     => 'filter-component',
@@ -540,7 +540,7 @@ class Logs extends Table {
 		}
 
 		if ( ! isset( $this->_filter_lock['event_id'] ) ) {
-			Elements::instance()->select_grouped( $this->get_select_events(), array(
+			Elements::i()->select_grouped( $this->get_select_events(), array(
 				'empty'    => __( 'All Events', 'coreactivity' ),
 				'selected' => $this->get_request_arg( 'filter-event_id' ),
 				'name'     => 'filter-event_id',
@@ -553,17 +553,17 @@ class Logs extends Table {
 				'-' => __( 'Normal', 'coreactivity' ),
 			);
 
-			foreach ( Core::instance()->valid_request_contexts() as $context ) {
+			foreach ( Core::i()->valid_request_contexts() as $context ) {
 				$_contexts[ $context ] = $context;
 			}
 
-			Elements::instance()->select( $_contexts, array(
+			Elements::i()->select( $_contexts, array(
 				'selected' => $this->get_request_arg( 'filter-context' ),
 				'name'     => 'filter-context',
 			) );
 		}
 
-		Elements::instance()->select_grouped( $this->get_country_codes(), array(
+		Elements::i()->select_grouped( $this->get_country_codes(), array(
 			'empty'    => __( 'All Countries', 'coreactivity' ),
 			'selected' => $this->get_request_arg( 'filter-country_code' ),
 			'name'     => 'filter-country_code',
@@ -574,11 +574,11 @@ class Logs extends Table {
 				'' => __( 'All Methods', 'coreactivity' ),
 			);
 
-			foreach ( Core::instance()->valid_request_methods() as $method ) {
+			foreach ( Core::i()->valid_request_methods() as $method ) {
 				$_methods[ $method ] = $method;
 			}
 
-			Elements::instance()->select( $_methods, array(
+			Elements::i()->select( $_methods, array(
 				'selected' => $this->get_request_arg( 'filter-method' ),
 				'name'     => 'filter-method',
 			) );
@@ -594,7 +594,7 @@ class Logs extends Table {
 					$_types[ $type ] = $value;
 				}
 
-				Elements::instance()->select( $_types, array(
+				Elements::i()->select( $_types, array(
 					'selected' => $this->get_request_arg( 'filter-object_type' ),
 					'name'     => 'filter-object_type',
 				) );
@@ -624,7 +624,7 @@ class Logs extends Table {
 			if ( $code == 'XX' ) {
 				$has_localhost = true;
 			} else {
-				$list[ $code ] = trim( '[' . $code . '] ' . GEO::instance()->country( $code ) );
+				$list[ $code ] = trim( '[' . $code . '] ' . GEO::i()->country( $code ) );
 			}
 		}
 
@@ -746,7 +746,7 @@ class Logs extends Table {
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-cloud d4p-icon-fw"></i> <span>' . esc_html__( 'IP', 'coreactivity' ) . '</span>';
 
 					if ( $this->_display_ip_country_flag ) {
-						$current_view .= '<span class="coreactivity-ip">' . esc_html( Render::ip_masked( $this->_filter_lock['ip'] ) ) . '</span> ' . GEO::instance()->flag( $this->_filter_lock['ip'] );
+						$current_view .= '<span class="coreactivity-ip">' . esc_html( Render::ip_masked( $this->_filter_lock['ip'] ) ) . '</span> ' . GEO::i()->flag( $this->_filter_lock['ip'] );
 					} else {
 						$current_view .= $this->_filter_lock['ip'];
 					}
@@ -756,7 +756,7 @@ class Logs extends Table {
 					break;
 				case 'country_code':
 					$current_view = '<span class="coreactivity-view-button"><i class="d4p-icon d4p-ui-globe d4p-icon-fw"></i> <span>' . esc_html__( 'Country', 'coreactivity' ) . '</span>';
-					$current_view .= '<span>[' . $this->_filter_lock['country_code'] . '] ' . GEO::instance()->country( $this->_filter_lock['country_code'] ) . '</span>' . GEO::instance()->flag_from_country( $this->_filter_lock['country_code'] );
+					$current_view .= '<span>[' . $this->_filter_lock['country_code'] . '] ' . GEO::i()->country( $this->_filter_lock['country_code'] ) . '</span>' . GEO::i()->flag_from_country( $this->_filter_lock['country_code'] );
 					$current_view .= '</span>';
 					$current_key  .= 'ip';
 					break;
@@ -942,9 +942,9 @@ class Logs extends Table {
 
 		if ( $this->_display_ip_country_flag ) {
 			if ( ! empty( $item->country_code ) ) {
-				$render = GEO::instance()->flag_from_country( $item->country_code ) . ' ' . $render;
+				$render = GEO::i()->flag_from_country( $item->country_code ) . ' ' . $render;
 			} else {
-				$render = GEO::instance()->flag( $item->ip ) . ' ' . $render;
+				$render = GEO::i()->flag( $item->ip ) . ' ' . $render;
 			}
 		}
 

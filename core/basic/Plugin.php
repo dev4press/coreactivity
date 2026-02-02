@@ -9,8 +9,8 @@ use Dev4Press\Plugin\CoreActivity\Log\GEO as LogLocation;
 use Dev4Press\Plugin\CoreActivity\Log\Metas as LogMetas;
 use Dev4Press\Plugin\CoreActivity\Log\Notifications;
 use Dev4Press\Plugin\CoreActivity\Log\Users as LogUsers;
-use Dev4Press\v54\Core\Plugins\Core;
-use Dev4Press\v54\Core\Quick\WPR;
+use Dev4Press\v55\Core\Plugins\Core;
+use Dev4Press\v55\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -21,7 +21,7 @@ class Plugin extends Core {
 
 	public string $plugin = 'coreactivity';
 
-	public function __construct() {
+	protected function __construct() {
 		$this->url  = COREACTIVITY_URL;
 		$this->path = COREACTIVITY_PATH;
 
@@ -47,15 +47,15 @@ class Plugin extends Core {
 	public function run() {
 		do_action( 'coreactivity_load_settings' );
 
-		LogActivity::instance();
-		LogLocation::instance();
-		LogMetas::instance();
-		LogCore::instance();
-		LogUsers::instance();
+		LogActivity::i();
+		LogLocation::i();
+		LogMetas::i();
+		LogCore::i();
+		LogUsers::i();
 
 		do_action( 'coreactivity_plugin_core_ready' );
 
-		Notifications::instance();
+		Notifications::i();
 
 		add_action( 'init', array( $this, 'init' ), 100 );
 		add_action( 'debugpress-tracker-plugins-call', array( $this, 'debugpress' ) );
@@ -65,21 +65,21 @@ class Plugin extends Core {
 		}
 	}
 
-	public function after_setup_theme() {
+	public function after_setup_theme() : void {
 		do_action( 'coreactivity_prepare' );
 
-		Jobs::instance();
+		Jobs::i();
 	}
 
 	public function debugpress() {
 		if ( function_exists( 'debugpress_store_for_plugin' ) ) {
 			debugpress_store_for_plugin( COREACTIVITY_FILE, array(
 				'data' => array(
-					'components' => Activity::instance()->get_all_components(),
-					'events'     => Activity::instance()->get_all_events(),
-					'statistics' => Activity::instance()->statistics,
+					'components' => Activity::i()->get_all_components(),
+					'events'     => Activity::i()->get_all_events(),
+					'statistics' => Activity::i()->statistics,
 				),
-				'log'  => LogCore::instance()->get_current_page_log(),
+				'log'  => LogCore::i()->get_current_page_log(),
 			) );
 		}
 	}

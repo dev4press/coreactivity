@@ -4,15 +4,15 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v54\Core\Admin\GetBack as BaseGetBack;
-use Dev4Press\v54\Core\Quick\Sanitize;
+use Dev4Press\v55\Core\Admin\GetBack as BaseGetBack;
+use Dev4Press\v55\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class GetBack extends BaseGetBack {
-	protected function process() {
+	protected function process() : void {
 		parent::process();
 
 		if ( ! empty( $this->a()->panel ) ) {
@@ -34,7 +34,7 @@ class GetBack extends BaseGetBack {
 		do_action( 'coreactivity_admin_getback_handler', $this->p(), $this->a() );
 	}
 
-	private function action_dashboard() {
+	private function action_dashboard() : void {
 		$action = $this->get_single_action();
 
 		if ( in_array( $action, array( 'disable-logging', 'enable-logging' ) ) ) {
@@ -49,7 +49,7 @@ class GetBack extends BaseGetBack {
 		}
 	}
 
-	private function action_logs() {
+	private function action_logs() : void {
 		$action = $this->get_single_action();
 
 		if ( $action == 'do-not-log' ) {
@@ -75,7 +75,7 @@ class GetBack extends BaseGetBack {
 		}
 	}
 
-	private function bulk_panel_events() {
+	private function bulk_panel_events() : void {
 		check_admin_referer( 'bulk-events' );
 
 		$action = $this->get_bulk_action();
@@ -88,9 +88,9 @@ class GetBack extends BaseGetBack {
 					$new = $action == 'enable' ? 'active' : 'inactive';
 
 					foreach ( $ids as $event_id ) {
-						DB::instance()->change_event_status( $event_id, $new );
+						DB::i()->change_event_status( $event_id, $new );
 					}
-				} else if ( substr( $action, 0, 13 ) == 'notifications' ) {
+				} else if ( str_starts_with( $action, 'notifications' ) ) {
 					$elements = explode( '-', substr( $action, 14 ) );
 
 					if ( count( $elements ) == 2 ) {
@@ -99,7 +99,7 @@ class GetBack extends BaseGetBack {
 
 						if ( in_array( $notification, array( 'instant', 'daily', 'weekly' ), true ) && in_array( $status, array( 'on', 'off' ), true ) ) {
 							foreach ( $ids as $event_id ) {
-								Activity::instance()->event_notification_toggle( $event_id, $notification, $status );
+								Activity::i()->event_notification_toggle( $event_id, $notification, $status );
 							}
 						}
 					}
@@ -111,7 +111,7 @@ class GetBack extends BaseGetBack {
 		}
 	}
 
-	private function bulk_panel_logs() {
+	private function bulk_panel_logs() : void {
 		check_admin_referer( 'bulk-logs' );
 
 		$action = $this->get_bulk_action();
@@ -121,7 +121,7 @@ class GetBack extends BaseGetBack {
 
 			if ( ! empty( $ids ) ) {
 				if ( $action == 'delete' ) {
-					DB::instance()->delete_log_entries( $ids );
+					DB::i()->delete_log_entries( $ids );
 
 					wp_redirect( $this->a()->current_url() . '&message=delete-completed' );
 					exit;

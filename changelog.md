@@ -2,6 +2,17 @@
 
 ## Changelog
 
+### Version: 3.0 / february 11, 2026
+
+* **new** plugin tested with `WordPress` up to 6.9
+* **new** plugin tested with `PHP` up to 8.5
+* **new** updated plugin system requirements
+* **edit** various updates to the plugin core and code structure
+* **edit** Dev4Press Library 5.5.2
+* **edit** Device Detector Library 6.5
+* **edit** IP2Location 9.8.1
+* **fix** a few small code formatting issues
+
 ### Version: 2.8 / June 14, 2025
 
 * **edit** Device Detector Library 6.4.6
@@ -22,17 +33,3 @@
 * **edit** Device Detector Library 6.4.3
 * **edit** Dev4Press Library 5.3
 * **fix** doing it wrong warning for translations on WordPress 6.7
-
-### Version: 2.6 / October 24, 2024
-
-* **new** component: `SweepPress` with 8 more events
-* **new** post meta updated: check for values equality
-* **new** comment meta updated: check for values equality
-* **new** term meta updated: check for values equality
-* **new** user meta updated: check for values equality
-* **new** option to control logging options and meta changes
-* **edit** option edited event: change to equality detection
-* **edit** sitemeta edited event: change to equality detection
-* **edit** expanded default values for some settings
-* **fix** some metadata logging events used wrong meta arguments
-* **fix** minor issue with the generating hidden logs row

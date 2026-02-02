@@ -17,7 +17,7 @@ class Logs extends Panel {
 	protected bool $form_multiform = false;
 	protected string $form_method = 'get';
 
-	public function screen_options_show() {
+	public function screen_options_show() : void {
 		add_screen_option( 'per_page', array(
 			'label'   => __( 'Rows', 'coreactivity' ),
 			'default' => 25,

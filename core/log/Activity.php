@@ -32,7 +32,7 @@ use Dev4Press\Plugin\CoreActivity\Plugins\Jetpack;
 use Dev4Press\Plugin\CoreActivity\Plugins\SweepPress;
 use Dev4Press\Plugin\CoreActivity\Plugins\UserSwitching;
 use Dev4Press\Plugin\CoreActivity\Plugins\WooCommerce;
-use Dev4Press\v54\Core\Quick\Str;
+use Dev4Press\v55\Core\Quick\Str;
 use stdClass;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -64,13 +64,18 @@ class Activity {
 	private $list = array();
 	private $object_types = array();
 
-	public function __construct() {
+	private function __construct() {
 		add_action( 'coreactivity_plugin_core_ready', array( $this, 'ready' ), 15 );
 		add_action( 'coreactivity_prepare', array( $this, 'prepare' ), 15 );
 		add_action( 'coreactivity_init', array( $this, 'init' ), 1 );
 	}
 
-	public static function instance() : Activity {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -81,7 +86,7 @@ class Activity {
 	}
 
 	public function ready() {
-		Upgrader::instance();
+		Upgrader::i();
 
 		$this->_init_events();
 		$this->_init_components();
@@ -92,7 +97,7 @@ class Activity {
 		do_action( 'coreactivity_component_registration', $this );
 		do_action( 'coreactivity_events_registration', $this );
 
-		Cache::instance()->set( 'events', 'registered', $this->events );
+		Cache::i()->set( 'events', 'registered', $this->events );
 
 		foreach ( $this->components as $component ) {
 			$this->statistics['components']['total'] ++;
@@ -438,7 +443,7 @@ class Activity {
 				$rules                  = $event->rules;
 				$rules['notifications'] = $event->notifications;
 
-				DB::instance()->change_event_rules( $event_id, $rules );
+				DB::i()->change_event_rules( $event_id, $rules );
 
 				return $event->notifications[ $notification ];
 			}
@@ -466,7 +471,7 @@ class Activity {
 			$rules                  = $event->rules;
 			$rules['notifications'] = $event->notifications;
 
-			DB::instance()->change_event_rules( $event_id, $rules );
+			DB::i()->change_event_rules( $event_id, $rules );
 		}
 	}
 
@@ -520,7 +525,7 @@ class Activity {
 		} else {
 			$category = $this->components[ $component ]->category;
 
-			$id = DB::instance()->add_new_event( $category, $component, $event, $obj->status, $rules );
+			$id = DB::i()->add_new_event( $category, $component, $event, $obj->status, $rules );
 
 			if ( $id > 0 ) {
 				$obj->event_id = $id;
@@ -545,7 +550,7 @@ class Activity {
 	}
 
 	private function _init_events() {
-		$events = Cache::instance()->get_all_registered_events();
+		$events = Cache::i()->get_all_registered_events();
 
 		foreach ( $events as $event ) {
 			if ( ! isset( $this->events[ $event->component ] ) ) {
@@ -592,36 +597,36 @@ class Activity {
 	}
 
 	private function _init_components() {
-		Internal::instance();
-		Network::instance();
-		Sitemeta::instance();
-		WordPress::instance();
-		Option::instance();
-		Notification::instance();
-		Error::instance();
-		Plugin::instance();
-		Theme::instance();
-		User::instance();
-		Post::instance();
-		Term::instance();
-		Comment::instance();
-		Attachment::instance();
-		Privacy::instance();
-		RESTAPI::instance();
+		Internal::i();
+		Network::i();
+		Sitemeta::i();
+		WordPress::i();
+		Option::i();
+		Notification::i();
+		Error::i();
+		Plugin::i();
+		Theme::i();
+		User::i();
+		Post::i();
+		Term::i();
+		Comment::i();
+		Attachment::i();
+		Privacy::i();
+		RESTAPI::i();
 	}
 
 	private function _init_plugins() {
-		bbPress::instance();
-		BuddyPress::instance();
-		ContactForm7::instance();
-		DebugPress::instance();
-		DuplicatePost::instance();
-		Forminator::instance();
-		GDForumManager::instance();
-		GravityForms::instance();
-		Jetpack::instance();
-		SweepPress::instance();
-		UserSwitching::instance();
-		WooCommerce::instance();
+		bbPress::i();
+		BuddyPress::i();
+		ContactForm7::i();
+		DebugPress::i();
+		DuplicatePost::i();
+		Forminator::i();
+		GDForumManager::i();
+		GravityForms::i();
+		Jetpack::i();
+		SweepPress::i();
+		UserSwitching::i();
+		WooCommerce::i();
 	}
 }

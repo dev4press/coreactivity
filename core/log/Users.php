@@ -7,13 +7,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Users {
-	public function __construct() {
+	private function __construct() {
 		add_action( 'init', array( $this, 'update_last_user_activity' ) );
 		add_action( 'wp_login', array( $this, 'update_last_user_login' ), 10, 2 );
 		add_action( 'wp_logout', array( $this, 'update_last_user_logout' ) );
 	}
 
-	public static function instance() : Users {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {

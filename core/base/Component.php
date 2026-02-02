@@ -4,7 +4,7 @@ namespace Dev4Press\Plugin\CoreActivity\Base;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Core;
-use Dev4Press\v54\Core\Quick\WPR;
+use Dev4Press\v55\Core\Quick\WPR;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -49,7 +49,7 @@ abstract class Component {
 	protected $log_values_if_array_or_object = false;
 	protected $plugin_file = '';
 
-	public function __construct() {
+	protected function __construct() {
 		$this->log_values_if_array_or_object = coreactivity_settings()->get( 'log_values_if_array_or_object' );
 
 		add_action( 'coreactivity_component_registration', array( $this, 'register_component' ) );
@@ -63,8 +63,12 @@ abstract class Component {
 		}
 	}
 
-	/** @return static */
-	public static function instance() {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = array();
 
 		if ( ! isset( $instance[ static::class ] ) ) {
@@ -141,12 +145,12 @@ abstract class Component {
 
 	public function log( string $event, array $data = array(), array $meta = array() ) : int {
 		if ( $this->is_active( $event ) ) {
-			$event_id = Activity::instance()->get_event_id( $this->code(), $event );
+			$event_id = Activity::i()->get_event_id( $this->code(), $event );
 
 			if ( $event_id > 0 ) {
 				$data = $this->prepare_data_for_log( $event, $data );
 
-				return Core::instance()->log( $event_id, $data, $meta );
+				return Core::i()->log( $event_id, $data, $meta );
 			}
 		}
 
@@ -158,7 +162,7 @@ abstract class Component {
 	}
 
 	public function is_active( string $event ) : bool {
-		return Activity::instance()->is_event_active( $this->code(), $event );
+		return Activity::i()->is_event_active( $this->code(), $event );
 	}
 
 	public function is_any_event_active() : bool {

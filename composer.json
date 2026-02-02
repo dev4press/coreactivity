@@ -1,8 +1,8 @@
 {
   "require": {
-    "dev4press/library": "~5.4",
-    "matomo/device-detector": "^6.4",
-    "ip2location/ip2location-php": "^9.7",
+    "dev4press/library": "5.5.2",
+    "matomo/device-detector": "^6.5",
+    "ip2location/ip2location-php": "^9.8",
     "geoip2/geoip2": "2.13.0"
   }
 }

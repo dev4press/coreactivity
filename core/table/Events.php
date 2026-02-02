@@ -3,10 +3,10 @@
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v54\Core\Plugins\DBLite;
-use Dev4Press\v54\Core\Quick\Sanitize;
-use Dev4Press\v54\Core\UI\Elements;
-use Dev4Press\v54\WordPress\Admin\Table;
+use Dev4Press\v55\Core\Plugins\DBLite;
+use Dev4Press\v55\Core\Quick\Sanitize;
+use Dev4Press\v55\Core\UI\Elements;
+use Dev4Press\v55\WordPress\Admin\Table;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -75,11 +75,11 @@ class Events extends Table {
 
 		foreach ( $this->items as &$item ) {
 			$parts     = explode( '/', $item->component );
-			$component = Activity::instance()->get_component( $item->component );
+			$component = Activity::i()->get_component( $item->component );
 
 			$item->event_id = absint( $item->event_id );
 			$item->plugin   = $component->plugin ?? $parts[0];
-			$item->source   = $component->source ?? Activity::instance()->get_plugin_label( $parts[0] );
+			$item->source   = $component->source ?? Activity::i()->get_plugin_label( $parts[0] );
 
 			if ( ! isset( $this->_logged_counts[ $item->component ] ) ) {
 				$this->_logged_counts[ $item->component ] = 0;
@@ -129,21 +129,22 @@ class Events extends Table {
 
 	protected function filter_block_top() {
 		echo '<div class="alignleft actions">';
-		Elements::instance()->select( array_merge( array( '' => __( 'All Sources', 'coreactivity' ) ), Activity::instance()->get_all_sources() ), array(
+		Elements::i()->select( array_merge( array( '' => __( 'All Sources', 'coreactivity' ) ), Activity::i()->get_all_sources() ), array(
 			'selected' => $this->get_request_arg( 'filter-source' ),
 			'name'     => 'filter-source',
 		) );
 
-		Elements::instance()->select( array_merge( array( '' => __( 'All Categories', 'coreactivity' ) ), Activity::instance()->get_all_categories() ), array(
+		Elements::i()->select( array_merge( array( '' => __( 'All Categories', 'coreactivity' ) ), Activity::i()->get_all_categories() ), array(
 			'selected' => $this->get_request_arg( 'filter-group' ),
 			'name'     => 'filter-group',
 		) );
 
-		Elements::instance()->select_grouped( Activity::instance()->get_select_event_components( true ), array(
+		Elements::i()->select_grouped( Activity::i()->get_select_event_components( true ), array(
 			'empty'    => __( 'All Components', 'coreactivity' ),
 			'selected' => $this->get_request_arg( 'filter-component' ),
 			'name'     => 'filter-component',
 		) );
+
 		submit_button( __( 'Filter', 'coreactivity' ), 'button', false, false, array( 'id' => 'coreactivity-events-submit' ) );
 		echo '</div>';
 	}
@@ -152,7 +153,7 @@ class Events extends Table {
 		$classes = array();
 
 		if ( ! is_network_admin() ) {
-			if ( ! Activity::instance()->is_event_available( $item->component, $item->event ) ) {
+			if ( ! Activity::i()->is_event_available( $item->component, $item->event ) ) {
 				$classes[] = '__is-not-loaded';
 			}
 		}
@@ -196,7 +197,7 @@ class Events extends Table {
 
 	protected function column_component( $item ) : string {
 		$render = '<div class="coreactivity-field-wrapper">';
-		$render .= '<i class="d4p-icon d4p-' . Activity::instance()->get_component_icon( $item->component ) . ' d4p-icon-fw"></i>';
+		$render .= '<i class="d4p-icon d4p-' . Activity::i()->get_component_icon( $item->component ) . ' d4p-icon-fw"></i>';
 		$render .= '<span>' . $item->component . '</span>';
 
 		if ( $this->_logged_counts[ $item->component ] > 0 ) {
@@ -226,15 +227,15 @@ class Events extends Table {
 	}
 
 	protected function column_description( $item ) : string {
-		return Activity::instance()->get_event_description( $item->component, $item->event );
+		return Activity::i()->get_event_description( $item->component, $item->event );
 	}
 
 	protected function column_available( $item ) : string {
-		return Activity::instance()->is_event_available( $item->component, $item->event ) ? __( 'Yes', 'coreactivity' ) : __( 'No', 'coreactivity' );
+		return Activity::i()->is_event_available( $item->component, $item->event ) ? __( 'Yes', 'coreactivity' ) : __( 'No', 'coreactivity' );
 	}
 
 	protected function column_notifications( $item ) : string {
-		$notifications = Activity::instance()->get_event_notifications( $item->component, $item->event );
+		$notifications = Activity::i()->get_event_notifications( $item->component, $item->event );
 
 		$render = '<div class="coreactivity-event-notifications">';
 		$render .= '<div>';

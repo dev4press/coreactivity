@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return void
  */
-function coreactivity_change_logging_status( bool $status ) {
+function coreactivity_change_logging_status( bool $status ) : void {
 	coreactivity_settings()->set( 'main_events_log_switch', $status, 'settings', true );
 }
 
@@ -25,20 +25,20 @@ function coreactivity_change_logging_status( bool $status ) {
  * @param string $event     name of the event
  * @param string $status    status for the event ('active', 'inactive')
  *
- * @return bool TRUE if the status has been changed, FALSE if the event is not found or status is not valid.
+ * @return bool TRUE if the status has been changed, FALSE if the event is not found or the status is not valid.
  */
 function coreactivity_change_event_status( string $component, string $event, string $status ) : bool {
 	if ( ! in_array( $status, array( 'active', 'inactive' ) ) ) {
 		return false;
 	}
 
-	$event_id = Activity::instance()->get_event_id( $component, $event );
+	$event_id = Activity::i()->get_event_id( $component, $event );
 
 	if ( $event_id == 0 ) {
 		return false;
 	}
 
-	DB::instance()->change_event_status( $event_id, $status );
+	DB::i()->change_event_status( $event_id, $status );
 
 	return true;
 }
@@ -74,7 +74,7 @@ function coreactivity_view_dialog_tabs() : array {
 	) );
 }
 
-function coreactivity_get_user_by( $field, $value ) {
+function coreactivity_get_user_by( $field, $value ) : object|bool {
 	$userdata = WP_User::get_data_by( $field, $value );
 
 	if ( ! $userdata ) {

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e86c7631a21f8044ef95968e549d3a68",
+    "content-hash": "d377dfbe3a66168849a6341d640420ab",
     "packages": [
         {
             "name": "composer/ca-bundle",
-            "version": "1.5.7",
+            "version": "1.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/ca-bundle.git",
-                "reference": "d665d22c417056996c59019579f1967dfe5c1e82"
+                "reference": "961a5e4056dd2e4a2eedcac7576075947c28bf63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/d665d22c417056996c59019579f1967dfe5c1e82",
-                "reference": "d665d22c417056996c59019579f1967dfe5c1e82",
+                "url": "https://api.github.com/repos/composer/ca-bundle/zipball/961a5e4056dd2e4a2eedcac7576075947c28bf63",
+                "reference": "961a5e4056dd2e4a2eedcac7576075947c28bf63",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/composer",
                 "issues": "https://github.com/composer/ca-bundle/issues",
-                "source": "https://github.com/composer/ca-bundle/tree/1.5.7"
+                "source": "https://github.com/composer/ca-bundle/tree/1.5.10"
             },
             "funding": [
                 {
@@ -74,26 +74,22 @@
                 {
                     "url": "https://github.com/composer",
                     "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
                 }
             ],
-            "time": "2025-05-26T15:08:54+00:00"
+            "time": "2025-12-08T15:06:51+00:00"
         },
         {
             "name": "dev4press/library",
-            "version": "5.4.0",
+            "version": "5.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dev4press/library.git",
-                "reference": "996d409448d31f3edff9a192879bfef3ca63f5ae"
+                "reference": "7075c50cb2534372052423d61e1822decac97b7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dev4press/library/zipball/996d409448d31f3edff9a192879bfef3ca63f5ae",
-                "reference": "996d409448d31f3edff9a192879bfef3ca63f5ae",
+                "url": "https://api.github.com/repos/dev4press/library/zipball/7075c50cb2534372052423d61e1822decac97b7b",
+                "reference": "7075c50cb2534372052423d61e1822decac97b7b",
                 "shasum": ""
             },
             "require": {
@@ -102,7 +98,7 @@
                 "ext-curl": "*",
                 "ext-fileinfo": "*",
                 "ext-json": "*",
-                "php": ">=7.4"
+                "php": ">=8.0"
             },
             "type": "library",
             "autoload": {
@@ -139,7 +135,7 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2025-05-23T18:34:00+00:00"
+            "time": "2026-02-10T19:42:40+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -302,16 +298,16 @@
         },
         {
             "name": "ip2location/ip2location-php",
-            "version": "9.7.3",
+            "version": "9.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chrislim2888/IP2Location-PHP-Module.git",
-                "reference": "67c7bf13b0571b70925435e640ea5598e9fdeee9"
+                "reference": "e18e5372cfa4b57f33d2dc8c15d24cee1ee6d1ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chrislim2888/IP2Location-PHP-Module/zipball/67c7bf13b0571b70925435e640ea5598e9fdeee9",
-                "reference": "67c7bf13b0571b70925435e640ea5598e9fdeee9",
+                "url": "https://api.github.com/repos/chrislim2888/IP2Location-PHP-Module/zipball/e18e5372cfa4b57f33d2dc8c15d24cee1ee6d1ce",
+                "reference": "e18e5372cfa4b57f33d2dc8c15d24cee1ee6d1ce",
                 "shasum": ""
             },
             "require": {
@@ -357,22 +353,22 @@
             ],
             "support": {
                 "issues": "https://github.com/chrislim2888/IP2Location-PHP-Module/issues",
-                "source": "https://github.com/chrislim2888/IP2Location-PHP-Module/tree/9.7.3"
+                "source": "https://github.com/chrislim2888/IP2Location-PHP-Module/tree/9.8.1"
             },
-            "time": "2024-02-26T22:30:40+00:00"
+            "time": "2025-12-21T22:28:29+00:00"
         },
         {
             "name": "matomo/device-detector",
-            "version": "6.4.6",
+            "version": "6.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matomo-org/device-detector.git",
-                "reference": "6f07f615199851548db47a900815d2ea2cdcde08"
+                "reference": "e0fff2309dad83eb3cfb2564e524be715cfcf3cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/6f07f615199851548db47a900815d2ea2cdcde08",
-                "reference": "6f07f615199851548db47a900815d2ea2cdcde08",
+                "url": "https://api.github.com/repos/matomo-org/device-detector/zipball/e0fff2309dad83eb3cfb2564e524be715cfcf3cf",
+                "reference": "e0fff2309dad83eb3cfb2564e524be715cfcf3cf",
                 "shasum": ""
             },
             "require": {
@@ -386,14 +382,13 @@
                 "matthiasmullie/scrapbook": "^1.4.7",
                 "mayflower/mo4-coding-standard": "^v9.0.0",
                 "phpstan/phpstan": "^1.10.44",
-                "phpunit/phpunit": "^8.5.8",
-                "psr/cache": "^1.0.1",
-                "psr/simple-cache": "^1.0.1",
+                "phpunit/phpunit": "^8.5.2 || ^9 || ^10 || ^11 || ^12",
+                "psr/cache": "^1.0.1 || ^2.0 || ^3.0",
+                "psr/simple-cache": "^1.0.1 || ^2.0 || ^3.0",
                 "slevomat/coding-standard": "<8.16.0",
                 "symfony/yaml": "^5.1.7"
             },
             "suggest": {
-                "doctrine/cache": "Can directly be used for caching purpose",
                 "ext-yaml": "Necessary for using the Pecl YAML parser"
             },
             "type": "library",
@@ -429,20 +424,20 @@
                 "source": "https://github.com/matomo-org/matomo",
                 "wiki": "https://dev.matomo.org/"
             },
-            "time": "2025-06-10T10:00:59+00:00"
+            "time": "2026-01-21T07:53:39+00:00"
         },
         {
             "name": "maxmind-db/reader",
-            "version": "v1.12.1",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/MaxMind-DB-Reader-php.git",
-                "reference": "815939e006b7e68062b540ec9e86aaa8be2b6ce4"
+                "reference": "2194f58d0f024ce923e685cdf92af3daf9951908"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/815939e006b7e68062b540ec9e86aaa8be2b6ce4",
-                "reference": "815939e006b7e68062b540ec9e86aaa8be2b6ce4",
+                "url": "https://api.github.com/repos/maxmind/MaxMind-DB-Reader-php/zipball/2194f58d0f024ce923e685cdf92af3daf9951908",
+                "reference": "2194f58d0f024ce923e685cdf92af3daf9951908",
                 "shasum": ""
             },
             "require": {
@@ -455,12 +450,13 @@
                 "friendsofphp/php-cs-fixer": "3.*",
                 "phpstan/phpstan": "*",
                 "phpunit/phpunit": ">=8.0.0,<10.0.0",
-                "squizlabs/php_codesniffer": "3.*"
+                "squizlabs/php_codesniffer": "4.*"
             },
             "suggest": {
                 "ext-bcmath": "bcmath or gmp is required for decoding larger integers with the pure PHP decoder",
                 "ext-gmp": "bcmath or gmp is required for decoding larger integers with the pure PHP decoder",
-                "ext-maxminddb": "A C-based database decoder that provides significantly faster lookups"
+                "ext-maxminddb": "A C-based database decoder that provides significantly faster lookups",
+                "maxmind-db/reader-ext": "C extension for significantly faster IP lookups (install via PIE: pie install maxmind-db/reader-ext)"
             },
             "type": "library",
             "autoload": {
@@ -490,35 +486,35 @@
             ],
             "support": {
                 "issues": "https://github.com/maxmind/MaxMind-DB-Reader-php/issues",
-                "source": "https://github.com/maxmind/MaxMind-DB-Reader-php/tree/v1.12.1"
+                "source": "https://github.com/maxmind/MaxMind-DB-Reader-php/tree/v1.13.1"
             },
-            "time": "2025-05-05T20:56:32+00:00"
+            "time": "2025-11-21T22:24:26+00:00"
         },
         {
             "name": "maxmind/web-service-common",
-            "version": "v0.9.0",
+            "version": "v0.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maxmind/web-service-common-php.git",
-                "reference": "4dc5a3e8df38aea4ca3b1096cee3a038094e9b53"
+                "reference": "c309236b5a5555b96cf560089ec3cead12d845d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/4dc5a3e8df38aea4ca3b1096cee3a038094e9b53",
-                "reference": "4dc5a3e8df38aea4ca3b1096cee3a038094e9b53",
+                "url": "https://api.github.com/repos/maxmind/web-service-common-php/zipball/c309236b5a5555b96cf560089ec3cead12d845d2",
+                "reference": "c309236b5a5555b96cf560089ec3cead12d845d2",
                 "shasum": ""
             },
             "require": {
                 "composer/ca-bundle": "^1.0.3",
                 "ext-curl": "*",
                 "ext-json": "*",
-                "php": ">=7.2"
+                "php": ">=8.1"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "3.*",
                 "phpstan/phpstan": "*",
-                "phpunit/phpunit": "^8.0 || ^9.0",
-                "squizlabs/php_codesniffer": "3.*"
+                "phpunit/phpunit": "^10.0",
+                "squizlabs/php_codesniffer": "4.*"
             },
             "type": "library",
             "autoload": {
@@ -541,9 +537,9 @@
             "homepage": "https://github.com/maxmind/web-service-common-php",
             "support": {
                 "issues": "https://github.com/maxmind/web-service-common-php/issues",
-                "source": "https://github.com/maxmind/web-service-common-php/tree/v0.9.0"
+                "source": "https://github.com/maxmind/web-service-common-php/tree/v0.11.1"
             },
-            "time": "2022-03-28T17:43:20+00:00"
+            "time": "2026-01-13T17:56:03+00:00"
         },
         {
             "name": "mustangostang/spyc",

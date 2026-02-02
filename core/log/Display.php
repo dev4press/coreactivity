@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Log;
 
 use BP_Groups_Group;
-use Dev4Press\v54\Core\Mailer\Detection;
+use Dev4Press\v55\Core\Mailer\Detection;
 use GFAPI;
 use stdClass;
 use WP_Comment;
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Display {
 	public $php_errors;
 
-	public function __construct() {
+	private function __construct() {
 		add_filter( 'coreactivity_logs_field_render_object_name', array( $this, 'logs_object_name' ), 10, 2 );
 
 		$this->php_errors = array(
@@ -39,7 +39,12 @@ class Display {
 		);
 	}
 
-	public static function instance() : Display {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -170,10 +175,10 @@ class Display {
 	public function components_list_to_markdown() : string {
 		$render = '';
 
-		$components = Activity::instance()->get_all_components();
-		$events     = Activity::instance()->get_all_events();
+		$components = Activity::i()->get_all_components();
+		$events     = Activity::i()->get_all_events();
 
-		foreach ( Activity::instance()->get_all_categories() as $category => $label ) {
+		foreach ( Activity::i()->get_all_categories() as $category => $label ) {
 			$render .= PHP_EOL . '## ' . $label . PHP_EOL;
 
 			foreach ( $components as $component ) {
@@ -246,7 +251,7 @@ class Display {
 		} else {
 			$render .= '<strong>' . $item->object_name . '</strong>';
 
-			$data = Detection::instance()->get_data( $item->object_name );
+			$data = Detection::i()->get_data( $item->object_name );
 
 			if ( ! empty( $data ) ) {
 				$render .= '<br/><span>' . esc_html__( 'Source', 'coreactivity' ) . ': <strong>' . $data['source'] . '</strong></span>';
