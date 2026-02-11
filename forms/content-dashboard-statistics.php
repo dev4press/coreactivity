@@ -1,14 +1,14 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use function Dev4Press\v54\Functions\panel;
+use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 $_blog_id   = is_multisite() && ! is_network_admin() ? get_current_blog_id() : - 1;
-$statistics = Statistics::instance()->detailed( 30, $_blog_id );
+$statistics = Statistics::i()->detailed( 30, $_blog_id );
 
 ?>
 

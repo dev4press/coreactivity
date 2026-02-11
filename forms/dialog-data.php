@@ -38,7 +38,7 @@ function _coreactivity_dialog_tab_info( $item ) {
 
 	echo '</dl>';
 
-	if ( Core::instance()->show_blog_data() ) {
+	if ( Core::i()->show_blog_data() ) {
 		$blog = get_blog_details( array( 'blog_id' => $item->blog_id ) );
 
 		echo '<dl class="d4p-ctrl-list">';
@@ -96,9 +96,9 @@ function _coreactivity_dialog_tab_location( $item ) {
 			echo '<dt>' . esc_html__( 'Country Code', 'coreactivity' ) . '</dt>';
 			echo '<dd>' . esc_html( $item->country_code ) . '</dd>';
 			echo '<dt>' . esc_html__( 'Country', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . esc_html( GEO::instance()->country( $item->country_code ) ) . '</dd>';
+			echo '<dd>' . esc_html( GEO::i()->country( $item->country_code ) ) . '</dd>';
 			echo '<dt>' . esc_html__( 'Continent', 'coreactivity' ) . '</dt>';
-			echo '<dd>' . esc_html( GEO::instance()->continent( $item->country_code ) ) . '</dd>';
+			echo '<dd>' . esc_html( GEO::i()->continent( $item->country_code ) ) . '</dd>';
 		} else {
 			echo '<dt>' . esc_html__( 'Unknown', 'coreactivity' ) . '</dt>';
 			echo '<dd>' . esc_html__( 'Localhost IP', 'coreactivity' ) . '</dd>';

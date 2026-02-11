@@ -1,7 +1,7 @@
 <?php
 
-use Dev4Press\v54\Core\Quick\KSES;
-use function Dev4Press\v54\Functions\panel;
+use Dev4Press\v55\Core\Quick\KSES;
+use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,32 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d4p-about-minor">
     <h3><?php esc_html_e( 'Maintenance and Security Releases', 'coreactivity' ); ?></h3>
     <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.5 / 2.6 / 2.7 / 2.7.1 / 2.8</span></strong> &minus;
-        Library Updated. Many improvements and changes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.4.1 / 2.4.2</span></strong> &minus;
-        Few minor changes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.4</span></strong> &minus;
-        New Component. Library Updated. Few minor changes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.3.1 / 2.3.2 / 2.3.3 / 2.3.4 / 2.3.5 / 2.3.6</span></strong> &minus;
-        Few minor changes and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.3</span></strong> &minus;
-        External libraries updated. Few minor changes and fixes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.2</span></strong> &minus;
-        Events link to cleanup. Device Detector library update Library Updated. Few minor changes.
-    </p>
-    <p>
-        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>2.0.1 / 2.1</span></strong> &minus;
-        Library Updated. Few minor changes.
+        <strong><?php esc_html_e( 'Version', 'coreactivity' ); ?> <span>3.0</span></strong> &minus;
+        PHP, WordPress system requirements. Dev4Press Library Updated. Many minor changes.
     </p>
     <p>
 		<?php

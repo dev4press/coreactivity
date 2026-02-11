@@ -63,7 +63,7 @@ class Error extends Component {
 
 	public function event_error() {
 		if ( is_404() ) {
-			$url = Core::instance()->get( 'request' );
+			$url = Core::i()->get( 'request' );
 
 			$query = wp_parse_url( $url, PHP_URL_QUERY );
 			$query = ! empty( $query ) ? trim( $query ) : '';

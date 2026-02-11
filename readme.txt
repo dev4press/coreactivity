@@ -2,10 +2,10 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 2.8
-Requires at least: 6.0
-Tested up to: 6.8
-Requires PHP: 7.4
+Stable tag: 3.0
+Requires at least: 6.1
+Tested up to: 6.9
+Requires PHP: 8.0
 Requires CP: 2.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -84,16 +84,16 @@ To use IP2Location, you need to have an account on IP2Location, to get the downl
 
 == Installation ==
 = General Requirements =
-* PHP: 7.4 or newer
+* PHP: 8.0 or newer
 
 = PHP Notice =
-* Plugin doesn't work with PHP 7.3 or older versions.
+* Plugin doesn't work with PHP 7.4 or older versions.
 
 = WordPress Requirements =
-* WordPress: 6.0 or newer
+* WordPress: 6.1 or newer
 
 = WordPress Notice =
-* Plugin may work with WordPress 5.9 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
+* Plugin may work with WordPress 6.0 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
 
 = Basic Installation =
 * Plugin folder in the WordPress plugins should be `coreactivity`.
@@ -122,7 +122,17 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
-= 2.8 (2024.06.14) =
+= 3.0 (2026.02.11) =
+* New:  plugin tested with `WordPress` up to 6.9
+* New:  plugin tested with `PHP` up to 8.5
+* New:  updated plugin system requirements
+* Edit: various updates to the plugin core and code structure
+* Edit: Dev4Press Library 5.5.2
+* Edit: Device Detector Library 6.5
+* Edit: IP2Location 9.8.1
+* Fix: a few small code formatting issues
+
+= 2.8 (2025.06.14) =
 * Edit: Device Detector Library 6.4.6
 * Edit: Dev4Press Library 5.4
 

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function coreactivity() : Plugin {
-	return Plugin::instance();
+	return Plugin::i();
 }
 
 function coreactivity_settings() : Settings {
@@ -20,17 +20,17 @@ function coreactivity_settings() : Settings {
 }
 
 function coreactivity_db() : DB {
-	return DB::instance();
+	return DB::i();
 }
 
 function coreactivity_admin() : AdminPlugin {
-	return AdminPlugin::instance();
+	return AdminPlugin::i();
 }
 
 function coreactivity_ajax() : AJAX {
-	return AJAX::instance();
+	return AJAX::i();
 }
 
 function coreactivity_wizard() : Wizard {
-	return Wizard::instance();
+	return Wizard::i();
 }

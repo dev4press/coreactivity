@@ -6,8 +6,9 @@ use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
-use Dev4Press\v54\Core\Admin\PostBack as BasePostBack;
-use Dev4Press\v54\Core\Quick\Sanitize;
+use Dev4Press\v55\Core\Admin\PostBack as BasePostBack;
+use Dev4Press\v55\Core\Quick\Sanitize;
+use JetBrains\PhpStorm\NoReturn;
 use WP_Filesystem_Direct;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class PostBack extends BasePostBack {
-	protected function process() {
+	protected function process() : void {
 		parent::process();
 
 		if ( $this->p() == $this->get_page_name( 'wizard' ) ) {
@@ -25,7 +26,7 @@ class PostBack extends BasePostBack {
 		do_action( 'coreactivity_admin_postback_handler', $this->p(), $this->a() );
 	}
 
-	protected function tools() {
+	protected function tools() : void {
 		if ( $this->a()->subpanel == 'notifications' ) {
 			$this->notifications();
 		} else if ( $this->a()->subpanel == 'cleanup' ) {
@@ -35,7 +36,8 @@ class PostBack extends BasePostBack {
 		}
 	}
 
-	protected function notifications() {
+	#[NoReturn]
+	protected function notifications() : void {
 		$data = $_POST['coreactivity']['tools-notifications'] ?? array(); // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
 		$msg = 'notifications-updated';
@@ -44,13 +46,14 @@ class PostBack extends BasePostBack {
 		$daily   = $data['daily'] ?? 'skip';
 		$weekly  = $data['weekly'] ?? 'skip';
 
-		Activity::instance()->events_notification_bulk_control( $instant, $daily, $weekly );
+		Activity::i()->events_notification_bulk_control( $instant, $daily, $weekly );
 
 		wp_redirect( $this->a()->current_url() . '&message=' . $msg );
 		exit;
 	}
 
-	protected function cleanup() {
+	#[NoReturn]
+	protected function cleanup() : void {
 		$data = $_POST['coreactivity']['tools-cleanup'] ?? array(); // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
 		$when = $data['period'] ?? '';
@@ -60,7 +63,7 @@ class PostBack extends BasePostBack {
 		if ( ! empty( $when ) && ! empty( $what ) && strlen( $when ) == 4 ) {
 			$what = Sanitize::ids_list( $what );
 
-			Cleanup::instance()->cleanup_log( $when, $what );
+			Cleanup::i()->cleanup_log( $when, $what );
 
 			$msg = 'cleanup-completed';
 		}
@@ -69,7 +72,8 @@ class PostBack extends BasePostBack {
 		exit;
 	}
 
-	protected function remove() {
+	#[NoReturn]
+	protected function remove() : void {
 		$message = 'nothing-removed';
 		$remove  = Sanitize::_get_switch_array( 'coreactivity-tools', 'remove' );
 
@@ -79,7 +83,7 @@ class PostBack extends BasePostBack {
 			}
 
 			if ( in_array( 'geo-db', $remove ) ) {
-				$path = Plugin::instance()->uploads_path();
+				$path = Plugin::i()->uploads_path();
 
 				if ( $path !== false ) {
 					WP_Filesystem();
@@ -90,13 +94,13 @@ class PostBack extends BasePostBack {
 			}
 
 			if ( in_array( 'drop', $remove ) ) {
-				InstallDB::instance()->drop();
+				InstallDB::i()->drop();
 
 				if ( ! isset( $remove['disable'] ) ) {
 					$this->a()->settings()->mark_for_update();
 				}
 			} else if ( in_array( 'truncate', $remove ) ) {
-				InstallDB::instance()->truncate();
+				InstallDB::i()->truncate();
 			}
 
 			if ( in_array( 'disable', $remove ) ) {

@@ -14,11 +14,16 @@ class Users {
 		'coreactivity_login'    => 'coreactivity_last_login',
 	);
 
-	public function __construct() {
+	private function __construct() {
 		add_action( 'current_screen', array( $this, 'current_screen' ) );
 	}
 
-	public static function instance() : Users {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : self {
+		return self::i();
+	}
+
+	public static function i() : self {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -28,7 +33,7 @@ class Users {
 		return $instance;
 	}
 
-	public function current_screen( $screen ) {
+	public function current_screen( $screen ) : void {
 		if ( $screen->id == 'users' ) {
 			add_filter( 'manage_users_columns', array( $this, 'manage_columns' ) );
 			add_filter( 'manage_users_sortable_columns', array( $this, 'sortable_columns' ) );
@@ -62,13 +67,13 @@ class Users {
 	public function column_values( $value, $column, $user_id ) {
 		switch ( $column ) {
 			case 'coreactivity_online':
-				if ( Feature::instance()->is_user_online( $user_id ) ) {
+				if ( Feature::i()->is_user_online( $user_id ) ) {
 					return '<div class="coreactivity-user-status __is-online"><i class="dashicons dashicons-yes-alt"></i> <span>' . __( 'Online', 'coreactivity' ) . '</span></div>';
 				} else {
 					return '<div class="coreactivity-user-status __is-offline"><i class="dashicons dashicons-dismiss"></i> <span>' . __( 'Offline', 'coreactivity' ) . '</span></div>';
 				}
 			case 'coreactivity_activity':
-				$last_activity = Feature::instance()->get_user_last_activity( $user_id );
+				$last_activity = Feature::i()->get_user_last_activity( $user_id );
 
 				if ( $last_activity == 0 ) {
 					return '/';
@@ -78,7 +83,7 @@ class Users {
 					return gmdate( 'Y.m.d', $timestamp ) . '<br/>@ ' . gmdate( 'H:i:s', $timestamp );
 				}
 			case 'coreactivity_login':
-				$last_login = Feature::instance()->get_user_last_login( $user_id );
+				$last_login = Feature::i()->get_user_last_login( $user_id );
 
 				if ( $last_login == 0 ) {
 					return '/';

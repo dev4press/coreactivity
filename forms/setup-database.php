@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div>
 		<?php
 
-		$db = InstallDB::instance();
+		$db = InstallDB::i();
 
 		$list_db = $db->install();
 

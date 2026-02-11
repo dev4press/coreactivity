@@ -3,8 +3,8 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
-use Dev4Press\v54\Core\Helpers\Source;
-use Dev4Press\v54\WordPress as LibWordPress;
+use Dev4Press\v55\Core\Helpers\Source;
+use Dev4Press\v55\WordPress as LibWordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -109,7 +109,7 @@ class WordPress extends Component {
 
 	public function prepare_update( $message ) {
 		if ( empty( $this->wp_version ) ) {
-			$this->wp_version = LibWordPress::instance()->version();
+			$this->wp_version = LibWordPress::i()->version();
 		}
 
 		return $message;
@@ -258,7 +258,7 @@ class WordPress extends Component {
 		}
 
 		if ( ! empty( $file_path ) ) {
-			$result         = Source::instance()->origin( $file_path );
+			$result         = Source::i()->origin( $file_path );
 			$result['line'] = $file_line;
 
 			return $result;

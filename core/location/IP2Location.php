@@ -3,9 +3,9 @@
 namespace Dev4Press\Plugin\CoreActivity\Location;
 
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use Dev4Press\v54\Core\Helpers\IP;
-use Dev4Press\v54\Service\GEOIP\Location;
-use Dev4Press\v54\Service\GEOIP\Locator;
+use Dev4Press\v55\Core\Helpers\IP;
+use Dev4Press\v55\Service\GEOIP\Location;
+use Dev4Press\v55\Service\GEOIP\Locator;
 use IP2Location\Database;
 
 class IP2Location extends Locator {
@@ -32,7 +32,7 @@ class IP2Location extends Locator {
 			);
 		}
 
-		$db = GEO::instance()->ip2location();
+		$db = GEO::i()->ip2location();
 
 		if ( $db instanceof Database ) {
 			$records = $db->lookup( $ip, Database::ALL );

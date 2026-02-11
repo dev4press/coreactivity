@@ -6,6 +6,10 @@ use Dev4Press\Plugin\CoreActivity\Base\Component;
 use WP_Error;
 use WP_User;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 class Network extends Component {
 	protected $plugin = 'coreactivity';
 	protected $name = 'network';

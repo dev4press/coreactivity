@@ -6,7 +6,7 @@ use Dev4Press\Plugin\CoreActivity\Admin\Meta\Users;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin as CorePlugin;
 use Dev4Press\Plugin\CoreActivity\Basic\Settings as CoreSettings;
 use Dev4Press\Plugin\CoreActivity\Basic\Wizard;
-use Dev4Press\v54\Core\Admin\Network\Plugin as BasePlugin;
+use Dev4Press\v55\Core\Admin\Network\Plugin as BasePlugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -33,14 +33,14 @@ class Plugin extends BasePlugin {
 		'coreactivity_events_rows_per_page',
 	);
 
-	public function constructor() {
+	public function constructor() : void {
 		$this->url  = COREACTIVITY_URL;
 		$this->path = COREACTIVITY_PATH;
 
-		Users::instance();
+		Users::i();
 	}
 
-	public function register_scripts_and_styles() {
+	public function register_scripts_and_styles() : void {
 		$this->enqueue->register( 'css', 'coreactivity-admin',
 			array(
 				'path' => 'css/',
@@ -71,7 +71,7 @@ class Plugin extends BasePlugin {
 			) );
 	}
 
-	public function plugins_loaded() {
+	public function plugins_loaded() : void {
 		parent::plugins_loaded();
 
 		add_filter( 'default_hidden_columns', array( $this, 'hide_columns_default' ), 10, 2 );
@@ -92,7 +92,7 @@ class Plugin extends BasePlugin {
 		return coreactivity()->svg_icon;
 	}
 
-	public function admin_menu_items() {
+	public function admin_menu_items() : void {
 		$this->setup_items = array(
 			'install' => array(
 				'title' => __( 'Install', 'coreactivity' ),
@@ -162,15 +162,15 @@ class Plugin extends BasePlugin {
 		}
 	}
 
-	public function run_getback() {
+	public function run_getback() : void {
 		new GetBack( $this );
 	}
 
-	public function run_postback() {
+	public function run_postback() : void {
 		new PostBack( $this );
 	}
 
-	public function admin_init() {
+	public function admin_init() : void {
 		if ( ! coreactivity()->is_logging_active() ) {
 			if ( coreactivity_settings()->get( 'notice_if_logging_is_disabled' ) ) {
 				if ( is_super_admin() ) {
@@ -180,7 +180,7 @@ class Plugin extends BasePlugin {
 		}
 	}
 
-	public function notice_disabled() {
+	public function notice_disabled() : void {
 		?>
 
         <div class="notice notice-error">
@@ -220,7 +220,7 @@ class Plugin extends BasePlugin {
 		return Settings::instance();
 	}
 
-	public function enqueue() {
+	public function enqueue() : void {
 		$this->e()->css( 'coreactivity-admin' );
 		$this->e()->js( 'coreactivity-admin' );
 
@@ -232,22 +232,22 @@ class Plugin extends BasePlugin {
 	}
 
 	public function wizard() {
-		return Wizard::instance();
+		return Wizard::i();
 	}
 
-	public function help_tab_getting_help() {
+	public function help_tab_getting_help() : void {
 		if ( ! empty( $this->panel ) ) {
-			Help::instance();
+			Help::i();
 		}
 
 		parent::help_tab_getting_help();
 	}
 
-	protected function extra_enqueue_scripts_plugin() {
+	protected function extra_enqueue_scripts_plugin() : void {
 		$this->enqueue();
 	}
 
-	protected function extra_enqueue_scripts_final( $hook ) {
+	protected function extra_enqueue_scripts_final( $hook ) : void {
 		$this->e()->css( 'coreactivity-global' );
 	}
 }

@@ -10,12 +10,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Upgrader {
-	public function __construct() {
+	private function __construct() {
 		add_filter( 'upgrader_pre_install', array( $this, 'save_pre_install_versions' ), 10, 2 );
 		add_action( 'upgrader_process_complete', array( $this, 'upgrader_process_complete' ), 10, 2 );
 	}
 
-	public static function instance() : Upgrader {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {

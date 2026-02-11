@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Table;
 
-use Dev4Press\v54\Core\Quick\Sanitize;
+use Dev4Press\v55\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

@@ -1,6 +1,6 @@
 <?php
 
-use Dev4Press\v54\Core\Scope;
+use Dev4Press\v55\Core\Scope;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="d4p-cards-wrapper">
 		<?php
 
-		if ( Scope::instance()->is_master_network_admin() ) {
+		if ( Scope::i()->is_master_network_admin() ) {
 			include COREACTIVITY_PATH . 'forms/content-dashboard-overall.php';
 			include COREACTIVITY_PATH . 'forms/content-dashboard-database.php';
 		} else {
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		include COREACTIVITY_PATH . 'forms/content-dashboard-statistics.php';
 
-		if ( Scope::instance()->is_master_network_admin() ) {
+		if ( Scope::i()->is_master_network_admin() ) {
 			include COREACTIVITY_PATH . 'forms/content-dashboard-location.php';
 		}
 

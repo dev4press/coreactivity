@@ -7,10 +7,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class WhoIs {
-	public function __construct() {
+	private function __construct() {
 	}
 
-	public static function instance() : WhoIs {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {

@@ -6,10 +6,10 @@
  * Author:            Milan Petrovic
  * Author URI:        https://www.dev4press.com/
  * Text Domain:       coreactivity
- * Version:           2.8
- * Requires at least: 6.0
- * Tested up to:      6.8
- * Requires PHP:      7.4
+ * Version:           3.0
+ * Requires at least: 6.1
+ * Tested up to:      6.9
+ * Requires PHP:      8.0
  * Requires CP:       2.0
  * Network:           true
  * License:           GPLv3 or later
@@ -18,7 +18,7 @@
  * @package coreActivity
  *
  * == Copyright ==
- * Copyright 2008 - 2025 Milan Petrovic (email: support@dev4press.com)
+ * Copyright 2008 - 2026 Milan Petrovic (email: support@dev4press.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,9 +34,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  */
 
-use Dev4Press\v54\WordPress;
+use Dev4Press\v55\WordPress;
 
-const COREACTIVITY_VERSION = '2.8';
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+const COREACTIVITY_VERSION = '3.0';
 const COREACTIVITY_FILE    = __FILE__;
 
 $coreactivity_dirname_basic = dirname( COREACTIVITY_FILE ) . '/';

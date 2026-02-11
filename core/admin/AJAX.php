@@ -6,21 +6,27 @@ use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\WhoIs;
 use Dev4Press\Plugin\CoreActivity\Table\Live;
-use Dev4Press\v54\Core\Quick\Sanitize;
+use Dev4Press\v55\Core\Quick\Sanitize;
+use JetBrains\PhpStorm\NoReturn;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 class AJAX {
-	public function __construct() {
+	private function __construct() {
 		add_action( 'wp_ajax_coreactivity_toggle_event', array( $this, 'toggle_event' ) );
 		add_action( 'wp_ajax_coreactivity_toggle_notification', array( $this, 'toggle_notification' ) );
 		add_action( 'wp_ajax_coreactivity_live_logs', array( $this, 'live_logs' ) );
 		add_action( 'wp_ajax_coreactivity_whois_ip', array( $this, 'whois_ip' ) );
 	}
 
-	public static function instance() : AJAX {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -30,7 +36,8 @@ class AJAX {
 		return $instance;
 	}
 
-	private function json_respond( $response, $code = 200 ) {
+	#[NoReturn]
+	private function json_respond( $response, $code = 200 ) : void {
 		status_header( $code );
 
 		if ( ! headers_sent() ) {
@@ -41,31 +48,33 @@ class AJAX {
 		die( wp_json_encode( $response ) );
 	}
 
-	public function toggle_event() {
+	#[NoReturn]
+	public function toggle_event() : void {
 		$id = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
 
 		$toggle = '';
 		if ( $id > 0 && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-toggle-event-' . $id ) ) {
-			$status = Activity::instance()->event_status( $id );
+			$status = Activity::i()->event_status( $id );
 
 			if ( ! empty( $status ) ) {
 				$new    = $status == 'active' ? 'inactive' : 'active';
 				$toggle = $status == 'active' ? 'off' : 'on';
 
-				DB::instance()->change_event_status( $id, $new );
+				DB::i()->change_event_status( $id, $new );
 			}
 		}
 
 		$this->json_respond( array( 'toggle' => $toggle ) );
 	}
 
-	public function toggle_notification() {
+	#[NoReturn]
+	public function toggle_notification() : void {
 		$id  = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
 		$key = isset( $_POST['notification'] ) ? Sanitize::slug( $_POST['notification'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
 		$toggle = '';
 		if ( $id > 0 && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-toggle-notification-' . $key . '-' . $id ) ) {
-			$change = Activity::instance()->event_notification_toggle( $id, $key );
+			$change = Activity::i()->event_notification_toggle( $id, $key );
 
 			if ( ! is_null( $change ) ) {
 				$toggle = $change ? 'on' : 'off';
@@ -75,7 +84,8 @@ class AJAX {
 		$this->json_respond( array( 'toggle' => $toggle ) );
 	}
 
-	public function live_logs() {
+	#[NoReturn]
+	public function live_logs() : void {
 		$output = '';
 
 		if ( isset( $_REQUEST['args'] ) ) {
@@ -100,7 +110,7 @@ class AJAX {
 				ob_end_clean();
 
 				if ( ! empty( $output ) ) {
-					$output = DB::instance()->get_last_log_id() . '.' . $output;
+					$output = DB::i()->get_last_log_id() . '.' . $output;
 				}
 			}
 		}
@@ -108,12 +118,13 @@ class AJAX {
 		die( $output ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
-	public function whois_ip() {
+	#[NoReturn]
+	public function whois_ip() : void {
 		$ip  = isset( $_POST['whois'] ) ? Sanitize::text( $_POST['whois'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 		$out = __( 'WhoIs check failed', 'coreactivity' );
 
 		if ( ! empty( $ip ) && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-whois-' . $ip ) ) {
-			$out = nl2br( trim( WhoIs::instance()->get( $ip ) ) );
+			$out = nl2br( trim( WhoIs::i()->get( $ip ) ) );
 		}
 
 		die( $out ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

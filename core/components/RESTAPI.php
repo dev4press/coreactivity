@@ -115,7 +115,7 @@ class RESTAPI extends Component {
 				$this->_log( 'rest-edit-item', $request->get_route(), $rest );
 			} else {
 				$log = true;
-				if ( $this->settings['skip_own_server_read'] && Core::instance()->get( 'is_server' ) ) {
+				if ( $this->settings['skip_own_server_read'] && Core::i()->get( 'is_server' ) ) {
 					$log = false;
 				}
 

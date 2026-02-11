@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
 use Dev4Press\Plugin\CoreActivity\Log\Users;
-use Dev4Press\v54\Core\Plugins\DB as BaseDB;
+use Dev4Press\v55\Core\Plugins\DB as BaseDB;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -344,7 +344,7 @@ class DB extends BaseDB {
 	}
 
 	public function get_new_log_entries_since_last_log_visit() : int {
-		$timestamp = Users::instance()->get_user_last_log_visit();
+		$timestamp = Users::i()->get_user_last_log_visit();
 
 		if ( $timestamp > 0 ) {
 			$datetime = coreactivity()->datetime()->mysql_date( true, $timestamp );

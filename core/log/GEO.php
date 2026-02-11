@@ -5,11 +5,11 @@ namespace Dev4Press\Plugin\CoreActivity\Log;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Location\GeoIP2;
 use Dev4Press\Plugin\CoreActivity\Location\IP2Location;
-use Dev4Press\v54\Core\Helpers\Data;
-use Dev4Press\v54\Core\Quick\File;
-use Dev4Press\v54\Core\Quick\Misc;
-use Dev4Press\v54\Service\GEOIP\GEOJSIO;
-use Dev4Press\v54\Service\GEOIP\Location;
+use Dev4Press\v55\Core\Helpers\Data;
+use Dev4Press\v55\Core\Quick\File;
+use Dev4Press\v55\Core\Quick\Misc;
+use Dev4Press\v55\Service\GEOIP\GEOJSIO;
+use Dev4Press\v55\Service\GEOIP\Location;
 use GeoIp2\Database\Reader;
 use IP2Location\Database;
 use WP_Filesystem_Direct;
@@ -1025,7 +1025,7 @@ class GEO {
 		),
 	);
 
-	public function __construct() {
+	private function __construct() {
 		$this->method = coreactivity_settings()->get( 'geolocation_method' );
 
 		if ( $this->method == 'ip2download' && ! $this->is_ip2location_valid() ) {
@@ -1037,7 +1037,12 @@ class GEO {
 		}
 	}
 
-	public static function instance() : GEO {
+	/** @deprecated 3.0 Use self::i() instead. */
+	public static function instance() : static {
+		return static::i();
+	}
+
+	public static function i() : static {
 		static $instance = null;
 
 		if ( ! isset( $instance ) ) {
@@ -1106,7 +1111,7 @@ class GEO {
 	}
 
 	public function geoip2_db_update() {
-		$path = Plugin::instance()->uploads_path();
+		$path = Plugin::i()->uploads_path();
 
 		if ( $path !== false ) {
 			$path = trailingslashit( $path ) . 'geoip2/';
@@ -1187,7 +1192,7 @@ class GEO {
 	}
 
 	public function ip2location_db_update() {
-		$path = Plugin::instance()->uploads_path();
+		$path = Plugin::i()->uploads_path();
 
 		if ( $path !== false ) {
 			$path = trailingslashit( $path ) . 'ip2location/';

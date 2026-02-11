@@ -1,13 +1,13 @@
 <?php
 
 use Dev4Press\Plugin\CoreActivity\Log\Statistics;
-use function Dev4Press\v54\Functions\panel;
+use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$statistics = Statistics::instance()->overall();
+$statistics = Statistics::i()->overall();
 $active     = coreactivity()->is_logging_active();
 
 ?>

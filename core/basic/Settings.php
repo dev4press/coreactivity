@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v54\Core\Plugins\Settings as BaseSettings;
+use Dev4Press\v55\Core\Plugins\Settings as BaseSettings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -130,7 +130,7 @@ class Settings extends BaseSettings {
 	}
 
 	protected function _install_db() {
-		return InstallDB::instance();
+		return InstallDB::i();
 	}
 
 	public function is_in_exception_list( $list, $value ) : bool {

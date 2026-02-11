@@ -163,7 +163,7 @@ class Option extends Component {
 	protected $transient_value;
 
 	public function init() {
-		$this->monitor[] = DB::instance()->prefix() . 'user_roles';
+		$this->monitor[] = DB::i()->prefix() . 'user_roles';
 
 		$this->exceptions      = coreactivity_settings()->get( 'exceptions_option_list' );
 		$this->transient_value = coreactivity_settings()->get( 'log_transient_value' );

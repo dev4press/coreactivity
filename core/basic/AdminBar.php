@@ -74,7 +74,7 @@ class AdminBar {
 			global $wp_admin_bar;
 
 			$show  = '';
-			$count = coreactivity_settings()->get( 'admin_bar_indicator' ) ? DB::instance()->get_new_log_entries_since_last_log_visit() : 0;
+			$count = coreactivity_settings()->get( 'admin_bar_indicator' ) ? DB::i()->get_new_log_entries_since_last_log_visit() : 0;
 
 			$title = '<span style="margin-top: 2px" class="ab-icon dashicons dashicons-database"></span><span class="ab-label">' . __( 'coreActivity', 'coreactivity' ) . '</span>';
 
