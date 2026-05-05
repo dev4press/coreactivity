@@ -4,7 +4,7 @@ use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 $statistics = Statistics::i()->overall();
@@ -49,32 +49,32 @@ $active     = coreactivity()->is_logging_active();
             <i class="d4p-icon d4p-ui-sliders-base d4p-icon-5x d4p-icon-fw"></i>
             <div>
                 <div class="__element __full-width">
-					<?php
+                    <?php
 
-					if ( $active ) {
-						?><?php esc_html_e( 'Events Logging', 'coreactivity' ); ?>: <span class="coreactivity-badge __badge-green">
+                    if ( $active ) {
+                        ?><?php esc_html_e( 'Events Logging', 'coreactivity' ); ?>: <span class="coreactivity-badge __badge-green">
                         <i aria-hidden="true" class="d4p-icon d4p-ui-check-square"></i> <?php esc_html_e( 'Active', 'coreactivity' ) ?></span><?php
-					} else {
-						?><?php esc_html_e( 'Events Logging', 'coreactivity' ); ?>: <span class="coreactivity-badge __badge-red">
+                    } else {
+                        ?><?php esc_html_e( 'Events Logging', 'coreactivity' ); ?>: <span class="coreactivity-badge __badge-red">
                         <i aria-hidden="true" class="d4p-icon d4p-ui-close-square"></i> <?php esc_html_e( 'Disabled', 'coreactivity' ) ?></span><?php
-					}
+                    }
 
-					?>
+                    ?>
                 </div>
             </div>
         </div>
     </div>
     <div class="d4p-group-footer">
-		<?php
+        <?php
 
-		if ( $active ) {
-			?>
+        if ( $active ) {
+            ?>
             <a class="button-secondary" href="<?php echo esc_url( panel()->a()->action_url( 'disable-logging', 'coreactivity-disable-logging' ) ); ?>"><?php esc_html_e( 'Disable all Events Logging', 'coreactivity' ); ?></a><?php
-		} else {
-			?>
+        } else {
+            ?>
             <a class="button-primary" href="<?php echo esc_url( panel()->a()->action_url( 'enable-logging', 'coreactivity-enable-logging' ) ); ?>"><?php esc_html_e( 'Enable Events Logging', 'coreactivity' ); ?></a><?php
-		}
+        }
 
-		?>
+        ?>
     </div>
 </div>

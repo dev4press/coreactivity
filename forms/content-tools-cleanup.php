@@ -5,7 +5,7 @@ use Dev4Press\v55\Core\Options\Render;
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
@@ -14,16 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="d4p-group d4p-group-information">
         <h3><?php esc_html_e( 'Important', 'coreactivity' ); ?></h3>
         <div class="d4p-group-inner">
-			<?php esc_html_e( 'These tools will remove logged data from the database. Create database backup before using these tools to avoid data loss in case you change your mind.', 'coreactivity' ); ?>
+            <?php esc_html_e( 'These tools will remove logged data from the database. Create database backup before using these tools to avoid data loss in case you change your mind.', 'coreactivity' ); ?>
         </div>
     </div>
 
-	<?php
+    <?php
 
-	$options = Settings::instance();
-	$groups  = $options->tools_cleanup();
+    $options = Settings::instance();
+    $groups  = $options->tools_cleanup();
 
-	Render::instance( 'coreactivity', panel()->a()->plugin_prefix )->prepare( 'tools-cleanup', $groups )->render();
+    Render::instance( 'coreactivity', panel()->a()->plugin_prefix )->prepare( 'tools-cleanup', $groups )->render();
 
-	?>
+    ?>
 </div>

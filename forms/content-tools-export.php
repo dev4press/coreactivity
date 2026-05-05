@@ -3,7 +3,7 @@
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
@@ -17,5 +17,5 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
 
-	<?php panel()->include_accessibility_control(); ?>
+    <?php panel()->include_accessibility_control(); ?>
 </div>

@@ -400,6 +400,7 @@ class Settings extends BaseSettings {
 							'settings' => array(
 								$this->i( 'settings', 'geolocation_geoip2_license', __( 'License', 'coreactivity' ), __( 'License is required to download and updated database file.', 'coreactivity' ), Type::TEXT )->more(
 									array(
+										__( 'To use this library, you must have PHP 8.1 on your server! If you activate it while using older PHP, you may encounter compatibility issues.', 'coreactivity' ),
 										__( 'GEOIP2 has free and premium services and databases. For this plugin purposes, Lite database is quite sufficient.', 'coreactivity' ),
 										__( 'To get the download license, register on the GEOIP2 website, and once you are logged in there, generate new license.', 'coreactivity' ),
 										__( 'Plugin will attempt to download database file once a week during regular weekly maintenance.', 'coreactivity' ),

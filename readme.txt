@@ -2,9 +2,9 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 3.0
+Stable tag: 3.1
 Requires at least: 6.1
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 8.0
 Requires CP: 2.0
 License: GPLv3 or later
@@ -122,6 +122,12 @@ Yes. But since cache plugins are bypassing WordPress to serve cached response, s
 If the database for GEO location is regularly updated, locating the IP to the country is most likely close to 100% precise. When it comes to more detailed location within the country, that is not always precise, and it depends on the country.
 
 == Changelog ==
+= 3.1 (2026.05.06) =
+* Edit: sanitize user_agent on input before storing it
+* Edit: control the display of the user agent values
+* Fix: unauthenticated PHP object injection via user_agent
+* Fix: a device detection library can fail for invalid user_agent
+
 = 3.0 (2026.02.11) =
 * New:  plugin tested with `WordPress` up to 6.9
 * New:  plugin tested with `PHP` up to 8.5

@@ -3,7 +3,7 @@
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
@@ -11,35 +11,35 @@ if ( ! defined( 'ABSPATH' ) ) {
         <input type="hidden" name="page" value="coreactivity-logs"/>
         <input type="hidden" name="coreactivity_handler" value="getback"/>
 
-		<?php
+        <?php
 
-		/** @var \Dev4Press\Plugin\CoreActivity\Table\Logs $_grid */
-		$_grid = panel()->get_table_object();
+        /** @var \Dev4Press\Plugin\CoreActivity\Table\Logs $_grid */
+        $_grid = panel()->get_table_object();
 
-		if ( is_multisite() && ! is_network_admin() ) {
-			$_grid->set_filter_lock( 'blog_id', get_current_blog_id() );
-		}
+        if ( is_multisite() && ! is_network_admin() ) {
+            $_grid->set_filter_lock( 'blog_id', get_current_blog_id() );
+        }
 
-		$_grid->prepare_table();
-		$_grid->prepare_items();
-		$_grid->live_attributes();
+        $_grid->prepare_table();
+        $_grid->prepare_items();
+        $_grid->live_attributes();
 
-		?>
+        ?>
         <div class="d4p-grid-alternative-view-search">
-			<?php
+            <?php
 
-			$_grid->views();
-			$_grid->search_box( esc_html__( 'Search', 'coreactivity' ), 'logs-search' );
+            $_grid->views();
+            $_grid->search_box( esc_html__( 'Search', 'coreactivity' ), 'logs-search' );
 
-			?>
+            ?>
 
         </div>
 
-		<?php
+        <?php
 
-		$_grid->display();
+        $_grid->display();
 
-		?>
+        ?>
     </div>
 <?php
 

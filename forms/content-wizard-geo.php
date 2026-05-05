@@ -3,13 +3,13 @@
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
 <div class="d4p-wizard-panel-header">
     <p>
-		<?php esc_html_e( 'Main Logs panel has a lot of moving parts and elements, and some of things may be useful to have depending on what your preferences are.', 'coreactivity' ); ?>
+        <?php esc_html_e( 'Main Logs panel has a lot of moving parts and elements, and some of things may be useful to have depending on what your preferences are.', 'coreactivity' ); ?>
     </p>
 </div>
 
@@ -18,14 +18,14 @@ if ( ! defined( 'ABSPATH' ) ) {
         <p><?php esc_html_e( 'Do you want to store country code for each activity logged?', 'coreactivity' ); ?></p>
         <div>
             <em><?php esc_html_e( 'This will improve speed for geo location later on, and will add additional information layer for requests activity analysis, and can be beneficial to other plugins related to the coreActivity.', 'coreactivity' ); ?></em>
-			<?php coreactivity_wizard()->render_yes_no( 'geo', 'country' ); ?>
+            <?php coreactivity_wizard()->render_yes_no( 'geo', 'country' ); ?>
         </div>
     </div>
     <div class="d4p-wizard-option-block d4p-wizard-block-yesno">
         <p><?php esc_html_e( 'Do you want to store extended geo location data?', 'coreactivity' ); ?></p>
         <div>
             <em><?php esc_html_e( 'All retrieved geo-location data can be stored in the log as a meta data. Right now, it is not used much, but it can be useful to view the IP information at the time it was logged.', 'coreactivity' ); ?></em>
-			<?php coreactivity_wizard()->render_yes_no( 'geo', 'expanded', 'no' ); ?>
+            <?php coreactivity_wizard()->render_yes_no( 'geo', 'expanded', 'no' ); ?>
         </div>
     </div>
     <div class="d4p-wizard-option-block">

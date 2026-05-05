@@ -3,7 +3,7 @@
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="d4p-group d4p-group-information">
         <h3><?php esc_html_e( 'Important Information', 'coreactivity' ); ?></h3>
         <div class="d4p-group-inner">
-			<?php esc_html_e( 'With this tool, you can easily enable or disable all events notifications status. If you want to enable all events for daily or weekly digest, or for instant notification, you can do it easily from here.', 'coreactivity' ); ?>
+            <?php esc_html_e( 'With this tool, you can easily enable or disable all events notifications status. If you want to enable all events for daily or weekly digest, or for instant notification, you can do it easily from here.', 'coreactivity' ); ?>
         </div>
     </div>
 
@@ -61,5 +61,5 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
 
-	<?php panel()->include_accessibility_control(); ?>
+    <?php panel()->include_accessibility_control(); ?>
 </div>

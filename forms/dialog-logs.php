@@ -3,7 +3,7 @@
 use Dev4Press\v55\Core\UI\Icons;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 $_tabs = coreactivity_view_dialog_tabs();
@@ -18,48 +18,48 @@ $_tabs = coreactivity_view_dialog_tabs();
     <div id="coreactivity-log-dialog" title="<?php esc_html_e( 'Log Data', 'coreactivity' ); ?>">
         <div class="d4p-ctrl-tabs d4p-tabs-have-icons d4p-tabs-in-dialog">
             <div role="tablist" aria-label="<?php esc_html_e( 'Log Dialog Popup', 'coreactivity' ); ?>">
-				<?php
+                <?php
 
-				$_selected = true;
-				foreach ( $_tabs as $_tab => $args ) {
-					$the_tab = 'coreactivity-popup-tabs-' . $_tab;
-					$ctrl    = 'coreactivity-popup-tabs-' . $_tab;
-					$class   = 'd4p-ctrl-tab d4p-ctrl-tab-coreactivity-popup-tabs-' . $_tab . ( $_selected ? ' d4p-ctrl-tab-is-active' : '' );
+                $_selected = true;
+                foreach ( $_tabs as $_tab => $args ) {
+                    $the_tab = 'coreactivity-popup-tabs-' . $_tab;
+                    $ctrl    = 'coreactivity-popup-tabs-' . $_tab;
+                    $class   = 'd4p-ctrl-tab d4p-ctrl-tab-coreactivity-popup-tabs-' . $_tab . ( $_selected ? ' d4p-ctrl-tab-is-active' : '' );
 
-					?>
+                    ?>
                     <button type="button" id="<?php echo esc_attr( $the_tab ); ?>-tab" aria-controls="<?php echo esc_attr( $ctrl ); ?>" aria-selected="<?php echo $_selected ? 'true' : 'false'; ?>" role="tab" data-tabname="<?php echo esc_attr( $_tab ); ?>" class="<?php echo esc_attr( $class ); ?>">
-						<?php echo Icons::i()->icon( $args['icon'], 'i', array( 'full' => true ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+                        <?php echo Icons::i()->icon( $args['icon'], 'i', array( 'full' => true ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
                         <span><?php echo esc_html( $args['label'] ); ?></span>
                     </button>
-					<?php
+                    <?php
 
-					$_selected = false;
-				}
+                    $_selected = false;
+                }
 
-				?>
+                ?>
             </div>
-			<?php
+            <?php
 
-			$_selected = true;
-			foreach ( $_tabs as $_tab => $args ) {
-				$the_tab = 'coreactivity-popup-tabs-' . $_tab;
-				$class   = 'd4p-ctrl-tabs-content d4p-ctrl-tab-coreactivity-popup-tabs-' . $_tab . ( $_selected ? ' d4p-ctrl-tabs-content-active' : '' );
+            $_selected = true;
+            foreach ( $_tabs as $_tab => $args ) {
+                $the_tab = 'coreactivity-popup-tabs-' . $_tab;
+                $class   = 'd4p-ctrl-tabs-content d4p-ctrl-tab-coreactivity-popup-tabs-' . $_tab . ( $_selected ? ' d4p-ctrl-tabs-content-active' : '' );
 
-				?>
+                ?>
                 <div id="<?php echo esc_attr( $the_tab ); ?>" aria-hidden="<?php echo $_selected ? 'false' : 'true'; ?>" role="tabpanel" aria-labelledby="<?php echo esc_attr( $the_tab ); ?>-tab" class="<?php echo esc_attr( $class ); ?>" <?php echo $_selected ? '' : 'hidden'; ?>>
                     <div></div>
                 </div>
-				<?php
+                <?php
 
-				$_selected = false;
-			}
+                $_selected = false;
+            }
 
-			?>
+            ?>
         </div>
     </div>
-	<?php
+    <?php
 
-	do_action( 'coreactivity_dialog_logs' );
+    do_action( 'coreactivity_dialog_logs' );
 
-	?>
+    ?>
 </div>

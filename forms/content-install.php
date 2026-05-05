@@ -3,28 +3,28 @@
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
 <div class="d4p-content">
     <div class="d4p-setup-wrapper">
         <div class="d4p-update-info">
-			<?php
+            <?php
 
-			include COREACTIVITY_PATH . 'forms/setup-database.php';
+            include COREACTIVITY_PATH . 'forms/setup-database.php';
 
-			coreactivity_settings()->set( 'install', false, 'info' );
-			coreactivity_settings()->set( 'update', false, 'info', true );
+            coreactivity_settings()->set( 'install', false, 'info' );
+            coreactivity_settings()->set( 'update', false, 'info', true );
 
-			?>
+            ?>
 
             <div class="d4p-install-block">
                 <h4>
-					<?php esc_html_e( 'All Done', 'coreactivity' ); ?>
+                    <?php esc_html_e( 'All Done', 'coreactivity' ); ?>
                 </h4>
                 <div>
-					<?php esc_html_e( 'Installation completed.', 'coreactivity' ); ?>
+                    <?php esc_html_e( 'Installation completed.', 'coreactivity' ); ?>
                 </div>
             </div>
 

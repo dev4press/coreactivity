@@ -4,7 +4,7 @@ use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\v55\Core\Quick\File;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 $db_stats = DB::i()->get_statistics();

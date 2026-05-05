@@ -3,27 +3,27 @@
 use Dev4Press\v55\Core\Scope;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
 <div class="d4p-content">
     <div class="d4p-cards-wrapper">
-		<?php
+        <?php
 
-		if ( Scope::i()->is_master_network_admin() ) {
-			include COREACTIVITY_PATH . 'forms/content-dashboard-overall.php';
-			include COREACTIVITY_PATH . 'forms/content-dashboard-database.php';
-		} else {
-			include COREACTIVITY_PATH . 'forms/content-dashboard-blog.php';
-		}
+        if ( Scope::i()->is_master_network_admin() ) {
+            include COREACTIVITY_PATH . 'forms/content-dashboard-overall.php';
+            include COREACTIVITY_PATH . 'forms/content-dashboard-database.php';
+        } else {
+            include COREACTIVITY_PATH . 'forms/content-dashboard-blog.php';
+        }
 
-		include COREACTIVITY_PATH . 'forms/content-dashboard-statistics.php';
+        include COREACTIVITY_PATH . 'forms/content-dashboard-statistics.php';
 
-		if ( Scope::i()->is_master_network_admin() ) {
-			include COREACTIVITY_PATH . 'forms/content-dashboard-location.php';
-		}
+        if ( Scope::i()->is_master_network_admin() ) {
+            include COREACTIVITY_PATH . 'forms/content-dashboard-location.php';
+        }
 
-		?>
+        ?>
     </div>
 </div>
