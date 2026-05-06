@@ -8,6 +8,7 @@ use GFAPI;
 use stdClass;
 use WP_Comment;
 use WP_Post;
+use WP_Term;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -465,7 +466,7 @@ class Display {
 
 		$term = get_term( $item->object_id );
 
-		if ( $term instanceof \WP_Term ) {
+		if ( $term instanceof WP_Term ) {
 			/* translators: Display log Term information. %1$s: Term ID. %2$s: Term Name and Link. %3$s: Taxonomy Name. */
 			$render .= sprintf( __( 'ID: %1$s &middot; Term: %2$s<br/>Taxonomy: %3$s', 'coreactivity' ), '<strong>' . $term->term_id . '</strong>', '<strong><a href="' . get_edit_term_link( $term ) . '">' . $term->name . '</a></strong>', '<strong>' . $term->taxonomy . '</strong>' );
 		} else {
@@ -697,7 +698,7 @@ class Display {
 
 		$term = get_term( $item->object_id );
 
-		if ( $term instanceof \WP_Term ) {
+		if ( $term instanceof WP_Term ) {
 			/* translators: Display brief log Term information. %1$s: Term ID. %2$s: Term Name. %3$s: Divider Dot. %4$s: Term Taxonomy. */
 			$render .= sprintf( __( 'ID: %1$s &middot; Term: %2$s%3$sTaxonomy: %4$s', 'coreactivity' ), $term->term_id, $term->name, ' · ', $term->taxonomy );
 		} else {

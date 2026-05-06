@@ -6,9 +6,9 @@
  * Author:            Milan Petrovic
  * Author URI:        https://www.dev4press.com/
  * Text Domain:       coreactivity
- * Version:           3.0
+ * Version:           3.1
  * Requires at least: 6.1
- * Tested up to:      6.9
+ * Tested up to:      7.0
  * Requires PHP:      8.0
  * Requires CP:       2.0
  * Network:           true

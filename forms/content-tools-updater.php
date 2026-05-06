@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
@@ -9,12 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="d4p-group d4p-group-information d4p-group-updater">
         <h3><?php esc_html_e( 'Update status', 'coreactivity' ); ?></h3>
         <div class="d4p-group-inner">
-			<?php
+            <?php
 
-			include COREACTIVITY_PATH . 'forms/setup-database.php';
-			include COREACTIVITY_PATH . 'forms/setup-statistics.php';
+            include COREACTIVITY_PATH . 'forms/setup-database.php';
+            include COREACTIVITY_PATH . 'forms/setup-statistics.php';
 
-			?>
+            ?>
         </div>
     </div>
 </div>

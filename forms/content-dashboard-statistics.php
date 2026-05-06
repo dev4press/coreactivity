@@ -4,7 +4,7 @@ use Dev4Press\Plugin\CoreActivity\Log\Statistics;
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 $_blog_id   = is_multisite() && ! is_network_admin() ? get_current_blog_id() : - 1;
@@ -16,21 +16,21 @@ $statistics = Statistics::i()->detailed( 30, $_blog_id );
     <h3><?php esc_html_e( 'Last 30 days statistics', 'coreactivity' ); ?></h3>
     <div class="d4p-group-inner">
         <div class="coreactivity-overall-components">
-			<?php
+            <?php
 
-			if ( $statistics['total'] == 0 ) {
-				?>
+            if ( $statistics['total'] == 0 ) {
+                ?>
 
                 <p><?php esc_html_e( 'There are no events logged in the past 30 days.', 'coreactivity' ); ?></p>
 
-				<?php
-			} else {
-				foreach ( $statistics['components'] as $component => $data ) {
-					$width = ( $data['count'] / $statistics['max'] ) * 100;
+                <?php
+            } else {
+                foreach ( $statistics['components'] as $component => $data ) {
+                    $width = ( $data['count'] / $statistics['max'] ) * 100;
 
-					if ( $data['count'] > 0 ) {
+                    if ( $data['count'] > 0 ) {
 
-						?>
+                        ?>
 
                         <div class="coreactivity-component">
                             <div class="__label">
@@ -45,12 +45,12 @@ $statistics = Statistics::i()->detailed( 30, $_blog_id );
                             <div class="__count"><?php echo esc_html( $data['count'] ); ?></div>
                         </div>
 
-						<?php
-					}
-				}
-			}
+                        <?php
+                    }
+                }
+            }
 
-			?>
+            ?>
         </div>
     </div>
 </div>

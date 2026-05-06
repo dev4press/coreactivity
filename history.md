@@ -2,6 +2,22 @@
 
 ## Changelog
 
+### Version: 2.7.1 / March 21, 2025
+
+* **edit** improvements to the various panel code decorations
+* **edit** improved sanitization of the Live Logs input arguments
+* **edit** Device Detector Library 6.4.5
+* **fix** SQL injections related to the Live Logs loading
+
+### Version: 2.7 / February 18, 2025
+
+* **new** loading of `Dev4Press Library` via Composer
+* **new** loading of various libraries via Composer
+* **edit** various small tweaks and loading changes
+* **edit** Device Detector Library 6.4.3
+* **edit** Dev4Press Library 5.3
+* **fix** doing it wrong warning for translations on WordPress 6.7
+
 ### Version: 2.6 / October 24, 2024
 
 * **new** component: `SweepPress` with 8 more events

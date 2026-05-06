@@ -250,7 +250,9 @@ class Core {
 
 	private function get_user_agent() : string {
 		if ( coreactivity_settings()->get( 'log_if_available_user_agent' ) && isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			return Sanitize::text( trim( $_SERVER['HTTP_USER_AGENT'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+			$ua = Sanitize::text( trim( $_SERVER['HTTP_USER_AGENT'] ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+
+			return $this->make_serialized_invalid( $ua );
 		}
 
 		return '';
@@ -385,5 +387,17 @@ class Core {
 		}
 
 		return md5( wp_json_encode( $temp ) );
+	}
+
+	private function make_serialized_invalid( $input ) {
+		if ( ! is_string( $input ) || empty( $input ) ) {
+			return $input;
+		}
+
+		if ( is_serialized( $input ) ) {
+			return 'INVALID__' . $input;
+		}
+
+		return $input;
 	}
 }

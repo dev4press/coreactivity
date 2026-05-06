@@ -3,29 +3,29 @@
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 class AdminBar {
-	public function __construct() {
-		add_action( 'wp_before_admin_bar_render', array( $this, 'integration' ) );
+    public function __construct() {
+        add_action( 'wp_before_admin_bar_render', array( $this, 'integration' ) );
 
-		add_action( 'admin_head', array( $this, 'style' ) );
-		add_action( 'wp_head', array( $this, 'style' ) );
-	}
+        add_action( 'admin_head', array( $this, 'style' ) );
+        add_action( 'wp_head', array( $this, 'style' ) );
+    }
 
-	public static function instance() : AdminBar {
-		static $instance = null;
+    public static function instance() : AdminBar {
+        static $instance = null;
 
-		if ( ! isset( $instance ) ) {
-			$instance = new AdminBar();
-		}
+        if ( ! isset( $instance ) ) {
+            $instance = new AdminBar();
+        }
 
-		return $instance;
-	}
+        return $instance;
+    }
 
-	public function style() {
-		?>
+    public function style() {
+        ?>
         <style>
             #wpadminbar .coreactivity-adminbar-count {
                 display: inline-block;
@@ -52,80 +52,80 @@ class AdminBar {
                     display: block;
                 }
             }</style>
-		<?php
-	}
+        <?php
+    }
 
-	public function short_count( $number ) {
-		$suffix = array( '', 'K', 'M' );
+    public function short_count( $number ) {
+        $suffix = array( '', 'K', 'M' );
 
-		for ( $i = 0; $i < count( $suffix ); $i ++ ) {
-			$divide = $number / pow( 1000, $i );
+        for ( $i = 0; $i < count( $suffix ); $i ++ ) {
+            $divide = $number / pow( 1000, $i );
 
-			if ( $divide < 1000 ) {
-				return round( $divide ) . $suffix[ $i ];
-			}
-		}
+            if ( $divide < 1000 ) {
+                return round( $divide ) . $suffix[ $i ];
+            }
+        }
 
-		return $number;
-	}
+        return $number;
+    }
 
-	public function integration() {
-		if ( current_user_can( 'manage_options' ) ) {
-			global $wp_admin_bar;
+    public function integration() {
+        if ( current_user_can( 'manage_options' ) ) {
+            global $wp_admin_bar;
 
-			$show  = '';
-			$count = coreactivity_settings()->get( 'admin_bar_indicator' ) ? DB::i()->get_new_log_entries_since_last_log_visit() : 0;
+            $show  = '';
+            $count = coreactivity_settings()->get( 'admin_bar_indicator' ) ? DB::i()->get_new_log_entries_since_last_log_visit() : 0;
 
-			$title = '<span style="margin-top: 2px" class="ab-icon dashicons dashicons-database"></span><span class="ab-label">' . __( 'coreActivity', 'coreactivity' ) . '</span>';
+            $title = '<span style="margin-top: 2px" class="ab-icon dashicons dashicons-database"></span><span class="ab-label">' . __( 'coreActivity', 'coreactivity' ) . '</span>';
 
-			if ( $count > 0 ) {
-				$show  = '<span class="wp-ui-notification coreactivity-adminbar-count">' . $this->short_count( $count ) . '</span>';
-				$title .= $show;
-			}
+            if ( $count > 0 ) {
+                $show  = '<span class="wp-ui-notification coreactivity-adminbar-count">' . $this->short_count( $count ) . '</span>';
+                $title .= $show;
+            }
 
-			$wp_admin_bar->add_menu( array(
-				'id'    => 'coreactivity-menu',
-				'title' => $title,
-				'href'  => network_admin_url( 'admin.php?page=coreactivity-dashboard' ),
-			) );
+            $wp_admin_bar->add_menu( array(
+                    'id'    => 'coreactivity-menu',
+                    'title' => $title,
+                    'href'  => network_admin_url( 'admin.php?page=coreactivity-dashboard' ),
+            ) );
 
-			$wp_admin_bar->add_group( array(
-				'parent' => 'coreactivity-menu',
-				'id'     => 'coreactivity-menu-top',
-			) );
+            $wp_admin_bar->add_group( array(
+                    'parent' => 'coreactivity-menu',
+                    'id'     => 'coreactivity-menu-top',
+            ) );
 
-			$wp_admin_bar->add_group( array(
-				'parent' => 'coreactivity-menu',
-				'id'     => 'coreactivity-menu-bottom',
-			) );
+            $wp_admin_bar->add_group( array(
+                    'parent' => 'coreactivity-menu',
+                    'id'     => 'coreactivity-menu-bottom',
+            ) );
 
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'coreactivity-menu-top',
-				'id'     => 'coreactivity-menu-events',
-				'title'  => __( 'Events', 'coreactivity' ),
-				'href'   => network_admin_url( 'admin.php?page=coreactivity-events' ),
-			) );
+            $wp_admin_bar->add_menu( array(
+                    'parent' => 'coreactivity-menu-top',
+                    'id'     => 'coreactivity-menu-events',
+                    'title'  => __( 'Events', 'coreactivity' ),
+                    'href'   => network_admin_url( 'admin.php?page=coreactivity-events' ),
+            ) );
 
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'coreactivity-menu-top',
-				'id'     => 'coreactivity-menu-logs',
-				'title'  => __( 'Logs', 'coreactivity' ) . $show,
-				'href'   => network_admin_url( 'admin.php?page=coreactivity-logs' ),
-			) );
+            $wp_admin_bar->add_menu( array(
+                    'parent' => 'coreactivity-menu-top',
+                    'id'     => 'coreactivity-menu-logs',
+                    'title'  => __( 'Logs', 'coreactivity' ) . $show,
+                    'href'   => network_admin_url( 'admin.php?page=coreactivity-logs' ),
+            ) );
 
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'coreactivity-menu-bottom',
-				'id'     => 'coreactivity-menu-settings',
-				'title'  => __( 'Settings', 'coreactivity' ),
-				'href'   => network_admin_url( 'admin.php?page=coreactivity-settings' ),
-			) );
+            $wp_admin_bar->add_menu( array(
+                    'parent' => 'coreactivity-menu-bottom',
+                    'id'     => 'coreactivity-menu-settings',
+                    'title'  => __( 'Settings', 'coreactivity' ),
+                    'href'   => network_admin_url( 'admin.php?page=coreactivity-settings' ),
+            ) );
 
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'coreactivity-menu-bottom',
-				'id'     => 'coreactivity-menu-tools',
-				'title'  => __( 'Tools', 'coreactivity' ),
-				'href'   => network_admin_url( 'admin.php?page=coreactivity-tools' ),
-			) );
-		}
-	}
+            $wp_admin_bar->add_menu( array(
+                    'parent' => 'coreactivity-menu-bottom',
+                    'id'     => 'coreactivity-menu-tools',
+                    'title'  => __( 'Tools', 'coreactivity' ),
+                    'href'   => network_admin_url( 'admin.php?page=coreactivity-tools' ),
+            ) );
+        }
+    }
 }

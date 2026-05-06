@@ -3,7 +3,7 @@
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <h3><?php esc_html_e( 'Blog Activity Logs', 'coreactivity' ); ?></h3>
     <div class="d4p-group-inner">
         <p>
-			<?php esc_html_e( 'This is a limited use dashboard for the individual blog on your multisite network. You can see only log entries logged for this individual blog only. To access plugin settings, events, and logs for the whole network, you need to go to the Network Admin.', 'coreactivity' ); ?>
+            <?php esc_html_e( 'This is a limited use dashboard for the individual blog on your multisite network. You can see only log entries logged for this individual blog only. To access plugin settings, events, and logs for the whole network, you need to go to the Network Admin.', 'coreactivity' ); ?>
         </p>
     </div>
     <div class="d4p-group-footer">

@@ -3,7 +3,7 @@
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 ?>
@@ -12,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="d4p-group d4p-group-information">
         <h3><?php esc_html_e( 'Important Information', 'coreactivity' ); ?></h3>
         <div class="d4p-group-inner">
-			<?php esc_html_e( 'This tool can remove plugin settings saved in the WordPress options table added by the plugin and you can remove share and likes data gathered by the plugin share blocks.', 'coreactivity' ); ?>
+            <?php esc_html_e( 'This tool can remove plugin settings saved in the WordPress options table added by the plugin and you can remove share and likes data gathered by the plugin share blocks.', 'coreactivity' ); ?>
             <br/><br/>
-			<?php esc_html_e( 'Deletion operations are not reversible, and it is highly recommended to create database backup before proceeding with this tool.', 'coreactivity' ); ?>
-			<?php esc_html_e( 'If you choose to remove plugin settings, once that is done, all settings will be reinitialized to default values if you choose to leave plugin active.', 'coreactivity' ); ?>
+            <?php esc_html_e( 'Deletion operations are not reversible, and it is highly recommended to create database backup before proceeding with this tool.', 'coreactivity' ); ?>
+            <?php esc_html_e( 'If you choose to remove plugin settings, once that is done, all settings will be reinitialized to default values if you choose to leave plugin active.', 'coreactivity' ); ?>
         </div>
     </div>
 
@@ -66,5 +66,5 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
     </div>
 
-	<?php panel()->include_accessibility_control(); ?>
+    <?php panel()->include_accessibility_control(); ?>
 </div>

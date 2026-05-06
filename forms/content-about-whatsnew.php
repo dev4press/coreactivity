@@ -3,7 +3,7 @@
 use function Dev4Press\v55\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+    exit;
 }
 
 include COREACTIVITY_PATH . 'forms/content-about-minor.php';
@@ -22,9 +22,9 @@ include COREACTIVITY_PATH . 'forms/content-about-minor.php';
                     Since the version 1.0 is released, the coreActivity plugin has seen extensive updates, and the Version 2.0 again expands the list of events, integrates into Users panel and more.
                 </p>
 
-				<?php if ( isset( $_GET['install'] ) && sanitize_key( $_GET['install'] ) === 'on' ) { // phpcs:ignore WordPress.Security.NonceVerification ?>
+                <?php if ( isset( $_GET['install'] ) && sanitize_key( $_GET['install'] ) === 'on' ) { // phpcs:ignore WordPress.Security.NonceVerification ?>
                     <a class="button-primary" href="<?php echo esc_url( panel()->a()->panel_url( 'wizard' ) ); ?>"><?php esc_html_e( 'Run Setup Wizard', 'coreactivity' ); ?></a>
-				<?php } ?>
+                <?php } ?>
 
                 <div class="coreactivity-about-counters">
                     <div><i class="d4p-icon d4p-ui-folder d4p-icon-fw"></i> <strong>28</strong> Components</div>
