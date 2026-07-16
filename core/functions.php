@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Enable or disable main CoreActivity logging switch.
+ * Enable or disable the main CoreActivity logging switch.
  *
  * @param bool $status TRUE will enable logging and FALSE will disable logging.
  *

@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### Version: 3.1.1 / july 17, 2026
+
+* **new** plugin tested with `WordPress` up to 7.0
+* **edit** Device Detector Library 6.5.1
+
 ### Version: 3.1 / may 6, 2026
 
 * **edit** sanitize user_agent on input before storing it

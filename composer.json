@@ -3,6 +3,37 @@
     "dev4press/library": "5.5.2",
     "matomo/device-detector": "^6.5",
     "ip2location/ip2location-php": "^9.8",
-    "geoip2/geoip2": "2.13.0"
+    "geoip2/geoip2": "2.13.0",
+    "php": ">=8.0"
+  },
+  "scripts": {
+    "post-cleanup": [
+      "rm -rf vendor/bin",
+      "rm -rf vendor/erusev/parsedown/.github",
+      "rm -rf vendor/erusev/parsedown-extra/test",
+      "rm -rf vendor/erusev/parsedown-extra/.travis.yml",
+      "rm -rf vendor/erusev/parsedown-extra/phpunit.xml.dist",
+      "rm -rf vendor/ip2location/ip2location-php/.github",
+      "rm -rf vendor/ip2location/ip2location-php/data",
+      "rm -rf vendor/ip2location/ip2location-php/docs",
+      "rm -rf vendor/ip2location/ip2location-php/examples",
+      "rm -rf vendor/ip2location/ip2location-php/tests",
+      "rm -rf vendor/ip2location/ip2location-php/.readthedocs.yaml",
+      "rm -rf vendor/ip2location/ip2location-php/phpunit.xml",
+      "rm -rf vendor/maxmind/web-service-common/dev-bin",
+      "rm -rf vendor/maxmind-db/reader/ext",
+      "rm -rf vendor/maxmind-db/reader/package.xml",
+      "rm -rf vendor/geoip2/geoip2/examples",
+      "rm -rf vendor/mustangostang/spyc/examples",
+      "rm -rf vendor/mustangostang/spyc/tests",
+      "rm -rf vendor/mustangostang/spyc/phpunit.xml",
+      "rm -rf vendor/mustangostang/spyc/.gitignore"
+    ],
+    "post-install-cmd": [
+      "@post-cleanup"
+    ],
+    "post-update-cmd": [
+      "@post-cleanup"
+    ]
   }
 }

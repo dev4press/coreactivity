@@ -87,13 +87,14 @@ class RESTAPI extends Component {
 	 */
 	public function pre_serve_request( $served, $response, $request, $server ) : bool {
 		$data = $response->get_data();
+
 		$rest = array(
 			'method' => $request->get_method(),
 			'action' => $this->actions[ $request->get_method() ] ?? 'unknown',
 			'query'  => $request->get_query_params(),
 			'body'   => $request->get_body_params(),
 			'status' => $response->get_status(),
-			'code'   => $data['code'] ?? '',
+			'code'   => is_array($data) ? ($data['code'] ?? '') : '',
 		);
 
 		if ( $rest['status'] == 404 ) {
