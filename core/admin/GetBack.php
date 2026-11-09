@@ -4,8 +4,8 @@ namespace Dev4Press\Plugin\CoreActivity\Admin;
 
 use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
-use Dev4Press\v55\Core\Admin\GetBack as BaseGetBack;
-use Dev4Press\v55\Core\Quick\Sanitize;
+use Dev4Press\v56\Core\Admin\GetBack as BaseGetBack;
+use Dev4Press\v56\Core\Quick\Sanitize;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -114,6 +114,10 @@ class GetBack extends BaseGetBack {
 	private function bulk_panel_logs() : void {
 		check_admin_referer( 'bulk-logs' );
 
+		if ( is_multisite() && is_network_admin() ? ! current_user_can( 'manage_network_options' ) : ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You are not allowed to delete logs.', 'coreactivity' ) );
+		}
+
 		$action = $this->get_bulk_action();
 
 		if ( $action != '' ) {
@@ -121,7 +125,8 @@ class GetBack extends BaseGetBack {
 
 			if ( ! empty( $ids ) ) {
 				if ( $action == 'delete' ) {
-					DB::i()->delete_log_entries( $ids );
+					$blog_id = is_multisite() && ! is_network_admin() ? get_current_blog_id() : null;
+					DB::i()->delete_log_entries( $ids, $blog_id );
 
 					wp_redirect( $this->a()->current_url() . '&message=delete-completed' );
 					exit;

@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Components;
 
 use Dev4Press\Plugin\CoreActivity\Base\Component;
-use Dev4Press\v55\Core\Quick\Request;
+use Dev4Press\v56\Core\Quick\Request;
 use WP_Error;
 use WP_User;
 
@@ -31,12 +31,9 @@ class User extends Component {
 		'locale',
 	);
 	protected $exceptions = array();
-	protected $storage = array();
 	protected $user_login = '';
 
 	public function tracking() {
-		add_filter( 'authenticate', array( $this, 'init_authenticate' ), 10, 3 );
-
 		if ( $this->is_active( 'login' ) ) {
 			add_action( 'wp_login', array( $this, 'event_login' ), 10, 2 );
 		}
@@ -229,13 +226,6 @@ class User extends Component {
 		return $meta_column_keys;
 	}
 
-	public function init_authenticate( $user, $username, $password ) {
-		$this->storage['username'] = $username;
-		$this->storage['password'] = $password;
-
-		return $user;
-	}
-
 	public function prepare_form_lostpassword() {
 		$this->user_login = $_POST['user_login'] ?? ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput,WordPress.Security.NonceVerification
 		$this->user_login = trim( wp_unslash( $this->user_login ) );
@@ -285,7 +275,6 @@ class User extends Component {
 		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'malformed',
 			'scheme' => $scheme,
-			'cookie' => $cookie,
 		) );
 
 		remove_action( 'auth_cookie_malformed', array( $this, 'event_failed_login_cookie_malformed' ), 10 );
@@ -294,7 +283,6 @@ class User extends Component {
 	public function event_failed_login_cookie_bad_hash( $cookie_elements ) {
 		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'bad_hash',
-			'cookie' => $cookie_elements,
 		) );
 
 		remove_action( 'auth_cookie_bad_hash', array( $this, 'event_failed_login_cookie_bad_hash' ) );
@@ -303,7 +291,6 @@ class User extends Component {
 	public function event_failed_login_cookie_bad_username( $cookie_elements ) {
 		$this->log( 'failed-login-cookie', array( 'user_id' => 0 ), array(
 			'reason' => 'bad_username',
-			'cookie' => $cookie_elements,
 		) );
 
 		remove_action( 'auth_cookie_bad_username', array( $this, 'event_failed_login_cookie_bad_username' ) );
@@ -322,7 +309,6 @@ class User extends Component {
 			'object_id' => $user_id,
 		), array(
 			'login'    => $username,
-			'password' => $this->storage['password'],
 		) );
 	}
 
@@ -462,7 +448,6 @@ class User extends Component {
 		$this->log( 'user-signup', array( 'blog_id' => 0 ), array(
 			'user_login' => $user,
 			'user_email' => $user_email,
-			'signup_key' => $key,
 		) );
 	}
 

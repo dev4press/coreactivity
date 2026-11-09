@@ -3,8 +3,8 @@
 namespace Dev4Press\Plugin\CoreActivity\Admin\Panel;
 
 use Dev4Press\Plugin\CoreActivity\Basic\Render;
-use Dev4Press\v55\Core\Scope;
-use Dev4Press\v55\Core\UI\Admin\PanelDashboard;
+use Dev4Press\v56\Core\Scope;
+use Dev4Press\v56\Core\UI\Admin\PanelDashboard;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

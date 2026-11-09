@@ -2,10 +2,10 @@
 Contributors: GDragoN
 Donate link: https://buymeacoffee.com/millan
 Tags: dev4press, activity log, activity, audit log, event log
-Stable tag: 3.1.1
-Requires at least: 6.1
-Tested up to: 7.0
-Requires PHP: 8.0
+Stable tag: 3.2
+Requires at least: 6.4
+Tested up to: 7.2
+Requires PHP: 8.1
 Requires CP: 2.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -84,13 +84,13 @@ To use IP2Location, you need to have an account on IP2Location, to get the downl
 
 == Installation ==
 = General Requirements =
-* PHP: 8.0 or newer
+* PHP: 8.1 or newer
 
 = PHP Notice =
-* Plugin doesn't work with PHP 7.4 or older versions.
+* Plugin doesn't work with PHP 8.0 or older versions.
 
 = WordPress Requirements =
-* WordPress: 6.1 or newer
+* WordPress: 6.4 or newer
 
 = WordPress Notice =
 * Plugin may work with WordPress 6.0 or older versions, but there is no guarantee of that, and plugin is no longer tested with these WordPress versions.
