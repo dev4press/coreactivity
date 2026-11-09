@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE buildprofiles SYSTEM "https://resources.jetbrains.com/writerside/1.0/build-profiles.dtd">
+<buildprofiles xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/build-profiles.xsd"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <variables></variables>
+    <build-profile instance="coreactivity">
+        <variables>
+            <noindex-content>true</noindex-content>
+        </variables>
+    </build-profile>
+    <footer>
+        <copyright>Dev4Press Web Development 2008-2026</copyright>
+        <social type="blog" href="https://www.dev4press.com/blog"/>
+        <social type="twitter" href="https://twitter.com/milangd"/>
+        <social type="facebook" href="https://www.facebook.com/dev4press"/>
+        <social type="instagram" href="https://www.instagram.com/dev4press"/>
+        <link href="https://www.dev4press.com/blog">Dev4Press</link>
+        <link href="https://support.dev4press.com/">Support</link>
+        <link href="https://www.dev4press.com/plugins/coreactivity/">Home Page</link>
+    </footer>
+</buildprofiles>
