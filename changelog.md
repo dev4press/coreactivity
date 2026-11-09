@@ -2,6 +2,20 @@
 
 ## Changelog
 
+### Version: 3.2 / november 16, 2026
+
+* **new** plugin tested with `WordPress` up to 7.2
+* **new** updated plugin system requirements
+* **edit** improve failed login passwords, authentication cookies, and signup keys
+* **edit** GeoIP Library 3.4.0
+* **edit** Device Detector Library 6.5.2
+* **edit** Dev4Press Library 5.6.5
+* **fix** restrict live logs to the authorized site in multisite
+* **fix** restrict log deletion to the authorized site in multisite
+* **fix** enforce capability checks for log and event AJAX actions
+* **fix** escape logged request values and metadata array keys in the log display
+* **fix** escape WHOIS responses displayed in the admin dialog
+
 ### Version: 3.1.1 / july 17, 2026
 
 * **new** plugin tested with `WordPress` up to 7.0

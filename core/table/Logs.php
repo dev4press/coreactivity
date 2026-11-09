@@ -10,13 +10,13 @@ use Dev4Press\Plugin\CoreActivity\Log\Device;
 use Dev4Press\Plugin\CoreActivity\Log\Display;
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
 use Dev4Press\Plugin\CoreActivity\Log\Users;
-use Dev4Press\v55\Core\Helpers\IP;
-use Dev4Press\v55\Core\Plugins\DBLite;
-use Dev4Press\v55\Core\Quick\Sanitize;
-use Dev4Press\v55\Core\UI\Elements;
-use Dev4Press\v55\WordPress\Admin\Table;
+use Dev4Press\v56\Core\Helpers\IP;
+use Dev4Press\v56\Core\Plugins\DBLite;
+use Dev4Press\v56\Core\Quick\Sanitize;
+use Dev4Press\v56\Core\UI\Elements;
+use Dev4Press\v56\WordPress\Admin\Table;
 use WP_Site;
-use function Dev4Press\v55\Functions\panel;
+use function Dev4Press\v56\Functions\panel;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -254,7 +254,8 @@ class Logs extends Table {
                 'filter'   => $this->_filter_key,
                 'settings' => array(),
                 'id'       => DB::i()->get_last_log_id(),
-                'nonce'    => wp_create_nonce( 'coreactivity-live-update' ),
+                'scope'    => is_multisite() && is_network_admin() ? 'network' : 'site',
+                'nonce'    => wp_create_nonce( 'coreactivity-live-update-' . ( is_multisite() && is_network_admin() ? 'network' : 'site' ) ),
                 'page'     => isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification
         );
 
@@ -872,6 +873,10 @@ class Logs extends Table {
     protected function column_default( $item, $column_name ) : string {
         $render  = isset( $item->$column_name ) ? (string) $item->$column_name : '/';
         $actions = array();
+
+        if ( $column_name === 'request' ) {
+            $render = esc_html( $render );
+        }
 
         $render  = apply_filters( 'coreactivity_logs_field_render_' . $column_name, $render, $item, $this );
         $actions = apply_filters( 'coreactivity_logs_field_actions_' . $column_name, $actions, $item, $this );

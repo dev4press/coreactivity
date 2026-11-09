@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Admin\Panel;
 
-use Dev4Press\v55\Core\UI\Admin\PanelSettings;
+use Dev4Press\v56\Core\UI\Admin\PanelSettings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

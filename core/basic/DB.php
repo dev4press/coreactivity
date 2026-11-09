@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
 use Dev4Press\Plugin\CoreActivity\Log\Users;
-use Dev4Press\v55\Core\Plugins\DB as BaseDB;
+use Dev4Press\v56\Core\Plugins\DB as BaseDB;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -153,7 +153,8 @@ class DB extends BaseDB {
 		return empty( $raw ) ? array() : $this->pluck( $raw, 'logs', 'event_id' );
 	}
 
-	public function delete_log_entries( array $ids ) : int {
+	public function delete_log_entries( array $ids, ?int $blog_id = null ) : int {
+		$ids = array_filter( array_map( 'absint', $ids ) );
 		if ( empty( $ids ) ) {
 			return 0;
 		}
@@ -161,6 +162,11 @@ class DB extends BaseDB {
 		$sql = "DELETE i, im FROM " . $this->logs . " i 
                 LEFT JOIN " . $this->logmeta . " im ON i.log_id = im.log_id 
                 WHERE i.log_id in (" . join( ', ', $ids ) . ")";
+
+		if ( $blog_id !== null ) {
+			$sql .= $this->prepare( ' AND i.blog_id = %d', $blog_id );
+		}
+
 		$this->query( $sql );
 
 		return $this->rows_affected();

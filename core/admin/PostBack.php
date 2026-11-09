@@ -6,8 +6,8 @@ use Dev4Press\Plugin\CoreActivity\Basic\InstallDB;
 use Dev4Press\Plugin\CoreActivity\Basic\Plugin;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\Cleanup;
-use Dev4Press\v55\Core\Admin\PostBack as BasePostBack;
-use Dev4Press\v55\Core\Quick\Sanitize;
+use Dev4Press\v56\Core\Admin\PostBack as BasePostBack;
+use Dev4Press\v56\Core\Quick\Sanitize;
 use JetBrains\PhpStorm\NoReturn;
 use WP_Filesystem_Direct;
 

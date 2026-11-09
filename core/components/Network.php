@@ -178,7 +178,6 @@ class Network extends Component {
 			'title'      => $title,
 			'user_name'  => $user,
 			'user_email' => $user_email,
-			'signup_key' => $key,
 		) );
 	}
 

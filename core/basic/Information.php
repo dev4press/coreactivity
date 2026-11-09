@@ -2,7 +2,7 @@
 
 namespace Dev4Press\Plugin\CoreActivity\Basic;
 
-use Dev4Press\v55\Core\Plugins\Information as BaseInformation;
+use Dev4Press\v56\Core\Plugins\Information as BaseInformation;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

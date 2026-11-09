@@ -3,7 +3,7 @@
 namespace Dev4Press\Plugin\CoreActivity\Plugins;
 
 use Dev4Press\Plugin\CoreActivity\Base\Plugin;
-use Dev4Press\v55\Core\Quick\Request;
+use Dev4Press\v56\Core\Quick\Request;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

@@ -3,9 +3,9 @@
 namespace Dev4Press\Plugin\CoreActivity\Location;
 
 use Dev4Press\Plugin\CoreActivity\Log\GEO;
-use Dev4Press\v55\Core\Helpers\IP;
-use Dev4Press\v55\Service\GEOIP\Location;
-use Dev4Press\v55\Service\GEOIP\Locator;
+use Dev4Press\v56\Core\Helpers\IP;
+use Dev4Press\v56\Service\GEOIP\Location;
+use Dev4Press\v56\Service\GEOIP\Locator;
 use Exception;
 use GeoIp2\Database\Reader;
 

@@ -6,7 +6,7 @@ use Dev4Press\Plugin\CoreActivity\Basic\DB;
 use Dev4Press\Plugin\CoreActivity\Log\Activity;
 use Dev4Press\Plugin\CoreActivity\Log\WhoIs;
 use Dev4Press\Plugin\CoreActivity\Table\Live;
-use Dev4Press\v55\Core\Quick\Sanitize;
+use Dev4Press\v56\Core\Quick\Sanitize;
 use JetBrains\PhpStorm\NoReturn;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -50,6 +50,10 @@ class AJAX {
 
 	#[NoReturn]
 	public function toggle_event() : void {
+		if ( ! current_user_can( is_multisite() ? 'manage_network_options' : 'manage_options' ) ) {
+			$this->json_respond( array( 'toggle' => '' ), 403 );
+		}
+
 		$id = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
 
 		$toggle = '';
@@ -69,6 +73,10 @@ class AJAX {
 
 	#[NoReturn]
 	public function toggle_notification() : void {
+		if ( ! current_user_can( is_multisite() ? 'manage_network_options' : 'manage_options' ) ) {
+			$this->json_respond( array( 'toggle' => '' ), 403 );
+		}
+
 		$id  = isset( $_POST['event'] ) ? absint( $_POST['event'] ) : 0;
 		$key = isset( $_POST['notification'] ) ? Sanitize::slug( $_POST['notification'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
@@ -88,19 +96,26 @@ class AJAX {
 	public function live_logs() : void {
 		$output = '';
 
-		if ( isset( $_REQUEST['args'] ) ) {
+		if ( isset( $_REQUEST['args'] ) && is_string( $_REQUEST['args'] ) ) {
 			$request = json_decode( wp_unslash( $_REQUEST['args'] ), true ); // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 
-			if ( isset( $request['nonce'] ) && wp_verify_nonce( $request['nonce'], 'coreactivity-live-update' ) ) {
-				$request['atts']['min_id'] = absint( $request['id'] );
+			$scope = $request['scope'] ?? '';
+			$allowed = $scope === 'network' ? is_multisite() && current_user_can( 'manage_network_options' ) : $scope === 'site' && current_user_can( 'manage_options' );
 
-				$request['settings']['_request_args']  = $request['atts'];
-				$request['settings']['_filter_lock']   = $request['lock'];
-				$request['settings']['_limit_lock']    = $request['limit'];
-				$request['settings']['_filter_key']    = $request['filter'];
-				$request['settings']['_url_page_name'] = $request['page'];
+			if ( $allowed && isset( $request['nonce'] ) && is_string( $request['nonce'] ) && wp_verify_nonce( $request['nonce'], 'coreactivity-live-update-' . $scope ) && isset( $request['atts'] ) && is_array( $request['atts'] ) ) {
+				$defaults = array_fill_keys( array( 'filter-blog_id', 'filter-user_id', 'filter-event_id', 'filter-ip', 'filter-component', 'filter-country_code', 'filter-context', 'filter-method', 'filter-object_type', 'filter-object_id', 'filter-object_name', 'view', 'search', 'period', 'orderby', 'order', 'paged', 'min_id' ), '' );
+				$atts = array_merge( $defaults, array_intersect_key( $request['atts'], $defaults ) );
 
-				$_grid = new Live( $request['settings'] );
+				foreach ( $atts as $key => $value ) {
+					if ( ! is_scalar( $value ) ) {
+						$atts[ $key ] = '';
+					}
+				}
+
+				$atts['min_id'] = absint( $request['id'] ?? 0 );
+				$lock = is_multisite() && $scope === 'site' ? array( 'blog_id' => get_current_blog_id() ) : array();
+
+				$_grid = new Live( array( '_request_args' => $atts, '_filter_lock' => $lock, '_url_page_name' => 'coreactivity-logs' ) );
 				$_grid->update();
 				$_grid->prepare_items();
 
@@ -120,13 +135,18 @@ class AJAX {
 
 	#[NoReturn]
 	public function whois_ip() : void {
-		$ip  = isset( $_POST['whois'] ) ? Sanitize::text( $_POST['whois'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
-		$out = __( 'WhoIs check failed', 'coreactivity' );
-
-		if ( ! empty( $ip ) && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-whois-' . $ip ) ) {
-			$out = nl2br( trim( WhoIs::i()->get( $ip ) ) );
+		if ( ! current_user_can( 'manage_options' ) && ! current_user_can( 'manage_network_options' ) ) {
+			status_header( 403 );
+			exit;
 		}
 
-		die( $out ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		$ip  = isset( $_POST['whois'] ) ? Sanitize::text( $_POST['whois'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
+		$out = esc_html__( 'WhoIs check failed', 'coreactivity' );
+
+		if ( ! empty( $ip ) && isset( $_REQUEST['_ajax_nonce'] ) && wp_verify_nonce( sanitize_key( $_REQUEST['_ajax_nonce'] ), 'coreactivity-whois-' . $ip ) ) {
+			$out = nl2br( esc_html( trim( WhoIs::i()->get( $ip ) ) ) );
+		}
+
+		die( $out ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above; nl2br adds markup.
 	}
 }

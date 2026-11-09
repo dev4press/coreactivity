@@ -6,10 +6,10 @@
  * Author:            Milan Petrovic
  * Author URI:        https://www.dev4press.com/
  * Text Domain:       coreactivity
- * Version:           3.1.1
- * Requires at least: 6.1
- * Tested up to:      7.0
- * Requires PHP:      8.0
+ * Version:           3.2
+ * Requires at least: 6.4
+ * Tested up to:      7.2
+ * Requires PHP:      8.1
  * Requires CP:       2.0
  * Network:           true
  * License:           GPLv3 or later
@@ -34,7 +34,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>
  */
 
-use Dev4Press\v55\WordPress;
+use Dev4Press\v56\WordPress;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

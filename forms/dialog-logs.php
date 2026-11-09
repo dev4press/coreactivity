@@ -1,6 +1,6 @@
 <?php
 
-use Dev4Press\v55\Core\UI\Icons;
+use Dev4Press\v56\Core\UI\Icons;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
